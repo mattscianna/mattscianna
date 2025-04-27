@@ -6,17 +6,9 @@
   <title>Matt Scianna</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&family=Cal+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&family=Cardo&family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
   <style>
-    /* Custom Font for Jersey 25 (if still needed elsewhere) */
-    @font-face {
-      font-family: 'Jersey25';
-      src: url('fonts/jersey-25.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
     body {
       font-family: 'Cardo', serif;
       background-color: #ffffff;
@@ -37,12 +29,12 @@
       margin-bottom: 5px;
     }
 
-    /* FOOTBALL JERSEYS */
+    /* FOOTBALL JERSEYS Title */
     h2 {
       font-family: 'Graduate', sans-serif;
       font-size: 28px;
-      color: #D7263D;
-      -webkit-text-stroke: 0.8px black; /* Thin black outline */
+      color: #5B0202;
+      -webkit-text-stroke: 0.8px black;
       margin-bottom: 30px;
       letter-spacing: 2px;
     }
@@ -66,20 +58,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: 'Cal Sans', sans-serif;
     }
 
+    /* Timer Numbers */
     .number {
+      font-family: 'Alfa Slab One', cursive;
       font-size: 36px;
       font-weight: bold;
-      color: #D7263D;
+      color: #ff0808;
     }
 
+    /* Timer Labels DAY HRS MIN SEC */
     .label {
-      font-family: 'Graduate', sans-serif;
+      font-family: 'Cardo', serif;
       font-size: 14px;
       font-weight: bold;
-      color: black;
+      color: #200E01;
       margin-top: 5px;
     }
 
@@ -89,7 +83,7 @@
       padding: 20px;
       width: 100%;
       text-align: center;
-      color: white;
+      color: #EDE7C7;
     }
 
     .social-links {
@@ -171,7 +165,7 @@
   </footer>
 
   <script>
-    // Set target date in UTC to match EST time (UTC-4)
+    // Set countdown for August 9, 2025 at 2PM EST
     const futureDate = new Date(Date.UTC(2025, 7, 9, 18, 0, 0)); 
 
     function updateCountdown() {

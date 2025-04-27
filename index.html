@@ -159,11 +159,11 @@
 
   <!-- SMS Form -->
   <div class="form-container">
-    <form action="https://formsubmit.co/matthewjets@icloud.com" method="POST" class="notify-form">
+    <form id="notify-form" class="notify-form">
       <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
-      <input type="text" name="name" placeholder="Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" id="name" name="name" placeholder="Name" required>
+      <input type="email" id="email" name="email" placeholder="Email" required>
+      <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
       <button type="submit">NOTIFY ME</button>
     </form>
   </div>
@@ -180,6 +180,37 @@
       </a>
     </div>
   </footer>
+
+  <!-- JavaScript to handle form submission -->
+  <script>
+    const form = document.getElementById('notify-form');
+    
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevents form from refreshing the page
+      
+      const formData = new FormData(form);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const phone = formData.get('phone');
+      
+      // Send form data via AJAX (using Fetch API)
+      fetch('https://your-server-url/send-notification', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, phone }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display success message on the same page
+        alert('You will be notified shortly!');
+      })
+      .catch(error => {
+        alert('There was an error. Please try again later.');
+      });
+    });
+  </script>
 
 </body>
 </html>

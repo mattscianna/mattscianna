@@ -30,58 +30,60 @@
       margin: 0;
       text-transform: uppercase;
       text-align: center;
-      padding: 0 20px;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 4vw; /* Adjusted for better scaling */
+      font-size: 5vw; /* Scales dynamically with screen size */
       margin-bottom: 10px;
     }
 
     h2 {
       font-family: 'Jersey25', sans-serif;
-      font-size: 5vw; /* Adjusted font size for mobile-friendly scaling */
+      font-size: 6vw; /* Scales dynamically with screen size */
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
 
     /* Styling for the logo */
     #logo {
-      width: 150px; /* Adjust width as needed */
+      width: 150px;
+      height: auto;
       margin-bottom: 20px;
     }
 
     #countdown {
       display: flex;
-      gap: 10px; /* Reduced gap between timer sections */
+      gap: 20px; /* Adequate space between time sections */
       justify-content: center;
       margin-top: 20px;
-      flex-wrap: wrap; /* Allow wrapping if needed */
-      justify-content: space-evenly;
-      align-items: center; /* Vertically center the timers */
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      align-items: center;
+      flex-direction: row;
     }
 
     .time-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 20px;
+      justify-content: center;
     }
 
     .time-section .number {
-      font-size: 6vw; /* Adjusted size for mobile responsiveness */
+      font-size: 10vw; /* Dynamically scales with screen size */
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     .time-section .label {
-      font-size: 3vw; /* Smaller size for label */
+      font-size: 4vw; /* Smaller label size for readability */
       letter-spacing: 1px;
       margin-top: 5px;
     }
 
-    /* Mobile adjustments for small screens */
+    /* Mobile adjustments for screens smaller than 768px */
     @media (max-width: 768px) {
       h1 {
         font-size: 8vw;
@@ -92,11 +94,11 @@
       }
 
       .time-section .number {
-        font-size: 12vw; /* Large enough for readability */
+        font-size: 15vw; /* Increase for better readability on small screens */
       }
 
       .time-section .label {
-        font-size: 4vw;
+        font-size: 5vw; /* More appropriate size for mobile devices */
       }
     }
 
@@ -111,11 +113,11 @@
       }
 
       .time-section .number {
-        font-size: 18vw; /* Large enough for readability */
+        font-size: 18vw; /* Larger for readability */
       }
 
       .time-section .label {
-        font-size: 5vw;
+        font-size: 6vw; /* Larger for readability */
       }
     }
 
@@ -123,7 +125,7 @@
 </head>
 <body>
 
-  <!-- Your Logo (make sure the image path is correct) -->
+  <!-- Your Logo (ensure the image path is correct) -->
   <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo" style="width: 200px; height: auto; margin-bottom: 20px;">
 
   <h1>MATT SCIANNA</h1>

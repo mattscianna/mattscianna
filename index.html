@@ -8,7 +8,6 @@
   <!-- Importing Cardo font from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -124,6 +123,7 @@
       transform: scale(1.1);
     }
 
+    /* Adjusting responsiveness for mobile */
     @media screen and (max-width: 600px) {
       h1 {
         font-size: 28px;
@@ -146,6 +146,17 @@
         font-size: 14px;
       }
     }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      background-color: #28a745;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -158,13 +169,15 @@
 
   <!-- SMS Form -->
   <div class="form-container">
-<form action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
-  <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
-  <input type="text" name="name" id="name" placeholder="Name" required>
-  <input type="email" name="email" id="email" placeholder="Email" required>
-  <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
-  <button type="submit">NOTIFY ME</button>
-</form>
+    <form id="sms-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
+      <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
+      <input type="text" name="name" id="name" placeholder="Name" required>
+      <input type="email" name="email" id="email" placeholder="Email" required>
+      <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
+      <button type="submit">NOTIFY ME</button>
+    </form>
+    <!-- Success Message -->
+    <div id="success-message" class="success-message">Thank you for signing up! We will notify you when the drop happens.</div>
   </div>
 
   <!-- Footer -->
@@ -180,39 +193,27 @@
     </div>
   </footer>
 
-  <!-- JavaScript for Form Submission and Notifications -->
   <script>
-    const form = document.getElementById('notify-form');
+    // Handle the form submission
+    document.getElementById("sms-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();  // Prevent form from reloading the page
-      
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-
-      // Make sure the data is in the correct format
-      const data = {
-        name: name,
-        email: email,
-        phone: phone
-      };
-
-      // Send the data using fetch to the backend server (or a service)
-      fetch('https://your-server-url/send-notification', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      // Use Formspree's API to handle submission
+      fetch("https://formspree.io/f/mvonybwr", {
+        method: "POST",
+        body: new FormData(this),
       })
-      .then(response => response.json())
-      .then(responseData => {
-        alert('You will be notified soon!');
-        form.reset();  // Clear the form after submission
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("sms-form").reset();  // Reset form fields
+          document.getElementById("success-message").style.display = "block"; // Show success message
+        } else {
+          alert("There was an error with the submission. Please try again.");
+        }
       })
       .catch(error => {
-        alert('There was an error. Please try again later.');
+        console.error("Error:", error);
+        alert("There was an error with the submission. Please try again.");
       });
     });
   </script>

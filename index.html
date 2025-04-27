@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matt Scianna</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Graduate&display=swap" rel="stylesheet">
+  <!-- Importing Cardo font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -25,136 +27,126 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 32px;
-      margin-bottom: 5px;
-    }
-
-    /* COMING SOON Title */
-    h2 {
-      font-family: 'Graduate', cursive;
-      font-size: 28px;
-      color: #8B0000;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-      margin-bottom: 30px;
-      letter-spacing: 2px;
-    }
-
-    #logo {
-      width: 200px; /* Increased size */
-      height: auto;
+      font-size: 48px;
       margin-bottom: 10px;
     }
 
-    #countdown {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      margin: 20px 0;
-      flex-wrap: wrap;
+    h2 {
+      font-family: 'Graduate', sans-serif;
+      font-size: 48px;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+      color: #8B0000;
     }
 
-    .time-section {
+    #logo {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      border: 2px solid #8B0000;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+
+    .notify-form {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Timer Numbers */
-    .number {
+    .notify-form h2 {
       font-family: 'Cardo', serif;
-      font-size: 36px;
-      font-weight: bold;
       color: #8B0000;
+      margin-bottom: 20px;
+      font-size: 28px;
     }
 
-    /* Timer Labels DAY HRS MIN SEC */
-    .label {
+    .notify-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       font-family: 'Cardo', serif;
-      font-size: 14px;
-      font-weight: bold;
-      color: #200E01;
-      margin-top: 5px;
+      font-size: 16px;
+    }
+
+    .notify-form button {
+      background-color: #8B0000;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-family: 'Cardo', serif;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .notify-form button:hover {
+      background-color: #600000;
     }
 
     footer {
-      margin-top: 40px;
-      background-color: #8B0000;
+      margin-top: 50px;
       padding: 20px;
+      background-color: #8B0000;
+      color: white;
       width: 100%;
       text-align: center;
-      color: #ffffff;
     }
 
-    .social-links {
+    .footer-text {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
       display: flex;
       justify-content: center;
       gap: 20px;
-      margin-top: 10px;
     }
 
-    .social-links img {
+    .social-icons img {
       width: 40px;
       height: 40px;
-      object-fit: contain;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 28px;
-      }
-
-      h2 {
-        font-size: 24px;
-      }
-
-      #logo {
-        width: 160px; /* Adjusted for mobile */
-      }
-
-      .number {
-        font-size: 32px;
-      }
-
-      .label {
-        font-size: 12px;
-      }
-
-      #countdown {
-        gap: 30px;
-      }
+    .social-icons img:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
 
-  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
+  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
 
   <h1>MATT SCIANNA</h1>
   <h2>COMING SOON</h2>
 
-  <div id="countdown">
-    <div class="time-section">
-      <div id="days" class="number">0</div>
-      <div class="label">DAY</div>
-    </div>
-    <div class="time-section">
-      <div id="hours" class="number">0</div>
-      <div class="label">HRS</div>
-    </div>
-    <div class="time-section">
-      <div id="minutes" class="number">0</div>
-      <div class="label">MIN</div>
-    </div>
-    <div class="time-section">
-      <div id="seconds" class="number">0</div>
-      <div class="label">SEC</div>
-    </div>
+  <!-- SMS Form -->
+  <div class="form-container">
+    <form action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST" class="notify-form">
+      <h2>STAY UPDATED</h2>
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <button type="submit">NOTIFY ME</button>
+    </form>
   </div>
 
+  <!-- Footer -->
   <footer>
-    <div>© 2025 Matt Scianna | Based in New York.</div>
-    <div class="social-links">
+    <div class="footer-text">2025 Matt Scianna | Based in New York.</div>
+    <div class="social-icons">
       <a href="https://www.instagram.com/mattsciannany" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/6E28D2AD-2C95-4CDB-B305-129399199A32.png?raw=true" alt="Instagram">
       </a>
@@ -163,34 +155,6 @@
       </a>
     </div>
   </footer>
-
-  <script>
-    // Set countdown for August 9, 2025 at 2PM EST
-    const futureDate = new Date(Date.UTC(2025, 7, 9, 18, 0, 0)); 
-
-    function updateCountdown() {
-      const currentTime = new Date();
-      const distance = futureDate - currentTime;
-
-      if (distance <= 0) {
-        document.getElementById("countdown").innerHTML = "OUT NOW";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
 
 </body>
 </html>

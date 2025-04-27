@@ -176,6 +176,7 @@
       <h2>SIGN UP TO GET THE LATEST UPDATES.</h2>
       <input type="text" name="name" id="name" placeholder="Name" required>
       <input type="email" name="email" id="email" placeholder="Email" required>
+      <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
       <button type="submit" id="my-form-button">NOTIFY ME</button>
       <p id="my-form-status"></p>
     </form>
@@ -190,34 +191,48 @@
       <a href="https://www.instagram.com/mattsciannany" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/93118C82-5960-4879-B385-C883ADCF1D2B.png?raw=true" alt="Instagram">
       </a>
-      <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
+      <a href="https://www.tiktok.com/@mattsciananny" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/ABF0364A-5BD6-4A48-A967-96C288578371.png?raw=true" alt="TikTok">
       </a>
     </div>
   </footer>
 
-<script type="text/javascript">
-    // Initialize EmailJS with your User ID
-    emailjs.init('YOUR_USER_ID'); // Replace with your User ID from EmailJS
+  <script>
+    // Handle the form submission via AJAX to stay on the page
+    var form = document.getElementById("my-form");
 
-    // Add event listener to your form
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting the normal way
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var status = document.getElementById("my-form-status");
+      var data = new FormData(event.target);
+      
+      // Send form data to Formspree via Fetch API (AJAX)
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          status.innerHTML = "";  // Clear any previous status message
+          form.reset();  // Reset the form after success
+          document.getElementById("status-message").style.display = "block"; // Show success message
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+            } else {
+              status.innerHTML = "Oops! There was a problem submitting your form"
+            }
+          })
+        }
+      }).catch(error => {
+        status.innerHTML = "Oops! There was a problem submitting your form"
+      });
+    }
 
-      var statusElement = document.getElementById('status');
-      statusElement.innerHTML = "Submitting...";
-
-      // Send form data to EmailJS
-      emailjs.sendForm('service_3ctvcdn', 'template_h7r45f5', this)
-        .then(function(response) {
-          // On success, display the success message
-          statusElement.innerHTML = "THANKS FOR YOUR SUBMISSION!";
-          document.getElementById('contact-form').reset(); // Reset the form fields
-        }, function(error) {
-          // On error, display the error message
-          statusElement.innerHTML = "There was a problem with your submission.";
-        });
-    });
+    form.addEventListener("submit", handleSubmit);
   </script>
 
 </body>

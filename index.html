@@ -33,28 +33,28 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 30px; /* Reduced font size */
+      font-size: 40px; /* Adjusted font size */
       margin-bottom: 10px;
     }
 
     h2 {
-      font-family: 'Jersey25', sans-serif; 
-      font-size: 30px; /* Reduced font size */
+      font-family: 'Jersey25', sans-serif;
+      font-size: 36px; /* Adjusted font size */
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
 
     /* Styling for the logo */
     #logo {
-      width: 160px; /* Adjust width as needed for mobile */
+      width: 180px; /* Adjust width for better visibility on mobile */
       margin-bottom: 20px;
     }
 
     #countdown {
       display: flex;
-      gap: 20px;
+      justify-content: center;
+      gap: 25px;
       margin-top: 20px;
-      justify-content: center; /* Centers countdown */
     }
 
     .time-section {
@@ -64,13 +64,13 @@
     }
 
     .time-section .number {
-      font-size: 36px; /* Reduced size */
+      font-size: 48px; /* Bigger font size for numbers */
       font-weight: bold;
       margin-bottom: 5px;
     }
 
     .time-section .label {
-      font-size: 14px; /* Reduced size */
+      font-size: 16px; /* Adjusted label size */
       letter-spacing: 1px;
       margin-top: 3px;
     }
@@ -98,7 +98,7 @@
     }
 
     .social-media-box img {
-      width: 40px; /* Adjust image size for mobile */
+      width: 40px; /* Adjust image size */
       height: 40px;
       border-radius: 5px;
     }
@@ -106,19 +106,19 @@
     /* Mobile responsiveness */
     @media (max-width: 768px) {
       h1, h2 {
-        font-size: 24px; /* Make heading font smaller for mobile */
+        font-size: 30px; /* Make heading font smaller for mobile */
       }
 
       #logo {
-        width: 140px; /* Make logo a bit smaller for mobile */
+        width: 160px; /* Make logo a bit smaller for mobile */
       }
 
       .time-section .number {
-        font-size: 30px; /* Smaller numbers for mobile */
+        font-size: 36px; /* Bigger numbers but not too large for mobile */
       }
 
       .time-section .label {
-        font-size: 12px; /* Smaller labels for mobile */
+        font-size: 14px; /* Smaller labels for mobile */
       }
 
       .social-media-box img {
@@ -131,7 +131,7 @@
     @media (max-width: 480px) {
       #countdown {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
       }
     }
   </style>

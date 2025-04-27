@@ -150,12 +150,10 @@
     /* Status message styling */
     .status-message {
       display: none;
-      background-color: #28a745;
-      color: white;
-      padding: 20px;
-      border-radius: 5px;
+      color: #8B0000;
       font-size: 18px;
       margin-top: 20px;
+      font-family: 'Cardo', serif;
     }
   </style>
 </head>
@@ -220,12 +218,12 @@
             if (Object.hasOwn(data, 'errors')) {
               status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
             } else {
-              status.innerHTML = "Oops! There was a problem submitting your form"
+              status.innerHTML = "There was a problem submitting your form."
             }
           })
         }
       }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
+        status.innerHTML = "There was a problem submitting your form."
       });
     }
 

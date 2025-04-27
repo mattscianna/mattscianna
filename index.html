@@ -47,14 +47,14 @@
 
     /* Styling for the logo */
     #logo {
-      width: 180px; /* Increased logo size */
+      width: 250px; /* Increased logo size to reduce white space on mobile */
       height: auto;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     #countdown {
       display: flex;
-      gap: 60px; /* Increased the gap between the time sections for more space */
+      gap: 80px; /* Increased the gap between the time sections */
       margin-top: 20px;
       justify-content: center;
     }
@@ -77,7 +77,7 @@
       font-weight: bold; /* Made the label bold */
       color: black; /* Set the label color to black */
       letter-spacing: 1px;
-      margin-top: 5px;
+      margin-top: 10px; /* Added more space between the number and label */
     }
 
     /* Responsive Design for Mobile Devices */
@@ -91,11 +91,11 @@
       }
 
       #countdown {
-        gap: 30px; /* Decrease gap for smaller devices */
+        gap: 50px; /* Decrease gap for smaller devices */
       }
 
       .time-section .number {
-        font-size: 7vw; /* Slightly smaller on mobile */
+        font-size: 8vw; /* Slightly smaller on mobile */
       }
 
       .time-section .label {
@@ -103,7 +103,7 @@
       }
 
       #logo {
-        width: 150px;
+        width: 220px; /* Adjust logo size */
       }
     }
 
@@ -118,7 +118,7 @@
       }
 
       #countdown {
-        gap: 10px; /* Decrease gap further for very small screens */
+        gap: 15px; /* Decrease gap further for very small screens */
       }
 
       .time-section .number {
@@ -130,7 +130,7 @@
       }
 
       #logo {
-        width: 130px;
+        width: 180px; /* Adjust logo size */
       }
     }
   </style>

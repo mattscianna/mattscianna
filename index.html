@@ -7,7 +7,7 @@
 
   <!-- Importing Cardo font from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-  
+
   <style>
     /* Use @font-face to load the Jersey 25 font (upload the font file to your repo) */
     @font-face {
@@ -39,24 +39,21 @@
 
     /* FOOTBALL JERSEYS in Jersey 25 font */
     h2 {
-      font-family: 'Jersey25', sans-serif;
-      font-size: 40px;
+      font-family: 'Jersey25', sans-serif; /* Apply Jersey 25 font */
+      font-size: 48px;
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
 
     /* Styling for the logo */
     #logo {
-      width: 200px;
-      height: auto;
+      width: 200px; /* Adjust width as needed */
       margin-bottom: 20px;
     }
 
-    /* Styling for countdown */
     #countdown {
       display: flex;
-      gap: 40px;
-      justify-content: center;
+      gap: 60px;
       margin-top: 20px;
     }
 
@@ -67,83 +64,37 @@
     }
 
     .time-section .number {
-      font-size: 48px;
+      font-size: 64px;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
 
     .time-section .label {
       font-size: 18px;
       letter-spacing: 1px;
-      color: black;
-      font-weight: bold;
+      margin-top: 5px;
     }
 
-    /* Styling for footer */
-    .footer {
-      background-color: #8B0000;
-      color: white;
-      padding: 20px;
-      width: 100%;
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    /* Styling for copyright box */
-    .copyright-box {
-      background-color: #8B0000;
-      color: white;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 14px;
-      display: inline-block;
-    }
-
-    /* Make sure the footer links align correctly */
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    /* Styling for image boxes (Instagram & TikTok) */
+    /* Styling for Social Media Boxes */
     .social-media-box {
-      width: 40px; /* Adjust to your preferred size */
-      height: 40px;
-      margin-top: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      margin: 10px;
     }
 
     .social-media-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 50px; /* Adjust image size */
+      height: 50px;
+      border-radius: 5px;
     }
-    
-    /* Responsive design for mobile */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 36px;
-      }
 
-      h2 {
-        font-size: 28px;
-      }
-
-      .time-section .number {
-        font-size: 32px;
-      }
-
-      .footer {
-        padding: 10px;
-      }
-      
-      /* Space out and make footer elements fit */
-      .footer-links a {
-        font-size: 16px;
-      }
+    /* Footer Section */
+    footer {
+      margin-top: 50px;
+      padding: 10px;
+      background-color: #8B0000;
+      color: white;
+      width: 100%;
+      text-align: center;
     }
   </style>
 </head>
@@ -173,6 +124,25 @@
       <div class="label">S</div>
     </div>
   </div>
+
+  <!-- Instagram Link -->
+  <div class="social-media-box">
+    <a href="https://www.instagram.com/mattsciannany" target="_blank">
+      <img src="https://github.com/mattscianna/mattscianna/blob/Main/6E28D2AD-2C95-4CDB-B305-129399199A32.png?raw=true" alt="Instagram Logo">
+    </a>
+  </div>
+
+  <!-- TikTok Link -->
+  <div class="social-media-box">
+    <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
+      <img src="https://github.com/mattscianna/mattscianna/blob/Main/72B6FE7C-B07D-4701-BDDA-F002443A82E6.png?raw=true" alt="TikTok Logo">
+    </a>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Matt Scianna. All Rights Reserved.</p>
+  </footer>
 
   <script>
     const now = new Date();
@@ -209,25 +179,6 @@
     // Update countdown every second (1000 ms)
     setInterval(updateCountdown, 1000);
   </script>
-
-  <!-- Footer Section -->
-  <div class="footer">
-    <div class="footer-links">
-      <!-- Instagram and TikTok image boxes -->
-      <div class="social-media-box">
-        <!-- Replace 'your-instagram-image-url.png' with your actual Instagram image URL -->
-        <img src="https://github.com/mattscianna/mattscianna/blob/Main/6E28D2AD-2C95-4CDB-B305-129399199A32.png?raw=true" alt="Instagram">
-      </div>
-      <div class="social-media-box">
-        <!-- Replace 'your-tiktok-image-url.png' with your actual TikTok image URL -->
-        <img src="https://github.com/mattscianna/mattscianna/blob/Main/72B6FE7C-B07D-4701-BDDA-F002443A82E6.png?raw=true" alt="TikTok">
-      </div>
-    </div>
-
-    <div class="copyright-box">
-      &copy; 2025 Matt Scianna. All Rights Reserved.
-    </div>
-  </div>
 
 </body>
 </html>

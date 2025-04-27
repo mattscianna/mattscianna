@@ -37,10 +37,10 @@
       margin-bottom: 10px;
     }
 
-    /* Increase size for FOOTBALL JERSEYS */
+    /* FOOTBALL JERSEYS in Jersey 25 font */
     h2 {
       font-family: 'Jersey25', sans-serif;
-      font-size: 42px; /* Slightly larger to adjust space */
+      font-size: 40px;
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
@@ -54,11 +54,12 @@
     /* Countdown Styles */
     #countdown {
       display: flex;
-      justify-content: center;
+      justify-content: space-evenly; /* Spacing out items evenly */
       align-items: center;
-      gap: 60px; /* Increased gap between time sections */
       margin-top: 20px;
-      flex-wrap: wrap; /* Ensures responsiveness on mobile */
+      gap: 30px; /* Added gap between the timer items */
+      width: 100%;
+      max-width: 100%;
     }
 
     .time-section {
@@ -68,14 +69,14 @@
     }
 
     .time-section .number {
-      font-size: 60px;  /* Slightly larger numbers */
+      font-size: 60px;  /* Adjusted for better visibility */
       font-weight: bold;
     }
 
     .time-section .label {
-      font-size: 18px; /* Slightly larger labels */
+      font-size: 18px;
       letter-spacing: 1px;
-      margin-top: 10px; /* Increased spacing between numbers and labels */
+      margin-top: 10px;
       color: black;
       font-weight: bold;
     }
@@ -131,21 +132,10 @@
         height: 40px;
       }
 
-      /* Ensure alignment and proper spacing on mobile */
+      /* Make sure countdown remains horizontal on mobile */
       #countdown {
-        flex-direction: row; /* Ensures items are on the same line */
-      }
-
-      .time-section {
-        align-items: center;
-      }
-    }
-
-    /* Make countdown text fit well on mobile */
-    @media (max-width: 480px) {
-      #countdown {
-        flex-direction: column;
-        gap: 15px;
+        flex-wrap: nowrap; /* Ensure items stay in a single line */
+        justify-content: space-evenly; /* Maintain even spacing */
       }
     }
   </style>

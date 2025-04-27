@@ -27,7 +27,7 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 36px; /* Reduced size for mobile compatibility */
+      font-size: 36px;
       margin-bottom: 10px;
     }
 
@@ -114,8 +114,8 @@
     }
 
     .social-icons img {
-      width: 45px; /* Slightly increased size */
-      height: 45px; /* Slightly increased size */
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       transition: transform 0.3s ease;
     }
@@ -124,10 +124,9 @@
       transform: scale(1.1);
     }
 
-    /* Adjusting responsiveness for mobile */
     @media screen and (max-width: 600px) {
       h1 {
-        font-size: 28px; /* Smaller size for mobile */
+        font-size: 28px;
       }
 
       h2 {
@@ -135,16 +134,16 @@
       }
 
       #logo {
-        width: 150px; /* Adjusted logo size for mobile */
+        width: 150px;
       }
 
       .form-container {
         width: 90%;
-        max-width: 300px; /* Adjust form size */
+        max-width: 300px;
       }
 
       .footer-text {
-        font-size: 14px; /* Smaller footer text for mobile */
+        font-size: 14px;
       }
     }
   </style>
@@ -161,9 +160,9 @@
   <div class="form-container">
     <form id="notify-form" class="notify-form">
       <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
-      <input type="text" id="name" name="name" placeholder="Name" required>
-      <input type="email" id="email" name="email" placeholder="Email" required>
-      <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="name" id="name" placeholder="Name" required>
+      <input type="email" name="email" id="email" placeholder="Email" required>
+      <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
       <button type="submit">NOTIFY ME</button>
     </form>
   </div>
@@ -181,30 +180,36 @@
     </div>
   </footer>
 
-  <!-- JavaScript to handle form submission -->
+  <!-- JavaScript for Form Submission and Notifications -->
   <script>
     const form = document.getElementById('notify-form');
-    
+
     form.addEventListener('submit', function(event) {
-      event.preventDefault();  // Prevents form from refreshing the page
+      event.preventDefault();  // Prevent form from reloading the page
       
-      const formData = new FormData(form);
-      const name = formData.get('name');
-      const email = formData.get('email');
-      const phone = formData.get('phone');
-      
-      // Send form data via AJAX (using Fetch API)
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      // Make sure the data is in the correct format
+      const data = {
+        name: name,
+        email: email,
+        phone: phone
+      };
+
+      // Send the data using fetch to the backend server (or a service)
       fetch('https://your-server-url/send-notification', {
         method: 'POST',
-        body: JSON.stringify({ name, email, phone }),
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       })
       .then(response => response.json())
-      .then(data => {
-        // Display success message on the same page
-        alert('You will be notified shortly!');
+      .then(responseData => {
+        alert('You will be notified soon!');
+        form.reset();  // Clear the form after submission
       })
       .catch(error => {
         alert('There was an error. Please try again later.');

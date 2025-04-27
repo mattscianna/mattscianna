@@ -8,9 +8,8 @@
   <!-- Importing Cardo font from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
 
-  <!-- Jersey 25 font (make sure the font file is in your repository) -->
+  <!-- Jersey 25 font -->
   <style>
-    /* Use @font-face to load the Jersey 25 font */
     @font-face {
       font-family: 'Jersey25';
       src: url('fonts/jersey-25.ttf') format('truetype');
@@ -36,30 +35,31 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 4vw; /* Reduced size for desktop */
+      font-size: 6vw; /* Adjusted font size for better scaling */
       margin-bottom: 10px;
+      margin-top: 20px;
     }
 
     h2 {
       font-family: 'Jersey25', sans-serif;
-      font-size: 5vw; /* Reduced size for desktop */
+      font-size: 7vw; /* Adjusted font size for better scaling */
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
 
     /* Styling for the logo */
     #logo {
-      width: 150px;
+      width: 250px; /* Adjusted width for better proportion */
       height: auto;
       margin-bottom: 20px;
     }
 
     #countdown {
       display: flex;
-      gap: 20px; /* Adequate space between time sections */
+      gap: 30px;
       justify-content: center;
       margin-top: 20px;
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      flex-wrap: wrap;
       align-items: center;
       flex-direction: row;
     }
@@ -72,13 +72,13 @@
     }
 
     .time-section .number {
-      font-size: 5vw; /* Adjusted for a more reasonable size on all devices */
+      font-size: 6vw; /* Adjusted font size for scaling */
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     .time-section .label {
-      font-size: 2vw; /* Slightly smaller font for labels */
+      font-size: 3vw; /* Adjusted font size for scaling */
       letter-spacing: 1px;
       margin-top: 5px;
     }
@@ -86,38 +86,46 @@
     /* Mobile adjustments for screens smaller than 768px */
     @media (max-width: 768px) {
       h1 {
-        font-size: 10vw;
-      }
-
-      h2 {
         font-size: 12vw;
       }
 
+      h2 {
+        font-size: 13vw;
+      }
+
       .time-section .number {
-        font-size: 10vw; /* More appropriate size for mobile devices */
+        font-size: 12vw;
       }
 
       .time-section .label {
-        font-size: 3vw; /* More appropriate size for mobile devices */
+        font-size: 4vw;
+      }
+
+      #logo {
+        width: 150px; /* Smaller logo on mobile */
       }
     }
 
     /* Further adjustments for very small screens like phones in portrait mode */
     @media (max-width: 480px) {
       h1 {
-        font-size: 14vw;
+        font-size: 15vw;
       }
 
       h2 {
-        font-size: 16vw;
+        font-size: 18vw;
       }
 
       .time-section .number {
-        font-size: 14vw; /* Larger for readability */
+        font-size: 15vw;
       }
 
       .time-section .label {
-        font-size: 4vw; /* Larger for readability */
+        font-size: 5vw;
+      }
+
+      #logo {
+        width: 120px; /* Even smaller logo for smaller screens */
       }
     }
 
@@ -126,7 +134,7 @@
 <body>
 
   <!-- Your Logo (ensure the image path is correct) -->
-  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo" style="width: 200px; height: auto; margin-bottom: 20px;">
+  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
 
   <h1>MATT SCIANNA</h1>
   <h2>FOOTBALL JERSEYS</h2>

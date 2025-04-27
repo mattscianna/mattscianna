@@ -8,9 +8,9 @@
   <!-- Importing Cardo font from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
 
-  <!-- Jersey 25 font, make sure to have the font file properly uploaded in your repository -->
+  <!-- Jersey 25 font (make sure the font file is in your repository) -->
   <style>
-    /* Use @font-face to load the Jersey 25 font (upload the font file to your repo) */
+    /* Use @font-face to load the Jersey 25 font */
     @font-face {
       font-family: 'Jersey25';
       src: url('fonts/jersey-25.ttf') format('truetype');
@@ -35,13 +35,13 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 4vw; /* Adjusted for a better fit */
+      font-size: 4vw; /* Adjusted for better scaling */
       margin-bottom: 10px;
     }
 
     h2 {
       font-family: 'Jersey25', sans-serif;
-      font-size: 5vw; /* Adjust font size for smaller screens */
+      font-size: 5vw; /* Adjusted font size for mobile-friendly scaling */
       margin-bottom: 40px;
       letter-spacing: 2px;
     }
@@ -54,37 +54,39 @@
 
     #countdown {
       display: flex;
-      gap: 30px;
+      gap: 10px; /* Reduced gap between timer sections */
       justify-content: center;
       margin-top: 20px;
-      flex-wrap: wrap; /* Allow wrapping, but elements should be aligned on the same line */
+      flex-wrap: wrap; /* Allow wrapping if needed */
       justify-content: space-evenly;
-      align-items: center; /* Vertically center the timer */
+      align-items: center; /* Vertically center the timers */
     }
 
     .time-section {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 20px;
     }
 
     .time-section .number {
-      font-size: 5vw; /* Adjusted for better fit on mobile */
+      font-size: 6vw; /* Adjusted size for mobile responsiveness */
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     .time-section .label {
-      font-size: 2vw;
+      font-size: 3vw; /* Smaller size for label */
       letter-spacing: 1px;
       margin-top: 5px;
     }
 
-    /* Mobile adjustments */
+    /* Mobile adjustments for small screens */
     @media (max-width: 768px) {
       h1 {
         font-size: 8vw;
       }
+
       h2 {
         font-size: 10vw;
       }
@@ -98,17 +100,18 @@
       }
     }
 
-    /* Extra small screen adjustments (e.g., phones in portrait mode) */
+    /* Further adjustments for very small screens like phones in portrait mode */
     @media (max-width: 480px) {
       h1 {
-        font-size: 10vw;
-      }
-      h2 {
         font-size: 12vw;
       }
 
+      h2 {
+        font-size: 14vw;
+      }
+
       .time-section .number {
-        font-size: 14vw; /* Large enough for readability */
+        font-size: 18vw; /* Large enough for readability */
       }
 
       .time-section .label {
@@ -120,7 +123,7 @@
 </head>
 <body>
 
-  <!-- Your Logo (replace with your actual logo file path) -->
+  <!-- Your Logo (make sure the image path is correct) -->
   <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo" style="width: 200px; height: auto; margin-bottom: 20px;">
 
   <h1>MATT SCIANNA</h1>

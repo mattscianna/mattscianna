@@ -29,36 +29,32 @@
       margin: 0;
       text-transform: uppercase;
       text-align: center;
-      padding-top: 0; /* Remove top padding */
-      padding-bottom: 0; /* Remove bottom padding */
     }
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 4vw;
-      margin-bottom: 5px; /* Reduced space between logo and text */
+      font-size: 48px;
+      margin-bottom: 10px;
     }
 
     /* FOOTBALL JERSEYS in Jersey 25 font */
     h2 {
-      font-family: 'Jersey25', sans-serif;
-      font-size: 3.5vw;
-      margin-bottom: 30px; /* Adjusted to balance space */
+      font-family: 'Jersey25', sans-serif; /* Apply Jersey 25 font */
+      font-size: 48px;
+      margin-bottom: 40px;
       letter-spacing: 2px;
     }
 
     /* Styling for the logo */
     #logo {
-      width: 230px; /* Slightly increased logo size */
-      height: auto;
-      margin-bottom: 5px; /* Reduced space between logo and title */
+      width: 150px; /* Adjust width as needed */
+      margin-bottom: 20px;
     }
 
     #countdown {
       display: flex;
-      gap: 80px; /* Increased gap between the time sections */
+      gap: 60px;
       margin-top: 20px;
-      justify-content: center;
     }
 
     .time-section {
@@ -68,79 +64,41 @@
     }
 
     .time-section .number {
-      font-size: 3.5vw;
+      font-size: 64px;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
 
     .time-section .label {
-      font-family: 'Jersey25', sans-serif; /* Applying Jersey 25 font for D H M S */
-      font-size: 1.2vw;
-      font-weight: bold; /* Made the label bold */
-      color: black; /* Set the label color to black */
+      font-size: 18px;
       letter-spacing: 1px;
-      margin-top: 10px; /* Added more space between the number and label */
+      margin-top: 5px;
     }
 
-    /* Responsive Design for Mobile Devices */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 7vw;
-      }
-
-      h2 {
-        font-size: 5vw;
-      }
-
-      #countdown {
-        gap: 50px; /* Decrease gap for smaller devices */
-      }
-
-      .time-section .number {
-        font-size: 8vw; /* Slightly smaller on mobile */
-      }
-
-      .time-section .label {
-        font-size: 3vw;
-      }
-
-      #logo {
-        width: 210px; /* Adjust logo size */
-      }
+    /* Footer Styles */
+    footer {
+      font-family: 'Cardo', serif;
+      font-size: 14px;
+      color: #8B0000;
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px 0;
+      background-color: #f7f7f7;
+    }
+    footer a {
+      color: #8B0000;
+      text-decoration: none;
     }
 
-    /* Mobile Adjustments for Smaller Devices */
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 8vw;
-      }
-
-      h2 {
-        font-size: 6vw;
-      }
-
-      #countdown {
-        gap: 15px; /* Decrease gap further for very small screens */
-      }
-
-      .time-section .number {
-        font-size: 9vw;
-      }
-
-      .time-section .label {
-        font-size: 4vw;
-      }
-
-      #logo {
-        width: 180px; /* Adjust logo size */
-      }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
   <!-- Your Logo (replace with your actual logo file path) -->
-  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
+  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo" style="width: 200px; height: auto; margin-bottom: 20px;">
 
   <h1>MATT SCIANNA</h1>
   <h2>FOOTBALL JERSEYS</h2>
@@ -199,6 +157,11 @@
     // Update countdown every second (1000 ms)
     setInterval(updateCountdown, 1000);
   </script>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Matt Scianna ©. All rights reserved. | <a href="/terms">Terms & Conditions</a> | <a href="/privacy">Privacy Policy</a></p>
+  </footer>
 
 </body>
 </html>

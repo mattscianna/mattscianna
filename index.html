@@ -173,7 +173,7 @@
   <!-- SMS Form -->
   <div class="form-container">
     <form id="my-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
-      <h2>GET THE LATEST UPDATES ON UPCOMING RELEASES.</h2>
+      <h2>SIGN UP TO GET THE LATEST UPDATES.</h2>
       <input type="text" name="name" id="name" placeholder="Name" required>
       <input type="email" name="email" id="email" placeholder="Email" required>
       <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
@@ -191,7 +191,7 @@
       <a href="https://www.instagram.com/mattsciannany" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/93118C82-5960-4879-B385-C883ADCF1D2B.png?raw=true" alt="Instagram">
       </a>
-      <a href="https://www.tiktok.com/@mattsciananny" target="_blank">
+      <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/ABF0364A-5BD6-4A48-A967-96C288578371.png?raw=true" alt="TikTok">
       </a>
     </div>
@@ -223,12 +223,12 @@
             if (Object.hasOwn(data, 'errors')) {
               status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
             } else {
-              status.innerHTML = "Oops! There was a problem submitting your form"
+              status.innerHTML = "There was a problem submitting your form."
             }
           })
         }
       }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
+        status.innerHTML = "There was a problem submitting your form."
       });
     }
 

@@ -30,12 +30,12 @@
       margin: 0;
       text-transform: uppercase;
       text-align: center;
-      padding: 0 20px; /* Added padding for better spacing */
+      padding: 0 20px;
     }
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 4vw; /* Make the font size responsive */
+      font-size: 4vw; /* Adjusted for a better fit */
       margin-bottom: 10px;
     }
 
@@ -57,7 +57,9 @@
       gap: 30px;
       justify-content: center;
       margin-top: 20px;
-      flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+      flex-wrap: wrap; /* Allow wrapping, but elements should be aligned on the same line */
+      justify-content: space-evenly;
+      align-items: center; /* Vertically center the timer */
     }
 
     .time-section {
@@ -67,13 +69,13 @@
     }
 
     .time-section .number {
-      font-size: 8vw; /* Make the timer numbers scale with screen size */
+      font-size: 5vw; /* Adjusted for better fit on mobile */
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     .time-section .label {
-      font-size: 2vw; /* Adjust label font size */
+      font-size: 2vw;
       letter-spacing: 1px;
       margin-top: 5px;
     }
@@ -81,36 +83,36 @@
     /* Mobile adjustments */
     @media (max-width: 768px) {
       h1 {
-        font-size: 6vw;
+        font-size: 8vw;
       }
       h2 {
-        font-size: 7vw;
+        font-size: 10vw;
       }
 
       .time-section .number {
-        font-size: 10vw; /* Adjust number size for mobile */
+        font-size: 12vw; /* Large enough for readability */
       }
 
       .time-section .label {
-        font-size: 3vw;
+        font-size: 4vw;
       }
     }
 
     /* Extra small screen adjustments (e.g., phones in portrait mode) */
     @media (max-width: 480px) {
       h1 {
-        font-size: 8vw;
+        font-size: 10vw;
       }
       h2 {
-        font-size: 9vw;
-      }
-
-      .time-section .number {
         font-size: 12vw;
       }
 
+      .time-section .number {
+        font-size: 14vw; /* Large enough for readability */
+      }
+
       .time-section .label {
-        font-size: 4vw;
+        font-size: 5vw;
       }
     }
 

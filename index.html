@@ -145,6 +145,11 @@
       .footer-text {
         font-size: 14px;
       }
+
+      /* Smaller font size for mobile success message */
+      #status-message {
+        font-size: 16px;
+      }
     }
 
     /* Status message styling */
@@ -168,7 +173,7 @@
   <!-- SMS Form -->
   <div class="form-container">
     <form id="my-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
-      <h2>SIGN UP TO GET NOTIFIED OF UPCOMING RELEASES.</h2>
+      <h2>GET THE LATEST UPDATES ON UPCOMING RELEASES.</h2>
       <input type="text" name="name" id="name" placeholder="Name" required>
       <input type="email" name="email" id="email" placeholder="Email" required>
       <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
@@ -218,12 +223,12 @@
             if (Object.hasOwn(data, 'errors')) {
               status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
             } else {
-              status.innerHTML = "There was a problem submitting your form."
+              status.innerHTML = "Oops! There was a problem submitting your form"
             }
           })
         }
       }).catch(error => {
-        status.innerHTML = "There was a problem submitting your form."
+        status.innerHTML = "Oops! There was a problem submitting your form"
       });
     }
 

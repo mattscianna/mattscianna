@@ -169,12 +169,13 @@
 
   <!-- SMS Form -->
   <div class="form-container">
-    <form id="sms-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
+    <form id="my-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
       <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
       <input type="text" name="name" id="name" placeholder="Name" required>
       <input type="email" name="email" id="email" placeholder="Email" required>
       <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
-      <button type="submit">NOTIFY ME</button>
+      <button type="submit" id="my-form-button">NOTIFY ME</button>
+      <p id="my-form-status"></p>
     </form>
     <!-- Success Message -->
     <div id="success-message" class="success-message">Thank you for signing up! We will notify you when the drop happens.</div>
@@ -194,28 +195,41 @@
   </footer>
 
   <script>
-    // Handle the form submission
-    document.getElementById("sms-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent default form submission
+    // Handle the form submission via AJAX to stay on the page
+    var form = document.getElementById("my-form");
 
-      // Use Formspree's API to handle submission
-      fetch("https://formspree.io/f/mvonybwr", {
-        method: "POST",
-        body: new FormData(this),
-      })
-      .then(response => {
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var status = document.getElementById("my-form-status");
+      var data = new FormData(event.target);
+      
+      // Send form data to Formspree via Fetch API (AJAX)
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
         if (response.ok) {
-          document.getElementById("sms-form").reset();  // Reset form fields
+          status.innerHTML = "Thanks for your submission!";
+          form.reset();  // Reset the form after success
           document.getElementById("success-message").style.display = "block"; // Show success message
         } else {
-          alert("There was an error with the submission. Please try again.");
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+            } else {
+              status.innerHTML = "Oops! There was a problem submitting your form"
+            }
+          })
         }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("There was an error with the submission. Please try again.");
+      }).catch(error => {
+        status.innerHTML = "Oops! There was a problem submitting your form"
       });
-    });
+    }
+
+    form.addEventListener("submit", handleSubmit);
   </script>
 
 </body>

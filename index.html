@@ -27,7 +27,7 @@
 
     h1 {
       font-family: 'Cardo', serif;
-      font-size: 48px;
+      font-size: 36px; /* Reduced size for mobile compatibility */
       margin-bottom: 10px;
     }
 
@@ -123,20 +123,44 @@
     .social-icons img:hover {
       transform: scale(1.1);
     }
+
+    /* Adjusting responsiveness for mobile */
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 28px; /* Smaller size for mobile */
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      #logo {
+        width: 150px; /* Adjusted logo size for mobile */
+      }
+
+      .form-container {
+        width: 90%;
+        max-width: 300px; /* Adjust form size */
+      }
+
+      .footer-text {
+        font-size: 14px; /* Smaller footer text for mobile */
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- Logo -->
-  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
+  <img id="logo" src="https://github.com/mattscianna/mattscianna/blob/Main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" alt="Matt Scianna Logo">
 
   <h1>MATT SCIANNA</h1>
   <h2>COMING SOON</h2>
 
   <!-- SMS Form -->
   <div class="form-container">
-    <form action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST" class="notify-form">
-      <h2>SIGN UP FOR 10% YOUR FIRST ORDER</h2>
+    <form action="https://formsubmit.co/matthewjets@icloud.com" method="POST" class="notify-form">
+      <h2>SIGN UP FOR 10% OFF YOUR FIRST ORDER.</h2>
       <input type="text" name="name" placeholder="Name" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="tel" name="phone" placeholder="Phone Number" required>
@@ -151,7 +175,7 @@
       <a href="https://www.instagram.com/mattsciannany" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/6E28D2AD-2C95-4CDB-B305-129399199A32.png?raw=true" alt="Instagram">
       </a>
-      <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
+      <a href="https://www.tiktok.com/@mattsciananny" target="_blank">
         <img src="https://github.com/mattscianna/mattscianna/blob/main/72B6FE7C-B07D-4701-BDDA-F002443A82E6.png?raw=true" alt="TikTok">
       </a>
     </div>

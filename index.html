@@ -147,8 +147,8 @@
       }
     }
 
-    /* Success message */
-    .success-message {
+    /* Status message styling */
+    .status-message {
       display: none;
       background-color: #28a745;
       color: white;
@@ -177,8 +177,8 @@
       <button type="submit" id="my-form-button">NOTIFY ME</button>
       <p id="my-form-status"></p>
     </form>
-    <!-- Success Message -->
-    <div id="success-message" class="success-message">Thank you for signing up! We will notify you when the drop happens.</div>
+    <!-- Success message will show after form submission -->
+    <div id="status-message" class="status-message">THANKS FOR YOUR SUBMISSION! WE WILL NOTIFY YOU OF UPCOMING RELEASES.</div>
   </div>
 
   <!-- Footer -->
@@ -212,9 +212,9 @@
         }
       }).then(response => {
         if (response.ok) {
-          status.innerHTML = "Thanks for your submission!";
+          status.innerHTML = "";  // Clear any previous status message
           form.reset();  // Reset the form after success
-          document.getElementById("success-message").style.display = "block"; // Show success message
+          document.getElementById("status-message").style.display = "block"; // Show success message
         } else {
           response.json().then(data => {
             if (Object.hasOwn(data, 'errors')) {

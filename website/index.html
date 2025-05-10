@@ -1,48 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Website</title>
+
+  <!-- Google Font: Cardo -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
+      font-family: 'Cardo', serif;
       background-color: white;
-      font-family: 'Graduate', sans-serif;
     }
 
-    .sliding-bar {
-      width: 100%;
-      background-color: #8B0000; /* Dark red */
+    .slider-container {
+      position: relative;
       overflow: hidden;
       white-space: nowrap;
-      box-sizing: border-box;
+      background-color: white;
+      height: 60px;
+      display: flex;
+      align-items: center;
     }
 
-    .sliding-text {
+    .slider-track {
       display: inline-block;
-      padding-left: 100%;
-      animation: slide 20s linear infinite;
-      color: white;
-      font-size: 16px;
-      letter-spacing: 2px;
+      white-space: nowrap;
+      animation: scroll-left 25s linear infinite;
     }
 
-    @keyframes slide {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+    .slider-track span {
+      display: inline-block;
+      font-size: 24px;
+      color: black;
+      padding: 0 60px;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .fade-left, .fade-right {
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .fade-left {
+      left: 0;
+      background: linear-gradient(to right, white, transparent);
+    }
+
+    .fade-right {
+      right: 0;
+      background: linear-gradient(to left, white, transparent);
     }
   </style>
 </head>
 <body>
 
-  <!-- Sliding Text Bar -->
-  <div class="sliding-bar">
-    <div class="sliding-text">
-      <span>NOW ACCEPTING EMAIL SIGNUPS • FOOTBALL JERSEYS OUT NOW • STAY TUNED • </span>
-      <span>NOW ACCEPTING EMAIL SIGNUPS • FOOTBALL JERSEYS OUT NOW • STAY TUNED • </span>
+  <div class="slider-container">
+    <div class="fade-left"></div>
+    <div class="slider-track">
+      <span>New collection launching soon</span>
+      <span>•</span>
+      <span>Sign up for exclusive updates</span>
+      <span>•</span>
+      <span>Follow @mattsciannany on socials</span>
+      <span>•</span>
+      <span>Spring 2025 — Stay tuned</span>
+      <span>•</span>
+
+      <!-- Repeat to ensure smooth looping -->
+      <span>FOOTBALL JERSEYS OUT NOW</span>
+      <span>•</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>•</span>
+      <span>FOOTBALL JERSEYS OUT NOW</span>
+      <span>•</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>•</span>
     </div>
+    <div class="fade-right"></div>
   </div>
 
 </body>

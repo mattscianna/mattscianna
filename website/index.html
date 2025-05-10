@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
+  <title>Infinite Marquee</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
   <style>
     body {
@@ -23,8 +23,8 @@
 
     .marquee {
       display: flex;
+      animation: scroll 25s linear infinite;
       width: max-content;
-      animation: scroll 15s linear infinite;
     }
 
     .marquee-content {
@@ -42,7 +42,7 @@
     .dot {
       width: 6px;
       height: 6px;
-      background-color: #999;
+      background-color: #aaa;
       border-radius: 50%;
       margin: 0 20px;
     }
@@ -68,10 +68,10 @@
     }
 
     @keyframes scroll {
-      from {
-        transform: translateX(0);
+      0% {
+        transform: translateX(0%);
       }
-      to {
+      100% {
         transform: translateX(-50%);
       }
     }
@@ -82,8 +82,8 @@
   <div class="marquee-wrapper">
     <div class="fade-left"></div>
     <div class="fade-right"></div>
-    <div class="marquee" id="marquee">
-      <div class="marquee-content" id="content">
+    <div class="marquee">
+      <div class="marquee-content">
         <span>FOOTBALL JERSEYS OUT NOW.</span>
         <div class="dot"></div>
         <span>FREE SHIPPING ON ORDERS $100+</span>
@@ -91,17 +91,21 @@
         <span>BASED IN NEW YORK.</span>
         <div class="dot"></div>
         <span>NEXT DAY SHIPPING.</span>
+        <div class="dot"></div>
+      </div>
+      <!-- Duplicate for infinite seamless loop -->
+      <div class="marquee-content" aria-hidden="true">
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <div class="dot"></div>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <div class="dot"></div>
+        <span>BASED IN NEW YORK.</span>
+        <div class="dot"></div>
+        <span>NEXT DAY SHIPPING.</span>
+        <div class="dot"></div>
       </div>
     </div>
   </div>
-
-  <script>
-    // Clone marquee content to enable infinite scroll
-    const marquee = document.getElementById('marquee');
-    const content = document.getElementById('content');
-    const clone = content.cloneNode(true);
-    marquee.appendChild(clone);
-  </script>
 
 </body>
 </html>

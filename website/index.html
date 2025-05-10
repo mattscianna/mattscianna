@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,46 +13,22 @@
     }
 
     body {
-      background-color: #ffffff;
       font-family: 'Graduate', sans-serif;
+      background-color: white;
     }
 
     .marquee-wrapper {
       position: relative;
-      height: 70px;
+      width: 100%;
       overflow: hidden;
       background-color: white;
+      height: 70px;
     }
 
-    .marquee-track {
-      display: flex;
-      white-space: nowrap;
-      animation: scroll 20s linear infinite;
-      font-size: 22px;
-      text-transform: uppercase;
-      color: black;
-      gap: 80px;
-    }
-
-    .marquee-track span {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      padding: 0 10px;
-    }
-
-    .marquee-track span::after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      background-color: black;
-      border-radius: 50%;
-    }
-
-    .fade {
+    .fade-left, .fade-right {
       position: absolute;
       top: 0;
-      width: 150px;
+      width: 120px;
       height: 100%;
       z-index: 2;
       pointer-events: none;
@@ -60,12 +36,40 @@
 
     .fade-left {
       left: 0;
-      background: linear-gradient(to right, white 0%, transparent 100%);
+      background: linear-gradient(to right, white, transparent);
     }
 
     .fade-right {
       right: 0;
-      background: linear-gradient(to left, white 0%, transparent 100%);
+      background: linear-gradient(to left, white, transparent);
+    }
+
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: scroll 20s linear infinite;
+    }
+
+    .marquee-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .message {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 22px;
+      text-transform: uppercase;
+      color: black;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: black;
+      border-radius: 50%;
     }
 
     @keyframes scroll {
@@ -81,26 +85,24 @@
 <body>
 
   <div class="marquee-wrapper">
-    <div class="fade fade-left"></div>
-    <div class="fade fade-right"></div>
+    <div class="fade-left"></div>
+    <div class="fade-right"></div>
 
     <div class="marquee-track">
-      <!-- Duplicated content TWICE for seamless loop -->
-      <span>FOOTBALL JERSEYS OUT NOW.</span>
-      <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>NEXT DAY SHIPPING.</span>
+      <!-- One long strip duplicated twice -->
+      <div class="marquee-content">
+        <div class="message">FOOTBALL JERSEYS OUT NOW.<div class="dot"></div></div>
+        <div class="message">FREE SHIPPING ON ORDERS $100+<div class="dot"></div></div>
+        <div class="message">BASED IN NEW YORK.<div class="dot"></div></div>
+        <div class="message">NEXT DAY SHIPPING.<div class="dot"></div></div>
+      </div>
 
-      <span>FOOTBALL JERSEYS OUT NOW.</span>
-      <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>NEXT DAY SHIPPING.</span>
-
-      <!-- Add more copies if needed -->
-      <span>FOOTBALL JERSEYS OUT NOW.</span>
-      <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>NEXT DAY SHIPPING.</span>
+      <div class="marquee-content">
+        <div class="message">FOOTBALL JERSEYS OUT NOW.<div class="dot"></div></div>
+        <div class="message">FREE SHIPPING ON ORDERS $100+<div class="dot"></div></div>
+        <div class="message">BASED IN NEW YORK.<div class="dot"></div></div>
+        <div class="message">NEXT DAY SHIPPING.<div class="dot"></div></div>
+      </div>
     </div>
   </div>
 

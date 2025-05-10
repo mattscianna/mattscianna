@@ -6,106 +6,88 @@
   <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      background-color: white;
+      margin: 0;
+      background: white;
       font-family: 'Graduate', sans-serif;
     }
 
     .marquee-container {
-      position: relative;
-      overflow: hidden;
       width: 100%;
+      overflow: hidden;
+      background: white;
       height: 60px;
-      background-color: white;
-    }
-
-    .marquee-fade {
-      position: absolute;
-      top: 0;
-      width: 100px;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .marquee-fade.left {
-      left: 0;
-      background: linear-gradient(to right, white, transparent);
-    }
-
-    .marquee-fade.right {
-      right: 0;
-      background: linear-gradient(to left, white, transparent);
+      position: relative;
     }
 
     .marquee-track {
       display: flex;
-      animation: scroll 30s linear infinite;
-      width: max-content;
+      animation: scroll 20s linear infinite;
+      white-space: nowrap;
     }
 
     .marquee-content {
       display: flex;
-      gap: 60px;
-      align-items: center;
-      padding-left: 100%;
+      gap: 80px;
+      padding-right: 100px;
     }
 
     .message {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 22px;
+      font-size: 20px;
       color: black;
       text-transform: uppercase;
-      white-space: nowrap;
+      gap: 10px;
     }
 
     .dot {
-      width: 6px;
-      height: 6px;
-      background-color: #888;
+      width: 5px;
+      height: 5px;
+      background-color: #aaa;
       border-radius: 50%;
-      flex-shrink: 0;
+    }
+
+    .fade-left,
+    .fade-right {
+      position: absolute;
+      top: 0;
+      width: 60px;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .fade-left {
+      left: 0;
+      background: linear-gradient(to right, white, transparent);
+    }
+
+    .fade-right {
+      right: 0;
+      background: linear-gradient(to left, white, transparent);
     }
 
     @keyframes scroll {
-      0% {
-        transform: translateX(0%);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .message {
-        font-size: 18px;
-      }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
   </style>
 </head>
 <body>
 
 <div class="marquee-container">
-  <div class="marquee-fade left"></div>
-  <div class="marquee-fade right"></div>
+  <div class="fade-left"></div>
+  <div class="fade-right"></div>
 
   <div class="marquee-track">
-    <!-- DUPLICATED content for seamless loop -->
     <div class="marquee-content">
       <div class="message">FOOTBALL JERSEYS OUT NOW. <div class="dot"></div></div>
       <div class="message">FREE SHIPPING ON ORDERS $100+ <div class="dot"></div></div>
       <div class="message">BASED IN NEW YORK. <div class="dot"></div></div>
       <div class="message">NEXT DAY SHIPPING. <div class="dot"></div></div>
     </div>
-
+    <!-- Duplicate for infinite loop -->
     <div class="marquee-content">
       <div class="message">FOOTBALL JERSEYS OUT NOW. <div class="dot"></div></div>
       <div class="message">FREE SHIPPING ON ORDERS $100+ <div class="dot"></div></div>

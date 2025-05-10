@@ -3,52 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+    <title>Matt Scianna</title>
   <style>
     body {
       margin: 0;
-      background: white;
+      background-color: white;
       font-family: 'Graduate', sans-serif;
+      overflow-x: hidden;
     }
 
-    .marquee-container {
+    .marquee-wrapper {
       position: relative;
       width: 100%;
-      height: 60px;
       overflow: hidden;
-      background: white;
+      background-color: white;
+      height: 50px;
     }
 
-    .marquee-track {
+    .marquee {
       display: flex;
       white-space: nowrap;
-      animation: scroll linear infinite;
+      animation: scroll 15s linear infinite;
+      font-size: 20px;
+      align-items: center;
+      height: 100%;
     }
 
-    .message {
-      display: inline-flex;
+    .marquee span {
+      margin: 0 40px;
+      display: flex;
       align-items: center;
-      font-size: 20px;
-      color: black;
-      text-transform: uppercase;
-      padding: 0 40px;
     }
 
     .dot {
-      display: inline-block;
-      margin-left: 10px;
-      margin-right: 10px;
-      width: 5px;
-      height: 5px;
+      margin: 0 20px;
+      width: 6px;
+      height: 6px;
       background-color: #aaa;
       border-radius: 50%;
+      display: inline-block;
     }
 
-    .fade-left, .fade-right {
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .fade-left,
+    .fade-right {
       position: absolute;
       top: 0;
-      width: 80px;
+      width: 40px; /* fade starts sooner */
       height: 100%;
       z-index: 1;
       pointer-events: none;
@@ -64,173 +73,34 @@
       background: linear-gradient(to left, white, transparent);
     }
 
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-  </style>
-</head>
-<body>
-
-<div class="marquee-container">
-  <div class="fade-left"></div>
-  <div class="fade-right"></div>
-  <div id="marquee" class="marquee-track"></div>
-</div>
-
-<script>
-  const messages = [
-    "FOOTBALL JERSEYS OUT NOW",
-    "FREE SHIPPING ON ORDERS $100+",
-    "BASED IN NEW YORK",
-    "NEXT DAY SHIPPING"
-  ];
-
-  const marquee = document.getElementById("marquee");
-
-  function buildContent() {
-    const createSegment = () => {
-      return messages.map(msg => {
-        return `<span class="message">${msg}<span class="dot"></span></span>`;
-      }).join('');
-    };
-
-    // Create two identical segments for seamless looping
-    marquee.innerHTML = createSegment() + createSegment();
-
-    // Set animation duration based on width
-    requestAnimationFrame(() => {
-      const contentWidth = marquee.offsetWidth / 2;
-      const speed = 100; // pixels per second
-      const duration = contentWidth / speed;
-      marquee.style.animationDuration = `${duration}s`;
-    });
-  }
-
-  buildContent();
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seamless Infinite Marquee</title>
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      background: white;
-      font-family: 'Graduate', sans-serif;
-    }
-
-    .marquee-container {
-      position: relative;
-      width: 100%;
-      height: 60px;
-      overflow: hidden;
-      background: white;
-    }
-
-    .marquee-track {
-      display: flex;
-      white-space: nowrap;
-      animation: scroll linear infinite;
-    }
-
-    .message {
+    .marquee-content {
       display: inline-flex;
-      align-items: center;
-      font-size: 20px;
-      color: black;
-      text-transform: uppercase;
-      padding: 0 40px;
-    }
-
-    .dot {
-      display: inline-block;
-      margin-left: 10px;
-      margin-right: 10px;
-      width: 5px;
-      height: 5px;
-      background-color: #aaa;
-      border-radius: 50%;
-    }
-
-    .fade-left, .fade-right {
-      position: absolute;
-      top: 0;
-      width: 80px;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .fade-left {
-      left: 0;
-      background: linear-gradient(to right, white, transparent);
-    }
-
-    .fade-right {
-      right: 0;
-      background: linear-gradient(to left, white, transparent);
-    }
-
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
     }
   </style>
 </head>
 <body>
-
-<div class="marquee-container">
-  <div class="fade-left"></div>
-  <div class="fade-right"></div>
-  <div id="marquee" class="marquee-track"></div>
-</div>
-
-<script>
-  const messages = [
-    "FOOTBALL JERSEYS OUT NOW.",
-    "FREE SHIPPING ON ORDERS $100+",
-    "BASED IN NEW YORK.",
-    "NEXT DAY SHIPPING."
-  ];
-
-  const marquee = document.getElementById("marquee");
-
-  function buildContent() {
-    const createSegment = () => {
-      return messages.map(msg => {
-        return `<span class="message">${msg}<span class="dot"></span></span>`;
-      }).join('');
-    };
-
-    // Create two identical segments for seamless looping
-    marquee.innerHTML = createSegment() + createSegment();
-
-    // Set animation duration based on width
-    requestAnimationFrame(() => {
-      const contentWidth = marquee.offsetWidth / 2;
-      const speed = 100; // pixels per second
-      const duration = contentWidth / speed;
-      marquee.style.animationDuration = `${duration}s`;
-    });
-  }
-
-  buildContent();
-</script>
-
+  <div class="marquee-wrapper">
+    <div class="fade-left"></div>
+    <div class="fade-right"></div>
+    <div class="marquee">
+      <div class="marquee-content">
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <span class="dot"></span>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <span class="dot"></span>
+        <span>BASED IN NEW YORK.</span>
+        <span class="dot"></span>
+        <span>NEXT DAY SHIPPING.</span>
+        <!-- Duplicate for seamless scroll -->
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <span class="dot"></span>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <span class="dot"></span>
+        <span>BASED IN NEW YORK.</span>
+        <span class="dot"></span>
+        <span>NEXT DAY SHIPPING.</span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

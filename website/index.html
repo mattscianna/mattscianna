@@ -13,98 +13,107 @@
     }
 
     body {
+      background-color: white;
       font-family: 'Graduate', sans-serif;
-      background-color: white;
     }
 
-    .marquee-wrapper {
+    .marquee-container {
       position: relative;
-      width: 100%;
       overflow: hidden;
+      width: 100%;
+      height: 60px;
       background-color: white;
-      height: 70px;
     }
 
-    .fade-left, .fade-right {
+    .marquee-fade {
       position: absolute;
       top: 0;
-      width: 120px;
+      width: 100px;
       height: 100%;
       z-index: 2;
       pointer-events: none;
     }
 
-    .fade-left {
+    .marquee-fade.left {
       left: 0;
       background: linear-gradient(to right, white, transparent);
     }
 
-    .fade-right {
+    .marquee-fade.right {
       right: 0;
       background: linear-gradient(to left, white, transparent);
     }
 
     .marquee-track {
       display: flex;
-      white-space: nowrap;
-      animation: scroll 20s linear infinite;
+      animation: scroll 30s linear infinite;
+      width: max-content;
     }
 
     .marquee-content {
       display: flex;
-      align-items: center;
       gap: 60px;
+      align-items: center;
+      padding-left: 100%;
     }
 
     .message {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       font-size: 22px;
-      text-transform: uppercase;
       color: black;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .dot {
-      width: 8px;
-      height: 8px;
-      background-color: black;
+      width: 6px;
+      height: 6px;
+      background-color: #888;
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
     @keyframes scroll {
       0% {
-        transform: translateX(0);
+        transform: translateX(0%);
       }
       100% {
         transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .message {
+        font-size: 18px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="marquee-wrapper">
-    <div class="fade-left"></div>
-    <div class="fade-right"></div>
+<div class="marquee-container">
+  <div class="marquee-fade left"></div>
+  <div class="marquee-fade right"></div>
 
-    <div class="marquee-track">
-      <!-- One long strip duplicated twice -->
-      <div class="marquee-content">
-        <div class="message">FOOTBALL JERSEYS OUT NOW.<div class="dot"></div></div>
-        <div class="message">FREE SHIPPING ON ORDERS $100+<div class="dot"></div></div>
-        <div class="message">BASED IN NEW YORK.<div class="dot"></div></div>
-        <div class="message">NEXT DAY SHIPPING.<div class="dot"></div></div>
-      </div>
+  <div class="marquee-track">
+    <!-- DUPLICATED content for seamless loop -->
+    <div class="marquee-content">
+      <div class="message">FOOTBALL JERSEYS OUT NOW. <div class="dot"></div></div>
+      <div class="message">FREE SHIPPING ON ORDERS $100+ <div class="dot"></div></div>
+      <div class="message">BASED IN NEW YORK. <div class="dot"></div></div>
+      <div class="message">NEXT DAY SHIPPING. <div class="dot"></div></div>
+    </div>
 
-      <div class="marquee-content">
-        <div class="message">FOOTBALL JERSEYS OUT NOW.<div class="dot"></div></div>
-        <div class="message">FREE SHIPPING ON ORDERS $100+<div class="dot"></div></div>
-        <div class="message">BASED IN NEW YORK.<div class="dot"></div></div>
-        <div class="message">NEXT DAY SHIPPING.<div class="dot"></div></div>
-      </div>
+    <div class="marquee-content">
+      <div class="message">FOOTBALL JERSEYS OUT NOW. <div class="dot"></div></div>
+      <div class="message">FREE SHIPPING ON ORDERS $100+ <div class="dot"></div></div>
+      <div class="message">BASED IN NEW YORK. <div class="dot"></div></div>
+      <div class="message">NEXT DAY SHIPPING. <div class="dot"></div></div>
     </div>
   </div>
+</div>
 
 </body>
 </html>

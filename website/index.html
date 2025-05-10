@@ -39,10 +39,10 @@
       background: linear-gradient(to left, white, transparent);
     }
 
-    .scroll-content {
+    .scroll-wrapper {
       display: flex;
       white-space: nowrap;
-      animation: scroll linear infinite;
+      animation: scroll 20s linear infinite;
     }
 
     .scroll-text {
@@ -50,16 +50,19 @@
       align-items: center;
       font-size: 18px;
       color: black;
-      margin-right: 2rem;
     }
 
     .dot {
       width: 6px;
       height: 6px;
-      background-color: #999;
+      background-color: #888;
       border-radius: 50%;
-      margin: 0 1.2rem;
-      display: inline-block;
+      margin: 0 1rem;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     @media (max-width: 600px) {
@@ -73,7 +76,7 @@
   <div class="scroll-container">
     <div class="fade left"></div>
     <div class="fade right"></div>
-    <div id="scroll-wrapper" class="scroll-content"></div>
+    <div id="scroll-wrapper" class="scroll-wrapper"></div>
   </div>
 
   <script>
@@ -86,40 +89,30 @@
 
     const wrapper = document.getElementById("scroll-wrapper");
 
-    // Create two identical sequences
     function createSequence() {
       const fragment = document.createDocumentFragment();
-      for (const text of messages) {
-        const span = document.createElement("span");
-        span.className = "scroll-text";
-        span.textContent = text;
+      for (let i = 0; i < messages.length; i++) {
+        const textSpan = document.createElement("span");
+        textSpan.className = "scroll-text";
+        textSpan.textContent = messages[i];
+        fragment.appendChild(textSpan);
 
-        const dot = document.createElement("span");
-        dot.className = "dot";
-
-        fragment.appendChild(span);
-        fragment.appendChild(dot);
+        if (i !== messages.length - 1) {
+          const dot = document.createElement("span");
+          dot.className = "dot";
+          fragment.appendChild(dot);
+        }
       }
       return fragment;
     }
 
-    wrapper.appendChild(createSequence());
-    wrapper.appendChild(createSequence());
-
-    // Once loaded, set animation duration based on content width
-    window.onload = () => {
-      const contentWidth = wrapper.scrollWidth / 2; // width of one full loop
-      wrapper.style.animationDuration = `${contentWidth / 50}s`; // adjust speed
-      wrapper.style.animationName = "scroll";
-      wrapper.style.animationTimingFunction = "linear";
-    };
-  </script>
-
-  <style>
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    // Append enough content to make it look like it repeats forever
+    for (let i = 0; i < 10; i++) {
+      wrapper.appendChild(createSequence());
+      const spacer = document.createElement("span");
+      spacer.style.width = "2rem";
+      wrapper.appendChild(spacer);
     }
-  </style>
+  </script>
 </body>
 </html>

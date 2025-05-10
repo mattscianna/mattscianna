@@ -19,7 +19,7 @@
 
     .marquee-wrapper {
       position: relative;
-      height: 60px;
+      height: 70px;
       overflow: hidden;
       background-color: white;
     }
@@ -27,23 +27,24 @@
     .marquee {
       display: flex;
       white-space: nowrap;
-      animation: scroll 15s linear infinite; /* Faster scroll */
-      font-size: 20px;
+      animation: scroll 12s linear infinite;
+      font-size: 22px;
       text-transform: uppercase;
       color: black;
-      gap: 60px;
+      gap: 80px;
     }
 
     .marquee span {
       display: flex;
       align-items: center;
-      gap: 20px; /* Adds space between text and dot */
+      gap: 30px; /* More space between text and dot */
+      padding: 0 10px;
     }
 
     .marquee span::after {
       content: '';
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background-color: black;
       border-radius: 50%;
     }
@@ -55,7 +56,7 @@
     .fade {
       position: absolute;
       top: 0;
-      width: 100px;
+      width: 150px; /* Wider fade */
       height: 100%;
       z-index: 2;
       pointer-events: none;
@@ -95,6 +96,10 @@
         <span>NEXT DAY SHIPPING.</span>
 
         <!-- Duplicated for seamless loop -->
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <span>BASED IN NEW YORK.</span>
+        <span>NEXT DAY SHIPPING.</span>
         <span>FOOTBALL JERSEYS OUT NOW.</span>
         <span>FREE SHIPPING ON ORDERS $100+</span>
         <span>BASED IN NEW YORK.</span>

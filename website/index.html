@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matt Scianna</title>
+  <title>Infinite Marquee</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -17,29 +17,21 @@
       font-family: 'Graduate', sans-serif;
     }
 
-    .marquee-container {
+    .marquee-wrapper {
+      position: relative;
+      height: 60px;
       overflow: hidden;
-      white-space: nowrap;
       background-color: white;
-      height: 50px;
-      display: flex;
-      align-items: center;
     }
 
     .marquee {
-      display: inline-block;
+      display: flex;
       white-space: nowrap;
-      animation: scroll-left 20s linear infinite;
-      font-family: 'Graduate', sans-serif;
-      font-size: 18px;
+      animation: scroll 30s linear infinite;
+      font-size: 20px;
       text-transform: uppercase;
       color: black;
-    }
-
-    .marquee span {
-      display: inline-block;
-      padding: 0 40px;
-      position: relative;
+      gap: 60px;
     }
 
     .marquee span::after {
@@ -50,39 +42,60 @@
       background-color: black;
       border-radius: 50%;
       margin-left: 40px;
-      position: relative;
-      top: -1px;
     }
 
-    @keyframes scroll-left {
-      0% {
+    .marquee-inner {
+      display: flex;
+    }
+
+    .fade {
+      position: absolute;
+      top: 0;
+      width: 100px;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .fade-left {
+      left: 0;
+      background: linear-gradient(to right, white 0%, transparent 100%);
+    }
+
+    .fade-right {
+      right: 0;
+      background: linear-gradient(to left, white 0%, transparent 100%);
+    }
+
+    @keyframes scroll {
+      from {
         transform: translateX(0%);
       }
-      100% {
+      to {
         transform: translateX(-50%);
       }
-    }
-
-    .marquee-duplicator {
-      display: flex;
-      width: fit-content;
     }
   </style>
 </head>
 <body>
 
-  <div class="marquee-container">
-    <div class="marquee marquee-duplicator">
-      <span>FOOTBALL JERSEYS OUT NOW.</span>
-      <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK. ©</span>
-      <span>NEXT DAY SHIPPING.</span>
+  <div class="marquee-wrapper">
+    <div class="fade fade-left"></div>
+    <div class="fade fade-right"></div>
 
-      <!-- Duplicate for seamless scroll -->
-      <span>FOOTBALL JERSEYS OUT NOW.</span>
-      <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK. ©</span>
-      <span>NEXT DAY SHIPPING.</span>
+    <div class="marquee">
+      <div class="marquee-inner">
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <span>BASED IN NEW YORK.</span>
+        <span>NEXT DAY SHIPPING.</span>
+
+        <!-- Duplicated for seamless loop -->
+        <span>FOOTBALL JERSEYS OUT NOW.</span>
+        <span>FREE SHIPPING ON ORDERS $100+</span>
+        <span>BASED IN NEW YORK.</span>
+        <span>NEXT DAY SHIPPING.</span>
+      </div>
     </div>
   </div>
 

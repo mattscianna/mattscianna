@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Website</title>
+  <title>Matt Scianna</title>
 
-  <!-- Google Font: Cardo -->
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+  <!-- Graduate Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      font-family: 'Cardo', serif;
       background-color: white;
+      font-family: 'Graduate', sans-serif;
     }
 
     .slider-container {
@@ -28,14 +28,15 @@
     .slider-track {
       display: inline-block;
       white-space: nowrap;
-      animation: scroll-left 25s linear infinite;
+      animation: scroll-left 20s linear infinite;
     }
 
     .slider-track span {
       display: inline-block;
       font-size: 24px;
       color: black;
-      padding: 0 60px;
+      padding: 0 40px;
+      letter-spacing: 1.5px;
     }
 
     @keyframes scroll-left {
@@ -47,10 +48,11 @@
       }
     }
 
-    .fade-left, .fade-right {
+    .fade-left,
+    .fade-right {
       position: absolute;
       top: 0;
-      width: 80px;
+      width: 50px;
       height: 100%;
       z-index: 2;
     }
@@ -71,20 +73,11 @@
   <div class="slider-container">
     <div class="fade-left"></div>
     <div class="slider-track">
-      <span>New collection launching soon</span>
-      <span>•</span>
-      <span>Sign up for exclusive updates</span>
-      <span>•</span>
-      <span>Follow @mattsciannany on socials</span>
-      <span>•</span>
-      <span>Spring 2025 — Stay tuned</span>
-      <span>•</span>
-
-      <!-- Repeat to ensure smooth looping -->
       <span>FOOTBALL JERSEYS OUT NOW</span>
       <span>•</span>
       <span>BASED IN NEW YORK.</span>
       <span>•</span>
+      <!-- Repeat for seamless loop -->
       <span>FOOTBALL JERSEYS OUT NOW</span>
       <span>•</span>
       <span>BASED IN NEW YORK.</span>

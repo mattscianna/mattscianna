@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scrolling Banner</title>
+  <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -21,8 +21,6 @@
       overflow: hidden;
       white-space: nowrap;
       background-color: white;
-      border-bottom: 2px solid #000;
-      position: relative;
       height: 50px;
       display: flex;
       align-items: center;
@@ -33,15 +31,14 @@
       white-space: nowrap;
       animation: scroll-left 20s linear infinite;
       font-family: 'Graduate', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      color: black;
     }
 
     .marquee span {
       display: inline-block;
       padding: 0 40px;
-      font-size: 18px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: black;
       position: relative;
     }
 
@@ -55,10 +52,6 @@
       margin-left: 40px;
       position: relative;
       top: -1px;
-    }
-
-    .copyright {
-      font-family: Arial, sans-serif;
     }
 
     @keyframes scroll-left {
@@ -82,13 +75,13 @@
     <div class="marquee marquee-duplicator">
       <span>FOOTBALL JERSEYS OUT NOW.</span>
       <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK. <span class="copyright">©</span></span>
+      <span>BASED IN NEW YORK. ©</span>
       <span>NEXT DAY SHIPPING.</span>
 
-      <!-- duplicate for seamless loop -->
+      <!-- Duplicate for seamless scroll -->
       <span>FOOTBALL JERSEYS OUT NOW.</span>
       <span>FREE SHIPPING ON ORDERS $100+</span>
-      <span>BASED IN NEW YORK. <span class="copyright">©</span></span>
+      <span>BASED IN NEW YORK. ©</span>
       <span>NEXT DAY SHIPPING.</span>
     </div>
   </div>

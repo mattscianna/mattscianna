@@ -2,94 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
-
-  <!-- Graduate Font -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scrolling Banner</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
-      background-color: white;
-      font-family: 'Graduate', sans-serif;
+      padding: 0;
     }
 
-    .slider-container {
-      position: relative;
+    .scroll-container {
+      font-family: 'Graduate', sans-serif;
+      background: white;
       overflow: hidden;
       white-space: nowrap;
-      background-color: white;
-      height: 60px;
+      position: relative;
+      height: 40px;
       display: flex;
       align-items: center;
-    }
-
-    .slider-track {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scroll-left 30s linear infinite;
-    }
-
-    .slider-track span {
-      display: inline-block;
-      font-size: 24px;
+      text-transform: uppercase;
+      font-size: 16px;
       color: black;
-      padding: 0 30px;
-      letter-spacing: 1px;
     }
 
-    @keyframes scroll-left {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
+    .scroll-content {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 20s linear infinite;
     }
 
-    .fade-left,
-    .fade-right {
+    .scroll-content span {
+      margin-right: 40px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: black;
+      border-radius: 50%;
+      margin: 0 20px;
+    }
+
+    .fade-left, .fade-right {
       position: absolute;
       top: 0;
-      width: 50px;
+      width: 60px;
       height: 100%;
-      z-index: 2;
-    }
-
-    .fade-left {
-      left: 0;
       background: linear-gradient(to right, white, transparent);
+      z-index: 2;
     }
 
     .fade-right {
       right: 0;
       background: linear-gradient(to left, white, transparent);
     }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media screen and (max-width: 600px) {
+      .scroll-container {
+        font-size: 14px;
+        height: 36px;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        margin: 0 15px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="slider-container">
+  <div class="scroll-container">
     <div class="fade-left"></div>
-    <div class="slider-track">
-      <!-- Repeated enough times for seamless scrolling -->
-      <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>&#9679;</span> <!-- Unicode bullet circle -->
-      <span>BASED IN NEW YORK.</span>
-      <span>&#9679;</span>
-      <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>&#9679;</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>&#9679;</span>
-      <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>&#9679;</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>&#9679;</span>
-      <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>&#9679;</span>
-      <span>BASED IN NEW YORK.</span>
-      <span>&#9679;</span>
+    <div class="scroll-content">
+      <span>FOOTBALL JERSEYS OUT NOW.</span><span class="dot"></span>
+      <span>FREE SHIPPING ON ORDERS $100+</span><span class="dot"></span>
+      <span>BASED IN NEW YORK. ©</span><span class="dot"></span>
+      <span>NEXT DAY SHIPPING</span><span class="dot"></span>
     </div>
     <div class="fade-right"></div>
   </div>

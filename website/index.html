@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
+  <title>Infinite Scrolling Banner</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
       background-color: white;
       font-family: 'Graduate', sans-serif;
+      text-align: center;
     }
 
     .scroll-container {
@@ -19,6 +20,7 @@
       height: 50px;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     .fade {
@@ -72,6 +74,17 @@
         font-size: 14px;
       }
     }
+
+    /* Logo styles */
+    .logo-container {
+      margin-top: 40px;
+    }
+
+    .logo-container img {
+      width: 200px;
+      max-width: 80%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -79,6 +92,11 @@
     <div class="fade left"></div>
     <div class="fade right"></div>
     <div id="scroll-wrapper" class="scroll-wrapper"></div>
+  </div>
+
+  <!-- LOGO IMAGE BELOW -->
+  <div class="logo-container">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Logo" />
   </div>
 
   <script>
@@ -99,7 +117,6 @@
         textSpan.textContent = messages[i];
         fragment.appendChild(textSpan);
 
-        // Always add a dot after each message (including the last one)
         const dot = document.createElement("span");
         dot.className = "dot";
         fragment.appendChild(dot);
@@ -107,7 +124,6 @@
       return fragment;
     }
 
-    // Duplicate content several times to simulate infinite scroll
     for (let i = 0; i < 10; i++) {
       wrapper.appendChild(createSequence());
     }

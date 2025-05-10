@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infinite Marquee</title>
+  <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -27,21 +27,25 @@
     .marquee {
       display: flex;
       white-space: nowrap;
-      animation: scroll 30s linear infinite;
+      animation: scroll 15s linear infinite; /* Faster scroll */
       font-size: 20px;
       text-transform: uppercase;
       color: black;
       gap: 60px;
     }
 
+    .marquee span {
+      display: flex;
+      align-items: center;
+      gap: 20px; /* Adds space between text and dot */
+    }
+
     .marquee span::after {
       content: '';
-      display: inline-block;
       width: 8px;
       height: 8px;
       background-color: black;
       border-radius: 50%;
-      margin-left: 40px;
     }
 
     .marquee-inner {

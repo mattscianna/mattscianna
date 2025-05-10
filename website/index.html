@@ -24,24 +24,24 @@
       background-color: white;
     }
 
-    .marquee {
+    .marquee-track {
       display: flex;
       white-space: nowrap;
-      animation: scroll 15s linear infinite;
+      animation: scroll 20s linear infinite;
       font-size: 22px;
       text-transform: uppercase;
       color: black;
       gap: 80px;
     }
 
-    .marquee span {
+    .marquee-track span {
       display: flex;
       align-items: center;
       gap: 30px;
       padding: 0 10px;
     }
 
-    .marquee span::after {
+    .marquee-track span::after {
       content: '';
       width: 10px;
       height: 10px;
@@ -68,14 +68,9 @@
       background: linear-gradient(to left, white 0%, transparent 100%);
     }
 
-    .marquee-track {
-      display: flex;
-      width: max-content;
-    }
-
     @keyframes scroll {
       0% {
-        transform: translateX(0%);
+        transform: translateX(0);
       }
       100% {
         transform: translateX(-50%);
@@ -88,20 +83,24 @@
   <div class="marquee-wrapper">
     <div class="fade fade-left"></div>
     <div class="fade fade-right"></div>
-    
-    <div class="marquee">
-      <div class="marquee-track">
-        <!-- First set of messages -->
-        <span>FOOTBALL JERSEYS OUT NOW.</span>
-        <span>FREE SHIPPING ON ORDERS $100+</span>
-        <span>BASED IN NEW YORK.</span>
-        <span>NEXT DAY SHIPPING.</span>
-        <!-- Duplicate to ensure seamless loop -->
-        <span>FOOTBALL JERSEYS OUT NOW.</span>
-        <span>FREE SHIPPING ON ORDERS $100+</span>
-        <span>BASED IN NEW YORK.</span>
-        <span>NEXT DAY SHIPPING.</span>
-      </div>
+
+    <div class="marquee-track">
+      <!-- Duplicated content TWICE for seamless loop -->
+      <span>FOOTBALL JERSEYS OUT NOW.</span>
+      <span>FREE SHIPPING ON ORDERS $100+</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>NEXT DAY SHIPPING.</span>
+
+      <span>FOOTBALL JERSEYS OUT NOW.</span>
+      <span>FREE SHIPPING ON ORDERS $100+</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>NEXT DAY SHIPPING.</span>
+
+      <!-- Add more copies if needed -->
+      <span>FOOTBALL JERSEYS OUT NOW.</span>
+      <span>FREE SHIPPING ON ORDERS $100+</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>NEXT DAY SHIPPING.</span>
     </div>
   </div>
 

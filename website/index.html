@@ -17,20 +17,40 @@
     .scroll-container {
       position: relative;
       overflow: hidden;
-      white-space: nowrap;
       height: 50px;
       background-color: white;
     }
 
     .scroll-content {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scroll 20s linear infinite;
+      display: flex;
+      width: max-content;
+      animation: scroll 25s linear infinite;
     }
 
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    .scroll-track {
+      display: inline-flex;
+      white-space: nowrap;
+    }
+
+    .scroll-text {
+      display: inline-block;
+      font-size: 20px;
+      color: black;
+      margin: 0 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      margin: 0 20px;
+      font-size: 16px;
+      color: #aaa;
+      position: relative;
+      top: -2px;
     }
 
     .fade {
@@ -52,27 +72,12 @@
       background: linear-gradient(to left, white 0%, transparent 100%);
     }
 
-    .scroll-text {
-      display: inline-block;
-      font-size: 20px;
-      color: black;
-    }
-
-    .dot {
-      display: inline-block;
-      margin: 0 20px;
-      font-size: 16px;
-      color: #aaa;
-      position: relative;
-      top: -2px;
-    }
-
     .logo-container {
-      margin-top: 30px;
+      margin-top: 15px;
     }
 
     .logo-container img {
-      width: 180px;
+      width: 220px;
       cursor: pointer;
     }
   </style>
@@ -83,23 +88,27 @@
     <div class="fade fade-left"></div>
     <div class="fade fade-right"></div>
     <div class="scroll-content">
-      <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">BASED IN NEW YORK.</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">NEXT DAY SHIPPING.</span>
-      <span class="dot">•</span>
-      <!-- Repeat for seamless scrolling -->
-      <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">BASED IN NEW YORK</span>
-      <span class="dot">•</span>
-      <span class="scroll-text">NEXT DAY SHIPPING.</span>
-      <span class="dot">•</span>
+      <div class="scroll-track">
+        <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">BASED IN NEW YORK.</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">NEXT DAY SHIPPING.</span>
+        <span class="dot">•</span>
+      </div>
+      <!-- Duplicate once for seamless infinite scroll -->
+      <div class="scroll-track">
+        <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">BASED IN NEW YORK.</span>
+        <span class="dot">•</span>
+        <span class="scroll-text">NEXT DAY SHIPPING.</span>
+        <span class="dot">•</span>
+      </div>
     </div>
   </div>
 

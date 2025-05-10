@@ -42,7 +42,8 @@
     .scroll-wrapper {
       display: flex;
       white-space: nowrap;
-      animation: scroll 20s linear infinite;
+      animation: scroll 35s linear infinite;
+      align-items: center;
     }
 
     .scroll-text {
@@ -55,9 +56,10 @@
     .dot {
       width: 6px;
       height: 6px;
-      background-color: #888;
+      background-color: #aaa;
       border-radius: 50%;
-      margin: 0 1rem;
+      margin: 0 1.2rem;
+      align-self: center;
     }
 
     @keyframes scroll {
@@ -97,21 +99,17 @@
         textSpan.textContent = messages[i];
         fragment.appendChild(textSpan);
 
-        if (i !== messages.length - 1) {
-          const dot = document.createElement("span");
-          dot.className = "dot";
-          fragment.appendChild(dot);
-        }
+        // Always add a dot after each message (including the last one)
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        fragment.appendChild(dot);
       }
       return fragment;
     }
 
-    // Append enough content to make it look like it repeats forever
+    // Duplicate content several times to simulate infinite scroll
     for (let i = 0; i < 10; i++) {
       wrapper.appendChild(createSequence());
-      const spacer = document.createElement("span");
-      spacer.style.width = "2rem";
-      wrapper.appendChild(spacer);
     }
   </script>
 </body>

@@ -28,15 +28,15 @@
     .slider-track {
       display: inline-block;
       white-space: nowrap;
-      animation: scroll-left 20s linear infinite;
+      animation: scroll-left 30s linear infinite;
     }
 
     .slider-track span {
       display: inline-block;
       font-size: 24px;
       color: black;
-      padding: 0 40px;
-      letter-spacing: 1.5px;
+      padding: 0 30px;
+      letter-spacing: 1px;
     }
 
     @keyframes scroll-left {
@@ -73,15 +73,23 @@
   <div class="slider-container">
     <div class="fade-left"></div>
     <div class="slider-track">
+      <!-- Repeated enough times for seamless scrolling -->
       <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>•</span>
+      <span>&#9679;</span> <!-- Unicode bullet circle -->
       <span>BASED IN NEW YORK.</span>
-      <span>•</span>
-      <!-- Repeat for seamless loop -->
+      <span>&#9679;</span>
       <span>FOOTBALL JERSEYS OUT NOW</span>
-      <span>•</span>
+      <span>&#9679;</span>
       <span>BASED IN NEW YORK.</span>
-      <span>•</span>
+      <span>&#9679;</span>
+      <span>FOOTBALL JERSEYS OUT NOW</span>
+      <span>&#9679;</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>&#9679;</span>
+      <span>FOOTBALL JERSEYS OUT NOW</span>
+      <span>&#9679;</span>
+      <span>BASED IN NEW YORK.</span>
+      <span>&#9679;</span>
     </div>
     <div class="fade-right"></div>
   </div>

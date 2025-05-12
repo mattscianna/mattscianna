@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
   <style>
     body {
@@ -12,24 +12,96 @@
       font-family: sans-serif;
     }
 
-    .logo-container {
+    .top-container {
       width: 100%;
-      text-align: center;
-      margin-top: 20px; /* Slightly lower than before */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative;
     }
 
-    .logo-container img {
+    .logo-container {
+      text-align: center;
+    }
+
+    https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true {
       width: 300px;
       max-width: 90%;
       height: auto;
+    }
+
+    .menu-icon {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    https://static.thenounproject.com/png/4238597-200.png {
+      width: 100%;
+      height: 100%;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #f4f4f4;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      transition: left 0.3s ease;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .side-menu.open {
+      left: 0;
+    }
+
+    .side-menu ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .side-menu ul li {
+      margin: 20px 0;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
 
-  <div class="logo-container">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo">
+  <!-- Side Menu -->
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li>Home</li>
+      <li>Shop</li>
+      <li>About</li>
+      <li>Contact</li>
+    </ul>
   </div>
+
+  <!-- Top Section with Logo and Menu Icon -->
+  <div class="top-container">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <img src="menu-icon.png" alt="Menu Icon" />
+    </div>
+    <div class="logo-container">
+      <img src="your-logo.png" alt="Matt Scianna Logo" />
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('sideMenu');
+      menu.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

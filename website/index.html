@@ -4,32 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background-color: white;
       font-family: 'Cardo', serif;
+      background-color: white;
     }
 
-    .top-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
+    .header {
       position: relative;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .logo-container img {
-      width: 220px;
-      height: auto;
+    .logo {
+      margin-top: 20px;
+      height: 60px;
+      cursor: pointer;
     }
 
     .menu-icon {
       position: absolute;
-      left: calc(25% - 20px); /* roughly halfway between left and logo */
+      left: 40px;
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
@@ -37,67 +35,43 @@
       cursor: pointer;
     }
 
-    .menu-icon img {
-      width: 100%;
-      height: auto;
-    }
-
-    .side-menu {
+    .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
       width: 250px;
       height: 100%;
-      background-color: #ffffff;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.3s ease;
-      padding: 40px 20px;
-      z-index: 1000;
+      background-color: white;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+      z-index: 1000;
     }
 
-    .side-menu.open {
+    .sidebar.open {
       left: 0;
-    }
-
-    .side-menu ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .side-menu ul li {
-      margin: 25px 0;
-      font-size: 18px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Side Menu -->
-  <div class="side-menu" id="sideMenu">
-    <ul>
-      <li>Home</li>
-      <li>Shop</li>
-      <li>About</li>
-      <li>Contact</li>
-    </ul>
+  <div class="header">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
   </div>
 
-  <!-- Top Section -->
-  <div class="top-container">
-    <div class="menu-icon" onclick="toggleMenu()">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" />
-    </div>
-    <div class="logo-container">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" />
-    </div>
+  <div id="sidebar" class="sidebar">
+    <p>Home</p>
+    <p>Shop</p>
+    <p>Contact</p>
+    <p>About</p>
   </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById('sideMenu').classList.toggle('open');
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
     }
   </script>
 

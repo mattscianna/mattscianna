@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: white;
-      font-family: sans-serif;
+      font-family: 'Cardo', serif;
     }
 
     .top-container {
@@ -25,25 +26,24 @@
       text-align: center;
     }
 
-    https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true {
-      width: 300px;
-      max-width: 90%;
+    .logo-container img {
+      width: 220px;  /* the size you were happy with earlier */
       height: auto;
     }
 
     .menu-icon {
       position: absolute;
-      left: 30px;
+      right: calc(50% + 150px); /* near logo */
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
+      width: 220px; /* same as logo box */
+      height: auto;
       cursor: pointer;
     }
 
-    https://static.thenounproject.com/png/4238597-200.png {
+    .menu-icon img {
       width: 100%;
-      height: 100%;
+      height: auto;
     }
 
     .side-menu {
@@ -52,11 +52,13 @@
       left: -250px;
       width: 250px;
       height: 100%;
-      background-color: #f4f4f4;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      background-color: #ffffff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
       transition: left 0.3s ease;
-      padding: 20px;
+      padding: 40px 20px;
       z-index: 1000;
+      font-family: 'Cardo', serif;
+      text-transform: uppercase;
     }
 
     .side-menu.open {
@@ -66,10 +68,11 @@
     .side-menu ul {
       list-style-type: none;
       padding: 0;
+      margin: 0;
     }
 
     .side-menu ul li {
-      margin: 20px 0;
+      margin: 25px 0;
       font-size: 18px;
     }
   </style>
@@ -86,7 +89,7 @@
     </ul>
   </div>
 
-  <!-- Top Section with Logo and Menu Icon -->
+  <!-- Top Section -->
   <div class="top-container">
     <div class="menu-icon" onclick="toggleMenu()">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" />
@@ -98,8 +101,7 @@
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('sideMenu');
-      menu.classList.toggle('open');
+      document.getElementById('sideMenu').classList.toggle('open');
     }
   </script>
 

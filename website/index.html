@@ -4,118 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: white;
-      font-family: 'Graduate', sans-serif;
-      text-align: center;
-    }
-
-    .scroll-container {
-      position: relative;
-      overflow: hidden;
-      height: 50px;
-      background-color: white;
-    }
-
-    .scroll-content {
       display: flex;
-      width: max-content;
-      animation: scroll 25s linear infinite;
-    }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .scroll-track {
-      display: inline-flex;
-      white-space: nowrap;
-    }
-
-    .scroll-text {
-      display: inline-block;
-      font-size: 20px;
-      color: black;
-      margin: 0 10px;
-      line-height: 50px;
-    }
-
-    .dot {
-      display: inline-block;
-      margin: 0 20px;
-      font-size: 18px;
-      color: #aaa;
-      vertical-align: middle;
-      line-height: 50px;
-    }
-
-    .fade {
-      position: absolute;
-      top: 0;
-      width: 80px;
-      height: 100%;
-      background: white;
-      z-index: 2;
-    }
-
-    .fade-left {
-      left: 0;
-      background: linear-gradient(to right, white 0%, transparent 100%);
-    }
-
-    .fade-right {
-      right: 0;
-      background: linear-gradient(to left, white 0%, transparent 100%);
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      font-family: sans-serif;
     }
 
     .logo-container {
-      margin-top: 10px;
+      margin-top: 40px;
     }
 
     .logo-container img {
-      width: 220px;
-      cursor: pointer;
+      width: 250px;
+      max-width: 90%;
     }
   </style>
 </head>
 <body>
 
-  <div class="scroll-container">
-    <div class="fade fade-left"></div>
-    <div class="fade fade-right"></div>
-    <div class="scroll-content">
-      <div class="scroll-track">
-        <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">BASED IN NEW YORK.</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">NEXT DAY SHIPPING.</span>
-        <span class="dot">•</span>
-      </div>
-      <div class="scroll-track">
-        <span class="scroll-text">FOOTBALL JERSEYS OUT NOW.</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">FREE SHIPPING ON ORDERS $100+</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">BASED IN NEW YORK.</span>
-        <span class="dot">•</span>
-        <span class="scroll-text">NEXT DAY SHIPPING.</span>
-        <span class="dot">•</span>
-      </div>
-    </div>
-  </div>
-
   <div class="logo-container">
-    <a href="">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Logo" />
-    </a>
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo">
   </div>
 
 </body>

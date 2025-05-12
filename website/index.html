@@ -21,13 +21,13 @@
 
     .logo {
       margin-top: 20px;
-      height: 60px;
+      height: 80px; /* original size you liked */
       cursor: pointer;
     }
 
     .menu-icon {
       position: absolute;
-      left: 40px;
+      left: 100px; /* moved more to the right */
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
@@ -53,9 +53,26 @@
     .sidebar.open {
       left: 0;
     }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.1);
+      display: none;
+      z-index: 999;
+    }
+
+    .overlay.show {
+      display: block;
+    }
   </style>
 </head>
 <body>
+
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
@@ -71,7 +88,15 @@
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
     }
   </script>
 

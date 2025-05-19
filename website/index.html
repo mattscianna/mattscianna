@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
 
@@ -20,7 +13,6 @@
       margin: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow-x: hidden;
     }
 
     .header {
@@ -32,7 +24,8 @@
     }
 
     .logo {
-      height: 50px; /* Smaller logo */
+      margin-top: 20px;
+      height: 60px;
       cursor: pointer;
     }
 
@@ -41,9 +34,40 @@
       left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      width: 35px;
+      width: 40px;
       height: auto;
       cursor: pointer;
+    }
+
+    .cart-container {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .cart-icon {
+      width: 100%;
+      height: auto;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background-color: #8B0000;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .sidebar {
@@ -85,12 +109,24 @@
     /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 40px;
+        height: 45px;
+        margin-top: 10px;
       }
 
       .menu-icon {
-        width: 28px;
+        width: 32px;
         left: 16px;
+      }
+
+      .cart-container {
+        width: 32px;
+        right: 16px;
+      }
+
+      .cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
       }
 
       .header {
@@ -104,8 +140,17 @@
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
+    <!-- Menu Icon -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
+
+    <!-- Logo -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+
+    <!-- Cart Icon -->
+    <div class="cart-container" onclick="incrementCart()">
+      <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart Icon" class="cart-icon" />
+      <span class="cart-count" id="cart-count">0</span>
+    </div>
   </div>
 
   <div id="sidebar" class="sidebar">
@@ -126,6 +171,14 @@
     function closeSidebar() {
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('show');
+    }
+
+    // Example cart update logic
+    let cartItemCount = 0;
+
+    function incrementCart() {
+      cartItemCount++;
+      document.getElementById('cart-count').textContent = cartItemCount;
     }
   </script>
 

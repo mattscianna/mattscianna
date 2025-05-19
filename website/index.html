@@ -24,7 +24,8 @@
     }
 
     .logo {
-      height: 45px;
+      margin-top: 20px;
+      height: 45px; /* smaller size for better alignment */
       cursor: pointer;
     }
 
@@ -45,18 +46,22 @@
       transform: translateY(-50%);
       width: 40px;
       height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
     }
 
     .cart-icon {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
     }
 
     .cart-count {
       position: absolute;
-      top: -6px;
-      right: -6px;
+      top: -5px;
+      right: -5px;
       background-color: #8B0000;
       color: white;
       font-size: 12px;
@@ -68,6 +73,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      pointer-events: none; /* disables clicks on the number */
     }
 
     .sidebar {
@@ -109,7 +115,8 @@
     /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 35px;
+        height: 32px;
+        margin-top: 10px;
       }
 
       .menu-icon {
@@ -128,6 +135,8 @@
         width: 16px;
         height: 16px;
         font-size: 10px;
+        top: -4px;
+        right: -4px;
       }
 
       .header {
@@ -141,14 +150,10 @@
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
-    <!-- Menu Icon -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
-
-    <!-- Logo -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-
-    <!-- Cart Icon -->
-    <div class="cart-container">
+    
+    <div class="cart-container" title="Shopping Cart">
       <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart Icon" class="cart-icon" />
       <span class="cart-count" id="cart-count">0</span>
     </div>
@@ -174,8 +179,7 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // Optional: update cart count via backend or elsewhere if needed
-    // Example: document.getElementById('cart-count').textContent = 3;
+    // Cart count does not increment on click, so no event here
   </script>
 
 </body>

@@ -48,6 +48,9 @@
       cursor: pointer;
       width: 40px;
       height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .cart-icon {
@@ -85,7 +88,7 @@
       background-color: white;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
-      padding: 60px 20px 20px 20px; /* top padding for X button space */
+      padding: 80px 20px 20px 20px; /* top padding to make room for close btn */
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
       transition: left 0.15s ease; /* faster transition */
       z-index: 1000;
@@ -100,19 +103,20 @@
     /* X Close button container on sidebar */
     .sidebar-close-container {
       position: absolute;
-      top: 50%;
+      top: 20px; /* near top, above Home */
       left: 20px;
-      transform: translateY(-50%);
       width: 40px;
       height: 40px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .sidebar-close {
       width: 24px;  /* Smaller than menu icon */
       height: auto;
       display: block;
-      margin: 0 auto;
     }
 
     .overlay {
@@ -156,6 +160,7 @@
         width: 32px;
         height: 32px;
         left: 16px;
+        top: 16px;
       }
 
       .sidebar-close {

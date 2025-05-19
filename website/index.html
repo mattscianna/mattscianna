@@ -24,61 +24,47 @@
     }
 
     .logo {
-      height: 45px;
-      cursor: pointer;
-    }
-
-    .menu-icon,
-    .cart-container {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-top: 20px;
+      height: 60px;
       cursor: pointer;
     }
 
     .menu-icon {
+      position: absolute;
       left: 20px;
-    }
-
-    .cart-container {
-      right: 20px;
-      width: 36px;
-      height: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
     }
 
     .cart-icon {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
     }
 
     .cart-count {
       position: absolute;
-      top: -5px;
-      right: -5px;
-      background-color: #8B0000;
+      top: 8px;
+      right: 18px;
+      background: red;
       color: white;
-      font-size: 12px;
-      font-weight: bold;
       font-family: sans-serif;
+      font-size: 12px;
+      padding: 2px 6px;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: 0;
+      left: -100%;
       width: 250px;
       height: 100%;
       background-color: white;
@@ -86,16 +72,17 @@
       text-transform: uppercase;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transform: translateX(-100%);
-      transition: transform 0.25s ease-out;
+      transition: left 0.25s ease-out;
       z-index: 1000;
+      visibility: hidden;
     }
 
     .sidebar.open {
-      transform: translateX(0);
+      left: 0;
+      visibility: visible;
     }
 
-    .close-icon {
+    .sidebar .close-icon {
       position: absolute;
       top: 50%;
       left: 20px;
@@ -105,7 +92,7 @@
       cursor: pointer;
     }
 
-    .sidebar-content {
+    .sidebar .sidebar-content {
       margin-top: 100px;
     }
 
@@ -125,77 +112,58 @@
     }
 
     @media screen and (max-width: 600px) {
+      .logo {
+        height: 45px;
+        margin-top: 10px;
+      }
+
+      .menu-icon,
+      .cart-icon,
+      .sidebar .close-icon {
+        width: 32px;
+        height: 32px;
+        left: 16px;
+      }
+
       .header {
         height: 80px;
       }
 
-      .logo {
-        height: 32px;
-      }
-
-      .menu-icon {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-      }
-
-      .cart-container {
-        width: 30px;
-        height: 30px;
-        right: 16px;
-      }
-
       .cart-count {
-        width: 16px;
-        height: 16px;
         font-size: 10px;
-        top: -4px;
-        right: -4px;
-      }
-
-      .close-icon {
-        width: 32px;
-        height: 32px;
-        top: 50%;
-        left: 16px;
-        transform: translateY(-50%);
-      }
-
-      .sidebar-content {
-        margin-top: 80px;
+        top: 6px;
+        right: 14px;
+        padding: 2px 5px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
+  <!-- Header -->
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true"
-         alt="Menu Icon"
-         class="menu-icon"
-         onclick="toggleSidebar()" />
-
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true"
-         alt="Matt Scianna"
-         class="logo"
-         onclick="location.reload()" />
-
-    <div class="cart-container" title="Shopping Cart">
-      <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png"
-           alt="Cart Icon"
-           class="cart-icon" />
-      <span class="cart-count" id="cart-count">0</span>
+    <!-- Menu Icon -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
+    
+    <!-- Logo -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+    
+    <!-- Cart Icon -->
+    <div>
+      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart Icon" class="cart-icon" />
+      <div class="cart-count" id="cart-count">0</div>
     </div>
   </div>
 
+  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png"
-         alt="Close"
-         class="close-icon"
-         onclick="closeSidebar()" />
+    <!-- X Close Icon -->
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" alt="Close Icon" class="close-icon" onclick="closeSidebar()" />
 
+    <!-- Sidebar Content -->
     <div class="sidebar-content">
       <p>Home</p>
       <p>Shop</p>
@@ -204,6 +172,7 @@
     </div>
   </div>
 
+  <!-- Scripts -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
@@ -217,19 +186,11 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    function updateCartCount(count) {
-      const cartCount = document.getElementById('cart-count');
-      if (count > 0) {
-        cartCount.textContent = count;
-        cartCount.style.display = 'flex';
-      } else {
-        cartCount.textContent = '0';
-        cartCount.style.display = 'none';
-      }
-    }
-
-    // Initialize cart count
-    updateCartCount(0);
+    // Optional: Dynamic cart count logic (if needed in the future)
+    // const cartCount = document.getElementById('cart-count');
+    // function updateCart(count) {
+    //   cartCount.innerText = count;
+    // }
   </script>
 
 </body>

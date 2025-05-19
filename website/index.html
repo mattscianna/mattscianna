@@ -24,24 +24,13 @@
     }
 
     .logo {
-      margin-top: 20px;
-      height: 45px; /* smaller size for better alignment */
+      height: 45px;
       cursor: pointer;
     }
 
-    .menu-icon {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
+    .menu-icon,
     .cart-container {
       position: absolute;
-      right: 20px;
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
@@ -50,6 +39,14 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+    }
+
+    .menu-icon {
+      left: 20px;
+    }
+
+    .cart-container {
+      right: 20px;
     }
 
     .cart-icon {
@@ -73,7 +70,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none; /* disables clicks on the number */
+      pointer-events: none;
     }
 
     .sidebar {
@@ -112,22 +109,26 @@
       display: block;
     }
 
-    /* Responsive adjustments */
     @media screen and (max-width: 600px) {
+      .header {
+        height: 80px;
+      }
+
       .logo {
         height: 32px;
-        margin-top: 10px;
+      }
+
+      .menu-icon,
+      .cart-container {
+        width: 32px;
+        height: 32px;
       }
 
       .menu-icon {
-        width: 32px;
-        height: 32px;
         left: 16px;
       }
 
       .cart-container {
-        width: 32px;
-        height: 32px;
         right: 16px;
       }
 
@@ -138,10 +139,6 @@
         top: -4px;
         right: -4px;
       }
-
-      .header {
-        height: 80px;
-      }
     }
   </style>
 </head>
@@ -150,11 +147,23 @@
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
+    <!-- Menu Icon -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true"
+         alt="Menu Icon"
+         class="menu-icon"
+         onclick="toggleSidebar()" />
+
+    <!-- Logo -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true"
+         alt="Matt Scianna"
+         class="logo"
+         onclick="location.reload()" />
+
+    <!-- Shopping Cart -->
     <div class="cart-container" title="Shopping Cart">
-      <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart Icon" class="cart-icon" />
+      <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png"
+           alt="Cart Icon"
+           class="cart-icon" />
       <span class="cart-count" id="cart-count">0</span>
     </div>
   </div>
@@ -179,7 +188,7 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // Cart count does not increment on click, so no event here
+    // You can update cart-count dynamically here when needed
   </script>
 
 </body>

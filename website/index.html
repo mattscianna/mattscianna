@@ -47,6 +47,8 @@
 
     .cart-container {
       right: 20px;
+      width: 36px; /* Slightly smaller cart */
+      height: 36px;
     }
 
     .cart-icon {
@@ -94,6 +96,19 @@
       visibility: visible;
     }
 
+    .sidebar .close-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .sidebar-content {
+      margin-top: 80px; /* Space below the X icon */
+    }
+
     .overlay {
       position: fixed;
       top: 0;
@@ -118,17 +133,15 @@
         height: 32px;
       }
 
-      .menu-icon,
-      .cart-container {
+      .menu-icon {
         width: 32px;
         height: 32px;
-      }
-
-      .menu-icon {
         left: 16px;
       }
 
       .cart-container {
+        width: 30px;
+        height: 30px;
         right: 16px;
       }
 
@@ -138,6 +151,17 @@
         font-size: 10px;
         top: -4px;
         right: -4px;
+      }
+
+      .sidebar .close-icon {
+        width: 32px;
+        height: 32px;
+        top: 16px;
+        left: 16px;
+      }
+
+      .sidebar-content {
+        margin-top: 70px;
       }
     }
   </style>
@@ -168,11 +192,21 @@
     </div>
   </div>
 
+  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <p>Home</p>
-    <p>Shop</p>
-    <p>Contact</p>
-    <p>About</p>
+    <!-- Close Icon -->
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png"
+         alt="Close"
+         class="close-icon"
+         onclick="closeSidebar()" />
+
+    <!-- Sidebar Content -->
+    <div class="sidebar-content">
+      <p>Home</p>
+      <p>Shop</p>
+      <p>Contact</p>
+      <p>About</p>
+    </div>
   </div>
 
   <script>
@@ -188,7 +222,7 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // You can update cart-count dynamically here when needed
+    // Optional: Dynamically update cart count here later
   </script>
 
 </body>

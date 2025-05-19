@@ -47,7 +47,7 @@
 
     .cart-container {
       right: 20px;
-      width: 36px; /* Slightly smaller cart */
+      width: 36px;
       height: 36px;
     }
 
@@ -69,7 +69,7 @@
       border-radius: 50%;
       width: 18px;
       height: 18px;
-      display: flex;
+      display: none; /* HIDDEN INITIALLY */
       align-items: center;
       justify-content: center;
       pointer-events: none;
@@ -98,15 +98,16 @@
 
     .sidebar .close-icon {
       position: absolute;
-      top: 20px;
+      top: 50%;
       left: 20px;
       width: 40px;
       height: 40px;
+      transform: translateY(-50%);
       cursor: pointer;
     }
 
     .sidebar-content {
-      margin-top: 80px; /* Space below the X icon */
+      margin-top: 100px;
     }
 
     .overlay {
@@ -156,12 +157,13 @@
       .sidebar .close-icon {
         width: 32px;
         height: 32px;
-        top: 16px;
+        top: 50%;
         left: 16px;
+        transform: translateY(-50%);
       }
 
       .sidebar-content {
-        margin-top: 70px;
+        margin-top: 80px;
       }
     }
   </style>
@@ -194,7 +196,7 @@
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <!-- Close Icon -->
+    <!-- Close Icon (X) -->
     <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png"
          alt="Close"
          class="close-icon"
@@ -222,7 +224,19 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // Optional: Dynamically update cart count here later
+    function updateCartCount(count) {
+      const cartCount = document.getElementById('cart-count');
+      if (count > 0) {
+        cartCount.textContent = count;
+        cartCount.style.display = 'flex';
+      } else {
+        cartCount.textContent = '0';
+        cartCount.style.display = 'none';
+      }
+    }
+
+    // Initialize cart count to 0 (hidden)
+    updateCartCount(0);
   </script>
 
 </body>

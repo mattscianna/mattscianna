@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" type="image/png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -11,30 +19,33 @@
       background-color: white;
     }
 
+    /* Header Layout */
     .header {
-      position: relative;
-      height: 100px;
       display: flex;
-      align-items: center;
       justify-content: center;
-    }
-
-    .logo {
-      margin-top: 20px;
-      height: 40px; /* smaller logo */
-      cursor: pointer;
+      align-items: center;
+      height: 80px;
+      position: relative;
+      background-color: white;
+      padding: 0 20px;
     }
 
     .menu-icon {
       position: absolute;
-      left: 120px; /* moved more to the right */
+      left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
+      width: 35px;
       height: auto;
       cursor: pointer;
     }
 
+    .logo {
+      height: 40px;
+      cursor: pointer;
+    }
+
+    /* Sidebar Styles */
     .sidebar {
       position: fixed;
       top: 0;
@@ -68,17 +79,36 @@
     .overlay.show {
       display: block;
     }
+
+    /* Responsive Tweaks for Mobile */
+    @media screen and (max-width: 600px) {
+      .header {
+        height: 70px;
+        padding: 0 15px;
+      }
+
+      .menu-icon {
+        width: 30px;
+      }
+
+      .logo {
+        height: 30px;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Overlay for sidebar -->
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
+  <!-- Header -->
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+    <img src="menu-icon.png" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
+    <img src="your-logo.png" alt="Matt Scianna" class="logo" onclick="location.reload()" />
   </div>
 
+  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
     <p>Home</p>
     <p>Shop</p>
@@ -86,6 +116,7 @@
     <p>About</p>
   </div>
 
+  <!-- Script for sidebar -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');

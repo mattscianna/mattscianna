@@ -24,8 +24,7 @@
     }
 
     .logo {
-      margin-top: 20px;
-      height: 60px;
+      height: 45px;
       cursor: pointer;
     }
 
@@ -35,7 +34,7 @@
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
-      height: auto;
+      height: 40px;
       cursor: pointer;
     }
 
@@ -62,6 +61,7 @@
       color: white;
       font-size: 12px;
       font-weight: bold;
+      font-family: sans-serif;
       border-radius: 50%;
       width: 18px;
       height: 18px;
@@ -109,17 +109,18 @@
     /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 45px;
-        margin-top: 10px;
+        height: 35px;
       }
 
       .menu-icon {
         width: 32px;
+        height: 32px;
         left: 16px;
       }
 
       .cart-container {
         width: 32px;
+        height: 32px;
         right: 16px;
       }
 
@@ -147,7 +148,7 @@
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
 
     <!-- Cart Icon -->
-    <div class="cart-container" onclick="incrementCart()">
+    <div class="cart-container">
       <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart Icon" class="cart-icon" />
       <span class="cart-count" id="cart-count">0</span>
     </div>
@@ -173,13 +174,8 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // Example cart update logic
-    let cartItemCount = 0;
-
-    function incrementCart() {
-      cartItemCount++;
-      document.getElementById('cart-count').textContent = cartItemCount;
-    }
+    // Optional: update cart count via backend or elsewhere if needed
+    // Example: document.getElementById('cart-count').textContent = 3;
   </script>
 
 </body>

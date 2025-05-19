@@ -12,10 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
 
   <style>
-    /* styles here */
-  </style>
-</head>
-  
     body {
       font-family: 'Cardo', serif;
       background-color: #ffffff;
@@ -178,69 +174,69 @@
 <h1>MATT SCIANNA</h1>
 <h2>COMING SOON</h2>
 
-  <!-- SMS Form -->
-  <div class="form-container">
-    <form id="my-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
-      <h2>SIGN UP TO GET THE LATEST UPDATES.</h2>
-      <input type="text" name="name" id="name" placeholder="Name" required>
-      <input type="email" name="email" id="email" placeholder="Email" required>
-      <button type="submit" id="my-form-button">NOTIFY ME</button>
-      <p id="my-form-status"></p>
-    </form>
-    <!-- Success message will show after form submission -->
-    <div id="status-message" class="status-message">THANKS FOR YOUR SUBMISSION!</div>
+<!-- SMS Form -->
+<div class="form-container">
+  <form id="my-form" action="https://formspree.io/f/xrbqbjpk" method="POST" class="notify-form">
+    <h2>SIGN UP TO GET THE LATEST UPDATES.</h2>
+    <input type="text" name="name" id="name" placeholder="Name" required>
+    <input type="email" name="email" id="email" placeholder="Email" required>
+    <button type="submit" id="my-form-button">NOTIFY ME</button>
+    <p id="my-form-status"></p>
+  </form>
+  <!-- Success message will show after form submission -->
+  <div id="status-message" class="status-message">THANKS FOR YOUR SUBMISSION!</div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-text">© 2025 Matt Scianna | Based in New York.</div>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/mattsciannany" target="_blank">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/93118C82-5960-4879-B385-C883ADCF1D2B.png?raw=true" alt="Instagram">
+    </a>
+    <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/ABF0364A-5BD6-4A48-A967-96C288578371.png?raw=true" alt="TikTok">
+    </a>
   </div>
+</footer>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-text">© 2025 Matt Scianna | Based in New York.</div>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/mattsciannany" target="_blank">
-        <img src="https://github.com/mattscianna/mattscianna/blob/main/93118C82-5960-4879-B385-C883ADCF1D2B.png?raw=true" alt="Instagram">
-      </a>
-      <a href="https://www.tiktok.com/@mattsciannany" target="_blank">
-        <img src="https://github.com/mattscianna/mattscianna/blob/main/ABF0364A-5BD6-4A48-A967-96C288578371.png?raw=true" alt="TikTok">
-      </a>
-    </div>
-  </footer>
+<script>
+  // Handle the form submission via AJAX to stay on the page
+  var form = document.getElementById("my-form");
 
-  <script>
-    // Handle the form submission via AJAX to stay on the page
-    var form = document.getElementById("my-form");
+  async function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(event.target);
+    
+    // Send form data to Formspree via Fetch API (AJAX)
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        status.innerHTML = "";  // Clear any previous status message
+        form.reset();  // Reset the form after success
+        document.getElementById("status-message").style.display = "block"; // Show success message
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+          } else {
+            status.innerHTML = "Oops! There was a problem submitting your form"
+          }
+        })
+      }
+    }).catch(error => {
+      status.innerHTML = "Oops! There was a problem submitting your form"
+    });
+  }
 
-    async function handleSubmit(event) {
-      event.preventDefault();
-      var status = document.getElementById("my-form-status");
-      var data = new FormData(event.target);
-      
-      // Send form data to Formspree via Fetch API (AJAX)
-      fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
-      }).then(response => {
-        if (response.ok) {
-          status.innerHTML = "";  // Clear any previous status message
-          form.reset();  // Reset the form after success
-          document.getElementById("status-message").style.display = "block"; // Show success message
-        } else {
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-            } else {
-              status.innerHTML = "Oops! There was a problem submitting your form"
-            }
-          })
-        }
-      }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
-      });
-    }
-
-    form.addEventListener("submit", handleSubmit);
-  </script>
+  form.addEventListener("submit", handleSubmit);
+</script>
 
 </body>
 </html>

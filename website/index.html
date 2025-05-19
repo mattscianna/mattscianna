@@ -25,7 +25,7 @@
 
     .logo {
       margin-top: 20px;
-      height: 60px;
+      height: 45px; /* smaller logo */
       cursor: pointer;
     }
 
@@ -35,30 +35,45 @@
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
-      height: 40px;
+      height: auto;
       cursor: pointer;
     }
 
-    .cart-icon {
+    /* Shopping Cart Container */
+    .cart-container {
       position: absolute;
       right: 20px;
       top: 50%;
       transform: translateY(-50%);
+      cursor: pointer;
       width: 40px;
       height: 40px;
-      cursor: pointer;
+    }
+
+    .cart-icon {
+      width: 36px; /* Slightly smaller than menu icon */
+      height: auto;
+      display: block;
+      position: relative;
     }
 
     .cart-count {
       position: absolute;
-      top: 8px;
-      right: 18px;
-      background: red;
+      top: -6px;
+      right: -6px;
+      background-color: #8B0000;
       color: white;
-      font-family: sans-serif;
-      font-size: 12px;
-      padding: 2px 6px;
+      font-family: Arial, sans-serif; /* standard font */
+      font-size: 14px;
+      padding: 1px 5px;
       border-radius: 50%;
+      display: none; /* Hidden initially */
+      pointer-events: none;
+      user-select: none;
+      font-weight: bold;
+      min-width: 18px;
+      text-align: center;
+      line-height: 1.2;
     }
 
     .sidebar {
@@ -70,9 +85,9 @@
       background-color: white;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
-      padding: 20px;
+      padding: 60px 20px 20px 20px; /* top padding for X button space */
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.25s ease-out;
+      transition: left 0.15s ease; /* faster transition */
       z-index: 1000;
       visibility: hidden;
     }
@@ -82,18 +97,22 @@
       visibility: visible;
     }
 
-    .sidebar .close-icon {
+    /* X Close button container on sidebar */
+    .sidebar-close-container {
       position: absolute;
       top: 50%;
       left: 20px;
+      transform: translateY(-50%);
       width: 40px;
       height: 40px;
-      transform: translateY(-50%);
       cursor: pointer;
     }
 
-    .sidebar .sidebar-content {
-      margin-top: 100px;
+    .sidebar-close {
+      width: 24px;  /* Smaller than menu icon */
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
     .overlay {
@@ -111,68 +130,67 @@
       display: block;
     }
 
+    /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 45px;
+        height: 35px;
         margin-top: 10px;
       }
 
-      .menu-icon,
-      .cart-icon,
-      .sidebar .close-icon {
+      .menu-icon {
+        width: 32px;
+        left: 16px;
+      }
+
+      .cart-container {
+        width: 32px;
+        height: 32px;
+        right: 16px;
+      }
+
+      .cart-icon {
+        width: 28px;
+      }
+
+      .sidebar-close-container {
         width: 32px;
         height: 32px;
         left: 16px;
       }
 
-      .header {
-        height: 80px;
+      .sidebar-close {
+        width: 20px;
       }
 
-      .cart-count {
-        font-size: 10px;
-        top: 6px;
-        right: 14px;
-        padding: 2px 5px;
+      .header {
+        height: 80px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-  <!-- Header -->
   <div class="header">
-    <!-- Menu Icon -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
-    
-    <!-- Logo -->
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
-    <!-- Cart Icon -->
-    <div>
-      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart Icon" class="cart-icon" />
+    <div class="cart-container" onclick="alert('Cart clicked!')">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/shopping-cart.png?raw=true" alt="Shopping Cart" class="cart-icon" />
       <div class="cart-count" id="cart-count">0</div>
     </div>
   </div>
 
-  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <!-- X Close Icon -->
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" alt="Close Icon" class="close-icon" onclick="closeSidebar()" />
-
-    <!-- Sidebar Content -->
-    <div class="sidebar-content">
-      <p>Home</p>
-      <p>Shop</p>
-      <p>Contact</p>
-      <p>About</p>
+    <div class="sidebar-close-container" onclick="closeSidebar()">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/X-icon.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
     </div>
+    <p>Home</p>
+    <p>Shop</p>
+    <p>Contact</p>
+    <p>About</p>
   </div>
 
-  <!-- Scripts -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
@@ -186,11 +204,30 @@
       document.getElementById('overlay').classList.remove('show');
     }
 
-    // Optional: Dynamic cart count logic (if needed in the future)
-    // const cartCount = document.getElementById('cart-count');
-    // function updateCart(count) {
-    //   cartCount.innerText = count;
-    // }
+    // Example cart item count updater
+    const cartCount = document.getElementById('cart-count');
+    
+    // Function to update cart count badge display & value
+    function updateCartCount(count) {
+      if(count > 0) {
+        cartCount.style.display = 'block';
+        cartCount.textContent = count;
+      } else {
+        cartCount.style.display = 'none';
+      }
+    }
+
+    // Initialize with 0 items (hidden)
+    updateCartCount(0);
+
+    // For demo: Uncomment below lines to test incrementing cart count every 3 seconds
+    /*
+    let demoCount = 0;
+    setInterval(() => {
+      demoCount = (demoCount + 1) % 6; // 0 to 5 items
+      updateCartCount(demoCount);
+    }, 3000);
+    */
   </script>
 
 </body>

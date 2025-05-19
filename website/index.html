@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
 
   <style>
@@ -25,7 +24,7 @@
 
     .logo {
       margin-top: 20px;
-      height: 60px;
+      height: 45px;
       cursor: pointer;
     }
 
@@ -39,6 +38,45 @@
       cursor: pointer;
     }
 
+    .cart-container {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cart-icon {
+      width: 36px;
+      height: auto;
+      display: block;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background-color: #8B0000;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      padding: 1px 5px;
+      border-radius: 50%;
+      display: none;
+      pointer-events: none;
+      user-select: none;
+      font-weight: bold;
+      min-width: 18px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -48,9 +86,9 @@
       background-color: white;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
-      padding: 20px;
+      padding: 100px 20px 20px 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.3s ease, visibility 0.3s ease;
+      transition: left 0.15s ease;
       z-index: 1000;
       visibility: hidden;
     }
@@ -58,6 +96,24 @@
     .sidebar.open {
       left: 0;
       visibility: visible;
+    }
+
+    .sidebar-close-container {
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar-close {
+      width: 24px;
+      height: auto;
+      display: block;
     }
 
     .overlay {
@@ -75,16 +131,36 @@
       display: block;
     }
 
-    /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 45px;
+        height: 35px;
         margin-top: 10px;
       }
 
       .menu-icon {
         width: 32px;
         left: 16px;
+      }
+
+      .cart-container {
+        width: 32px;
+        height: 32px;
+        right: 16px;
+      }
+
+      .cart-icon {
+        width: 28px;
+      }
+
+      .sidebar-close-container {
+        width: 32px;
+        height: 32px;
+        left: 16px;
+        top: 26px;
+      }
+
+      .sidebar-close {
+        width: 20px;
       }
 
       .header {
@@ -100,9 +176,17 @@
   <div class="header">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+    
+    <div class="cart-container" onclick="alert('Cart clicked!')">
+      <img src="https://img.icons8.com/ios-filled/50/000000/shopping-cart.png" alt="Shopping Cart" class="cart-icon" />
+      <div class="cart-count" id="cart-count">0</div>
+    </div>
   </div>
 
   <div id="sidebar" class="sidebar">
+    <div class="sidebar-close-container" onclick="closeSidebar()">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/X-icon.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
+    </div>
     <p>Home</p>
     <p>Shop</p>
     <p>Contact</p>
@@ -121,6 +205,19 @@
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('show');
     }
+
+    const cartCount = document.getElementById('cart-count');
+
+    function updateCartCount(count) {
+      if(count > 0) {
+        cartCount.style.display = 'block';
+        cartCount.textContent = count;
+      } else {
+        cartCount.style.display = 'none';
+      }
+    }
+
+    updateCartCount(0); // Hidden initially
   </script>
 
 </body>

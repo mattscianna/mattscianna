@@ -25,7 +25,7 @@
 
     .logo {
       margin-top: 20px;
-      height: 45px; /* smaller logo */
+      height: 60px;
       cursor: pointer;
     }
 
@@ -39,46 +39,6 @@
       cursor: pointer;
     }
 
-    /* Shopping Cart Container */
-    .cart-container {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .cart-icon {
-      width: 36px; /* Slightly smaller than menu icon */
-      height: auto;
-      display: block;
-      position: relative;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      background-color: #8B0000;
-      color: white;
-      font-family: Arial, sans-serif; /* standard font */
-      font-size: 14px;
-      padding: 1px 5px;
-      border-radius: 50%;
-      display: none; /* Hidden initially */
-      pointer-events: none;
-      user-select: none;
-      font-weight: bold;
-      min-width: 18px;
-      text-align: center;
-      line-height: 1.2;
-    }
-
     .sidebar {
       position: fixed;
       top: 0;
@@ -88,9 +48,9 @@
       background-color: white;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
-      padding: 80px 20px 20px 20px; /* top padding to make room for close btn */
+      padding: 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.15s ease; /* faster transition */
+      transition: left 0.3s ease, visibility 0.3s ease;
       z-index: 1000;
       visibility: hidden;
     }
@@ -98,25 +58,6 @@
     .sidebar.open {
       left: 0;
       visibility: visible;
-    }
-
-    /* X Close button container on sidebar */
-    .sidebar-close-container {
-      position: absolute;
-      top: 20px; /* near top, above Home */
-      left: 20px;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sidebar-close {
-      width: 24px;  /* Smaller than menu icon */
-      height: auto;
-      display: block;
     }
 
     .overlay {
@@ -137,34 +78,13 @@
     /* Responsive adjustments */
     @media screen and (max-width: 600px) {
       .logo {
-        height: 35px;
+        height: 45px;
         margin-top: 10px;
       }
 
       .menu-icon {
         width: 32px;
         left: 16px;
-      }
-
-      .cart-container {
-        width: 32px;
-        height: 32px;
-        right: 16px;
-      }
-
-      .cart-icon {
-        width: 28px;
-      }
-
-      .sidebar-close-container {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-        top: 16px;
-      }
-
-      .sidebar-close {
-        width: 20px;
       }
 
       .header {
@@ -180,16 +100,9 @@
   <div class="header">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    <div class="cart-container" onclick="alert('Cart clicked!')">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/shopping-cart.png?raw=true" alt="Shopping Cart" class="cart-icon" />
-      <div class="cart-count" id="cart-count">0</div>
-    </div>
   </div>
 
   <div id="sidebar" class="sidebar">
-    <div class="sidebar-close-container" onclick="closeSidebar()">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/X-icon.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
-    </div>
     <p>Home</p>
     <p>Shop</p>
     <p>Contact</p>
@@ -208,31 +121,6 @@
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('show');
     }
-
-    // Example cart item count updater
-    const cartCount = document.getElementById('cart-count');
-    
-    // Function to update cart count badge display & value
-    function updateCartCount(count) {
-      if(count > 0) {
-        cartCount.style.display = 'block';
-        cartCount.textContent = count;
-      } else {
-        cartCount.style.display = 'none';
-      }
-    }
-
-    // Initialize with 0 items (hidden)
-    updateCartCount(0);
-
-    // For demo: Uncomment below lines to test incrementing cart count every 3 seconds
-    /*
-    let demoCount = 0;
-    setInterval(() => {
-      demoCount = (demoCount + 1) % 6; // 0 to 5 items
-      updateCartCount(demoCount);
-    }, 3000);
-    */
   </script>
 
 </body>

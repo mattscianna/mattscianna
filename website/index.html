@@ -18,35 +18,36 @@
       background-color: white;
     }
 
+    /* HEADER */
     .header {
       position: relative;
-      height: 100px;
+      height: 90px;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* align children to top */
       justify-content: center;
-    }
-
-    .logo {
-      margin-top: 20px;
-      height: 45px;
-      cursor: pointer;
+      padding: 10px 20px; /* add space from edges and top */
+      box-sizing: border-box;
     }
 
     .menu-icon {
       position: absolute;
       left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 10px;
       width: 40px;
       height: auto;
       cursor: pointer;
     }
 
+    .logo {
+      height: 40px;  /* smaller */
+      cursor: pointer;
+      margin-top: 5px; /* closer to top */
+    }
+
     .cart-container {
       position: absolute;
       right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 10px;
       cursor: pointer;
       width: 40px;
       height: 40px;
@@ -80,94 +81,51 @@
       line-height: 1.2;
     }
 
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 250px;
-      height: 100%;
-      background-color: white;
-      font-family: 'Cardo', serif;
-      text-transform: uppercase;
-      padding: 100px 20px 20px 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.15s ease;
-      z-index: 1000;
-      visibility: hidden;
-    }
+    /* SIDEBAR & OVERLAY unchanged from your code, omitted here for brevity */
 
-    .sidebar.open {
-      left: 0;
-      visibility: visible;
-    }
-
-    .sidebar-close-container {
-      position: absolute;
-      top: 36px;
-      left: 20px;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
+    /* FULLSCREEN IMAGE BOX BELOW HEADER */
+    .hero-image-box {
+      width: 100vw;
+      height: calc(100vh - 90px); /* fill viewport below header */
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center center/cover no-repeat;
+      /* You can replace the URL above with any image you want */
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-family: 'Cardo', serif;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+      user-select: none;
     }
 
-    .sidebar-close {
-      width: 18px;
-      height: auto;
-      display: block;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0,0,0,0.1);
-      display: none;
-      z-index: 999;
-    }
-
-    .overlay.show {
-      display: block;
-    }
-
+    /* RESPONSIVE CHANGES */
     @media screen and (max-width: 600px) {
+      .header {
+        height: 70px;
+        padding: 8px 16px;
+      }
+
       .logo {
-        height: 35px;
-        margin-top: 10px;
+        height: 30px;
+        margin-top: 3px;
       }
 
       .menu-icon {
         width: 32px;
         left: 16px;
+        top: 8px;
       }
 
       .cart-container {
         width: 32px;
         height: 32px;
         right: 16px;
+        top: 8px;
       }
 
       .cart-icon {
         font-size: 24px;
-      }
-
-      .sidebar-close-container {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-        top: 30px;
-      }
-
-      .sidebar-close {
-        width: 18px;
-      }
-
-      .header {
-        height: 80px;
       }
     }
   </style>
@@ -194,6 +152,11 @@
     <p>Shop</p>
     <p>Contact</p>
     <p>About</p>
+  </div>
+
+  <!-- Full screen hero/image box below the header -->
+  <div class="hero-image-box">
+    Welcome to Matt Scianna's site
   </div>
 
   <script>

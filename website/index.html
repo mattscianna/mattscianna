@@ -36,46 +36,11 @@
 
     .menu-icon {
       width: 32px;
-      height: 24px; /* fixed height for hamburger bars */
+      height: auto;
       cursor: pointer;
       z-index: 1101;
       filter: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.4s ease;
-      /* remove img, build hamburger from div bars */
-    }
-
-    .menu-icon div {
-      background: white;
-      height: 4px;
-      border-radius: 2px;
-      transition: all 0.4s ease;
-    }
-
-    .menu-icon div:nth-child(1) {
-      width: 32px;
-    }
-    .menu-icon div:nth-child(2) {
-      width: 24px;
-      align-self: flex-end;
-    }
-    .menu-icon div:nth-child(3) {
-      width: 32px;
-    }
-
-    /* Transform hamburger to X */
-    .menu-icon.open div:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-      width: 32px;
-    }
-    .menu-icon.open div:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-icon.open div:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-      width: 32px;
+      transition: transform 0.3s ease;
     }
 
     .logo {
@@ -97,7 +62,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1101;
-      transition: transform 0.2s ease, opacity 0.3s ease;
+      transition: opacity 0.3s ease;
     }
 
     .cart-icon {
@@ -196,72 +161,7 @@
         align-items: center;
       }
 
-      /* Hide old menu icon image */
-      .menu-icon img {
-        display: none;
-      }
-
-      /* Build hamburger from 3 bars */
-      .menu-icon {
-        width: 32px;
-        height: 24px;
-        margin-top: 3px;
-        filter: brightness(0) invert(1);
-        background: none;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      .menu-icon div {
-        background: white;
-        height: 4px;
-        border-radius: 2px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .menu-icon div:nth-child(1) {
-        width: 32px;
-      }
-      .menu-icon div:nth-child(2) {
-        width: 24px;
-        align-self: flex-end;
-      }
-      .menu-icon div:nth-child(3) {
-        width: 32px;
-      }
-
-      .menu-icon.open div:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-        width: 32px;
-      }
-      .menu-icon.open div:nth-child(2) {
-        opacity: 0;
-      }
-      .menu-icon.open div:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-        width: 32px;
-      }
-
-      /* Revert logos & cart to original smaller sizes */
-      .logo {
-        height: 26px;
-        margin-top: 3px;
-        transition: opacity 0.3s ease;
-      }
-
-      .cart-container {
-        width: 26px;
-        height: 26px;
-        transition: opacity 0.3s ease;
-      }
-
-      .cart-icon {
-        font-size: 22px;
-      }
-
-      /* Sidebar full screen with smoother transition */
+      /* Sidebar full screen with smoother and slower transition */
       .sidebar {
         width: 100vw;
         height: 100vh;
@@ -271,7 +171,7 @@
         box-shadow: none;
         background-color: rgba(60, 60, 60, 0.95);
         color: white;
-        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
         visibility: hidden;
       }
@@ -292,6 +192,55 @@
       .sidebar-close-container {
         display: none;
       }
+
+      /* Menu icon back to original image size, smaller */
+      .menu-icon {
+        width: 24px !important;
+        height: auto !important;
+        filter: brightness(0) invert(1);
+        transition: filter 0.3s ease;
+      }
+
+      /* Use the original menu icon image again */
+      .menu-icon img {
+        display: block;
+        width: 24px;
+        height: auto;
+      }
+
+      /* Remove hamburger div bars if any */
+      .menu-icon div {
+        display: none !important;
+      }
+
+      /* We’ll use the image and add an X overlay to transform */
+
+      /* Create X lines with pseudo elements on menu icon for toggle */
+      .menu-icon {
+        position: relative;
+      }
+      .menu-icon.open::before,
+      .menu-icon.open::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 24px;
+        height: 2.5px;
+        background-color: white;
+        transition: all 0.4s ease;
+        border-radius: 2px;
+      }
+      .menu-icon.open::before {
+        transform: translateY(-50%) rotate(45deg);
+      }
+      .menu-icon.open::after {
+        transform: translateY(-50%) rotate(-45deg);
+      }
+      /* Hide the original menu icon image when open */
+      .menu-icon.open img {
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -301,9 +250,7 @@
 
   <div class="header">
     <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
-      <div></div>
-      <div></div>
-      <div></div>
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" />
     </div>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
     
@@ -333,7 +280,6 @@
       menuIcon.classList.toggle('open');
     }
 
-    // Close sidebar if overlay clicked (already done in toggleSidebar with overlay)
     overlay.addEventListener('click', () => {
       sidebar.classList.remove('open');
       overlay.classList.remove('show');

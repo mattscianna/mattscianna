@@ -21,6 +21,12 @@
       user-select: none;
     }
 
+    body.no-scroll {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+
     .header {
       position: fixed;
       top: 10px;
@@ -37,13 +43,13 @@
     .menu-toggle {
       width: 24px;
       height: 24px;
-      position: relative;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 4px;
+      justify-content: space-between;
+      padding: 3px 0;
       z-index: 1101;
+      transition: transform 0.3s ease;
     }
 
     .menu-toggle span {
@@ -51,11 +57,14 @@
       height: 2px;
       width: 100%;
       background: white;
-      transition: 0.3s ease;
+      border-radius: 1px;
+      transition: all 0.3s ease;
+      transform-origin: center;
     }
 
+    /* Transform the menu icon into an X when open */
     .menu-toggle.open span:nth-child(1) {
-      transform: rotate(45deg) translate(4px, 4px);
+      transform: rotate(45deg) translate(5px, 5px);
     }
 
     .menu-toggle.open span:nth-child(2) {
@@ -63,7 +72,7 @@
     }
 
     .menu-toggle.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(4px, -4px);
+      transform: rotate(-45deg) translate(5px, -5px);
     }
 
     .logo {
@@ -166,7 +175,7 @@
 <body>
 
   <div class="header">
-    <div class="menu-toggle" onclick="toggleSidebar(this)">
+    <div class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
       <span></span>
       <span></span>
       <span></span>
@@ -180,19 +189,29 @@
 
   <div id="sidebar" class="sidebar">
     <nav class="sidebar-menu">
-      <a href="#shop">SHOP</a>
-      <a href="#lookbooks">LOOKBOOKS</a>
-      <a href="#about">ABOUT</a>
+      <a href="https://mattscianna.com/shop">SHOP</a>
+      <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+      <a href="https://mattscianna.com/about">ABOUT</a>
     </nav>
   </div>
 
   <div class="hero-image-box"></div>
 
   <script>
-    function toggleSidebar(icon) {
-      icon.classList.toggle("open");
+    function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
+      const menuToggle = document.getElementById("menuToggle");
+      const body = document.body;
+      
       sidebar.classList.toggle("open");
+      menuToggle.classList.toggle("open");
+      
+      // Lock or unlock body scroll on mobile
+      if (sidebar.classList.contains("open")) {
+        body.classList.add("no-scroll");
+      } else {
+        body.classList.remove("no-scroll");
+      }
     }
 
     function updateCartCount(count) {

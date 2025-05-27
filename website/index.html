@@ -161,13 +161,14 @@
         align-items: center;
       }
 
-      /* Revert menu icon width to original */
+      /* Menu icon smaller */
       .menu-icon {
-        width: 32px;         
+        width: 24px;         
         margin-top: 3px;
         filter: brightness(0) invert(1);
       }
 
+      /* Revert logos & cart to original smaller sizes */
       .logo {
         height: 26px;
         margin-top: 3px;
@@ -194,7 +195,9 @@
         box-shadow: none;
         transition: left 0.3s ease;
         overflow-y: auto;
-        background-color: rgba(50, 50, 50, 0.85); /* transparent gray like ALD */
+
+        /* Less transparent gray: more opaque */
+        background-color: rgba(60, 60, 60, 0.95); /* darker gray with slight transparency */
         color: white;
       }
 

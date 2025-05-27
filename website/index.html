@@ -35,39 +35,37 @@
     }
 
     .menu-icon {
-      width: 26px;
+      width: 32px;
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none;
-      margin-left: 6px;
-      margin-top: 4px;
+      filter: none; /* Make sure no filter changes color */
+      transition: transform 0.2s ease;
     }
 
     .logo {
-      height: 32px;
+      height: 36px;  /* Smaller on PC per earlier */
       cursor: pointer;
       z-index: 1101;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .cart-container {
       cursor: pointer;
-      width: 26px;
-      height: 26px;
+      width: 32px;
+      height: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1101;
-      margin-right: 6px;
-      margin-top: 3px;
+      transition: transform 0.2s ease;
     }
 
     .cart-icon {
-      font-size: 24px;
+      font-size: 28px;
       color: white;
     }
 
@@ -104,6 +102,7 @@
       transition: left 0.15s ease;
       z-index: 1000;
       visibility: hidden;
+      overflow-y: auto;
     }
 
     .sidebar.open {
@@ -154,7 +153,6 @@
       z-index: 1;
     }
 
-    /* Mobile styles */
     @media screen and (max-width: 600px) {
       .header {
         top: 8px;
@@ -163,10 +161,9 @@
       }
 
       .menu-icon {
-        width: 24px;
-        margin-top: 3px;
-        margin-left: 0;
-        filter: brightness(0) invert(1);
+        width: 28px;         /* Smaller menu icon on mobile */
+        margin-top: 3px;     /* Slightly up */
+        filter: brightness(0) invert(1); /* White menu icon on mobile */
       }
 
       .logo {
@@ -177,12 +174,26 @@
       .cart-container {
         width: 26px;
         height: 26px;
-        margin-right: 0;
-        margin-top: 0;
       }
 
       .cart-icon {
         font-size: 22px;
+      }
+
+      .sidebar {
+        width: 100vw;          /* full viewport width */
+        height: 100vh;         /* full viewport height */
+        top: 0;
+        left: -100vw;          /* start fully offscreen left */
+        padding: 60px 20px 20px 20px; /* adjusted padding */
+        box-shadow: none;      /* remove shadow on mobile */
+        transition: left 0.3s ease; /* smooth transition */
+        overflow-y: auto;      /* scroll if content is long */
+      }
+
+      .sidebar.open {
+        left: 0;               /* slide in to full screen */
+        visibility: visible;
       }
 
       .sidebar-close-container {

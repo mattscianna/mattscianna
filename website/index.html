@@ -39,18 +39,19 @@
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none; /* Make sure no filter changes color */
+      filter: none;
       transition: transform 0.2s ease;
     }
 
     .logo {
-      height: 36px;  /* Smaller on PC per earlier */
+      height: 36px;
       cursor: pointer;
       z-index: 1101;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       margin-top: 8px;
+      transition: opacity 0.3s ease;
     }
 
     .cart-container {
@@ -61,7 +62,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1101;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, opacity 0.3s ease;
     }
 
     .cart-icon {
@@ -160,40 +161,53 @@
         align-items: center;
       }
 
+      /* Revert menu icon width to original */
       .menu-icon {
-        width: 28px;         /* Smaller menu icon on mobile */
-        margin-top: 3px;     /* Slightly up */
-        filter: brightness(0) invert(1); /* White menu icon on mobile */
+        width: 32px;         
+        margin-top: 3px;
+        filter: brightness(0) invert(1);
       }
 
       .logo {
         height: 26px;
         margin-top: 3px;
+        transition: opacity 0.3s ease;
       }
 
       .cart-container {
         width: 26px;
         height: 26px;
+        transition: opacity 0.3s ease;
       }
 
       .cart-icon {
         font-size: 22px;
       }
 
+      /* Sidebar full screen */
       .sidebar {
-        width: 100vw;          /* full viewport width */
-        height: 100vh;         /* full viewport height */
+        width: 100vw;
+        height: 100vh;
         top: 0;
-        left: -100vw;          /* start fully offscreen left */
-        padding: 60px 20px 20px 20px; /* adjusted padding */
-        box-shadow: none;      /* remove shadow on mobile */
-        transition: left 0.3s ease; /* smooth transition */
-        overflow-y: auto;      /* scroll if content is long */
+        left: -100vw;
+        padding: 60px 20px 20px 20px;
+        box-shadow: none;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        background-color: rgba(50, 50, 50, 0.85); /* transparent gray like ALD */
+        color: white;
       }
 
       .sidebar.open {
-        left: 0;               /* slide in to full screen */
+        left: 0;
         visibility: visible;
+      }
+
+      /* Hide logo and cart when sidebar open */
+      .sidebar.open ~ .header .logo,
+      .sidebar.open ~ .header .cart-container {
+        opacity: 0;
+        pointer-events: none;
       }
 
       .sidebar-close-container {

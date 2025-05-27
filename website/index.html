@@ -18,17 +18,17 @@
       font-family: 'Cardo', serif;
       background-color: white;
       height: 100vh;
-      overflow: hidden; /* Prevent scrolling */
+      overflow: hidden; /* Lock scroll */
     }
 
     .header {
       position: fixed;
-      top: 10px;
+      top: 6px; /* Moved closer to top */
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
       max-width: 1200px;
-      height: 90px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -38,7 +38,7 @@
 
     .menu-icon {
       position: absolute;
-      left: 8px; /* just a tad of space */
+      left: 16px; /* Spacing from left */
       top: 10px;
       width: 26px;
       height: auto;
@@ -47,15 +47,15 @@
     }
 
     .logo {
-      height: 36px;
+      height: 34px; /* Smaller and closer to top */
       cursor: pointer;
-      margin-top: 2px;
+      margin-top: 0px;
       z-index: 1101;
     }
 
     .cart-container {
       position: absolute;
-      right: 8px; /* just a tad of space */
+      right: 16px; /* Spacing from right */
       top: 10px;
       width: 28px;
       height: 28px;
@@ -152,26 +152,26 @@
 
     @media screen and (max-width: 600px) {
       .header {
-        top: 8px;
         height: 70px;
+        top: 4px;
       }
 
       .menu-icon {
-        left: 6px;
-        width: 24px;
+        left: 12px;
         top: 8px;
+        width: 24px;
       }
 
       .logo {
-        height: 30px;
-        margin-top: 1px;
+        height: 28px;
+        margin-top: 0;
       }
 
       .cart-container {
-        right: 6px;
+        right: 12px;
+        top: 8px;
         width: 26px;
         height: 26px;
-        top: 8px;
       }
 
       .cart-icon {

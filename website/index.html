@@ -7,17 +7,17 @@
 
   <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-
+  
   <!-- Font Awesome for shopping bag icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    body {
+    html, body {
       margin: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow-x: hidden;
-      overflow-y: hidden; /* prevent scrolling above/below image box */
+      overflow: hidden; /* lock scrolling */
+      height: 100vh;
     }
 
     .header {
@@ -40,25 +40,26 @@
 
     .menu-icon {
       position: absolute;
-      left: 4px;
-      top: 8px;
+      left: 0;
+      top: 10px;
       width: 24px;
       height: auto;
       cursor: pointer;
       z-index: 1101;
+      padding-left: 6px;
     }
 
     .logo {
-      height: 35px;
+      height: 34px;
       cursor: pointer;
-      margin-top: 3px;
+      margin-top: 2px;
       z-index: 1101;
     }
 
     .cart-container {
       position: absolute;
-      right: 4px;
-      top: 8px;
+      right: 0;
+      top: 10px;
       cursor: pointer;
       width: 26px;
       height: 26px;
@@ -66,10 +67,11 @@
       justify-content: center;
       align-items: center;
       z-index: 1101;
+      padding-right: 6px;
     }
 
     .cart-icon {
-      font-size: 26px;
+      font-size: 24px;
       color: white;
       position: relative;
     }
@@ -91,7 +93,6 @@
       min-width: 18px;
       text-align: center;
       line-height: 1.2;
-      text-shadow: 0 0 3px rgba(0,0,0,0.8);
     }
 
     .sidebar {
@@ -166,25 +167,27 @@
       }
 
       .logo {
-        height: 30px;
-        margin-top: 3px;
+        height: 28px;
+        margin-top: 2px;
       }
 
       .menu-icon {
         width: 22px;
-        left: 6px;
+        left: 0;
         top: 10px;
+        padding-left: 6px;
       }
 
       .cart-container {
         width: 24px;
         height: 24px;
-        right: 6px;
+        right: 0;
         top: 10px;
+        padding-right: 6px;
       }
 
       .cart-icon {
-        font-size: 24px;
+        font-size: 22px;
       }
 
       .sidebar-close-container {

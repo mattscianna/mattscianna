@@ -14,10 +14,11 @@
   <style>
     html, body {
       margin: 0;
+      padding: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow: hidden; /* lock scrolling */
       height: 100vh;
+      overflow: hidden; /* Prevent scrolling */
     }
 
     .header {
@@ -25,32 +26,28 @@
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      height: 90px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 0 20px;
-      box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
-      pointer-events: auto;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
       z-index: 1100;
-      background: transparent;
     }
 
     .menu-icon {
       position: absolute;
-      left: 0;
+      left: 8px; /* just a tad of space */
       top: 10px;
-      width: 24px;
+      width: 26px;
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      padding-left: 6px;
     }
 
     .logo {
-      height: 34px;
+      height: 36px;
       cursor: pointer;
       margin-top: 2px;
       z-index: 1101;
@@ -58,22 +55,20 @@
 
     .cart-container {
       position: absolute;
-      right: 0;
+      right: 8px; /* just a tad of space */
       top: 10px;
-      cursor: pointer;
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
       z-index: 1101;
-      padding-right: 6px;
     }
 
     .cart-icon {
       font-size: 24px;
       color: white;
-      position: relative;
     }
 
     .cart-count {
@@ -82,13 +77,10 @@
       right: -10px;
       background-color: #8B0000;
       color: white;
-      font-family: Arial, sans-serif;
       font-size: 14px;
       padding: 1px 5px;
       border-radius: 50%;
       display: none;
-      pointer-events: none;
-      user-select: none;
       font-weight: bold;
       min-width: 18px;
       text-align: center;
@@ -132,7 +124,6 @@
     .sidebar-close {
       width: 18px;
       height: auto;
-      display: block;
     }
 
     .overlay {
@@ -161,44 +152,30 @@
 
     @media screen and (max-width: 600px) {
       .header {
-        height: 70px;
         top: 8px;
-        padding: 0 16px;
-      }
-
-      .logo {
-        height: 28px;
-        margin-top: 2px;
+        height: 70px;
       }
 
       .menu-icon {
-        width: 22px;
-        left: 0;
-        top: 10px;
-        padding-left: 6px;
+        left: 6px;
+        width: 24px;
+        top: 8px;
+      }
+
+      .logo {
+        height: 30px;
+        margin-top: 1px;
       }
 
       .cart-container {
-        width: 24px;
-        height: 24px;
-        right: 0;
-        top: 10px;
-        padding-right: 6px;
+        right: 6px;
+        width: 26px;
+        height: 26px;
+        top: 8px;
       }
 
       .cart-icon {
         font-size: 22px;
-      }
-
-      .sidebar-close-container {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-        top: 30px;
-      }
-
-      .sidebar-close {
-        width: 18px;
       }
     }
   </style>

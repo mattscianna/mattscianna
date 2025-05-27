@@ -35,11 +35,51 @@
     }
 
     .menu-icon {
-      width: 28px;
-      height: auto;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       z-index: 1101;
-      transition: transform 0.3s ease;
+      filter: brightness(0) invert(1);
+      position: relative;
+      transition: transform 0.4s ease;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after,
+    .menu-icon div {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      left: 0;
+      transition: all 0.4s ease;
+    }
+
+    .menu-icon div {
+      top: 10px;
+    }
+
+    .menu-icon::before {
+      top: 4px;
+    }
+
+    .menu-icon::after {
+      top: 16px;
+    }
+
+    .menu-icon.open::before {
+      transform: rotate(45deg);
+      top: 10px;
+    }
+
+    .menu-icon.open::after {
+      transform: rotate(-45deg);
+      top: 10px;
+    }
+
+    .menu-icon.open div {
+      opacity: 0;
     }
 
     .logo {
@@ -98,7 +138,7 @@
       text-transform: uppercase;
       padding: 100px 20px 20px 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.4s ease;
+      transition: left 0.5s ease;
       z-index: 1000;
       visibility: hidden;
     }
@@ -106,6 +146,12 @@
     .sidebar.open {
       left: 0;
       visibility: visible;
+    }
+
+    .sidebar p {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
     }
 
     .overlay {
@@ -141,6 +187,7 @@
 
       .menu-icon {
         width: 24px;
+        height: 24px;
         margin-top: 3px;
         filter: brightness(0) invert(1);
       }
@@ -161,10 +208,11 @@
       }
 
       .sidebar {
-        width: 100%;
-        height: 100%;
-        padding-top: 100px;
-        transition: left 0.5s ease;
+        color: white;
+      }
+
+      .sidebar p {
+        color: white;
       }
 
       .overlay {
@@ -178,9 +226,10 @@
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" class="menu-icon" id="menu-icon" onclick="toggleSidebar()" />
+    <div class="menu-icon" id="menu-icon" onclick="toggleSidebar()">
+      <div></div>
+    </div>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
     <div class="cart-container" id="cart-icon">
       <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
@@ -205,17 +254,13 @@
       const isOpen = sidebar.classList.contains('open');
       sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
-
-      // Toggle icon image
-      menuIcon.src = isOpen
-        ? 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true'
-        : 'https://github.com/mattscianna/mattscianna/blob/main/X.png?raw=true';
+      menuIcon.classList.toggle('open');
     }
 
     function closeSidebar() {
       sidebar.classList.remove('open');
       overlay.classList.remove('show');
-      menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
+      menuIcon.classList.remove('open');
     }
 
     const cartCount = document.getElementById('cart-count');

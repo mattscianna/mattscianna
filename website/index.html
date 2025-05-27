@@ -39,7 +39,6 @@
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none; /* reset if any */
     }
 
     .logo {
@@ -151,42 +150,8 @@
     }
 
     @media screen and (max-width: 600px) {
-      .header {
-        top: 6px; /* Moved header up slightly */
-        padding: 0 12px;
-        align-items: center;
-      }
-
       .menu-icon {
-        width: 24px;
-        margin-top: 3px; /* Adjusted upward */
-        filter: invert(1); /* Make menu icon white like the shopping bag */
-      }
-
-      .logo {
-        height: 26px;
-        margin-top: 1px; /* Adjusted upward */
-      }
-
-      .cart-container {
-        width: 26px;
-        height: 26px;
-        margin-top: 4px; /* 1px lower than before */
-      }
-
-      .cart-icon {
-        font-size: 22px;
-      }
-
-      .sidebar-close-container {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-        top: 30px;
-      }
-
-      .sidebar-close {
-        width: 18px;
+        filter: brightness(0) invert(1); /* Make menu icon white on mobile */
       }
     }
   </style>

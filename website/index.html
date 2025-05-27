@@ -12,36 +12,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow: hidden;
+      overflow: hidden; /* Prevent scrolling off the hero image */
     }
 
     .header {
       position: fixed;
       top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 90px;
+      left: 0;
+      width: 100%;
       display: flex;
       align-items: flex-start;
-      justify-content: center;
-      padding: 0 20px;
+      justify-content: space-between;
+      padding: 0 16px;
       box-sizing: border-box;
-      width: 100%;
-      max-width: 1200px;
-      pointer-events: auto;
       z-index: 1100;
       background: transparent;
     }
 
     .menu-icon {
-      position: absolute;
-      left: 10px;
-      top: 10px;
-      width: 28px;
+      width: 32px;
       height: auto;
       cursor: pointer;
       z-index: 1101;
@@ -50,17 +44,17 @@
     .logo {
       height: 40px;
       cursor: pointer;
-      margin-top: 5px;
       z-index: 1101;
+      margin-top: 5px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .cart-container {
-      position: absolute;
-      right: 10px;
-      top: 10px;
       cursor: pointer;
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -68,9 +62,8 @@
     }
 
     .cart-icon {
-      font-size: 26px;
+      font-size: 28px;
       color: white;
-      position: relative;
     }
 
     .cart-count {
@@ -90,7 +83,6 @@
       min-width: 18px;
       text-align: center;
       line-height: 1.2;
-      text-shadow: 0 0 3px rgba(0,0,0,0.8);
     }
 
     .sidebar {
@@ -159,31 +151,26 @@
 
     @media screen and (max-width: 600px) {
       .header {
-        height: 70px;
-        top: 4px;
-        padding: 0 16px;
+        top: 8px;
+        padding: 0 12px;
       }
 
       .menu-icon {
-        left: 12px;
-        top: 8px;
-        width: 24px;
+        width: 28px;
       }
 
       .logo {
         height: 28px;
-        margin-top: 5px; /* Adjusted down for better center alignment */
+        margin-top: 6px; /* Slightly lower to align with other icons */
       }
 
       .cart-container {
-        right: 12px;
-        top: 8px;
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
       }
 
       .cart-icon {
-        font-size: 22px;
+        font-size: 24px;
       }
 
       .sidebar-close-container {

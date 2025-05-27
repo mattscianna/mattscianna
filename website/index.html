@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
 
+  <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for shopping bag icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
@@ -14,25 +17,21 @@
       padding: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow: hidden;
-    }
-
-    * {
+      overflow-x: hidden;
       -webkit-user-select: none;
-      -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
     }
 
     .header {
       position: fixed;
-      top: 10px;
+      top: 8px;
       left: 0;
       width: 100%;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 12px;
       box-sizing: border-box;
       z-index: 1100;
       background: transparent;
@@ -41,12 +40,12 @@
     .menu-icon {
       width: 24px;
       height: 24px;
+      position: relative;
       cursor: pointer;
       z-index: 1101;
       filter: brightness(0) invert(1);
-      position: relative;
       transition: transform 0.4s ease;
-      margin-top: 1px; /* Slightly raised */
+      margin-top: 1px;
     }
 
     .menu-icon::before,
@@ -61,16 +60,16 @@
       transition: all 0.4s ease;
     }
 
+    .menu-icon::before {
+      top: 2px;
+    }
+
     .menu-icon div {
       top: 10px;
     }
 
-    .menu-icon::before {
-      top: 4px;
-    }
-
     .menu-icon::after {
-      top: 16px;
+      top: 18px;
     }
 
     .menu-icon.open::before {
@@ -88,27 +87,28 @@
     }
 
     .logo {
-      height: 40px;
+      height: 26px;
       cursor: pointer;
       z-index: 1101;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 5px;
+      margin-top: 0px;
     }
 
     .cart-container {
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1101;
+      margin-top: 1px;
     }
 
     .cart-icon {
-      font-size: 28px;
+      font-size: 22px;
       color: white;
     }
 
@@ -137,13 +137,12 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: rgba(40, 40, 40, 0.85);
-      backdrop-filter: blur(6px);
+      background: rgba(40, 40, 40, 0.88);
+      backdrop-filter: blur(8px);
       font-family: 'Cardo', serif;
       text-transform: uppercase;
       padding: 100px 20px 20px 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.5s ease;
+      transition: left 0.4s ease-in-out;
       z-index: 1000;
       visibility: hidden;
     }
@@ -154,24 +153,13 @@
     }
 
     .sidebar p {
+      color: white;
       margin: 20px 0;
-      font-size: 20px;
-      color: black;
+      font-size: 18px;
     }
 
     .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0,0,0,0.1);
       display: none;
-      z-index: 999;
-    }
-
-    .overlay.show {
-      display: block;
     }
 
     .hero-image-box {
@@ -183,58 +171,46 @@
       z-index: 1;
     }
 
-    @media screen and (max-width: 600px) {
-      .header {
-        top: 8px;
-        padding: 0 12px;
-        align-items: center;
-      }
-
+    @media (min-width: 601px) {
       .menu-icon {
-        width: 24px;
-        height: 24px;
-        margin-top: 1px;
-        filter: brightness(0) invert(1);
+        display: none;
       }
 
       .logo {
-        height: 26px;
-        margin-top: 0px;
+        height: 40px;
       }
 
       .cart-container {
-        width: 26px;
-        height: 26px;
-        margin-top: 2px;
+        width: 32px;
+        height: 32px;
       }
 
       .cart-icon {
-        font-size: 22px;
+        font-size: 28px;
       }
 
       .sidebar {
-        color: white;
+        width: 250px;
+        background: white;
+        backdrop-filter: none;
       }
 
       .sidebar p {
-        color: white;
-      }
-
-      .overlay {
-        display: none !important;
+        color: black;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
   <div class="header">
-    <div class="menu-icon" id="menu-icon" onclick="toggleSidebar()">
+    <div class="menu-icon" id="menu-toggle" onclick="toggleSidebar()">
       <div></div>
     </div>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true"
+         alt="Matt Scianna" class="logo" onclick="location.reload()" />
+
     <div class="cart-container" id="cart-icon">
       <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
@@ -251,26 +227,18 @@
   <div class="hero-image-box"></div>
 
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const menuIcon = document.getElementById('menu-icon');
-
     function toggleSidebar() {
-      const isOpen = sidebar.classList.contains('open');
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('show');
-      menuIcon.classList.toggle('open');
-    }
+      const sidebar = document.getElementById('sidebar');
+      const icon = document.getElementById('menu-toggle');
 
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      menuIcon.classList.remove('open');
+      sidebar.classList.toggle('open');
+      icon.classList.toggle('open');
     }
 
     const cartCount = document.getElementById('cart-count');
+
     function updateCartCount(count) {
-      if (count > 0) {
+      if(count > 0) {
         cartCount.style.display = 'block';
         cartCount.textContent = count;
       } else {

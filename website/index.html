@@ -39,7 +39,7 @@
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none;
+      filter: none; /* Default: no color filter */
     }
 
     .logo {
@@ -150,7 +150,6 @@
       z-index: 1;
     }
 
-    /* === MOBILE STYLES === */
     @media screen and (max-width: 600px) {
       .header {
         top: 8px;
@@ -159,10 +158,10 @@
       }
 
       .menu-icon {
-        width: 32px;
+        width: 24px; /* Smaller menu icon on mobile */
         height: auto;
         margin-top: 3px;
-        filter: brightness(0) invert(1); /* Brighter white effect on mobile */
+        filter: brightness(0) invert(1); /* Make white on mobile */
       }
 
       .logo {

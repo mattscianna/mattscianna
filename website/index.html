@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
 
-  <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome for shopping bag icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
@@ -24,6 +21,7 @@
       user-select: none;
       touch-action: manipulation;
       overscroll-behavior: none;
+      height: 100vh;
     }
 
     .header {
@@ -46,6 +44,7 @@
       cursor: pointer;
       position: relative;
       z-index: 1101;
+      margin-top: 3px; /* Lowered slightly */
     }
 
     .menu-icon div {
@@ -55,30 +54,20 @@
       background-color: white;
       left: 2px;
       border-radius: 1.5px;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s ease-in-out;
     }
 
-    .menu-icon div:nth-child(1) {
-      top: 2px;
-    }
-
-    .menu-icon div:nth-child(2) {
-      top: 9px;
-    }
-
-    .menu-icon div:nth-child(3) {
-      top: 16px;
-    }
+    .menu-icon div:nth-child(1) { top: 2px; }
+    .menu-icon div:nth-child(2) { top: 9px; }
+    .menu-icon div:nth-child(3) { top: 16px; }
 
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
       top: 9px;
     }
-
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
     }
-
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
       top: 9px;
@@ -91,7 +80,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 3px;
+      margin-top: 2px;
       user-select: none;
     }
 
@@ -103,6 +92,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1101;
+      margin-top: 1px;
     }
 
     .cart-icon {
@@ -121,7 +111,6 @@
       padding: 1px 5px;
       border-radius: 50%;
       display: none;
-      pointer-events: none;
       font-weight: bold;
       min-width: 18px;
       text-align: center;
@@ -134,13 +123,13 @@
       left: -100%;
       width: 100vw;
       height: 100%;
-      background-color: rgba(50,50,50,0.95);
+      background-color: rgba(50,50,50,0.94);
       backdrop-filter: blur(12px);
       font-family: 'Cardo', serif;
       text-transform: uppercase;
       padding-top: 90px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.45s ease;
+      transition: left 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
       z-index: 1000;
       visibility: hidden;
       color: white;
@@ -187,19 +176,10 @@
     }
 
     @media screen and (max-width: 600px) {
-      html, body {
-        overflow: hidden;
-        height: 100vh;
-      }
-
       .header {
         top: 8px;
         padding: 0 12px;
         align-items: center;
-      }
-
-      .menu-icon {
-        margin-top: 0px;
       }
 
       .logo {
@@ -208,7 +188,7 @@
       }
 
       .cart-container {
-        margin-top: 0px;
+        margin-top: 1px;
       }
 
       .sidebar {
@@ -232,7 +212,6 @@
       <div></div>
     </div>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
     <div class="cart-container" id="cart-icon">
       <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
@@ -240,7 +219,7 @@
   </div>
 
   <div id="sidebar" class="sidebar">
-    <p onclick="location.href='https://mattscianna.com/home'">HOME</p>
+    <p onclick="location.href='https://mattscianna.com/shop'">SHOP</p>
     <p onclick="location.href='https://mattscianna.com/lookbooks'">LOOKBOOKS</p>
     <p onclick="location.href='https://mattscianna.com/about'">ABOUT</p>
   </div>

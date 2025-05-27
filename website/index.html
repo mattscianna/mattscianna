@@ -39,6 +39,7 @@
       height: auto;
       cursor: pointer;
       z-index: 1101;
+      filter: none; /* Make sure no filter changes color */
     }
 
     .logo {
@@ -150,8 +151,41 @@
     }
 
     @media screen and (max-width: 600px) {
+      .header {
+        top: 8px;
+        padding: 0 12px;
+        align-items: center;
+      }
+
       .menu-icon {
-        filter: brightness(0) invert(1); /* Make menu icon white on mobile */
+        width: 24px;         /* Slightly smaller */
+        margin-top: 3px;     /* Slightly up */
+        filter: none;        /* No color change */
+      }
+
+      .logo {
+        height: 26px;
+        margin-top: 3px;
+      }
+
+      .cart-container {
+        width: 26px;
+        height: 26px;
+      }
+
+      .cart-icon {
+        font-size: 22px;
+      }
+
+      .sidebar-close-container {
+        width: 32px;
+        height: 32px;
+        left: 16px;
+        top: 30px;
+      }
+
+      .sidebar-close {
+        width: 18px;
       }
     }
   </style>

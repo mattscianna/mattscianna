@@ -36,11 +36,46 @@
 
     .menu-icon {
       width: 32px;
-      height: auto;
+      height: 24px; /* fixed height for hamburger bars */
       cursor: pointer;
       z-index: 1101;
       filter: none;
-      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.4s ease;
+      /* remove img, build hamburger from div bars */
+    }
+
+    .menu-icon div {
+      background: white;
+      height: 4px;
+      border-radius: 2px;
+      transition: all 0.4s ease;
+    }
+
+    .menu-icon div:nth-child(1) {
+      width: 32px;
+    }
+    .menu-icon div:nth-child(2) {
+      width: 24px;
+      align-self: flex-end;
+    }
+    .menu-icon div:nth-child(3) {
+      width: 32px;
+    }
+
+    /* Transform hamburger to X */
+    .menu-icon.open div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+      width: 32px;
+    }
+    .menu-icon.open div:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-icon.open div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+      width: 32px;
     }
 
     .logo {
@@ -161,11 +196,52 @@
         align-items: center;
       }
 
-      /* Menu icon smaller */
+      /* Hide old menu icon image */
+      .menu-icon img {
+        display: none;
+      }
+
+      /* Build hamburger from 3 bars */
       .menu-icon {
-        width: 24px;         
+        width: 32px;
+        height: 24px;
         margin-top: 3px;
         filter: brightness(0) invert(1);
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .menu-icon div {
+        background: white;
+        height: 4px;
+        border-radius: 2px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .menu-icon div:nth-child(1) {
+        width: 32px;
+      }
+      .menu-icon div:nth-child(2) {
+        width: 24px;
+        align-self: flex-end;
+      }
+      .menu-icon div:nth-child(3) {
+        width: 32px;
+      }
+
+      .menu-icon.open div:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        width: 32px;
+      }
+      .menu-icon.open div:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-icon.open div:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        width: 32px;
       }
 
       /* Revert logos & cart to original smaller sizes */
@@ -185,7 +261,7 @@
         font-size: 22px;
       }
 
-      /* Sidebar full screen */
+      /* Sidebar full screen with smoother transition */
       .sidebar {
         width: 100vw;
         height: 100vh;
@@ -193,12 +269,11 @@
         left: -100vw;
         padding: 60px 20px 20px 20px;
         box-shadow: none;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-
-        /* Less transparent gray: more opaque */
-        background-color: rgba(60, 60, 60, 0.95); /* darker gray with slight transparency */
+        background-color: rgba(60, 60, 60, 0.95);
         color: white;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        visibility: hidden;
       }
 
       .sidebar.open {
@@ -213,25 +288,23 @@
         pointer-events: none;
       }
 
+      /* Remove sidebar close X container */
       .sidebar-close-container {
-        width: 32px;
-        height: 32px;
-        left: 16px;
-        top: 30px;
-      }
-
-      .sidebar-close {
-        width: 18px;
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
+    <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
     
     <div class="cart-container" id="cart-icon">
@@ -241,9 +314,6 @@
   </div>
 
   <div id="sidebar" class="sidebar">
-    <div class="sidebar-close-container" onclick="closeSidebar()">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/X.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
-    </div>
     <p>Home</p>
     <p>Shop</p>
     <p>Contact</p>
@@ -253,17 +323,22 @@
   <div class="hero-image-box"></div>
 
   <script>
+    const menuIcon = document.getElementById('menuIcon');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
       sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
+      menuIcon.classList.toggle('open');
     }
 
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('overlay').classList.remove('show');
-    }
+    // Close sidebar if overlay clicked (already done in toggleSidebar with overlay)
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      menuIcon.classList.remove('open');
+    });
 
     const cartCount = document.getElementById('cart-count');
 

@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
 
+  <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for shopping bag icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
     body {
@@ -52,16 +56,15 @@
     }
 
     .cart-icon {
-      width: 36px;
-      height: auto;
-      display: block;
+      font-size: 28px;
+      color: black;
       position: relative;
     }
 
     .cart-count {
       position: absolute;
       top: -6px;
-      right: -6px;
+      right: -10px;
       background-color: #8B0000;
       color: white;
       font-family: Arial, sans-serif;
@@ -100,10 +103,10 @@
 
     .sidebar-close-container {
       position: absolute;
-      top: 30px;
+      top: 36px;
       left: 20px;
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       cursor: pointer;
       display: flex;
       justify-content: center;
@@ -111,7 +114,7 @@
     }
 
     .sidebar-close {
-      width: 24px;
+      width: 18px;
       height: auto;
       display: block;
     }
@@ -149,18 +152,18 @@
       }
 
       .cart-icon {
-        width: 28px;
+        font-size: 24px;
       }
 
       .sidebar-close-container {
         width: 32px;
         height: 32px;
         left: 16px;
-        top: 26px;
+        top: 30px;
       }
 
       .sidebar-close {
-        width: 20px;
+        width: 18px;
       }
 
       .header {
@@ -177,8 +180,8 @@
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
     
-    <div class="cart-container" onclick="alert('Cart clicked!')">
-      <img src="https://img.icons8.com/ios-filled/50/000000/shopping-cart.png" alt="Shopping Cart" class="cart-icon" />
+    <div class="cart-container" id="cart-icon">
+      <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
     </div>
   </div>
@@ -217,7 +220,7 @@
       }
     }
 
-    updateCartCount(0); // Hidden initially
+    updateCartCount(0); // Start with count hidden
   </script>
 
 </body>

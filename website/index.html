@@ -39,7 +39,7 @@
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none; /* Make sure no filter changes color */
+      filter: none;
     }
 
     .logo {
@@ -150,6 +150,7 @@
       z-index: 1;
     }
 
+    /* === MOBILE STYLES === */
     @media screen and (max-width: 600px) {
       .header {
         top: 8px;
@@ -158,9 +159,10 @@
       }
 
       .menu-icon {
-        width: 32px;         /* Keep original width */
-        margin-top: 3px;     /* Slightly up */
-        filter: brightness(0) invert(1); /* Make menu icon white on mobile */
+        width: 32px;
+        height: auto;
+        margin-top: 3px;
+        filter: brightness(0) invert(1); /* Brighter white effect on mobile */
       }
 
       .logo {

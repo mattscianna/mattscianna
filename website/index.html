@@ -18,12 +18,12 @@
       font-family: 'Cardo', serif;
       background-color: white;
       overflow: hidden;
-      -webkit-user-select: none; /* Prevent text selection */
+      -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      touch-action: manipulation; /* Improve touch behavior */
-      overscroll-behavior: none; /* Prevent overscroll bounce on some browsers */
+      touch-action: manipulation;
+      overscroll-behavior: none;
     }
 
     .header {
@@ -41,25 +41,21 @@
     }
 
     .menu-icon {
-      width: 32px;
-      height: 24px; /* Height for 3 lines stacked */
+      width: 28px;
+      height: 21px;
       cursor: pointer;
       position: relative;
       z-index: 1101;
-      filter: none;
-      -webkit-user-select: none;
-      user-select: none;
     }
 
-    /* Three lines for the hamburger */
     .menu-icon div {
       position: absolute;
       width: 24px;
       height: 3px;
       background-color: white;
-      left: 4px;
+      left: 2px;
       border-radius: 1.5px;
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .menu-icon div:nth-child(1) {
@@ -67,17 +63,16 @@
     }
 
     .menu-icon div:nth-child(2) {
-      top: 10px;
+      top: 9px;
     }
 
     .menu-icon div:nth-child(3) {
-      top: 18px;
+      top: 16px;
     }
 
-    /* When sidebar open, transform hamburger into X */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
-      top: 10px;
+      top: 9px;
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -86,33 +81,32 @@
 
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
-      top: 10px;
+      top: 9px;
     }
 
     .logo {
-      height: 40px;
+      height: 26px;
       cursor: pointer;
       z-index: 1101;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 5px;
+      margin-top: 3px;
       user-select: none;
     }
 
     .cart-container {
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1101;
-      user-select: none;
     }
 
     .cart-icon {
-      font-size: 28px;
+      font-size: 22px;
       color: white;
     }
 
@@ -128,7 +122,6 @@
       border-radius: 50%;
       display: none;
       pointer-events: none;
-      user-select: none;
       font-weight: bold;
       min-width: 18px;
       text-align: center;
@@ -139,19 +132,22 @@
       position: fixed;
       top: 0;
       left: -100%;
-      width: 250px;
+      width: 100vw;
       height: 100%;
-      background-color: rgba(50,50,50,0.9);
-      backdrop-filter: blur(8px);
+      background-color: rgba(50,50,50,0.95);
+      backdrop-filter: blur(12px);
       font-family: 'Cardo', serif;
       text-transform: uppercase;
-      padding: 100px 20px 20px 20px;
+      padding-top: 90px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.4s ease;
+      transition: left 0.45s ease;
       z-index: 1000;
       visibility: hidden;
       color: white;
-      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .sidebar.open {
@@ -162,6 +158,8 @@
     .sidebar p {
       margin: 20px 0;
       cursor: pointer;
+      font-size: 18px;
+      color: white;
     }
 
     .overlay {
@@ -188,10 +186,9 @@
       z-index: 1;
     }
 
-    /* MOBILE ONLY */
     @media screen and (max-width: 600px) {
       html, body {
-        overflow: hidden; /* No scroll on mobile */
+        overflow: hidden;
         height: 100vh;
       }
 
@@ -201,33 +198,21 @@
         align-items: center;
       }
 
-      /* Smaller menu icon */
       .menu-icon {
-        width: 28px;
-        height: 21px;
-        margin-top: 2px;
+        margin-top: 0px;
       }
 
       .logo {
         height: 26px;
-        margin-top: 3px;
+        margin-top: 2px;
       }
 
       .cart-container {
-        width: 26px;
-        height: 26px;
-      }
-
-      .cart-icon {
-        font-size: 22px;
+        margin-top: 0px;
       }
 
       .sidebar {
-        width: 100vw;
-        background-color: rgba(50,50,50,0.95);
-        backdrop-filter: blur(12px);
         padding-top: 90px;
-        transition: left 0.5s ease;
       }
 
       .sidebar p {
@@ -255,7 +240,7 @@
   </div>
 
   <div id="sidebar" class="sidebar">
-    <p onclick="location.href='https://mattscianna.com/shop'">SHOP</p>
+    <p onclick="location.href='https://mattscianna.com/home'">HOME</p>
     <p onclick="location.href='https://mattscianna.com/lookbooks'">LOOKBOOKS</p>
     <p onclick="location.href='https://mattscianna.com/about'">ABOUT</p>
   </div>
@@ -279,7 +264,6 @@
       menuIcon.classList.remove('open');
     }
 
-    // Prevent scrolling on mobile
     document.addEventListener('touchmove', function(event) {
       if(sidebar.classList.contains('open')) {
         event.preventDefault();

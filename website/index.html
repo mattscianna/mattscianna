@@ -33,23 +33,25 @@
     }
 
     .menu-icon {
-      width: 24px;
-      height: 20px;
+      width: 20px;
+      height: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
       z-index: 1101;
+      margin-top: 6px;
     }
 
     .menu-icon div {
       height: 2px;
       background-color: white;
-      transition: all 0.4s ease-in-out;
+      transition: all 0.35s ease-in-out;
+      transform-origin: center;
     }
 
     .menu-icon.open div:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
+      transform: rotate(45deg) translate(3px, 3px);
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -57,7 +59,7 @@
     }
 
     .menu-icon.open div:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
+      transform: rotate(-45deg) translate(3px, -3px);
     }
 
     .logo {
@@ -66,6 +68,7 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 1101;
+      margin-top: 4px;
     }
 
     .cart-container {
@@ -75,6 +78,7 @@
       align-items: center;
       justify-content: center;
       z-index: 1101;
+      margin-top: 4px;
     }
 
     .cart-icon {
@@ -103,7 +107,8 @@
       left: -100vw;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(60, 60, 60, 0.96); /* slightly translucent gray */
+      background-color: rgba(60, 60, 60, 0.85);
+      backdrop-filter: blur(8px);
       color: white;
       padding: 80px 20px 20px 20px;
       box-sizing: border-box;
@@ -143,6 +148,7 @@
       .menu-icon {
         width: 32px;
         height: auto;
+        margin-top: 0;
       }
 
       .menu-icon div {
@@ -151,11 +157,13 @@
 
       .logo {
         height: 36px;
+        margin-top: 0;
       }
 
       .cart-container {
         width: 32px;
         height: 32px;
+        margin-top: 0;
       }
 
       .cart-icon {
@@ -168,6 +176,7 @@
         background: white;
         color: black;
         padding: 100px 20px;
+        backdrop-filter: none;
       }
 
       .sidebar.open {
@@ -208,7 +217,7 @@
     const overlay = document.getElementById('overlay');
 
     function toggleSidebar() {
-      const isOpen = sidebar.classList.toggle('open');
+      sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
       menuIcon.classList.toggle('open');
     }

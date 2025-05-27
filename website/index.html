@@ -7,26 +7,25 @@
 
   <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome for shopping bag icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       font-family: 'Cardo', serif;
       background-color: white;
-      overflow: hidden; /* Locks scrolling */
-      height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden; /* prevent scrolling above/below image box */
     }
 
     .header {
       position: fixed;
-      top: 4px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      height: 80px;
+      height: 90px;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -34,32 +33,31 @@
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
+      pointer-events: auto;
       z-index: 1100;
       background: transparent;
     }
 
     .menu-icon {
       position: absolute;
-      left: 10px;
+      left: 4px;
       top: 8px;
       width: 24px;
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.75));
     }
 
     .logo {
-      height: 30px;
+      height: 35px;
       cursor: pointer;
-      margin-top: 2px;
+      margin-top: 3px;
       z-index: 1101;
-      filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.6));
     }
 
     .cart-container {
       position: absolute;
-      right: 10px;
+      right: 4px;
       top: 8px;
       cursor: pointer;
       width: 26px;
@@ -71,10 +69,9 @@
     }
 
     .cart-icon {
-      font-size: 24px;
+      font-size: 26px;
       color: white;
       position: relative;
-      filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.6));
     }
 
     .cart-count {
@@ -169,25 +166,25 @@
       }
 
       .logo {
-        height: 26px;
-        margin-top: 2px;
+        height: 30px;
+        margin-top: 3px;
       }
 
       .menu-icon {
         width: 22px;
-        left: 12px;
+        left: 6px;
         top: 10px;
       }
 
       .cart-container {
         width: 24px;
         height: 24px;
-        right: 12px;
+        right: 6px;
         top: 10px;
       }
 
       .cart-icon {
-        font-size: 22px;
+        font-size: 24px;
       }
 
       .sidebar-close-container {

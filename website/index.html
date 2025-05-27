@@ -35,27 +35,27 @@
     }
 
     .menu-icon {
-      width: 32px;
+      width: 26px; /* Smaller on desktop */
       height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none; /* Default: no color filter */
+      filter: none;
     }
 
     .logo {
-      height: 40px;
+      height: 32px; /* Smaller on desktop */
       cursor: pointer;
       z-index: 1101;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 5px;
+      margin-top: 4px;
     }
 
     .cart-container {
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 26px; /* Smaller on desktop */
+      height: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -63,7 +63,7 @@
     }
 
     .cart-icon {
-      font-size: 28px;
+      font-size: 24px; /* Smaller on desktop */
       color: white;
     }
 
@@ -150,6 +150,7 @@
       z-index: 1;
     }
 
+    /* Mobile styles */
     @media screen and (max-width: 600px) {
       .header {
         top: 8px;
@@ -158,8 +159,7 @@
       }
 
       .menu-icon {
-        width: 24px; /* Smaller menu icon on mobile */
-        height: auto;
+        width: 24px;
         margin-top: 3px;
         filter: brightness(0) invert(1); /* Make white on mobile */
       }

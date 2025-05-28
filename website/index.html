@@ -1,326 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matt Scianna</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Matt Scianna</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  /* GENERAL HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1100;
+    padding: 0 15px;
+  }
+  .logo {
+    cursor: pointer;
+    height: 30px;
+    user-select: none;
+  }
+  .cart-container {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+  .cart-icon {
+    font-size: 24px;
+    color: white;
+  }
+  /* MENU ICON */
+  .menu-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    user-select: none;
+  }
+  .menu-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
 
-  <!-- Font: Cardo -->
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome for shopping bag icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  /* TRANSFORM TO X */
+  .menu-icon.active span:nth-child(1) {
+    transform: rotate(45deg);
+    position: absolute;
+    top: 10.5px;
+    left: 0;
+    width: 100%;
+  }
+  .menu-icon.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-icon.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 10.5px;
+    left: 0;
+    width: 100%;
+  }
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Cardo', serif;
-      background-color: white;
-      overflow: hidden;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      touch-action: manipulation;
-    }
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(50, 50, 50, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 100px 20px 20px 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+    z-index: 1000;
+  }
+  .sidebar.open {
+    left: 0;
+    visibility: visible;
+  }
+  .sidebar p {
+    margin: 25px 0;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    max-width: 220px;
+    text-align: center;
+  }
 
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+  }
+  .overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* MOBILE STYLES */
+  @media screen and (max-width: 600px) {
     .header {
-      position: fixed;
-      top: 10px;
-      left: 0;
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
+      padding: 0 15px;
       justify-content: space-between;
-      padding: 0 16px;
-      box-sizing: border-box;
-      z-index: 1100;
-      background: transparent;
+      align-items: center;
+      top: 8px;
     }
-
-    /* The menu icon container for the animated lines */
     .menu-icon {
-      cursor: pointer;
-      z-index: 1101;
       width: 30px;
-      height: 25px;
+      height: 24px;
+      margin-top: 6px;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin-top: 6px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1101;
     }
-
     .menu-icon span {
-      display: block;
       height: 3px;
       background-color: white;
       border-radius: 2px;
       transition: all 0.3s ease;
       transform-origin: center;
-    }
-
-    /* Lines */
-    .menu-icon span:nth-child(1) {
-      width: 100%;
-    }
-    .menu-icon span:nth-child(2) {
       width: 100%;
     }
     .menu-icon span:nth-child(3) {
-      width: 70%;
-      margin-left: auto;
-    }
-
-    /* X icon animation when active */
-    .menu-icon.active span:nth-child(1) {
-      transform: rotate(45deg);
       width: 100%;
       margin-left: 0;
+    }
+    /* Menu icon active - perfect X */
+    .menu-icon.active span:nth-child(1) {
+      transform: rotate(45deg);
+      position: absolute;
+      top: 10.5px;
+      left: 0;
+      width: 100%;
     }
     .menu-icon.active span:nth-child(2) {
       opacity: 0;
     }
     .menu-icon.active span:nth-child(3) {
       transform: rotate(-45deg);
-      width: 100%;
-      margin-left: 0;
-    }
-
-    .logo {
-      height: 40px;
-      cursor: pointer;
-      z-index: 1101;
-      position: relative;
-      margin-left: 8px; /* moved more left */
-      margin-top: 5px;
-    }
-
-    .cart-container {
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1101;
-      margin-right: 12px;
-      margin-top: 10px;
-    }
-
-    .cart-icon {
-      font-size: 28px;
-      color: white;
-    }
-
-    .cart-count {
       position: absolute;
-      top: -6px;
-      right: -10px;
-      background-color: #8B0000;
-      color: white;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      padding: 1px 5px;
-      border-radius: 50%;
-      display: none;
-      pointer-events: none;
-      user-select: none;
-      font-weight: bold;
-      min-width: 18px;
-      text-align: center;
-      line-height: 1.2;
+      top: 10.5px;
+      left: 0;
+      width: 100%;
     }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 100vw;
-      height: 100%;
-      background-color: rgba(50, 50, 50, 0.95);
-      font-family: 'Cardo', serif;
-      text-transform: uppercase;
-      padding: 100px 20px 20px 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.4s ease;
-      z-index: 1000;
-      visibility: hidden;
+    .logo {
+      height: 26px;
+      margin-left: 22px; /* shifted slightly right */
+      margin-top: 0;
+      user-select: none;
+      position: relative;
+      z-index: 1101;
+      cursor: pointer;
+    }
+    .cart-container {
+      width: 26px;
+      height: 26px;
+      margin-right: 22px; /* shifted slightly right */
+      margin-top: 6px;
+      user-select: none;
+      position: relative;
+      z-index: 1101;
+      cursor: pointer;
+    }
+    .cart-icon {
+      font-size: 22px;
       color: white;
+    }
+    .sidebar {
+      width: 100vw;
+      left: -100%;
+      background-color: rgba(50, 50, 50, 0.95);
       backdrop-filter: blur(10px);
+      padding: 100px 20px 20px 40px;
+      color: white;
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* align text left */
-      padding-left: 40px; /* some left padding */
+      align-items: center;
+      visibility: hidden;
+      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
     .sidebar.open {
       left: 0;
       visibility: visible;
     }
-
     .sidebar p {
+      text-align: center;
       margin: 25px 0;
       font-size: 18px;
       cursor: pointer;
-      text-align: left; /* align text left */
       width: 100%;
       max-width: 220px;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: transparent;
-      display: none;
-      z-index: 999;
-    }
-
-    .overlay.show {
-      display: block;
-    }
-
-    .hero-image-box {
-      width: 100vw;
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center center/cover no-repeat;
       user-select: none;
-      position: relative;
-      z-index: 1;
     }
-
-    /* MOBILE STYLES */
-    @media screen and (max-width: 600px) {
-      .header {
-        top: 8px;
-        padding: 0 12px;
-        align-items: center;
-      }
-
-      .menu-icon {
-        width: 28px;
-        height: 22px;
-        margin-top: 6px;
-      }
-
-      .logo {
-        height: 26px;
-        margin-left: 10px;
-        margin-top: 0;
-      }
-
-      .cart-container {
-        width: 26px;
-        height: 26px;
-        margin-right: 12px;
-        margin-top: 6px;
-      }
-
-      .cart-icon {
-        font-size: 22px;
-        color: white;
-      }
-
-      .sidebar {
-        width: 100vw;
-        left: -100%;
-        background-color: rgba(50, 50, 50, 0.95);
-        backdrop-filter: blur(10px);
-        transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 100px 20px 20px 40px; /* left aligned */
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; /* align text left */
-      }
-
-      .sidebar.open {
-        left: 0;
-        visibility: visible;
-      }
-
-      .sidebar p {
-        text-align: left;
-        margin: 25px 0;
-        font-size: 18px;
-        cursor: pointer;
-        width: 100%;
-        max-width: 220px;
-      }
-
-      .overlay {
-        background: transparent; /* no darkening */
-      }
+    .overlay {
+      background: transparent;
     }
-  </style>
+    /* Prevent scrolling when sidebar is open */
+    body.sidebar-open {
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+  }
+</style>
+
+<!-- FontAwesome for cart icon -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
 </head>
 <body>
-
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
   <div class="header">
     <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    <div class="cart-container" id="cart-icon">
+    <img
+      src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true"
+      alt="Matt Scianna"
+      class="logo"
+      onclick="location.reload()"
+    />
+    <div class="cart-container" id="cart-icon" onclick="location.href='https://mattscianna.com/cart'">
       <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
     </div>
   </div>
 
   <div id="sidebar" class="sidebar">
-    <p onclick="location.href='shop.html'">SHOP</p>
-    <p onclick="location.href='lookbooks.html'">LOOKBOOKS</p>
-    <p onclick="location.href='about.html'">ABOUT</p>
-    <p onclick="location.href='contact.html'">CONTACT</p>
+    <p onclick="location.href='https://mattscianna.com/shop'">SHOP</p>
+    <p onclick="location.href='https://mattscianna.com/lookbooks'">LOOKBOOKS</p>
+    <p onclick="location.href='https://mattscianna.com/about'">ABOUT</p>
+    <p onclick="location.href='https://mattscianna.com/contact'">CONTACT</p>
   </div>
 
-  <div class="hero-image-box"></div>
+  <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
 
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const menuIcon = document.getElementById('menuIcon');
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuIcon = document.getElementById('menuIcon');
 
-    function toggleSidebar() {
-      const isOpen = sidebar.classList.contains('open');
-      if(isOpen) {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
-        menuIcon.classList.remove('active');
-      } else {
-        sidebar.classList.add('open');
-        overlay.classList.add('show');
-        menuIcon.classList.add('active');
-      }
-    }
-
-    function closeSidebar() {
+  function toggleSidebar() {
+    const isOpen = sidebar.classList.contains('open');
+    if (isOpen) {
       sidebar.classList.remove('open');
       overlay.classList.remove('show');
       menuIcon.classList.remove('active');
+      document.body.classList.remove('sidebar-open');
+    } else {
+      sidebar.classList.add('open');
+      overlay.classList.add('show');
+      menuIcon.classList.add('active');
+      document.body.classList.add('sidebar-open');
     }
+  }
 
-    const cartCount = document.getElementById('cart-count');
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    menuIcon.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  }
 
-    function updateCartCount(count) {
-      if(count > 0) {
-        cartCount.style.display = 'block';
-        cartCount.textContent = count;
-      } else {
-        cartCount.style.display = 'none';
-      }
+  // Prevent text selection and highlight on mobile
+  document.body.addEventListener('touchstart', function(e) {
+    if (document.body.classList.contains('sidebar-open')) {
+      e.preventDefault();
     }
-
-    updateCartCount(0);
-  </script>
-
+  }, { passive: false });
+</script>
 </body>
 </html>

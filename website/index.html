@@ -18,7 +18,7 @@
       font-family: 'Cardo', serif;
       background-color: white;
       overflow: hidden;
-      -webkit-user-select: none; /* disable text selection on mobile */
+      -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
@@ -39,22 +39,61 @@
       background: transparent;
     }
 
+    /* The menu icon container for the animated lines */
     .menu-icon {
-      width: 32px;
-      height: auto;
       cursor: pointer;
       z-index: 1101;
-      filter: none; /* no color filter */
-      transition: transform 0.3s ease;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    /* Lines */
+    .menu-icon span:nth-child(1) {
+      width: 100%;
+    }
+    .menu-icon span:nth-child(2) {
+      width: 100%;
+    }
+    .menu-icon span:nth-child(3) {
+      width: 70%;
+      margin-left: auto;
+    }
+
+    /* X icon animation when active */
+    .menu-icon.active span:nth-child(1) {
+      transform: rotate(45deg);
+      width: 100%;
+      margin-left: 0;
+    }
+    .menu-icon.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-icon.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      width: 100%;
+      margin-left: 0;
     }
 
     .logo {
       height: 40px;
       cursor: pointer;
       z-index: 1101;
-      position: absolute;
-      left: 55%; /* moved right to be exactly centered */
-      transform: translateX(-50%);
+      position: relative;
+      margin-left: 8px; /* moved more left */
       margin-top: 5px;
     }
 
@@ -66,9 +105,8 @@
       justify-content: center;
       align-items: center;
       z-index: 1101;
-      position: absolute;
-      right: 16px; /* back on the right */
-      top: 10px;
+      margin-right: 12px;
+      margin-top: 10px;
     }
 
     .cart-icon {
@@ -113,7 +151,8 @@
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
-      align-items: center; /* center text horizontally */
+      align-items: flex-start; /* align text left */
+      padding-left: 40px; /* some left padding */
     }
 
     .sidebar.open {
@@ -125,7 +164,7 @@
       margin: 25px 0;
       font-size: 18px;
       cursor: pointer;
-      text-align: center; /* center text */
+      text-align: left; /* align text left */
       width: 100%;
       max-width: 220px;
     }
@@ -163,29 +202,22 @@
       }
 
       .menu-icon {
-        width: 28px;          /* smaller */
-        margin-top: 4px;      /* slightly lower */
-        filter: brightness(0) invert(1); /* white */
-        cursor: pointer;
+        width: 28px;
+        height: 22px;
+        margin-top: 6px;
       }
 
       .logo {
         height: 26px;
-        position: absolute;
-        left: 55%;            /* moved right */
-        top: 6px;
-        transform: translateX(-50%);
+        margin-left: 10px;
         margin-top: 0;
       }
 
       .cart-container {
         width: 26px;
         height: 26px;
-        position: absolute;
-        right: 12px;          /* back to right */
-        top: 6px;
-        margin-left: 0;
-        margin-top: 0;
+        margin-right: 12px;
+        margin-top: 6px;
       }
 
       .cart-icon {
@@ -198,12 +230,12 @@
         left: -100%;
         background-color: rgba(50, 50, 50, 0.95);
         backdrop-filter: blur(10px);
-        transition: left 0.4s ease; /* smoother */
-        padding: 100px 20px 20px 20px;
+        transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 100px 20px 20px 40px; /* left aligned */
         color: white;
         display: flex;
         flex-direction: column;
-        align-items: center; /* center sidebar text */
+        align-items: flex-start; /* align text left */
       }
 
       .sidebar.open {
@@ -212,7 +244,7 @@
       }
 
       .sidebar p {
-        text-align: center;
+        text-align: left;
         margin: 25px 0;
         font-size: 18px;
         cursor: pointer;
@@ -221,7 +253,7 @@
       }
 
       .overlay {
-        background: transparent; /* no darkening on hero */
+        background: transparent; /* no darkening */
       }
     }
   </style>
@@ -231,9 +263,12 @@
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" class="menu-icon" id="menuIcon" onclick="toggleSidebar()" />
+    <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
     <div class="cart-container" id="cart-icon">
       <i class="fas fa-shopping-bag cart-icon"></i>
       <div class="cart-count" id="cart-count">0</div>
@@ -259,18 +294,18 @@
       if(isOpen) {
         sidebar.classList.remove('open');
         overlay.classList.remove('show');
-        menuIcon.src = "https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true";
+        menuIcon.classList.remove('active');
       } else {
         sidebar.classList.add('open');
         overlay.classList.add('show');
-        menuIcon.src = "https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true";
+        menuIcon.classList.add('active');
       }
     }
 
     function closeSidebar() {
       sidebar.classList.remove('open');
       overlay.classList.remove('show');
-      menuIcon.src = "https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true";
+      menuIcon.classList.remove('active');
     }
 
     const cartCount = document.getElementById('cart-count');

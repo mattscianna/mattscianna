@@ -51,7 +51,7 @@
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    margin-top: 6px; /* moved down a bit */
+    margin-top: 6px; /* slightly lower */
   }
 
   .menu-btn::before,
@@ -104,8 +104,8 @@
     position: relative;
     cursor: pointer;
     z-index: 1300;
-    margin-top: 6px; /* align with menu */
     margin-right: 4px;
+    margin-top: 2px; /* raised a bit higher */
   }
 
   .cart-icon {
@@ -133,7 +133,6 @@
 
   /* Image box below header */
   .image-box {
-    margin-top: 56px; /* below header */
     width: 100vw;
     height: 60vh;
     overflow: hidden;
@@ -203,7 +202,7 @@
   </div>
 </header>
 
-<!-- Image box below header -->
+<!-- Image box directly below header -->
 <div class="image-box" aria-label="Sample photo">
   <!-- Sample placeholder image -->
   <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
@@ -266,6 +265,12 @@
     }
   });
 
+  // For some browsers and mobile: prevent overscroll on touch devices
+  document.addEventListener('touchmove', (event) => {
+    if (window.scrollY <= 0 && event.touches[0].clientY > 0) {
+      event.preventDefault();
+    }
+  }, { passive: false });
 </script>
 
 </body>

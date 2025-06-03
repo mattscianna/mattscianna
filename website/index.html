@@ -15,30 +15,43 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
+      height: 100%;
+      overflow: hidden; /* Prevent scrolling vertically and horizontally */
+      background-color: white;
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
+    }
+
+    body {
+      color: black;
+      user-select: none;
     }
 
     header {
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 56px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 12px 16px;
-      background-color: white;  /* White header background */
+      background-color: white;
       color: black;
       z-index: 1200;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
     }
 
     .menu-btn {
-      width: 18px;   /* smaller menu icon */
+      width: 18px;
       height: 2px;
       background-color: black;
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
+      margin-top: 4px; /* slightly lower */
     }
 
     .menu-btn::before,
@@ -84,20 +97,23 @@
 
     .logo {
       height: 34px;
-      filter: none; /* no filter, black logo */
+      filter: none; /* black logo */
     }
 
     .cart-icon-container {
       position: relative;
       cursor: pointer;
       z-index: 1300;
+      margin-top: 6px; /* lowered to align with menu icon */
+      margin-right: 4px;
     }
 
     .cart-icon {
-      height: 18px;  /* smaller */
-      filter: invert(0%); /* black */
+      height: 22px; /* bigger */
+      filter: invert(0%);
       position: relative;
-      top: -1px; /* raise to align with logo */
+      top: 0;
+      display: block;
     }
 
     .cart-count {
@@ -112,20 +128,22 @@
       line-height: 1;
       min-width: 16px;
       text-align: center;
-      display: none; /* hidden initially */
+      display: none;
     }
 
     /* Image box below header */
     .image-box {
+      position: fixed;
+      top: 56px; /* right below header */
+      left: 0;
       width: 100vw;
-      max-width: 100vw;
-      height: 70vh;
-      margin-top: 0; /* flush with header */
+      height: calc(100vh - 56px);
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #222; /* dark background behind image */
+      background-color: #222;
+      z-index: 1;
     }
 
     .image-box img {
@@ -152,21 +170,14 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      overflow-y: auto;
     }
 
     .sidebar.open {
       left: 0;
     }
 
-    /* Sidebar close button */
-    .sidebar-close-btn {
-      align-self: flex-end;
-      font-size: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-      margin-bottom: 20px;
-    }
+    /* Remove sidebar close button */
 
     /* Show header only on mobile */
     @media (min-width: 768px) {
@@ -180,29 +191,28 @@
 
   <header>
     <!-- Menu Icon (Left) -->
-    <div id="menuToggle" class="menu-btn"></div>
+    <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
 
     <!-- Centered Logo -->
-    <div class="logo-container" id="logoContainer" title="Go to main page">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
+    <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-black.png?raw=true" alt="Matt Scianna Logo" class="logo" />
     </div>
 
     <!-- Shopping Bag Icon (Right) -->
-    <div class="cart-icon-container" title="View Cart">
+    <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
       <div class="cart-count" id="cartCount">0</div>
     </div>
   </header>
 
   <!-- Image box below header -->
-  <div class="image-box">
+  <div class="image-box" aria-label="Sample photo">
     <!-- Sample placeholder image -->
     <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
   </div>
 
   <!-- Sidebar -->
-  <nav id="sidebar" class="sidebar" aria-hidden="true">
-    <div class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">&times;</div>
+  <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
     <div>
       <!-- Sidebar content here -->
       <p>Sidebar content goes here.</p>
@@ -212,7 +222,6 @@
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
 
@@ -223,22 +232,13 @@
       sidebar.setAttribute('aria-hidden', !isOpen);
     });
 
-    // Close sidebar button
-    sidebarCloseBtn.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      menuToggle.classList.remove('open');
-      sidebar.setAttribute('aria-hidden', 'true');
-    });
-
-    // Clicking Matt Scianna logo reloads current page smoothly
+    // Clicking Matt Scianna logo reloads main page smoothly
     logoContainer.addEventListener('click', () => {
-      // Simple smooth reload without flicker:
-      // Fade out logos slightly
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
 
       setTimeout(() => {
-        window.location.href = '/website/'; // Reload to main page
+        window.location.href = '/website/';
       }, 300);
     });
 
@@ -248,6 +248,17 @@
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
     updateCartCount(0);
+
+    // Accessibility: allow enter key to trigger click on keyboard focus
+    ['menuToggle', 'logoContainer'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    });
   </script>
 
 </body>

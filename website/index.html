@@ -71,7 +71,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 7px; /* Slightly raised from previous */
+      top: 7px;
     }
 
     .logo {
@@ -99,6 +99,7 @@
       line-height: 1;
       min-width: 16px;
       text-align: center;
+      display: none; /* Hidden until items are added */
     }
 
     @media (min-width: 768px) {
@@ -121,26 +122,29 @@
 
     <!-- Shopping Bag Icon (Right) -->
     <div class="cart-icon-container">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/shopping-bag-white.png?raw=true" alt="Cart" class="cart-icon" />
+      <img src="https://via.placeholder.com/22?text=👜" alt="Cart" class="cart-icon" />
       <div class="cart-count" id="cartCount">0</div>
     </div>
   </header>
 
   <script>
-    // Menu icon toggle
+    // Toggle menu icon
     const menuToggle = document.getElementById('menuToggle');
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('open');
     });
 
-    // Simulate adding items to cart
+    // Cart logic (you'll update this later with real cart functionality)
     const cartCountEl = document.getElementById('cartCount');
-    let cartItems = 0;
 
-    document.querySelector('.cart-icon').addEventListener('click', () => {
-      cartItems++;
-      cartCountEl.textContent = cartItems;
-    });
+    // Example function to update cart count when items are added
+    function updateCartCount(count) {
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+
+    // Just simulating with 0 items for now
+    updateCartCount(0);
   </script>
 
 </body>

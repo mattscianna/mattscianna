@@ -21,7 +21,7 @@
 
     .header {
       position: relative;
-      height: 90px;
+      height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,8 +29,8 @@
     }
 
     .logo {
-      margin-top: 10px;
-      height: 30px;
+      margin-top: 8px;
+      height: 40px;
       cursor: pointer;
     }
 
@@ -39,15 +39,10 @@
       left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      width: 35px;
+      width: 28px;
       height: auto;
       cursor: pointer;
-      transition: transform 0.3s ease;
       z-index: 1100;
-    }
-
-    .menu-icon.open {
-      transform: translateY(-50%) rotate(90deg);
     }
 
     .cart-container {
@@ -56,8 +51,8 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      width: 35px;
-      height: 35px;
+      width: 32px;
+      height: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -65,7 +60,7 @@
     }
 
     .cart-icon {
-      font-size: 26px;
+      font-size: 24px;
       color: white;
       position: relative;
     }
@@ -76,7 +71,7 @@
       right: -10px;
       background-color: #8B0000;
       color: white;
-      font-size: 14px;
+      font-size: 13px;
       padding: 1px 5px;
       border-radius: 50%;
       display: none;
@@ -141,12 +136,12 @@
 
     @media screen and (max-width: 600px) {
       .logo {
-        height: 25px;
+        height: 35px;
         margin-top: 5px;
       }
 
       .menu-icon {
-        width: 28px;
+        width: 24px;
         left: 16px;
       }
 
@@ -170,7 +165,12 @@
       }
 
       .header {
-        height: 80px;
+        height: 90px;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding-left: 30px;
       }
     }
   </style>
@@ -209,11 +209,12 @@
       const overlay = document.getElementById('overlay');
       const menuIcon = document.getElementById('menuIcon');
 
+      const isOpen = sidebar.classList.contains('open');
       sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
-      
-      // Toggle the menu icon to an X by swapping image
-      if (sidebar.classList.contains('open')) {
+
+      // Toggle menu icon to X and back
+      if (!isOpen) {
         menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true';
       } else {
         menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
@@ -237,7 +238,7 @@
       }
     }
 
-    updateCartCount(0); // Initial state
+    updateCartCount(0); // Initial count
   </script>
 
 </body>

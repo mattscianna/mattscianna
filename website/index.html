@@ -33,8 +33,7 @@
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 6px; /* Lowered slightly */
     }
 
     .menu-btn::before,
@@ -84,13 +83,12 @@
       position: relative;
       display: flex;
       align-items: center;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 6px; /* Lowered slightly */
     }
 
     .cart-icon {
       height: 20px;
-      filter: brightness(0) invert(1); /* Makes the icon white */
+      filter: brightness(0) invert(1); /* Makes icon white */
       cursor: pointer;
     }
 
@@ -106,13 +104,17 @@
       line-height: 1;
       min-width: 16px;
       text-align: center;
-      display: none; /* Hidden until items are added */
+      display: none;
     }
 
     @media (min-width: 768px) {
       header {
         display: none;
       }
+    }
+
+    a {
+      text-decoration: none;
     }
   </style>
 </head>
@@ -123,9 +125,9 @@
     <div id="menuToggle" class="menu-btn"></div>
 
     <!-- Centered Logo -->
-    <div class="logo-container">
+    <a href="/" class="logo-container">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna Logo" class="logo" />
-    </div>
+    </a>
 
     <!-- Shopping Bag Icon (Right) -->
     <div class="cart-icon-container">
@@ -141,16 +143,15 @@
       menuToggle.classList.toggle('open');
     });
 
-    // Cart logic (you'll update this later with real cart functionality)
+    // Cart logic
     const cartCountEl = document.getElementById('cartCount');
 
-    // Example function to update cart count when items are added
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
 
-    // Just simulating with 0 items for now
+    // Placeholder count
     updateCartCount(0);
   </script>
 

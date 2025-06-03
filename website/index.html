@@ -1,173 +1,268 @@
-<style>
-  html, body {
-    height: 100%;
-    overflow-y: auto; /* allow vertical scrolling */
-    overscroll-behavior-y: contain; /* prevent pull-to-refresh overscroll */
-    margin: 0;
-    padding: 0;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matt Scianna</title>
 
-  header {
-    position: sticky;
-    top: 0;
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    background-color: white;
-    border-bottom: 1px solid #ccc;
-    z-index: 1200;
-  }
+  <!-- Import Cardo font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
 
-  .menu-btn {
-    margin-top: 2px; /* raised to align better with logo */
-    width: 18px;
-    height: 2px;
-    background-color: black;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .menu-btn::before,
-  .menu-btn::after {
-    content: "";
-    width: 18px;
-    height: 2px;
-    background-color: black;
-    position: absolute;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .menu-btn::before {
-    top: -8px;
-  }
-
-  .menu-btn::after {
-    top: 8px;
-  }
-
-  .menu-btn.open {
-    background-color: transparent;
-  }
-
-  .menu-btn.open::before {
-    transform: rotate(45deg);
-    top: 0;
-  }
-
-  .menu-btn.open::after {
-    transform: rotate(-45deg);
-    top: 0;
-  }
-
-  .logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 12px; /* logo a bit lower */
-    cursor: pointer;
-    z-index: 1300;
-  }
-
-  .cart-icon-container {
-    margin-top: 0px; /* slightly higher to align with menu */
-    cursor: pointer;
-    position: relative;
-    z-index: 1300;
-  }
-
-  .cart-icon {
-    height: 26px;
-  }
-
-  .image-box {
-    width: 100vw;
-    height: 60vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #222;
-  }
-
-  .image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 56px; /* below header */
-    left: -100%;
-    width: 100vw;
-    height: calc(100vh - 56px);
-    background-color: white;
-    font-family: 'Cardo', serif;
-    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1100;
-    color: black;
-    font-size: 24px;
-    user-select: none;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
-</style>
-
-<header>
-  <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
-
-  <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
-  </div>
-
-  <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-  </div>
-</header>
-
-<div class="image-box" aria-label="Sample photo">
-  <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
-</div>
-
-<nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
-  <div>
-    <p>Sidebar content goes here. This text is padded so it does not go off-screen anymore and is below the header bar.</p>
-    <p>Additional menu items or info can be placed here, and it will scroll inside the sidebar if necessary.</p>
-  </div>
-</nav>
-
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-
-  menuToggle.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
-    sidebar.setAttribute('aria-hidden', !isOpen);
-  });
-
-  // Prevent scrolling above header (no overscroll past top)
-  window.addEventListener('scroll', () => {
-    if (window.scrollY < 0) {
-      window.scrollTo(0, 0);
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  });
 
-  // On mobile: prevent overscroll/pull-to-refresh above top
-  document.addEventListener('touchmove', (event) => {
-    if (window.scrollY <= 0 && event.touches[0].clientY > 0) {
-      event.preventDefault();
+    html, body {
+      height: 100%;
+      overflow-y: auto; /* allow vertical scrolling */
+      overscroll-behavior-y: contain; /* prevent pull-to-refresh overscroll */
+      font-family: Arial, sans-serif;
+      background-color: white;
+      color: black;
+      user-select: none;
     }
-  }, { passive: false });
-</script>
+
+    header {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      height: 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background-color: white;
+      border-bottom: 1px solid #ccc;
+      z-index: 1200;
+      box-sizing: border-box;
+    }
+
+    .menu-btn {
+      width: 18px;
+      height: 2px;
+      background-color: black;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      margin-top: 2px; /* raised to align better with logo */
+    }
+
+    .menu-btn::before,
+    .menu-btn::after {
+      content: "";
+      width: 18px;
+      height: 2px;
+      background-color: black;
+      position: absolute;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .menu-btn::before {
+      top: -8px;
+    }
+
+    .menu-btn::after {
+      top: 8px;
+    }
+
+    .menu-btn.open {
+      background-color: transparent;
+    }
+
+    .menu-btn.open::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+
+    .menu-btn.open::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 12px; /* logo a bit lower */
+      cursor: pointer;
+      z-index: 1300;
+    }
+
+    .logo {
+      height: 34px;
+      filter: none;
+    }
+
+    .cart-icon-container {
+      margin-top: 0px; /* slightly higher to align */
+      cursor: pointer;
+      position: relative;
+      z-index: 1300;
+      margin-right: 4px;
+    }
+
+    .cart-icon {
+      height: 26px;
+      filter: invert(0%);
+      display: block;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background-color: white;
+      color: #111;
+      border-radius: 50%;
+      font-size: 10px;
+      padding: 2px 5px;
+      line-height: 1;
+      min-width: 16px;
+      text-align: center;
+      display: none;
+    }
+
+    /* Image box below header */
+    .image-box {
+      width: 100vw;
+      height: 60vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #222;
+      margin-top: 0; /* touching header bottom line */
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 56px; /* just below header */
+      left: -100%;
+      width: 100vw;
+      height: calc(100vh - 56px);
+      background-color: white;
+      font-family: 'Cardo', serif;
+      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1100;
+      color: black;
+      font-size: 24px;
+      user-select: none;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    /* Hide header on wider screens (optional) */
+    @media (min-width: 768px) {
+      header {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Menu Icon (Left) -->
+    <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
+
+    <!-- Centered Logo -->
+    <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
+    </div>
+
+    <!-- Shopping Bag Icon (Right) -->
+    <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </header>
+
+  <!-- Image box below header -->
+  <div class="image-box" aria-label="Sample photo">
+    <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
+  </div>
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
+    <div>
+      <p>Sidebar content goes here. This text is padded so it does not go off-screen anymore and is below the header bar.</p>
+      <p>Additional menu items or info can be placed here, and it will scroll inside the sidebar if necessary.</p>
+    </div>
+  </nav>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const logoContainer = document.getElementById('logoContainer');
+    const cartCountEl = document.getElementById('cartCount');
+
+    // Menu toggle open/close sidebar
+    menuToggle.addEventListener('click', () => {
+      const isOpen = sidebar.classList.toggle('open');
+      menuToggle.classList.toggle('open', isOpen);
+      sidebar.setAttribute('aria-hidden', !isOpen);
+    });
+
+    // Clicking Matt Scianna logo reloads main page smoothly
+    logoContainer.addEventListener('click', () => {
+      document.querySelector('header').style.transition = 'opacity 0.3s ease';
+      document.querySelector('header').style.opacity = '0.6';
+
+      setTimeout(() => {
+        window.location.href = '/website/';
+      }, 300);
+    });
+
+    // Cart count example (start hidden)
+    function updateCartCount(count) {
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+    updateCartCount(0);
+
+    // Accessibility: allow enter key to trigger click on keyboard focus
+    ['menuToggle', 'logoContainer'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    });
+
+    // Prevent scrolling above the header (no overscroll past top)
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < 0) {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    // On mobile: prevent overscroll/pull-to-refresh above top
+    document.addEventListener('touchmove', (event) => {
+      if (window.scrollY <= 0 && event.touches[0].clientY > 0) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+  </script>
+
+</body>
+</html>

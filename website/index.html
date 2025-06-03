@@ -71,7 +71,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 10px; /* Lowered just a bit more */
+      top: 7px; /* Slightly raised from previous */
     }
 
     .logo {
@@ -133,11 +133,10 @@
       menuToggle.classList.toggle('open');
     });
 
-    // Simulate adding items to cart (you’ll hook this up later)
+    // Simulate adding items to cart
     const cartCountEl = document.getElementById('cartCount');
     let cartItems = 0;
 
-    // Example: increase count on click (for demo purposes)
     document.querySelector('.cart-icon').addEventListener('click', () => {
       cartItems++;
       cartCountEl.textContent = cartItems;

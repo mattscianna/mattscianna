@@ -7,7 +7,7 @@
 
   <!-- Font: Cardo -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome for shopping bag icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -15,20 +15,22 @@
     body {
       margin: 0;
       font-family: 'Cardo', serif;
-      background-color: white;
+      background-color: black;
+      color: white;
     }
 
     .header {
       position: relative;
-      height: 100px;
+      height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1001;
     }
 
     .logo {
-      margin-top: 20px;
-      height: 45px;
+      margin-top: 10px;
+      height: 30px;
       cursor: pointer;
     }
 
@@ -37,9 +39,15 @@
       left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
+      width: 35px;
       height: auto;
       cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 1100;
+    }
+
+    .menu-icon.open {
+      transform: translateY(-50%) rotate(90deg);
     }
 
     .cart-container {
@@ -48,16 +56,17 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 1100;
     }
 
     .cart-icon {
-      font-size: 28px;
-      color: black;
+      font-size: 26px;
+      color: white;
       position: relative;
     }
 
@@ -67,13 +76,10 @@
       right: -10px;
       background-color: #8B0000;
       color: white;
-      font-family: Arial, sans-serif;
       font-size: 14px;
       padding: 1px 5px;
       border-radius: 50%;
       display: none;
-      pointer-events: none;
-      user-select: none;
       font-weight: bold;
       min-width: 18px;
       text-align: center;
@@ -86,19 +92,18 @@
       left: -100%;
       width: 250px;
       height: 100%;
-      background-color: white;
+      background-color: #1f1f1f;
       font-family: 'Cardo', serif;
       text-transform: uppercase;
       padding: 100px 20px 20px 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.15s ease;
+      transition: left 0.3s ease;
       z-index: 1000;
-      visibility: hidden;
+      color: white;
     }
 
     .sidebar.open {
       left: 0;
-      visibility: visible;
     }
 
     .sidebar-close-container {
@@ -125,7 +130,7 @@
       left: 0;
       height: 100%;
       width: 100%;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.3);
       display: none;
       z-index: 999;
     }
@@ -136,28 +141,26 @@
 
     @media screen and (max-width: 600px) {
       .logo {
-        height: 35px;
-        margin-top: 10px;
+        height: 25px;
+        margin-top: 5px;
       }
 
       .menu-icon {
-        width: 32px;
+        width: 28px;
         left: 16px;
       }
 
       .cart-container {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         right: 16px;
       }
 
       .cart-icon {
-        font-size: 24px;
+        font-size: 22px;
       }
 
       .sidebar-close-container {
-        width: 32px;
-        height: 32px;
         left: 16px;
         top: 30px;
       }
@@ -174,11 +177,14 @@
 </head>
 <body>
 
+  <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
+  <!-- Header -->
   <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU.png?raw=true" alt="Menu Icon" class="menu-icon" onclick="toggleSidebar()" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" class="menu-icon" id="menuIcon" onclick="toggleSidebar()" />
+    
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
     
     <div class="cart-container" id="cart-icon">
       <i class="fas fa-shopping-bag cart-icon"></i>
@@ -186,9 +192,10 @@
     </div>
   </div>
 
+  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
     <div class="sidebar-close-container" onclick="closeSidebar()">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/X.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
     </div>
     <p>Home</p>
     <p>Shop</p>
@@ -200,13 +207,23 @@
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('overlay');
+      const menuIcon = document.getElementById('menuIcon');
+
       sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
+      
+      // Toggle the menu icon to an X by swapping image
+      if (sidebar.classList.contains('open')) {
+        menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true';
+      } else {
+        menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
+      }
     }
 
     function closeSidebar() {
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('show');
+      document.getElementById('menuIcon').src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
     }
 
     const cartCount = document.getElementById('cart-count');
@@ -220,7 +237,7 @@
       }
     }
 
-    updateCartCount(0); // Start with count hidden
+    updateCartCount(0); // Initial state
   </script>
 
 </body>

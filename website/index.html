@@ -15,7 +15,7 @@
       font-family: Arial, sans-serif;
       background-color: #111;
       color: white;
-      overflow-x: hidden; /* prevent horizontal scroll when sidebar open */
+      overflow-x: hidden;
     }
 
     header {
@@ -25,9 +25,15 @@
       align-items: center;
       padding: 12px 16px;
       background-color: #111;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       z-index: 1001;
       opacity: 1;
+    }
+
+    /* Fade out class */
+    .fade-out {
+      opacity: 0.3 !important;
+      transition: opacity 0.4s ease !important;
     }
 
     .menu-btn {
@@ -79,13 +85,9 @@
       transform: translateX(-50%);
       top: 7px;
       cursor: pointer;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       z-index: 1001;
       opacity: 1;
-    }
-
-    .logo {
-      height: 34px;
     }
 
     .cart-icon-container {
@@ -95,7 +97,7 @@
       top: 1px;
       z-index: 1001;
       opacity: 1;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
     .cart-icon {
@@ -126,7 +128,7 @@
       left: -100%;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(255, 255, 255, 0.15); /* transparent gray */
+      background-color: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(6px);
       transition: left 0.35s ease;
       z-index: 1100;
@@ -142,7 +144,6 @@
       left: 0;
     }
 
-    /* Hide header on larger screens */
     @media (min-width: 768px) {
       header {
         display: none;
@@ -170,7 +171,6 @@
 
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar" aria-hidden="true">
-    <!-- You can add menu content here if you want -->
     Menu Content Here
   </div>
 
@@ -189,26 +189,27 @@
       header.style.opacity = '1';
       logo.style.opacity = '1';
       cartIconContainer.style.opacity = '1';
-      // Toggle aria attributes for accessibility
       sidebar.setAttribute('aria-hidden', !isOpen);
       menuToggle.setAttribute('aria-expanded', isOpen);
     });
 
-    // Smooth reload on clicking the logo (fade out, reload, fade in)
+    // Smooth reload on clicking the logo (fade out then reload)
     function smoothReload() {
-      // Fade out all logos smoothly
-      header.style.opacity = '0.3';
-      logo.style.opacity = '0.3';
-      cartIconContainer.style.opacity = '0.3';
+      // Add fade-out class to all elements
+      header.classList.add('fade-out');
+      logo.classList.add('fade-out');
+      cartIconContainer.classList.add('fade-out');
 
-      setTimeout(() => {
+      // Listen for transition end on header opacity (only once)
+      header.addEventListener('transitionend', () => {
         window.location.reload();
-      }, 300);
+      }, { once: true });
     }
 
     logo.addEventListener('click', smoothReload);
     logo.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
         smoothReload();
       }
     });
@@ -219,7 +220,6 @@
       logo.style.opacity = '0';
       cartIconContainer.style.opacity = '0';
 
-      // Fade them back in simultaneously after tiny delay
       setTimeout(() => {
         header.style.transition = 'opacity 0.4s ease';
         logo.style.transition = 'opacity 0.4s ease';
@@ -228,19 +228,22 @@
         header.style.opacity = '1';
         logo.style.opacity = '1';
         cartIconContainer.style.opacity = '1';
+
+        // Remove fade-out class in case it persists
+        header.classList.remove('fade-out');
+        logo.classList.remove('fade-out');
+        cartIconContainer.classList.remove('fade-out');
       }, 50);
     });
 
     // Cart count element
     const cartCountEl = document.getElementById('cartCount');
 
-    // Example function to update cart count
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
 
-    // Initialize with 0 items
     updateCartCount(0);
   </script>
 

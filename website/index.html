@@ -27,18 +27,20 @@
     }
 
     .menu-btn {
-      width: 24px;
+      width: 18px;
       height: 2px;
       background-color: white;
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .menu-btn::before,
     .menu-btn::after {
       content: "";
-      width: 24px;
+      width: 18px;
       height: 2px;
       background-color: white;
       position: absolute;
@@ -46,11 +48,11 @@
     }
 
     .menu-btn::before {
-      top: -8px;
+      top: -6px;
     }
 
     .menu-btn::after {
-      top: 8px;
+      top: 6px;
     }
 
     .menu-btn.open {
@@ -82,13 +84,14 @@
       position: relative;
       display: flex;
       align-items: center;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .cart-icon {
-      height: 26px; /* Slightly larger */
+      height: 20px;
       filter: brightness(0) invert(1); /* Makes the icon white */
       cursor: pointer;
-      margin-top: 2px; /* Adjust vertical position slightly downward */
     }
 
     .cart-count {

@@ -80,11 +80,15 @@
 
     .cart-icon-container {
       position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .cart-icon {
-      height: 22px;
+      height: 26px; /* Slightly larger */
+      filter: brightness(0) invert(1); /* Makes the icon white */
       cursor: pointer;
+      margin-top: 2px; /* Adjust vertical position slightly downward */
     }
 
     .cart-count {

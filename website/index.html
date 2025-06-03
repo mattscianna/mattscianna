@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
 
-  <!-- Import Cardo font -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
 
   <style>
@@ -17,8 +17,8 @@
 
     html, body {
       height: 100%;
-      overflow-y: auto; /* allow vertical scrolling */
-      overscroll-behavior-y: contain; /* prevent pull-to-refresh overscroll */
+      overflow-y: auto;       /* allow vertical scrolling */
+      overflow-x: hidden;     /* prevent side scrolling */
       font-family: Arial, sans-serif;
       background-color: white;
       color: black;
@@ -37,7 +37,6 @@
       background-color: white;
       border-bottom: 1px solid #ccc;
       z-index: 1200;
-      box-sizing: border-box;
     }
 
     .menu-btn {
@@ -47,7 +46,7 @@
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      margin-top: 2px; /* raised to align better with logo */
+      margin-top: 4px; /* Slightly lower */
     }
 
     .menu-btn::before,
@@ -86,22 +85,20 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 12px; /* logo a bit lower */
+      top: 12px;
       cursor: pointer;
       z-index: 1300;
     }
 
     .logo {
       height: 34px;
-      filter: none;
     }
 
     .cart-icon-container {
-      margin-top: 0px; /* slightly higher to align */
+      margin-top: -2px; /* Raised higher */
       cursor: pointer;
       position: relative;
       z-index: 1300;
-      margin-right: 4px;
     }
 
     .cart-icon {
@@ -125,7 +122,6 @@
       display: none;
     }
 
-    /* Image box below header */
     .image-box {
       width: 100vw;
       height: 60vh;
@@ -134,7 +130,7 @@
       justify-content: center;
       align-items: center;
       background-color: #222;
-      margin-top: 0; /* touching header bottom line */
+      margin-top: 0;
     }
 
     .image-box img {
@@ -143,10 +139,9 @@
       object-fit: cover;
     }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
-      top: 56px; /* just below header */
+      top: 56px;
       left: -100%;
       width: 100vw;
       height: calc(100vh - 56px);
@@ -169,7 +164,6 @@
       left: 0;
     }
 
-    /* Hide header on wider screens (optional) */
     @media (min-width: 768px) {
       header {
         display: none;
@@ -180,31 +174,26 @@
 <body>
 
   <header>
-    <!-- Menu Icon (Left) -->
     <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
 
-    <!-- Centered Logo -->
     <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
     </div>
 
-    <!-- Shopping Bag Icon (Right) -->
     <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
       <div class="cart-count" id="cartCount">0</div>
     </div>
   </header>
 
-  <!-- Image box below header -->
   <div class="image-box" aria-label="Sample photo">
     <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
   </div>
 
-  <!-- Sidebar -->
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
     <div>
-      <p>Sidebar content goes here. This text is padded so it does not go off-screen anymore and is below the header bar.</p>
-      <p>Additional menu items or info can be placed here, and it will scroll inside the sidebar if necessary.</p>
+      <p>Sidebar content goes here. This text is padded so it does not go off-screen and stays below the header.</p>
+      <p>Additional links or text can go here too.</p>
     </div>
   </nav>
 
@@ -214,14 +203,12 @@
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
 
-    // Menu toggle open/close sidebar
     menuToggle.addEventListener('click', () => {
       const isOpen = sidebar.classList.toggle('open');
       menuToggle.classList.toggle('open', isOpen);
       sidebar.setAttribute('aria-hidden', !isOpen);
     });
 
-    // Clicking Matt Scianna logo reloads main page smoothly
     logoContainer.addEventListener('click', () => {
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
@@ -231,14 +218,13 @@
       }, 300);
     });
 
-    // Cart count example (start hidden)
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
+
     updateCartCount(0);
 
-    // Accessibility: allow enter key to trigger click on keyboard focus
     ['menuToggle', 'logoContainer'].forEach(id => {
       const el = document.getElementById(id);
       el.addEventListener('keydown', (e) => {
@@ -248,20 +234,6 @@
         }
       });
     });
-
-    // Prevent scrolling above the header (no overscroll past top)
-    window.addEventListener('scroll', () => {
-      if (window.scrollY < 0) {
-        window.scrollTo(0, 0);
-      }
-    });
-
-    // On mobile: prevent overscroll/pull-to-refresh above top
-    document.addEventListener('touchmove', (event) => {
-      if (window.scrollY <= 0 && event.touches[0].clientY > 0) {
-        event.preventDefault();
-      }
-    }, { passive: false });
   </script>
 
 </body>

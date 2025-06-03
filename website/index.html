@@ -26,7 +26,7 @@
       padding: 12px 16px;
       background-color: #111;
       transition: opacity 0.4s ease;
-      z-index: 1001;
+      z-index: 1102; /* keep header on top */
       opacity: 1;
     }
 
@@ -44,7 +44,7 @@
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       top: 2px;
-      z-index: 1102;
+      z-index: 1103; /* above sidebar */
     }
 
     .menu-btn::before,
@@ -86,8 +86,12 @@
       top: 7px;
       cursor: pointer;
       transition: opacity 0.4s ease;
-      z-index: 1001;
+      z-index: 1103; /* above sidebar */
       opacity: 1;
+    }
+
+    .logo {
+      height: 34px; /* reverted size */
     }
 
     .cart-icon-container {
@@ -95,7 +99,7 @@
       display: flex;
       align-items: center;
       top: 1px;
-      z-index: 1001;
+      z-index: 1103; /* above sidebar */
       opacity: 1;
       transition: opacity 0.4s ease;
     }
@@ -131,7 +135,7 @@
       background-color: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(6px);
       transition: left 0.35s ease;
-      z-index: 1100;
+      z-index: 1100; /* below header and icons */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -185,7 +189,7 @@
     menuToggle.addEventListener('click', () => {
       const isOpen = menuToggle.classList.toggle('open');
       sidebar.classList.toggle('open', isOpen);
-      // Keep all logos fully visible even when sidebar is open
+      // Make sure all logos stay visible & clickable on top when sidebar is open
       header.style.opacity = '1';
       logo.style.opacity = '1';
       cartIconContainer.style.opacity = '1';

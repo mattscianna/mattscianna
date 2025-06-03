@@ -1,302 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Matt Scianna</title>
-<style>
-  /* Reset */
-  * {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-    background: black;
-    color: white;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matt Scianna</title>
 
-  /* HEADER */
-  .header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    background: transparent;
-    z-index: 1100;
-  }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
 
-  /* LOGO */
-  .logo {
-    height: 30px;
-    cursor: pointer;
-    user-select: none;
-    margin-left: 0;
-    filter: none;
-    box-shadow: none;
-    transition: margin 0.3s ease;
-  }
+  <!-- Font Awesome for shopping bag icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  /* CART ICON */
-  .cart-container {
-    cursor: pointer;
-    user-select: none;
-    margin-right: 0;
-    position: relative;
-  }
-  .cart-icon {
-    font-size: 24px;
-    color: white;
-    filter: none;
-    box-shadow: none;
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  /* MENU ICON */
-  .menu-icon {
-    width: 24px; /* smaller size */
-    height: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    z-index: 1150;
-  }
-  .menu-icon span {
-    display: block;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
+    body {
+      margin: 0;
+      font-family: 'Cardo', serif;
+      background-color: white;
+      overflow-x: hidden;
+    }
 
-  /* MENU ICON ACTIVE (X) */
-  .menu-icon.active span:nth-child(1) {
-    transform: rotate(45deg);
-    position: absolute;
-    top: 7.5px;
-    left: 0;
-    width: 100%;
-  }
-  .menu-icon.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .menu-icon.active span:nth-child(3) {
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 7.5px;
-    left: 0;
-    width: 100%;
-  }
-
-  /* SIDEBAR - OLD STYLE */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -100vw;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(60, 60, 60, 0.95); /* less transparent gray */
-    color: white;
-    padding: 100px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: left 0.4s ease-in-out;
-    visibility: hidden;
-    z-index: 1120;
-  }
-  .sidebar.open {
-    left: 0;
-    visibility: visible;
-  }
-  .sidebar p {
-    margin: 25px 0;
-    font-size: 20px;
-    cursor: pointer;
-    user-select: none;
-    text-align: center;
-    width: 100%;
-    max-width: 250px;
-  }
-
-  /* OVERLAY */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1110;
-  }
-  .overlay.show {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  /* BODY NO SCROLL WHEN SIDEBAR OPEN */
-  body.sidebar-open {
-    overflow: hidden;
-    touch-action: none;
-    user-select: none;
-  }
-
-  /* MOBILE STYLES */
-  @media screen and (max-width: 600px) {
+    /* Header */
     .header {
-      padding: 0 15px;
-      height: 56px;
+      position: relative;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
     }
-    .menu-icon {
-      margin-top: 6px;
-      width: 24px; /* smaller size */
-      height: 18px;
-    }
+
     .logo {
-      height: 26px; /* original mobile size */
-      margin-left: 20px;
-      filter: none;
-      box-shadow: none;
+      height: 40px;
+      margin-top: 0;
     }
-    .cart-container {
-      margin-right: 20px;
+
+    .menu-icon, .cart-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      z-index: 1002;
     }
+
+    .menu-icon {
+      left: 16px;
+      width: 28px;
+    }
+
     .cart-icon {
-      font-size: 22px;
-      filter: none;
-      box-shadow: none;
+      right: 16px;
+      font-size: 24px;
+      color: #8B0000;
     }
+
+    /* Sidebar */
     .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      transition: left 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
       padding-top: 100px;
+      padding-left: 30px;
+      font-family: 'Cardo', serif;
     }
-    .sidebar p {
-      font-size: 18px;
+
+    .sidebar a {
+      text-decoration: none;
+      color: #8B0000;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
     }
-  }
-</style>
 
-<!-- FontAwesome for shopping bag icon -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+    .sidebar.open {
+      left: 0;
+    }
 
+    /* Hamburger Menu (X Toggle) */
+    .menu-toggle {
+      width: 28px;
+      height: 20px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .bar {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: #8B0000;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.open .bar:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+
+    .menu-toggle.open .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.open .bar:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 600px) {
+      .sidebar a {
+        font-size: 22px;
+      }
+
+      .header {
+        padding: 10px 0;
+      }
+
+      .logo {
+        height: 32px;
+      }
+
+      .menu-icon {
+        width: 24px;
+      }
+
+      .cart-icon {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header class="header">
-    <div
-      class="menu-icon"
-      id="menuIcon"
-      aria-label="Menu button"
-      role="button"
-      tabindex="0"
-      onclick="toggleSidebar()"
-      onkeydown="if(event.key==='Enter') toggleSidebar();"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
+  <!-- Header -->
+  <div class="header">
+    <!-- Menu Icon -->
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div class="menu-toggle" id="menu-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
     </div>
 
-    <img
-      src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true"
-      alt="Matt Scianna Logo"
-      class="logo"
-      onclick="location.reload()"
-    />
+    <!-- Logo -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/Copy_of_Logo_1-2-removebg-preview.png?raw=true" class="logo" alt="Matt Scianna Logo" />
 
-    <div
-      class="cart-container"
-      id="cartIcon"
-      aria-label="Shopping cart"
-      role="button"
-      tabindex="0"
-      onclick="location.href='https://mattscianna.com/cart'"
-      onkeydown="if(event.key==='Enter') location.href='https://mattscianna.com/cart';"
-    >
-      <i class="fas fa-shopping-bag cart-icon"></i>
+    <!-- Cart Icon -->
+    <div class="cart-icon">
+      <i class="fas fa-bag-shopping"></i>
     </div>
-  </header>
+  </div>
 
-  <nav id="sidebar" class="sidebar" aria-hidden="true">
-    <p
-      onclick="location.href='https://mattscianna.com/shop'"
-      tabindex="0"
-      role="link"
-    >
-      SHOP
-    </p>
-    <p
-      onclick="location.href='https://mattscianna.com/lookbooks'"
-      tabindex="0"
-      role="link"
-    >
-      LOOKBOOKS
-    </p>
-    <p
-      onclick="location.href='https://mattscianna.com/about'"
-      tabindex="0"
-      role="link"
-    >
-      ABOUT
-    </p>
-    <p
-      onclick="location.href='https://mattscianna.com/contact'"
-      tabindex="0"
-      role="link"
-    >
-      CONTACT
-    </p>
-  </nav>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
 
-  <div
-    id="overlay"
-    class="overlay"
-    onclick="closeSidebar()"
-    tabindex="-1"
-  ></div>
-
-<script>
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const menuIcon = document.getElementById('menuIcon');
-
-  function toggleSidebar() {
-    const isOpen = sidebar.classList.contains('open');
-    if (isOpen) {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      menuIcon.classList.remove('active');
-      sidebar.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('sidebar-open');
-    } else {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-      menuIcon.classList.add('active');
-      sidebar.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('sidebar-open');
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const menuToggle = document.getElementById("menu-toggle");
+      sidebar.classList.toggle("open");
+      menuToggle.classList.toggle("open");
     }
-  }
-
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
-    menuIcon.classList.remove('active');
-    sidebar.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('sidebar-open');
-  }
-</script>
+  </script>
 </body>
 </html>

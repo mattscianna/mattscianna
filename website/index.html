@@ -1,57 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Matt Scianna</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
-
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   html, body {
     height: 100%;
-    background-color: white;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden; /* no horizontal scroll */
+    overflow-y: auto; /* allow vertical scrolling */
     overscroll-behavior-y: contain; /* prevent pull-to-refresh overscroll */
-  }
-
-  body {
-    color: black;
-    user-select: none;
+    margin: 0;
+    padding: 0;
   }
 
   header {
     position: sticky;
     top: 0;
-    left: 0;
-    width: 100vw;
     height: 56px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
     background-color: white;
-    color: black;
-    z-index: 1200;
-    box-sizing: border-box;
     border-bottom: 1px solid #ccc;
+    z-index: 1200;
   }
 
   .menu-btn {
+    margin-top: 2px; /* raised to align better with logo */
     width: 18px;
     height: 2px;
     background-color: black;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    margin-top: 6px; /* slightly lower */
   }
 
   .menu-btn::before,
@@ -90,48 +66,22 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 12px; /* logo a little lower */
+    top: 12px; /* logo a bit lower */
     cursor: pointer;
     z-index: 1300;
-  }
-
-  .logo {
-    height: 34px;
-    filter: none; /* black logo */
   }
 
   .cart-icon-container {
-    position: relative;
+    margin-top: 0px; /* slightly higher to align with menu */
     cursor: pointer;
+    position: relative;
     z-index: 1300;
-    margin-right: 4px;
-    margin-top: 2px; /* raised a bit higher */
   }
 
   .cart-icon {
     height: 26px;
-    filter: invert(0%);
-    position: relative;
-    top: 0;
-    display: block;
   }
 
-  .cart-count {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background-color: white;
-    color: #111;
-    border-radius: 50%;
-    font-size: 10px;
-    padding: 2px 5px;
-    line-height: 1;
-    min-width: 16px;
-    text-align: center;
-    display: none;
-  }
-
-  /* Image box below header */
   .image-box {
     width: 100vw;
     height: 60vh;
@@ -140,7 +90,6 @@
     justify-content: center;
     align-items: center;
     background-color: #222;
-    z-index: 1;
   }
 
   .image-box img {
@@ -149,10 +98,9 @@
     object-fit: cover;
   }
 
-  /* Sidebar */
   .sidebar {
     position: fixed;
-    top: 56px; /* push sidebar below header */
+    top: 56px; /* below header */
     left: -100%;
     width: 100vw;
     height: calc(100vh - 56px);
@@ -174,44 +122,26 @@
   .sidebar.open {
     left: 0;
   }
-
-  /* Accessibility and layout tweaks */
-
-  @media (min-width: 768px) {
-    header {
-      display: none;
-    }
-  }
 </style>
-</head>
-<body>
 
 <header>
-  <!-- Menu Icon (Left) -->
   <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
 
-  <!-- Centered Logo -->
   <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
   </div>
 
-  <!-- Shopping Bag Icon (Right) -->
   <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-    <div class="cart-count" id="cartCount">0</div>
   </div>
 </header>
 
-<!-- Image box directly below header -->
 <div class="image-box" aria-label="Sample photo">
-  <!-- Sample placeholder image -->
   <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
 </div>
 
-<!-- Sidebar -->
 <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
   <div>
-    <!-- Sidebar content here -->
     <p>Sidebar content goes here. This text is padded so it does not go off-screen anymore and is below the header bar.</p>
     <p>Additional menu items or info can be placed here, and it will scroll inside the sidebar if necessary.</p>
   </div>
@@ -220,58 +150,24 @@
 <script>
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
-  const logoContainer = document.getElementById('logoContainer');
-  const cartCountEl = document.getElementById('cartCount');
 
-  // Menu toggle open/close sidebar
   menuToggle.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
     menuToggle.classList.toggle('open', isOpen);
     sidebar.setAttribute('aria-hidden', !isOpen);
   });
 
-  // Clicking Matt Scianna logo reloads main page smoothly
-  logoContainer.addEventListener('click', () => {
-    document.querySelector('header').style.transition = 'opacity 0.3s ease';
-    document.querySelector('header').style.opacity = '0.6';
-
-    setTimeout(() => {
-      window.location.href = '/website/';
-    }, 300);
-  });
-
-  // Cart count example (start hidden)
-  function updateCartCount(count) {
-    cartCountEl.textContent = count;
-    cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
-  }
-  updateCartCount(0);
-
-  // Accessibility: allow enter key to trigger click on keyboard focus
-  ['menuToggle', 'logoContainer'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        el.click();
-      }
-    });
-  });
-
-  // Prevent scrolling UP beyond header (top of page)
+  // Prevent scrolling above header (no overscroll past top)
   window.addEventListener('scroll', () => {
     if (window.scrollY < 0) {
       window.scrollTo(0, 0);
     }
   });
 
-  // For some browsers and mobile: prevent overscroll on touch devices
+  // On mobile: prevent overscroll/pull-to-refresh above top
   document.addEventListener('touchmove', (event) => {
     if (window.scrollY <= 0 && event.touches[0].clientY > 0) {
       event.preventDefault();
     }
   }, { passive: false });
 </script>
-
-</body>
-</html>

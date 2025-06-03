@@ -17,7 +17,7 @@
 
     html, body {
       height: 100%;
-      overflow-x: hidden;  /* Prevent side scrolling */
+      overflow-x: hidden;
       font-family: Arial, sans-serif;
       background-color: white;
       color: black;
@@ -29,8 +29,9 @@
     }
 
     header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
       width: 100vw;
       height: 56px;
       display: flex;
@@ -49,7 +50,7 @@
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      margin-top: 2px; /* Slightly lower */
+      margin-top: 4px;
     }
 
     .menu-btn::before,
@@ -88,7 +89,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 14px; /* Tiny bit lower */
+      top: 7px; /* Raised logo a bit higher */
       cursor: pointer;
       z-index: 1300;
     }
@@ -98,7 +99,7 @@
     }
 
     .cart-icon-container {
-      margin-top: -2px; /* Raised to align with logo */
+      margin-top: -2px;
       cursor: pointer;
       position: relative;
       z-index: 1300;
@@ -133,7 +134,7 @@
       justify-content: center;
       align-items: center;
       background-color: #222;
-      margin-top: 0;
+      margin-top: 56px; /* To push below fixed header */
     }
 
     .image-box img {
@@ -150,7 +151,7 @@
       height: calc(100vh - 56px);
       background-color: white;
       font-family: 'Cardo', serif;
-      transition: left 0.5s ease-in-out;
+      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1100;
       color: black;
       font-size: 24px;
@@ -195,8 +196,8 @@
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
     <div>
-      <p>Sidebar content goes here. This text is padded and positioned to not overlap with the header.</p>
-      <p>Additional links or sections can be added below.</p>
+      <p>Sidebar content goes here. This text is padded so it does not go off-screen and stays below the header.</p>
+      <p>Additional links or text can go here too.</p>
     </div>
   </nav>
 

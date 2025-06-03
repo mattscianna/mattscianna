@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
   <style>
-    /* Base Reset */
     * {
       margin: 0;
       padding: 0;
@@ -18,7 +17,6 @@
       color: white;
     }
 
-    /* Mobile Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -28,8 +26,8 @@
     }
 
     .logo {
-      height: 36px; /* Smaller logo */
-      margin-left: 4px; /* Close to edge, but safe */
+      height: 36px;
+      margin-left: 4px;
     }
 
     .icon {
@@ -37,7 +35,7 @@
       cursor: pointer;
     }
 
-    /* Prevent layout from changing on bigger screens for now */
+    /* Desktop: hide everything */
     @media (min-width: 768px) {
       header {
         display: none;
@@ -48,12 +46,13 @@
 <body>
 
   <header>
-    <img src="logo-white-original.png" alt="Matt Scianna Logo" class="logo" />
-    <img src="shopping-bag-original.png" alt="Shopping Bag" class="icon" />
+    <!-- Replace src with your actual image paths -->
+    <img src="https://via.placeholder.com/100x36?text=Matt+Logo" alt="Matt Scianna Logo" class="logo" />
+    <img src="https://via.placeholder.com/22?text=👜" alt="Shopping Bag" class="icon" />
   </header>
 
   <script>
-    // Currently no interactivity needed
+    // No JS functionality needed yet
   </script>
 
 </body>

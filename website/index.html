@@ -18,6 +18,7 @@
     }
 
     header {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -25,17 +26,80 @@
       background-color: #111;
     }
 
-    .logo {
-      height: 36px;
-      margin-left: 4px;
+    .menu-btn {
+      width: 24px;
+      height: 2px;
+      background-color: white;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
     }
 
-    .icon {
+    .menu-btn::before,
+    .menu-btn::after {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background-color: white;
+      position: absolute;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .menu-btn::before {
+      top: -8px;
+    }
+
+    .menu-btn::after {
+      top: 8px;
+    }
+
+    .menu-btn.open {
+      background-color: transparent;
+    }
+
+    .menu-btn.open::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+
+    .menu-btn.open::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .logo {
+      height: 34px;
+    }
+
+    .cart-icon-container {
+      position: relative;
+    }
+
+    .cart-icon {
       height: 22px;
       cursor: pointer;
     }
 
-    /* Desktop: hide everything */
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      font-size: 10px;
+      padding: 2px 5px;
+      line-height: 1;
+      min-width: 16px;
+      text-align: center;
+    }
+
     @media (min-width: 768px) {
       header {
         display: none;
@@ -46,13 +110,37 @@
 <body>
 
   <header>
-    <!-- Replace src with your actual image paths -->
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna Logo" class="logo" />
-    <img src="https://via.placeholder.com/22?text=👜" alt="Shopping Bag" class="icon" />
+    <!-- Menu Icon (Left) -->
+    <div id="menuToggle" class="menu-btn"></div>
+
+    <!-- Centered Logo -->
+    <div class="logo-container">
+      <img src="https://via.placeholder.com/100x34?text=Logo" alt="Matt Scianna Logo" class="logo" />
+    </div>
+
+    <!-- Shopping Bag Icon (Right) -->
+    <div class="cart-icon-container">
+      <img src="https://via.placeholder.com/22?text=👜" alt="Cart" class="cart-icon" />
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
   </header>
 
   <script>
-    // No JS functionality needed yet
+    // Menu icon toggle
+    const menuToggle = document.getElementById('menuToggle');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+    });
+
+    // Simulate adding items to cart (you’ll hook this up later)
+    const cartCountEl = document.getElementById('cartCount');
+    let cartItems = 0;
+
+    // Example: increase count on click (for demo purposes)
+    document.querySelector('.cart-icon').addEventListener('click', () => {
+      cartItems++;
+      cartCountEl.textContent = cartItems;
+    });
   </script>
 
 </body>

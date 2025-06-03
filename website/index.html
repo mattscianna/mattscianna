@@ -27,19 +27,18 @@
     }
 
     .menu-btn {
-      width: 18px;
+      width: 24px;
       height: 2px;
       background-color: white;
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      top: 3px;
     }
 
     .menu-btn::before,
     .menu-btn::after {
       content: "";
-      width: 18px;
+      width: 24px;
       height: 2px;
       background-color: white;
       position: absolute;
@@ -47,11 +46,11 @@
     }
 
     .menu-btn::before {
-      top: -6px;
+      top: -8px;
     }
 
     .menu-btn::after {
-      top: 6px;
+      top: 8px;
     }
 
     .menu-btn.open {
@@ -73,6 +72,7 @@
       left: 50%;
       transform: translateX(-50%);
       top: 7px;
+      cursor: pointer;
     }
 
     .logo {
@@ -83,13 +83,13 @@
       position: relative;
       display: flex;
       align-items: center;
-      top: 1px; /* Slightly higher than before */
+      top: 4px; /* raised shopping bag icon */
     }
 
     .cart-icon {
-      height: 20px;
-      filter: brightness(0) invert(1); /* Makes icon white */
+      height: 22px;
       cursor: pointer;
+      filter: brightness(0) invert(1); /* makes the icon white */
     }
 
     .cart-count {
@@ -104,17 +104,13 @@
       line-height: 1;
       min-width: 16px;
       text-align: center;
-      display: none;
+      display: none; /* Hidden until items are added */
     }
 
     @media (min-width: 768px) {
       header {
         display: none;
       }
-    }
-
-    a {
-      text-decoration: none;
     }
   </style>
 </head>
@@ -124,8 +120,8 @@
     <!-- Menu Icon (Left) -->
     <div id="menuToggle" class="menu-btn"></div>
 
-    <!-- Centered Logo - refreshes main page only -->
-    <a href="/" class="logo-container">
+    <!-- Centered Logo (link refreshes to /website/) -->
+    <a href="/website/" class="logo-container" aria-label="Matt Scianna Home">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna Logo" class="logo" />
     </a>
 
@@ -137,19 +133,22 @@
   </header>
 
   <script>
-    // Toggle menu icon
+    // Toggle menu icon open/close
     const menuToggle = document.getElementById('menuToggle');
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('open');
     });
 
-    // Cart logic
+    // Cart count element
     const cartCountEl = document.getElementById('cartCount');
+
+    // Example function to update cart count
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
 
+    // Initialize with 0 items
     updateCartCount(0);
   </script>
 

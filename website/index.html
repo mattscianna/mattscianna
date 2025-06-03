@@ -17,17 +17,19 @@
 
     html, body {
       height: 100%;
-      overflow-x: hidden; /* prevent horizontal scrolling */
+      overflow-x: hidden; /* prevent horizontal scroll */
       background-color: white;
       font-family: Arial, sans-serif;
+      overscroll-behavior-y: contain; /* contain overscroll to avoid refresh */
     }
 
     body {
       color: black;
       user-select: none;
-      overflow-y: auto; /* enable vertical scroll */
-      max-height: 100vh;
-      overscroll-behavior-y: contain; /* prevent pull-to-refresh */
+      overflow-y: hidden; /* prevent vertical scrolling down */
+      position: fixed; /* lock scroll */
+      width: 100vw;
+      height: 100vh;
     }
 
     header {
@@ -93,7 +95,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 8px;
+      top: 12px; /* lowered from 8px */
       cursor: pointer;
       z-index: 1300;
     }
@@ -107,12 +109,12 @@
       position: relative;
       cursor: pointer;
       z-index: 1300;
-      margin-top: 0; /* raised higher to align with menu */
+      margin-top: 0; /* align with menu */
       margin-right: 4px;
     }
 
     .cart-icon {
-      height: 26px; /* bigger */
+      height: 26px;
       filter: invert(0%);
       position: relative;
       top: 0;
@@ -137,10 +139,10 @@
     /* Image box below header */
     .image-box {
       position: fixed;
-      top: 56px; /* right below header */
+      top: 56px; /* below header */
       left: 0;
       width: 100vw;
-      height: 60vh; /* shorter height */
+      height: 60vh;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -162,18 +164,19 @@
       left: -100%;
       width: 100vw;
       height: 100vh;
-      background-color: white; /* white background */
+      background-color: white;
       font-family: 'Cardo', serif;
       transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1100;
       color: black;
       font-size: 24px;
       user-select: none;
-      padding: 40px 20px 20px 20px;
+      padding: 40px 20px 20px 20px; /* added padding-left */
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       overflow-y: auto;
+      box-sizing: border-box;
     }
 
     .sidebar.open {
@@ -218,7 +221,8 @@
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
     <div>
       <!-- Sidebar content here -->
-      <p>Sidebar content goes here.</p>
+      <p>Sidebar content goes here. This text is padded so it does not go off-screen anymore.</p>
+      <p>Additional menu items or info can be placed here, and it will scroll inside the sidebar if necessary.</p>
     </div>
   </nav>
 

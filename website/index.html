@@ -4,241 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matt Scianna</title>
-
-  <!-- Font: Cardo -->
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome for shopping bag icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <style>
-    body {
+    /* Reset and base styles */
+    * {
       margin: 0;
-      font-family: 'Cardo', serif;
-      background-color: black;
-      color: white;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .header {
-      position: relative;
-      height: 100px;
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    /* Header styles */
+    header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
+      padding: 10px 20px;
+      background-color: #111;
+      position: relative;
       z-index: 1001;
     }
 
     .logo {
-      margin-top: 8px;
-      height: 40px;
-      cursor: pointer;
+      height: 40px; /* Smaller logo */
+      margin-top: 5px; /* Positioned higher */
     }
 
-    .menu-icon {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: auto;
-      cursor: pointer;
-      z-index: 1100;
-    }
-
-    .cart-container {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
+    .icons {
       display: flex;
-      justify-content: center;
       align-items: center;
-      z-index: 1100;
+      gap: 15px;
     }
 
-    .cart-icon {
-      font-size: 24px;
-      color: white;
+    .icon {
+      height: 20px;
+      cursor: pointer;
+      margin-top: 5px; /* Positioned higher */
+    }
+
+    /* Menu icon styles */
+    .menu-icon {
+      width: 25px;
+      height: 2px;
+      background-color: white;
       position: relative;
+      transition: all 0.3s ease-in-out;
     }
 
-    .cart-count {
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      width: 25px;
+      height: 2px;
+      background-color: white;
       position: absolute;
-      top: -6px;
-      right: -10px;
-      background-color: #8B0000;
-      color: white;
-      font-size: 13px;
-      padding: 1px 5px;
-      border-radius: 50%;
-      display: none;
-      font-weight: bold;
-      min-width: 18px;
-      text-align: center;
-      line-height: 1.2;
+      transition: all 0.3s ease-in-out;
     }
 
+    .menu-icon::before {
+      top: -8px;
+    }
+
+    .menu-icon::after {
+      top: 8px;
+    }
+
+    .menu-icon.open {
+      background-color: transparent;
+    }
+
+    .menu-icon.open::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+
+    .menu-icon.open::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    /* Sidebar styles */
     .sidebar {
       position: fixed;
       top: 0;
-      left: -100%;
-      width: 250px;
+      left: 0;
       height: 100%;
-      background-color: #1f1f1f;
-      font-family: 'Cardo', serif;
-      text-transform: uppercase;
-      padding: 100px 20px 20px 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: left 0.3s ease;
+      width: 250px;
+      background-color: #2b2b2b;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
       z-index: 1000;
-      color: white;
+      padding: 50px 20px;
     }
 
     .sidebar.open {
-      left: 0;
+      transform: translateX(0);
     }
 
-    .sidebar-close-container {
-      position: absolute;
-      top: 36px;
-      left: 20px;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sidebar-close {
-      width: 18px;
-      height: auto;
-      display: block;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0,0,0,0.3);
-      display: none;
-      z-index: 999;
-    }
-
-    .overlay.show {
-      display: block;
-    }
-
-    @media screen and (max-width: 600px) {
-      .logo {
-        height: 35px;
-        margin-top: 5px;
-      }
-
-      .menu-icon {
-        width: 24px;
-        left: 16px;
-      }
-
-      .cart-container {
-        width: 28px;
-        height: 28px;
-        right: 16px;
-      }
-
-      .cart-icon {
-        font-size: 22px;
-      }
-
-      .sidebar-close-container {
-        left: 16px;
-        top: 30px;
-      }
-
-      .sidebar-close {
-        width: 18px;
-      }
-
-      .header {
-        height: 90px;
-      }
-
+    /* Hide sidebar on larger screens */
+    @media (min-width: 768px) {
       .sidebar {
-        width: 100%;
-        padding-left: 30px;
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-  <!-- Header -->
-  <div class="header">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true" alt="Menu Icon" class="menu-icon" id="menuIcon" onclick="toggleSidebar()" />
-    
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA-white.png?raw=true" alt="Matt Scianna" class="logo" onclick="location.reload()" />
-    
-    <div class="cart-container" id="cart-icon">
-      <i class="fas fa-shopping-bag cart-icon"></i>
-      <div class="cart-count" id="cart-count">0</div>
+  <header>
+    <img src="logo-white.png" alt="Matt Scianna Logo" class="logo" />
+    <div class="icons">
+      <img src="shopping-bag-icon.png" class="icon" alt="Shopping Bag" />
+      <div id="menuToggle" class="menu-icon"></div>
     </div>
-  </div>
+  </header>
 
-  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <div class="sidebar-close-container" onclick="closeSidebar()">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true" alt="Close Sidebar" class="sidebar-close" />
-    </div>
-    <p>Home</p>
-    <p>Shop</p>
-    <p>Contact</p>
-    <p>About</p>
+    <p>Sidebar Content</p>
+    <!-- Add your sidebar links or content here -->
   </div>
 
   <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const menuIcon = document.getElementById('menuIcon');
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
 
-      const isOpen = sidebar.classList.contains('open');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
       sidebar.classList.toggle('open');
-      overlay.classList.toggle('show');
-
-      // Toggle menu icon to X and back
-      if (!isOpen) {
-        menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/X-white.png?raw=true';
-      } else {
-        menuIcon.src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
-      }
-    }
-
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('overlay').classList.remove('show');
-      document.getElementById('menuIcon').src = 'https://github.com/mattscianna/mattscianna/blob/main/MENU-white.png?raw=true';
-    }
-
-    const cartCount = document.getElementById('cart-count');
-
-    function updateCartCount(count) {
-      if(count > 0) {
-        cartCount.style.display = 'block';
-        cartCount.textContent = count;
-      } else {
-        cartCount.style.display = 'none';
-      }
-    }
-
-    updateCartCount(0); // Initial count
+    });
   </script>
 
 </body>

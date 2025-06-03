@@ -25,8 +25,9 @@
       align-items: center;
       padding: 12px 16px;
       background-color: #111;
-      transition: opacity 0.3s ease; /* for fade effect */
+      transition: opacity 0.3s ease;
       z-index: 1001;
+      opacity: 1;
     }
 
     .menu-btn {
@@ -80,6 +81,7 @@
       cursor: pointer;
       transition: opacity 0.3s ease;
       z-index: 1001;
+      opacity: 1;
     }
 
     .logo {
@@ -92,6 +94,8 @@
       align-items: center;
       top: 1px;
       z-index: 1001;
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
 
     .cart-icon {
@@ -175,21 +179,28 @@
     const sidebar = document.getElementById('sidebar');
     const header = document.querySelector('header');
     const logo = document.getElementById('logo');
+    const cartIconContainer = document.querySelector('.cart-icon-container');
 
     // Toggle sidebar open/close
     menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('open');
-      sidebar.classList.toggle('open');
+      const isOpen = menuToggle.classList.toggle('open');
+      sidebar.classList.toggle('open', isOpen);
+      // Keep all logos fully visible even when sidebar is open
+      header.style.opacity = '1';
+      logo.style.opacity = '1';
+      cartIconContainer.style.opacity = '1';
       // Toggle aria attributes for accessibility
-      const expanded = menuToggle.classList.contains('open');
-      sidebar.setAttribute('aria-hidden', !expanded);
-      menuToggle.setAttribute('aria-expanded', expanded);
+      sidebar.setAttribute('aria-hidden', !isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
     });
 
     // Smooth reload on clicking the logo (fade out, reload, fade in)
     function smoothReload() {
+      // Fade out all logos smoothly
       header.style.opacity = '0.3';
       logo.style.opacity = '0.3';
+      cartIconContainer.style.opacity = '0.3';
+
       setTimeout(() => {
         window.location.reload();
       }, 300);
@@ -200,6 +211,24 @@
       if (e.key === 'Enter' || e.key === ' ') {
         smoothReload();
       }
+    });
+
+    // On page load: fade logos in smoothly
+    window.addEventListener('load', () => {
+      header.style.opacity = '0';
+      logo.style.opacity = '0';
+      cartIconContainer.style.opacity = '0';
+
+      // Fade them back in simultaneously after tiny delay
+      setTimeout(() => {
+        header.style.transition = 'opacity 0.4s ease';
+        logo.style.transition = 'opacity 0.4s ease';
+        cartIconContainer.style.transition = 'opacity 0.4s ease';
+
+        header.style.opacity = '1';
+        logo.style.opacity = '1';
+        cartIconContainer.style.opacity = '1';
+      }, 50);
     });
 
     // Cart count element

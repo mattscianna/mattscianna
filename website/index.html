@@ -13,9 +13,12 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
+      background-color: white; /* Changed to white */
+      color: black; /* Text black by default */
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -24,27 +27,29 @@
       justify-content: space-between;
       align-items: center;
       padding: 12px 16px;
-      background-color: #111;
+      background-color: white; /* White header background */
+      border-bottom: 1px solid #ccc;
       transition: opacity 0.4s ease;
       z-index: 1102; /* keep header on top */
       opacity: 1;
+      color: black;
     }
 
-    /* Fade out class */
-    .fade-out {
-      opacity: 0.3 !important;
-      transition: opacity 0.4s ease !important;
+    /* Icons and text in header black */
+    .menu-btn,
+    .menu-btn::before,
+    .menu-btn::after {
+      background-color: black;
     }
 
     .menu-btn {
       width: 18px;
       height: 2px;
-      background-color: white;
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       top: 2px;
-      z-index: 1103; /* above sidebar */
+      z-index: 1103;
     }
 
     .menu-btn::before,
@@ -52,17 +57,18 @@
       content: "";
       width: 18px;
       height: 2px;
-      background-color: white;
       position: absolute;
       transition: all 0.3s ease-in-out;
     }
 
     .menu-btn::before {
       top: -8px;
+      background-color: black;
     }
 
     .menu-btn::after {
       top: 8px;
+      background-color: black;
     }
 
     .menu-btn.open {
@@ -86,12 +92,13 @@
       top: 7px;
       cursor: pointer;
       transition: opacity 0.4s ease;
-      z-index: 1103; /* above sidebar */
+      z-index: 1103;
       opacity: 1;
     }
 
     .logo {
-      height: 34px; /* reverted size */
+      height: 34px;
+      filter: none; /* remove invert */
     }
 
     .cart-icon-container {
@@ -99,7 +106,7 @@
       display: flex;
       align-items: center;
       top: 1px;
-      z-index: 1103; /* above sidebar */
+      z-index: 1103;
       opacity: 1;
       transition: opacity 0.4s ease;
     }
@@ -107,15 +114,15 @@
     .cart-icon {
       height: 22px;
       cursor: pointer;
-      filter: brightness(0) invert(1);
+      filter: none; /* no invert */
     }
 
     .cart-count {
       position: absolute;
       top: -6px;
       right: -6px;
-      background-color: white;
-      color: #111;
+      background-color: black;
+      color: white;
       border-radius: 50%;
       font-size: 10px;
       padding: 2px 5px;
@@ -132,20 +139,43 @@
       left: -100%;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(0, 0, 0, 0.15);
       backdrop-filter: blur(6px);
-      transition: left 0.35s ease;
-      z-index: 1100; /* below header and icons */
+      transition: left 0.5s ease-in-out; /* smoother */
+      z-index: 1100;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
+      color: black;
       font-size: 24px;
       user-select: none;
     }
 
     .sidebar.open {
       left: 0;
+    }
+
+    /* Image box below header */
+    .image-box {
+      flex-grow: 1;
+      max-height: 70vh;
+      width: 90vw;
+      max-width: 1000px;
+      margin: 16px auto 40px auto; /* leaves white space below */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
     }
 
     @media (min-width: 768px) {
@@ -173,6 +203,11 @@
     </div>
   </header>
 
+  <!-- Image box below header -->
+  <div class="image-box">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Sample" />
+  </div>
+
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar" aria-hidden="true">
     Menu Content Here
@@ -199,12 +234,9 @@
 
     // Smooth reload on clicking the logo (fade out then reload)
     function smoothReload() {
-      // Add fade-out class to all elements
       header.classList.add('fade-out');
       logo.classList.add('fade-out');
       cartIconContainer.classList.add('fade-out');
-
-      // Listen for transition end on header opacity (only once)
       header.addEventListener('transitionend', () => {
         window.location.reload();
       }, { once: true });
@@ -233,7 +265,6 @@
         logo.style.opacity = '1';
         cartIconContainer.style.opacity = '1';
 
-        // Remove fade-out class in case it persists
         header.classList.remove('fade-out');
         logo.classList.remove('fade-out');
         cartIconContainer.classList.remove('fade-out');
@@ -242,12 +273,10 @@
 
     // Cart count element
     const cartCountEl = document.getElementById('cartCount');
-
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
-
     updateCartCount(0);
   </script>
 

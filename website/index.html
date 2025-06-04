@@ -51,7 +51,7 @@
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      margin-top: 2px; /* Slightly lower */
+      margin-top: 2px;
     }
 
     .menu-btn::before,
@@ -90,7 +90,7 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 10px; /* Lowered to align with icons */
+      top: 12px; /* Lowered even more */
       cursor: pointer;
       z-index: 1300;
     }
@@ -104,7 +104,7 @@
       position: relative;
       cursor: pointer;
       z-index: 1300;
-      margin-top: 3px; /* Higher to align */
+      margin-top: 3px;
       margin-right: 4px;
     }
 
@@ -173,7 +173,7 @@
     }
 
     main {
-      padding: 20px;
+      display: none; /* Hide the old text content */
     }
 
     @media (min-width: 768px) {
@@ -202,13 +202,6 @@
     <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
   </div>
 
-  <main>
-    <p style="font-family: 'Cardo', serif;">This is where your website content can go.</p>
-    <p style="font-family: 'Cardo', serif;">You can scroll this area freely.</p>
-    <p style="font-family: 'Cardo', serif;">Add more content here to test scrolling behavior.</p>
-    <div style="height: 1000px;"></div>
-  </main>
-
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
     <p>Sidebar content goes here.</p>
   </nav>
@@ -228,7 +221,6 @@
     logoContainer.addEventListener('click', () => {
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
-
       setTimeout(() => {
         window.location.href = '/website/';
       }, 300);
@@ -238,6 +230,7 @@
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
+
     updateCartCount(0);
 
     ['menuToggle', 'logoContainer'].forEach(id => {

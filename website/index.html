@@ -45,23 +45,37 @@
 
     .menu-icon {
       width: 24px;
-      height: 16px;
+      height: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
     .menu-icon div {
       height: 2px;
       background-color: black;
+      transition: all 0.3s ease;
+    }
+
+    .menu-icon.open div:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .menu-icon.open div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open div:nth-child(3) {
+      transform: rotate(-45deg) translate(4px, -4px);
     }
 
     .logo-container {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 50%;
+      top: 70%; /* lowered slightly */
       transform: translate(-50%, -50%);
       z-index: 1300;
     }
@@ -221,6 +235,7 @@
     menuToggle.addEventListener('click', () => {
       const isOpen = sidebar.classList.toggle('open');
       sidebar.setAttribute('aria-hidden', !isOpen);
+      menuToggle.classList.toggle('open');
     });
 
     logoContainer.addEventListener('click', () => {

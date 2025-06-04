@@ -30,7 +30,7 @@
     }
     header {
       position: fixed;
-      top: 0;
+      top: 8px; /* reduced from 0 to add slight spacing */
       left: 0;
       width: 100vw;
       height: 64px;
@@ -125,9 +125,8 @@
       user-select: none;
     }
 
-    /* IMAGE SLIDE CONTAINER */
     .image-box {
-      margin-top: 64px;
+      margin-top: 56px; /* reduced from 64px */
       width: 100%;
       height: 400px;
       overflow: hidden;
@@ -138,8 +137,8 @@
     .slides-wrapper {
       display: flex;
       height: 100%;
-      width: 300%; /* 3 images */
-      transition: transform 1s ease-in-out;
+      width: 300%;
+      transition: transform 0.5s ease-in-out; /* faster smooth slide */
     }
     .slide-img {
       width: 100%;
@@ -149,8 +148,6 @@
       pointer-events: none;
       flex-shrink: 0;
     }
-
-    /* ARROWS */
     .arrow {
       position: absolute;
       top: 50%;
@@ -172,7 +169,6 @@
       right: 10px;
       transform: translateY(-50%) rotate(-45deg);
     }
-
     .sidebar {
       position: fixed;
       top: 0;
@@ -252,7 +248,6 @@
     const totalSlides = slidesWrapper.children.length;
     let currentSlide = 0;
 
-    // Toggle sidebar open/close with smooth transition
     function toggleSidebar() {
       const isOpen = menuToggle.classList.toggle('open');
       sidebar.classList.toggle('open', isOpen);
@@ -260,8 +255,6 @@
     }
 
     menuToggle.addEventListener('click', toggleSidebar);
-
-    // Keyboard support for menu toggle
     menuToggle.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -269,7 +262,6 @@
       }
     });
 
-    // Clicking the logo reloads/navigates to homepage
     logoContainer.addEventListener('click', () => {
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
@@ -298,21 +290,16 @@
       updateSlidePosition();
     }
 
-    // Auto advance every 10 seconds
     setInterval(() => {
       nextSlide();
     }, 10000);
 
-    // Cart count example update function
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
     updateCartCount(0);
-
-    // Initialize position
     updateSlidePosition();
-
   </script>
 
 </body>

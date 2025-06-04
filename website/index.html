@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
 
-  <!-- Import Cardo font -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
 
   <style>
@@ -45,7 +44,7 @@
     }
 
     .menu-btn {
-      width: 14px;
+      width: 10px;
       height: 2px;
       background-color: black;
       position: relative;
@@ -57,7 +56,7 @@
     .menu-btn::before,
     .menu-btn::after {
       content: "";
-      width: 14px;
+      width: 10px;
       height: 2px;
       background-color: black;
       position: absolute;
@@ -88,7 +87,7 @@
 
     .logo-container {
       position: absolute;
-      left: 54%;
+      left: 50%;
       transform: translateX(-50%);
       top: 8px;
       cursor: pointer;
@@ -96,8 +95,7 @@
     }
 
     .logo {
-      height: 40px;
-      /* Removed invert filter */
+      height: 36px;
     }
 
     .cart-icon-container {
@@ -105,12 +103,11 @@
       cursor: pointer;
       z-index: 1300;
       margin-top: 3px;
-      margin-right: 4px;
+      margin-right: 2px;
     }
 
     .cart-icon {
-      height: 22px;
-      /* Removed invert filter */
+      height: 20px;
       position: relative;
       top: 0;
       display: block;
@@ -162,7 +159,7 @@
       left: -100%;
       width: 100vw;
       height: 100vh;
-      background-color: #eee;
+      background-color: white;
       font-family: 'Cardo', serif;
       transition: left 0.5s ease-in-out;
       z-index: 1100;
@@ -207,7 +204,7 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <img class="slide-img active" src="https://github.com/mattscianna/mattscianna/blob/main/JERSEYRED.png?raw=true" alt="Slide 1" />
+    <img class="slide-img active" src="https://via.placeholder.com/1200x700?text=Image+1" alt="Slide 1" />
     <img class="slide-img" src="https://via.placeholder.com/1200x700?text=Image+2" alt="Slide 2" />
   </div>
 
@@ -245,8 +242,7 @@
     ['menuToggle', 'logoContainer'].forEach(id => {
       const el = document.getElementById(id);
       el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
+        if (e.key === 'Enter') {
           el.click();
         }
       });

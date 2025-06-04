@@ -20,10 +20,6 @@
       font-family: Arial, sans-serif;
     }
 
-    body {
-      color: black;
-    }
-
     header {
       position: fixed;
       top: 0;
@@ -35,24 +31,20 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
+      color: black;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
-    }
-
-    .menu-icon, .cart-icon-container {
-      display: flex;
-      align-items: center;
-      height: 22px;
-      cursor: pointer;
-      z-index: 1300;
     }
 
     .menu-icon {
       width: 22px;
       height: 16px;
       margin-top: 4px;
+      display: flex;
       justify-content: center;
       position: relative;
+      cursor: pointer;
+      z-index: 1300;
     }
 
     .menu-icon div {
@@ -60,8 +52,9 @@
       width: 22px;
       height: 2px;
       background-color: black;
+      left: 0;
       border-radius: 2px;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
     }
 
     .menu-icon div:nth-child(1) { top: 0; }
@@ -92,11 +85,20 @@
 
     .logo {
       height: 36px;
+    }
+
+    .cart-icon-container {
+      display: flex;
+      align-items: center;
+      height: 22px;
       cursor: pointer;
+      z-index: 1300;
+      position: relative;
     }
 
     .cart-icon {
       height: 22px;
+      display: block;
     }
 
     .cart-count {
@@ -118,54 +120,46 @@
       margin-top: 64px;
       width: 100%;
       height: 400px;
+      position: relative;
       background-color: black;
       overflow: hidden;
-      position: relative;
     }
 
-    .slider {
+    .slide-wrapper {
       display: flex;
-      width: 400%;
+      width: 100%;
       height: 100%;
-      animation: slide 40s linear infinite;
+      transition: transform 0.6s ease-in-out;
     }
 
-    .slider img {
-      width: 100vw;
-      height: 100%;
+    .slide-img {
+      min-width: 100%;
+      height: 400px;
       object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    @keyframes slide {
-      0%   { transform: translateX(0); }
-      25%  { transform: translateX(-100vw); }
-      50%  { transform: translateX(-200vw); }
-      75%  { transform: translateX(-300vw); }
-      100% { transform: translateX(-400vw); }
+      pointer-events: none;
     }
 
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border: solid white;
-      border-width: 0 2px 2px 0;
-      padding: 5px;
+      border-width: 0 3px 3px 0;
+      padding: 6px;
       cursor: pointer;
       z-index: 2;
     }
 
     .arrow.left {
       left: 10px;
-      transform: rotate(135deg);
+      transform: rotate(135deg) translateY(-50%);
     }
 
     .arrow.right {
       right: 10px;
-      transform: rotate(-45deg);
+      transform: rotate(-45deg) translateY(-50%);
     }
 
     .sidebar {
@@ -176,10 +170,10 @@
       height: 100vh;
       background-color: white;
       font-family: 'Oswald', sans-serif;
-      font-weight: 500;
-      font-size: 24px;
-      transition: left 0.3s ease;
+      transition: left 0.4s ease-in-out;
       z-index: 1100;
+      color: black;
+      font-size: 24px;
       padding: 80px 20px 20px 20px;
       display: flex;
       flex-direction: column;
@@ -189,6 +183,10 @@
 
     .sidebar.open {
       left: 0;
+    }
+
+    main {
+      display: none;
     }
 
     @media (min-width: 768px) {
@@ -218,14 +216,13 @@
   </header>
 
   <div class="image-box">
-    <div class="slider">
-      <img src="https://via.placeholder.com/800x800?text=Image+1" alt="Image 1" />
-      <img src="https://via.placeholder.com/800x800?text=Image+2" alt="Image 2" />
-      <img src="https://via.placeholder.com/800x800?text=Image+3" alt="Image 3" />
-      <img src="https://via.placeholder.com/800x800?text=Image+4" alt="Image 4" />
+    <div class="slide-wrapper" id="slideWrapper">
+      <img class="slide-img" src="https://via.placeholder.com/800x800?text=Image+1" alt="Image 1" />
+      <img class="slide-img" src="https://via.placeholder.com/800x800?text=Image+2" alt="Image 2" />
+      <img class="slide-img" src="https://via.placeholder.com/800x800?text=Image+3" alt="Image 3" />
     </div>
-    <div class="arrow left"></div>
-    <div class="arrow right"></div>
+    <div class="arrow left" onclick="prevSlide()"></div>
+    <div class="arrow right" onclick="nextSlide()"></div>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
@@ -237,18 +234,48 @@
     const sidebar = document.getElementById('sidebar');
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
+    const slideWrapper = document.getElementById('slideWrapper');
+    const slides = document.querySelectorAll('.slide-img');
+    let currentSlide = 0;
+    let totalSlides = slides.length;
+
+    function updateCartCount(count) {
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+
+    updateCartCount(0);
 
     menuToggle.addEventListener('click', () => {
       const isOpen = menuToggle.classList.toggle('open');
       sidebar.classList.toggle('open', isOpen);
+      sidebar.setAttribute('aria-hidden', !isOpen);
     });
 
     logoContainer.addEventListener('click', () => {
-      location.reload();
+      window.location.reload();
     });
 
-    cartCountEl.textContent = "0";
-    cartCountEl.style.display = "none";
+    ['menuToggle', 'logoContainer'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          el.click();
+        }
+      });
+    });
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slideWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      slideWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    setInterval(nextSlide, 10000);
   </script>
 </body>
 </html>

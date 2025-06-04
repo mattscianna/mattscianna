@@ -40,20 +40,27 @@
       border-bottom: 1px solid #ccc;
     }
 
-    .menu-icon {
-      width: 20px;
-      height: 18px;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    /* Adjusted sizes and vertical alignment for menu and cart containers */
+    .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
+      height: 24px; /* uniform height */
+      cursor: pointer;
+      z-index: 1300;
+    }
+
+    /* Slightly smaller menu icon with same height but reduced width */
+    .menu-icon {
+      width: 18px; /* smaller width */
+      height: 24px; /* keep height consistent */
+      position: relative;
+      transition: all 0.3s ease;
       justify-content: center;
     }
 
     .menu-icon div {
       position: absolute;
-      width: 20px;
+      width: 18px; /* match menu icon width */
       height: 2px;
       background-color: black;
       left: 0;
@@ -66,16 +73,16 @@
     }
 
     .menu-icon div:nth-child(2) {
-      top: 8px;
+      top: 11px;
     }
 
     .menu-icon div:nth-child(3) {
-      top: 16px;
+      top: 22px;
     }
 
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
-      top: 8px;
+      top: 11px;
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -84,7 +91,7 @@
 
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
-      top: 8px;
+      top: 11px;
     }
 
     .logo-container {
@@ -99,16 +106,9 @@
       height: 36px;
     }
 
-    .cart-icon-container {
-      position: relative;
-      cursor: pointer;
-      z-index: 1300;
-      display: flex;
-      align-items: center;
-    }
-
+    /* Slightly smaller shopping bag icon */
     .cart-icon {
-      height: 24px;
+      height: 20px;
       display: block;
     }
 

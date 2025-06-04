@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
 
-  <!-- Font -->
+  <!-- Import Cardo font -->
   <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
 
   <style>
@@ -17,15 +17,14 @@
 
     html, body {
       height: 100%;
-      overflow-x: hidden;
-      font-family: Arial, sans-serif;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
       background-color: white;
-      color: black;
-      user-select: none;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      overflow-y: auto;
+      color: black;
+      user-select: none;
     }
 
     header {
@@ -39,8 +38,10 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
-      border-bottom: 1px solid #ccc;
+      color: black;
       z-index: 1200;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
     }
 
     .menu-btn {
@@ -50,7 +51,7 @@
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      margin-top: 4px;
+      margin-top: 2px; /* Slightly lower */
     }
 
     .menu-btn::before,
@@ -89,25 +90,29 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 7px; /* Raised logo a bit higher */
+      top: 10px; /* Lowered to align with icons */
       cursor: pointer;
       z-index: 1300;
     }
 
     .logo {
       height: 34px;
+      filter: none; /* Black logo */
     }
 
     .cart-icon-container {
-      margin-top: -2px;
-      cursor: pointer;
       position: relative;
+      cursor: pointer;
       z-index: 1300;
+      margin-top: 3px; /* Higher to align */
+      margin-right: 4px;
     }
 
     .cart-icon {
-      height: 26px;
+      height: 22px;
       filter: invert(0%);
+      position: relative;
+      top: 0;
       display: block;
     }
 
@@ -127,14 +132,14 @@
     }
 
     .image-box {
-      width: 100vw;
-      height: 60vh;
+      margin-top: 56px; /* Push content below header */
+      width: 100%;
+      height: 400px;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: #222;
-      margin-top: 56px; /* To push below fixed header */
     }
 
     .image-box img {
@@ -145,27 +150,30 @@
 
     .sidebar {
       position: fixed;
-      top: 56px;
+      top: 0;
       left: -100%;
       width: 100vw;
-      height: calc(100vh - 56px);
+      height: 100vh;
       background-color: white;
       font-family: 'Cardo', serif;
-      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: left 0.5s ease-in-out;
       z-index: 1100;
       color: black;
       font-size: 24px;
       user-select: none;
-      padding: 20px;
+      padding: 80px 20px 20px 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       overflow-y: auto;
-      box-sizing: border-box;
     }
 
     .sidebar.open {
       left: 0;
+    }
+
+    main {
+      padding: 20px;
     }
 
     @media (min-width: 768px) {
@@ -194,11 +202,15 @@
     <img src="https://via.placeholder.com/1200x700?text=Sample+Photo" alt="Sample Photo" />
   </div>
 
+  <main>
+    <p style="font-family: 'Cardo', serif;">This is where your website content can go.</p>
+    <p style="font-family: 'Cardo', serif;">You can scroll this area freely.</p>
+    <p style="font-family: 'Cardo', serif;">Add more content here to test scrolling behavior.</p>
+    <div style="height: 1000px;"></div>
+  </main>
+
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
-    <div>
-      <p>Sidebar content goes here. This text is padded so it does not go off-screen and stays below the header.</p>
-      <p>Additional links or text can go here too.</p>
-    </div>
+    <p>Sidebar content goes here.</p>
   </nav>
 
   <script>
@@ -226,7 +238,6 @@
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
-
     updateCartCount(0);
 
     ['menuToggle', 'logoContainer'].forEach(id => {

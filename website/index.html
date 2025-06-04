@@ -113,7 +113,7 @@
     }
     .slider {
       display: flex;
-      width: 300%;
+      width: calc(100% * 4); /* 3 images + 1 clone */
       height: 100%;
       transition: transform 0.5s ease-in-out;
     }
@@ -163,7 +163,6 @@
       z-index: 1100;
       color: black;
       transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      /* smoother easing */
       will-change: left;
       -webkit-overflow-scrolling: touch;
     }
@@ -204,6 +203,8 @@
       <img class="slide-img" src="https://picsum.photos/800/800?random=1" alt="Image 1" />
       <img class="slide-img" src="https://picsum.photos/800/800?random=2" alt="Image 2" />
       <img class="slide-img" src="https://picsum.photos/800/800?random=3" alt="Image 3" />
+      <!-- Clone first image for infinite effect -->
+      <img class="slide-img" src="https://picsum.photos/800/800?random=1" alt="Image 1 Clone" />
     </div>
     <div class="arrow left" aria-label="Previous image" role="button" tabindex="0"></div>
     <div class="arrow right" aria-label="Next image" role="button" tabindex="0"></div>
@@ -224,7 +225,7 @@
     const rightArrow = document.querySelector('.arrow.right');
 
     let currentIndex = 0;
-    const totalSlides = slides.length;
+    const totalSlides = slides.length - 1; // last one is clone
 
     // Sidebar toggle
     menuToggle.addEventListener('click', () => {
@@ -239,59 +240,12 @@
     });
 
     // Accessibility for keyboard toggling
-    ['menuToggle', 'logoContainer', 'leftArrow', 'rightArrow'].forEach(id => {
-      const el = document.getElementById(id) || document.querySelector(`.${id}`);
-      if (el) {
-        el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            el.click();
-          }
-        });
-      }
+    [menuToggle, logoContainer, leftArrow, rightArrow].forEach(el => {
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') el.click();
+      });
     });
 
     // Arrows click handlers
     leftArrow.addEventListener('click', prevSlide);
     rightArrow.addEventListener('click', nextSlide);
-
-    leftArrow.addEventListener('keydown', e => { if(e.key === 'Enter') prevSlide(); });
-    rightArrow.addEventListener('keydown', e => { if(e.key === 'Enter') nextSlide(); });
-
-    // Update cart count
-    function updateCartCount(count) {
-      cartCountEl.textContent = count;
-      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
-    }
-    updateCartCount(0);
-
-    // Show slide by index (no intermediate images, smooth slide)
-    function showSlide(index) {
-      const offset = index * -100;
-      slider.style.transition = 'transform 0.5s ease-in-out';
-      slider.style.transform = `translateX(${offset}%)`;
-    }
-
-    // Next and previous slide
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      showSlide(currentIndex);
-    }
-
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      showSlide(currentIndex);
-    }
-
-    // Auto slide every 10 seconds
-    let slideInterval = setInterval(nextSlide, 10000);
-
-    // Pause auto slide on manual arrow clicks, resume after 10s
-    function resetInterval() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(nextSlide, 10000);
-    }
-    leftArrow.addEventListener('click', resetInterval);
-    rightArrow.addEventListener('click', resetInterval);
-  </script>
-</body>
-</html>

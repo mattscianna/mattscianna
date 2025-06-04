@@ -40,35 +40,35 @@
       border-bottom: 1px solid #ccc;
     }
 
-    /* Containers for menu and cart icons */
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
-      height: 22px; /* unified height to align with icons */
+      height: 22px; 
       cursor: pointer;
       z-index: 1300;
+      position: relative;
     }
 
-    /* Menu icon with longer horizontal lines and closer vertical spacing */
+    /* Adjust menu icon downward for alignment */
     .menu-icon {
       width: 22px;
-      height: 16px; /* shorter vertical height for closer lines */
-      position: relative;
-      transition: all 0.5s ease;
+      height: 16px;
+      margin-top: 3px; /* nudged down */
       justify-content: center;
+      position: relative;
+      transition: all 0.4s ease;
     }
 
     .menu-icon div {
       position: absolute;
-      width: 22px; /* longer lines */
+      width: 22px;
       height: 2px;
       background-color: black;
       left: 0;
       border-radius: 2px;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s ease;
     }
 
-    /* Lines spaced closer together vertically */
     .menu-icon div:nth-child(1) {
       top: 0;
     }
@@ -81,7 +81,7 @@
       top: 14px;
     }
 
-    /* Smooth X transition */
+    /* Simple smooth X transition: rotate top and bottom lines, hide middle line */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
       top: 7px;
@@ -89,7 +89,6 @@
 
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
-      transform: translateX(-20px);
     }
 
     .menu-icon.open div:nth-child(3) {
@@ -109,7 +108,6 @@
       height: 36px;
     }
 
-    /* Slightly bigger shopping bag */
     .cart-icon {
       height: 22px;
       display: block;
@@ -297,7 +295,7 @@
       showSlide(currentSlide);
     }
 
-    setInterval(nextSlide, 10000); // 10 seconds
+    setInterval(nextSlide, 10000);
   </script>
 </body>
 </html>

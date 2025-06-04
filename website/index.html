@@ -43,59 +43,63 @@
       border-bottom: 1px solid #ccc;
     }
 
+    /* Reverted menu icon (old style) */
     .menu-btn {
-      width: 10px;
-      height: 2px;
-      background-color: black;
+      width: 20px;
+      height: 14px;
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-      margin-top: 2px;
+      margin-top: 0;
     }
 
-    .menu-btn::before,
-    .menu-btn::after {
-      content: "";
-      width: 10px;
-      height: 2px;
-      background-color: black;
+    .menu-btn span {
       position: absolute;
+      height: 2px;
+      width: 100%;
+      background-color: black;
+      left: 0;
       transition: all 0.3s ease-in-out;
     }
 
-    .menu-btn::before {
-      top: -6px;
+    .menu-btn span:nth-child(1) {
+      top: 0;
+    }
+    .menu-btn span:nth-child(2) {
+      top: 6px;
+    }
+    .menu-btn span:nth-child(3) {
+      top: 12px;
     }
 
-    .menu-btn::after {
+    /* Toggle to X */
+    .menu-btn.open span:nth-child(1) {
+      transform: rotate(45deg);
       top: 6px;
     }
 
-    .menu-btn.open {
-      background-color: transparent;
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
     }
 
-    .menu-btn.open::before {
-      transform: rotate(45deg);
-      top: 0;
-    }
-
-    .menu-btn.open::after {
+    .menu-btn.open span:nth-child(3) {
       transform: rotate(-45deg);
-      top: 0;
+      top: 6px;
     }
 
+    /* Logo container moved lower and smaller logo */
     .logo-container {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 8px;
+      top: 12px; /* lowered a bit */
       cursor: pointer;
       z-index: 1300;
     }
 
     .logo {
-      height: 36px;
+      height: 28px; /* smaller */
+      display: block;
     }
 
     .cart-icon-container {
@@ -153,6 +157,42 @@
       z-index: 1;
     }
 
+    /* Side arrows */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1500;
+      transition: background 0.3s ease;
+    }
+
+    .arrow:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .arrow.left {
+      left: 16px;
+    }
+
+    .arrow.right {
+      right: 16px;
+    }
+
+    .arrow svg {
+      width: 20px;
+      height: 20px;
+      fill: black;
+    }
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -191,7 +231,11 @@
 <body>
 
   <header>
-    <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
+    <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
     <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
@@ -204,8 +248,16 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <img class="slide-img active" src="https://github.com/mattscianna/mattscianna/blob/main/JERSEYRED.png?raw=true" alt="Slide 1" />
+    <img class="slide-img active" src="https://via.placeholder.com/1200x700?text=Image+1" alt="Slide 1" />
     <img class="slide-img" src="https://via.placeholder.com/1200x700?text=Image+2" alt="Slide 2" />
+
+    <!-- Side arrows -->
+    <div class="arrow left" id="prevArrow" aria-label="Previous image" role="button" tabindex="0">
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </div>
+    <div class="arrow right" id="nextArrow" aria-label="Next image" role="button" tabindex="0">
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+    </div>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
@@ -247,6 +299,43 @@
         }
       });
     });
+
+    // Image slideshow logic with arrows and auto change every 10 seconds
+    const slides = document.querySelectorAll('.slide-img');
+    let currentIndex = 0;
+    let slideInterval = setInterval(nextSlide, 10000); // 10 seconds
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      currentIndex = index;
+    }
+
+    function nextSlide() {
+      let nextIndex = (currentIndex + 1) % slides.length;
+      showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+      let prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(prevIndex);
+    }
+
+    document.getElementById('nextArrow').addEventListener('click', () => {
+      nextSlide();
+      resetInterval();
+    });
+
+    document.getElementById('prevArrow').addEventListener('click', () => {
+      prevSlide();
+      resetInterval();
+    });
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 10000);
+    }
   </script>
 </body>
 </html>

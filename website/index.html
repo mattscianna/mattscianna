@@ -40,19 +40,19 @@
       border-bottom: 1px solid #ccc;
     }
 
-    /* Adjusted sizes and vertical alignment for menu and cart containers */
+    /* Containers for menu and cart icons */
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
-      height: 24px; /* uniform height */
+      height: 22px; /* unify height */
       cursor: pointer;
       z-index: 1300;
     }
 
-    /* Slightly smaller menu icon with same height but reduced width */
+    /* Menu icon with closer lines, smaller height but same width as shopping bag */
     .menu-icon {
-      width: 18px; /* smaller width */
-      height: 24px; /* keep height consistent */
+      width: 22px;
+      height: 22px;
       position: relative;
       transition: all 0.3s ease;
       justify-content: center;
@@ -60,7 +60,7 @@
 
     .menu-icon div {
       position: absolute;
-      width: 18px; /* match menu icon width */
+      width: 22px;
       height: 2px;
       background-color: black;
       left: 0;
@@ -68,21 +68,22 @@
       border-radius: 2px;
     }
 
+    /* Line positions closer together vertically */
     .menu-icon div:nth-child(1) {
       top: 0;
     }
 
     .menu-icon div:nth-child(2) {
-      top: 11px;
+      top: 10px;
     }
 
     .menu-icon div:nth-child(3) {
-      top: 22px;
+      top: 20px;
     }
 
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
-      top: 11px;
+      top: 10px;
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -91,7 +92,7 @@
 
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
-      top: 11px;
+      top: 10px;
     }
 
     .logo-container {
@@ -106,9 +107,9 @@
       height: 36px;
     }
 
-    /* Slightly smaller shopping bag icon */
+    /* Slightly bigger shopping bag */
     .cart-icon {
-      height: 20px;
+      height: 22px;
       display: block;
     }
 

@@ -44,28 +44,28 @@
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
-      height: 22px; /* unify height */
+      height: 20px; /* unified smaller height */
       cursor: pointer;
       z-index: 1300;
     }
 
-    /* Menu icon with closer lines, smaller height but same width as shopping bag */
+    /* Smaller menu icon with thinner lines and closer spacing */
     .menu-icon {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 20px;
       position: relative;
-      transition: all 0.3s ease;
+      transition: all 0.5s ease;
       justify-content: center;
     }
 
     .menu-icon div {
       position: absolute;
-      width: 22px;
+      width: 18px;
       height: 2px;
       background-color: black;
       left: 0;
-      transition: all 0.35s ease;
       border-radius: 2px;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* Line positions closer together vertically */
@@ -74,25 +74,27 @@
     }
 
     .menu-icon div:nth-child(2) {
-      top: 10px;
+      top: 9px;
     }
 
     .menu-icon div:nth-child(3) {
-      top: 20px;
+      top: 18px;
     }
 
+    /* Smooth X transition */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
-      top: 10px;
+      top: 9px;
     }
 
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
+      transform: translateX(-20px);
     }
 
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
-      top: 10px;
+      top: 9px;
     }
 
     .logo-container {

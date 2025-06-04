@@ -45,7 +45,7 @@
     }
 
     .menu-btn {
-      width: 18px;
+      width: 14px;
       height: 2px;
       background-color: black;
       position: relative;
@@ -57,7 +57,7 @@
     .menu-btn::before,
     .menu-btn::after {
       content: "";
-      width: 18px;
+      width: 14px;
       height: 2px;
       background-color: black;
       position: absolute;
@@ -65,11 +65,11 @@
     }
 
     .menu-btn::before {
-      top: -8px;
+      top: -6px;
     }
 
     .menu-btn::after {
-      top: 8px;
+      top: 6px;
     }
 
     .menu-btn.open {
@@ -88,16 +88,16 @@
 
     .logo-container {
       position: absolute;
-      left: 50%;
+      left: 54%;
       transform: translateX(-50%);
-      top: 10px;
+      top: 8px;
       cursor: pointer;
       z-index: 1300;
     }
 
     .logo {
       height: 40px;
-      filter: invert(1);
+      /* Removed invert filter */
     }
 
     .cart-icon-container {
@@ -110,7 +110,7 @@
 
     .cart-icon {
       height: 22px;
-      filter: invert(100%);
+      /* Removed invert filter */
       position: relative;
       top: 0;
       display: block;
@@ -207,8 +207,7 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <!-- 🔁 Replace these with your actual image links -->
-    <img class="slide-img active" src="https://github.com/mattscianna/mattscianna/blob/main/JERSEYRED.png?raw=true" alt="Slide 1" />
+    <img class="slide-img active" src="https://via.placeholder.com/1200x700?text=Image+1" alt="Slide 1" />
     <img class="slide-img" src="https://via.placeholder.com/1200x700?text=Image+2" alt="Slide 2" />
   </div>
 
@@ -252,22 +251,6 @@
         }
       });
     });
-
-    // ⏳ SLIDESHOW SCRIPT
-    const slides = document.querySelectorAll('.slide-img');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-      });
-    }
-
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % slides.length;
-      showSlide(currentIndex);
-    }, 4000);
   </script>
-
 </body>
 </html>

@@ -44,15 +44,15 @@
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
-      height: 20px; /* unified smaller height */
+      height: 22px; /* unified height to align with icons */
       cursor: pointer;
       z-index: 1300;
     }
 
-    /* Smaller menu icon with thinner lines and closer spacing */
+    /* Menu icon with longer horizontal lines and closer vertical spacing */
     .menu-icon {
-      width: 18px;
-      height: 20px;
+      width: 22px;
+      height: 16px; /* shorter vertical height for closer lines */
       position: relative;
       transition: all 0.5s ease;
       justify-content: center;
@@ -60,7 +60,7 @@
 
     .menu-icon div {
       position: absolute;
-      width: 18px;
+      width: 22px; /* longer lines */
       height: 2px;
       background-color: black;
       left: 0;
@@ -68,23 +68,23 @@
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Line positions closer together vertically */
+    /* Lines spaced closer together vertically */
     .menu-icon div:nth-child(1) {
       top: 0;
     }
 
     .menu-icon div:nth-child(2) {
-      top: 9px;
+      top: 7px;
     }
 
     .menu-icon div:nth-child(3) {
-      top: 18px;
+      top: 14px;
     }
 
     /* Smooth X transition */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
-      top: 9px;
+      top: 7px;
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -94,7 +94,7 @@
 
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
-      top: 9px;
+      top: 7px;
     }
 
     .logo-container {

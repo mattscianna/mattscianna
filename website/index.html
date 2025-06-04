@@ -35,7 +35,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
+      padding: 0 16px;
       background-color: white;
       color: black;
       z-index: 1200;
@@ -43,74 +43,42 @@
       border-bottom: 1px solid #ccc;
     }
 
-    .menu-btn {
-      width: 10px;
-      height: 2px;
-      background-color: black;
-      position: relative;
+    .menu-icon {
+      width: 24px;
+      height: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      margin-top: 2px;
     }
 
-    .menu-btn::before,
-    .menu-btn::after {
-      content: "";
-      width: 10px;
+    .menu-icon div {
       height: 2px;
       background-color: black;
-      position: absolute;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .menu-btn::before {
-      top: -6px;
-    }
-
-    .menu-btn::after {
-      top: 6px;
-    }
-
-    .menu-btn.open {
-      background-color: transparent;
-    }
-
-    .menu-btn.open::before {
-      transform: rotate(45deg);
-      top: 0;
-    }
-
-    .menu-btn.open::after {
-      transform: rotate(-45deg);
-      top: 0;
     }
 
     .logo-container {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 6px;
-      cursor: pointer;
+      top: 50%;
+      transform: translate(-50%, -50%);
       z-index: 1300;
     }
 
     .logo {
-      height: 44px; /* bigger logo */
+      height: 32px;
     }
 
     .cart-icon-container {
-      position: relative;
       cursor: pointer;
       z-index: 1300;
-      margin-top: 0; /* moved higher */
-      margin-right: 2px;
+      display: flex;
+      align-items: center;
     }
 
     .cart-icon {
       height: 20px;
-      position: relative;
-      top: 0;
-      display: block;
     }
 
     .cart-count {
@@ -153,33 +121,23 @@
       z-index: 1;
     }
 
-    /* Arrows styles */
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      color: white;
-      font-size: 36px; /* bigger */
-      font-weight: bold;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
-      user-select: none;
-      background: none; /* removed white circle */
-      border: none;
-      padding: 0 10px;
       z-index: 1500;
-      transition: color 0.3s ease;
-    }
-
-    .arrow:hover {
-      color: #ddd;
+      fill: white;
     }
 
     .arrow-left {
-      left: 10px; /* closer to edge */
+      left: 10px;
     }
 
     .arrow-right {
-      right: 10px; /* closer to edge */
+      right: 10px;
     }
 
     .sidebar {
@@ -206,10 +164,6 @@
       left: 0;
     }
 
-    main {
-      display: none;
-    }
-
     @media (min-width: 768px) {
       header {
         display: none;
@@ -220,7 +174,11 @@
 <body>
 
   <header>
-    <div id="menuToggle" class="menu-btn" aria-label="Toggle sidebar" role="button" tabindex="0"></div>
+    <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
 
     <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
@@ -232,13 +190,18 @@
     </div>
   </header>
 
-  <div class="image-box" aria-label="Image slideshow">
+  <div class="image-box">
     <img class="slide-img active" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Football turf 1" />
     <img class="slide-img" src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80" alt="Football turf 2" />
-    
-    <!-- Arrows -->
-    <button class="arrow arrow-left" aria-label="Previous slide" tabindex="0">&lt;</button>
-    <button class="arrow arrow-right" aria-label="Next slide" tabindex="0">&gt;</button>
+
+    <!-- SVG Arrows -->
+    <svg class="arrow arrow-left" viewBox="0 0 24 24">
+      <path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <svg class="arrow arrow-right" viewBox="0 0 24 24">
+      <path d="M9 6l6 6-6 6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
@@ -257,16 +220,11 @@
 
     menuToggle.addEventListener('click', () => {
       const isOpen = sidebar.classList.toggle('open');
-      menuToggle.classList.toggle('open', isOpen);
       sidebar.setAttribute('aria-hidden', !isOpen);
     });
 
     logoContainer.addEventListener('click', () => {
-      document.querySelector('header').style.transition = 'opacity 0.3s ease';
-      document.querySelector('header').style.opacity = '0.6';
-      setTimeout(() => {
-        window.location.href = '/website/';
-      }, 300);
+      window.location.href = '/website/';
     });
 
     function updateCartCount(count) {

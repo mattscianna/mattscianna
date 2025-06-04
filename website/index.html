@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <style>
     * {
       margin: 0;
@@ -18,6 +21,9 @@
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
+    }
+
+    body {
       color: black;
     }
 
@@ -32,6 +38,7 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
+      color: black;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
@@ -71,9 +78,11 @@
       transform: rotate(45deg);
       top: 7px;
     }
+
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
     }
+
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
       top: 7px;
@@ -120,32 +129,29 @@
       overflow: hidden;
     }
 
-    .slider-container {
-      display: flex;
-      height: 100%;
-      transition: transform 0.5s ease-in-out;
-      will-change: transform;
-    }
-
-    .slide-wrapper {
-      flex: 0 0 100%;
-      height: 100%;
-    }
-
     .slide-img {
+      position: absolute;
       width: 100%;
-      height: 100%;
+      height: 400px;
       object-fit: cover;
+      transition: transform 0.6s ease-in-out;
+      top: 0;
+      left: 100%;
+    }
+
+    .slide-img.active {
+      left: 0;
+      z-index: 1;
     }
 
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border: solid white;
-      border-width: 0 2px 2px 0;
+      border-width: 0 3px 3px 0;
       padding: 5px;
       cursor: pointer;
       z-index: 2;
@@ -153,27 +159,29 @@
 
     .arrow.left {
       left: 10px;
-      transform: translateY(-50%) rotate(135deg);
+      transform: rotate(135deg) translateY(-50%);
     }
 
     .arrow.right {
       right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
+      transform: rotate(-45deg) translateY(-50%);
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: 0;
-      transform: translateX(-100%);
+      left: -100%;
       width: 100vw;
       height: 100vh;
       background-color: white;
-      font-family: 'Arial Black', Arial, sans-serif;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
       transition: transform 0.4s ease;
+      transform: translateX(-100%);
       z-index: 1100;
       color: black;
       font-size: 24px;
+      user-select: none;
       padding: 80px 20px 20px 20px;
       display: flex;
       flex-direction: column;
@@ -182,7 +190,7 @@
     }
 
     .sidebar.open {
-      transform: translateX(0);
+      transform: translateX(0%);
     }
 
     main {
@@ -216,17 +224,9 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <div class="slider-container" id="slider">
-      <div class="slide-wrapper">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1602810316883-c0b14dd01530?auto=format&fit=crop&w=800&q=80" alt="Image 1" />
-      </div>
-      <div class="slide-wrapper">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1600185364515-070528b9f51b?auto=format&fit=crop&w=800&q=80" alt="Image 2" />
-      </div>
-      <div class="slide-wrapper">
-        <img class="slide-img" src="https://images.unsplash.com/photo-1601589136050-3e14619e3f59?auto=format&fit=crop&w=800&q=80" alt="Image 3" />
-      </div>
-    </div>
+    <img class="slide-img active" src="https://via.placeholder.com/600x600.png?text=Image+1" alt="Image 1" />
+    <img class="slide-img" src="https://via.placeholder.com/600x600.png?text=Image+2" alt="Image 2" />
+    <img class="slide-img" src="https://via.placeholder.com/600x600.png?text=Image+3" alt="Image 3" />
     <div class="arrow left" onclick="prevSlide()"></div>
     <div class="arrow right" onclick="nextSlide()"></div>
   </div>
@@ -240,39 +240,8 @@
     const sidebar = document.getElementById('sidebar');
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
-    const slider = document.getElementById('slider');
-
+    const slides = document.querySelectorAll('.slide-img');
     let currentSlide = 0;
-
-    function updateSlidePosition() {
-      slider.style.transition = 'transform 0.5s ease-in-out';
-      slider.style.transform = `translateX(-100%)`;
-    }
-
-    function nextSlide() {
-      updateSlidePosition();
-
-      setTimeout(() => {
-        const firstSlide = slider.firstElementChild;
-        slider.appendChild(firstSlide);
-        slider.style.transition = 'none';
-        slider.style.transform = 'translateX(0)';
-      }, 500);
-    }
-
-    function prevSlide() {
-      const lastSlide = slider.lastElementChild;
-      slider.insertBefore(lastSlide, slider.firstElementChild);
-      slider.style.transition = 'none';
-      slider.style.transform = 'translateX(-100%)';
-
-      setTimeout(() => {
-        slider.style.transition = 'transform 0.5s ease-in-out';
-        slider.style.transform = 'translateX(0)';
-      }, 20);
-    }
-
-    setInterval(nextSlide, 10000);
 
     menuToggle.addEventListener('click', () => {
       const isOpen = menuToggle.classList.toggle('open');
@@ -281,7 +250,11 @@
     });
 
     logoContainer.addEventListener('click', () => {
-      window.location.href = '/website/';
+      document.querySelector('header').style.transition = 'opacity 0.3s ease';
+      document.querySelector('header').style.opacity = '0.6';
+      setTimeout(() => {
+        window.location.href = '/website/';
+      }, 300);
     });
 
     function updateCartCount(count) {
@@ -297,6 +270,27 @@
         if (e.key === 'Enter') el.click();
       });
     });
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.transform = `translateX(${(i - index) * 100}%)`;
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+    setInterval(nextSlide, 10000);
   </script>
+
 </body>
 </html>

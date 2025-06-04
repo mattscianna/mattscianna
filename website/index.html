@@ -4,16 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Oswald:wght@400&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
     }
 
     html, body {
@@ -25,6 +22,22 @@
 
     body {
       color: black;
+      user-select: none;
+    }
+
+    /* Make all images unselectable */
+    img {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      pointer-events: none;
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
 
     header {
@@ -46,17 +59,22 @@
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
-      height: 22px;
+      height: 22px; 
       cursor: pointer;
       z-index: 1300;
       position: relative;
     }
 
+    /* Adjust menu icon downward for alignment */
     .menu-icon {
       width: 22px;
       height: 16px;
+      margin-top: 4px; /* nudged down by 1px */
       justify-content: center;
       position: relative;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      z-index: 1300;
     }
 
     .menu-icon div {
@@ -69,10 +87,19 @@
       transition: all 0.4s ease;
     }
 
-    .menu-icon div:nth-child(1) { top: 0; }
-    .menu-icon div:nth-child(2) { top: 7px; }
-    .menu-icon div:nth-child(3) { top: 14px; }
+    .menu-icon div:nth-child(1) {
+      top: 0;
+    }
 
+    .menu-icon div:nth-child(2) {
+      top: 7px;
+    }
+
+    .menu-icon div:nth-child(3) {
+      top: 14px;
+    }
+
+    /* Simple smooth X transition */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
       top: 7px;
@@ -93,14 +120,20 @@
       top: 57%;
       transform: translate(-50%, -50%);
       z-index: 1300;
+      cursor: pointer;
     }
 
     .logo {
       height: 36px;
+      user-select: none;
+      pointer-events: none;
     }
 
     .cart-icon {
       height: 22px;
+      display: block;
+      user-select: none;
+      pointer-events: none;
     }
 
     .cart-count {
@@ -116,6 +149,8 @@
       min-width: 16px;
       text-align: center;
       display: none;
+      user-select: none;
+      pointer-events: none;
     }
 
     .image-box {
@@ -129,53 +164,49 @@
 
     .slide-img {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 400px;
       object-fit: cover;
       transition: transform 0.6s ease-in-out;
-      top: 0;
-      left: 100%;
-    }
-
-    .slide-img.active {
-      left: 0;
-      z-index: 1;
+      pointer-events: none;
+      user-select: none;
     }
 
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 12px;
-      height: 12px;
+      width: 18px;
+      height: 18px;
       border: solid white;
-      border-width: 0 2px 2px 0;
-      padding: 6px;
+      border-width: 0 3px 3px 0;
+      padding: 5px;
       cursor: pointer;
       z-index: 2;
     }
 
     .arrow.left {
-      left: 12px;
+      left: 10px;
       transform: translateY(-50%) rotate(135deg);
     }
 
     .arrow.right {
-      right: 12px;
+      right: 10px;
       transform: translateY(-50%) rotate(-45deg);
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: 0;
+      left: -100%;
       width: 100vw;
       height: 100vh;
       background-color: white;
-      font-family: 'Oswald', sans-serif;
+      font-family: 'Oswald', Arial, sans-serif;
       font-weight: 400;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-in-out;
+      transition: left 0.4s ease;
       z-index: 1100;
       color: black;
       font-size: 24px;
@@ -188,7 +219,7 @@
     }
 
     .sidebar.open {
-      transform: translateX(0);
+      left: 0;
     }
 
     main {
@@ -222,11 +253,11 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <img class="slide-img active" src="https://via.placeholder.com/600x600.png?text=Image+1" alt="Image 1" />
-    <img class="slide-img" src="https://via.placeholder.com/600x600.png?text=Image+2" alt="Image 2" />
-    <img class="slide-img" src="https://via.placeholder.com/600x600.png?text=Image+3" alt="Image 3" />
-    <div class="arrow left" onclick="prevSlide()"></div>
-    <div class="arrow right" onclick="nextSlide()"></div>
+    <img class="slide-img" src="https://via.placeholder.com/600x600/ff4444/ffffff?text=Image+1" alt="Image 1" />
+    <img class="slide-img" src="https://via.placeholder.com/600x600/44ff44/ffffff?text=Image+2" alt="Image 2" />
+    <img class="slide-img" src="https://via.placeholder.com/600x600/4444ff/ffffff?text=Image+3" alt="Image 3" />
+    <div class="arrow left" onclick="prevSlide()" aria-label="Previous slide"></div>
+    <div class="arrow right" onclick="nextSlide()" aria-label="Next slide"></div>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
@@ -257,38 +288,4 @@
 
     function updateCartCount(count) {
       cartCountEl.textContent = count;
-      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
-    }
-
-    updateCartCount(0);
-
-    ['menuToggle', 'logoContainer'].forEach(id => {
-      const el = document.getElementById(id);
-      el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') el.click();
-      });
-    });
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.style.transform = `translateX(${(i - index) * 100}%)`;
-        slide.classList.toggle('active', i === index);
-      });
-    }
-
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
-    }
-
-    function prevSlide() {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      showSlide(currentSlide);
-    }
-
-    showSlide(currentSlide);
-    setInterval(nextSlide, 10000);
-  </script>
-
-</body>
-</html>
+      cartCountEl.style.display = count > 0 ? 'inline-block'

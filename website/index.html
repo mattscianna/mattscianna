@@ -24,6 +24,18 @@
       user-select: none;
     }
 
+    /* Make all images un-highlightable/unselectable */
+    img {
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none;    /* Firefox */
+      -ms-user-select: none;     /* IE10+/Edge */
+      user-select: none;         /* Standard */
+      -webkit-touch-callout: none; /* Disable callout on iOS */
+      -webkit-user-drag: none;   /* Disable image dragging in Safari and Chrome */
+      user-drag: none;           /* Standard */
+      pointer-events: none;      /* Prevent mouse/touch events on images */
+    }
+
     header {
       position: fixed;
       top: 0;
@@ -53,7 +65,7 @@
     .menu-icon {
       width: 22px;
       height: 16px;
-      margin-top: 4px; /* nudged down by 1 more pixel */
+      margin-top: 4px; /* nudged 1px lower as requested */
       justify-content: center;
       position: relative;
       transition: all 0.4s ease;

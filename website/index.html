@@ -16,9 +16,6 @@
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
-    }
-    body {
-      color: black;
       user-select: none;
     }
     img {
@@ -58,7 +55,7 @@
     .menu-icon {
       width: 22px;
       height: 16px;
-      margin-top: 4px; /* nudged down 1px as before */
+      margin-top: 4px; 
       justify-content: center;
       position: relative;
       transition: all 0.4s ease;
@@ -81,7 +78,6 @@
     .menu-icon div:nth-child(3) {
       top: 14px;
     }
-    /* Smooth X transition */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
       top: 7px;
@@ -105,7 +101,6 @@
     .logo {
       height: 36px;
       user-select: none;
-      -webkit-user-select: none;
       pointer-events: none;
     }
     .cart-icon {
@@ -129,51 +124,55 @@
       display: none;
       user-select: none;
     }
+
+    /* IMAGE SLIDE CONTAINER */
     .image-box {
       margin-top: 64px;
       width: 100%;
       height: 400px;
-      position: relative;
-      background-color: #222;
       overflow: hidden;
+      background-color: #222;
+      position: relative;
       user-select: none;
+    }
+    .slides-wrapper {
+      display: flex;
+      height: 100%;
+      width: 300%; /* 3 images */
+      transition: transform 1s ease-in-out;
     }
     .slide-img {
-      position: absolute;
       width: 100%;
-      height: 400px;
+      height: 100%;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      pointer-events: none;
       user-select: none;
+      pointer-events: none;
+      flex-shrink: 0;
     }
-    .slide-img.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
+
+    /* ARROWS */
     .arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
+      width: 16px;
+      height: 16px;
       border: solid white;
       border-width: 0 3px 3px 0;
-      padding: 6px;
+      padding: 3px;
       cursor: pointer;
       z-index: 2;
       user-select: none;
     }
     .arrow.left {
       left: 10px;
-      transform: rotate(135deg);
+      transform: translateY(-50%) rotate(135deg);
     }
     .arrow.right {
       right: 10px;
-      transform: rotate(-45deg);
+      transform: translateY(-50%) rotate(-45deg);
     }
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -231,8 +230,11 @@
   </header>
 
   <div class="image-box" aria-label="Image slideshow">
-    <img class="slide-img active" src="https://images.unsplash.com/photo-1603732551608-5fbc96b2c60d?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 1" />
-    <img class="slide-img" src="https://images.unsplash.com/photo-1579982413367-39cdb401e9c4?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 2" />
+    <div class="slides-wrapper" id="slidesWrapper">
+      <img class="slide-img" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Sample Image 1" />
+      <img class="slide-img" src="https://images.unsplash.com/photo-1526403228070-85706c1f5fdb?auto=format&fit=crop&w=1200&q=80" alt="Sample Image 2" />
+      <img class="slide-img" src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80" alt="Sample Image 3" />
+    </div>
     <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
     <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
   </div>
@@ -246,7 +248,8 @@
     const sidebar = document.getElementById('sidebar');
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
-    const slides = document.querySelectorAll('.slide-img');
+    const slidesWrapper = document.getElementById('slidesWrapper');
+    const totalSlides = slidesWrapper.children.length;
     let currentSlide = 0;
 
     // Toggle sidebar open/close with smooth transition
@@ -258,7 +261,7 @@
 
     menuToggle.addEventListener('click', toggleSidebar);
 
-    // Support toggling with keyboard (Enter or Space)
+    // Keyboard support for menu toggle
     menuToggle.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -268,15 +271,12 @@
 
     // Clicking the logo reloads/navigates to homepage
     logoContainer.addEventListener('click', () => {
-      // Optional visual feedback
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
       setTimeout(() => {
-        // Change this URL as needed to your homepage URL
         window.location.href = '/website/';
       }, 300);
     });
-
     logoContainer.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -284,33 +284,35 @@
       }
     });
 
-    // Slide controls
-    function showSlide(n) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === n);
-      });
+    function updateSlidePosition() {
+      slidesWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
     }
 
     function nextSlide() {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlidePosition();
     }
 
     function prevSlide() {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      showSlide(currentSlide);
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlidePosition();
     }
 
-    // Initialize
-    showSlide(currentSlide);
+    // Auto advance every 10 seconds
+    setInterval(() => {
+      nextSlide();
+    }, 10000);
 
     // Cart count example update function
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
-
     updateCartCount(0);
+
+    // Initialize position
+    updateSlidePosition();
+
   </script>
 
 </body>

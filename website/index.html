@@ -4,20 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-user-drag: none;
       user-select: none;
     }
 
     html, body {
       height: 100%;
-      overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
+      overflow-x: hidden;
     }
 
     body {
@@ -35,6 +36,7 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
+      color: black;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
@@ -98,6 +100,7 @@
 
     .cart-icon {
       height: 22px;
+      display: block;
     }
 
     .cart-count {
@@ -109,6 +112,7 @@
       border-radius: 50%;
       font-size: 10px;
       padding: 2px 5px;
+      line-height: 1;
       min-width: 16px;
       text-align: center;
       display: none;
@@ -118,25 +122,21 @@
       margin-top: 64px;
       width: 100%;
       height: 400px;
-      overflow: hidden;
-      background: black;
       position: relative;
+      background-color: black;
+      overflow: hidden;
     }
 
     .slider {
       display: flex;
-      transition: transform 1s ease-in-out;
-    }
-
-    .slide {
-      width: 100vw;
-      height: 400px;
-      flex-shrink: 0;
-    }
-
-    .slide img {
-      width: 100%;
+      width: 300%;
       height: 100%;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .slide-img {
+      flex: 0 0 100%;
+      height: 400px;
       object-fit: cover;
     }
 
@@ -144,10 +144,10 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border: solid white;
-      border-width: 0 2px 2px 0;
+      border-width: 0 3px 3px 0;
       padding: 5px;
       cursor: pointer;
       z-index: 2;
@@ -155,12 +155,12 @@
 
     .arrow.left {
       left: 10px;
-      transform: rotate(135deg);
+      transform: translateY(-50%) rotate(135deg);
     }
 
     .arrow.right {
       right: 10px;
-      transform: rotate(-45deg);
+      transform: translateY(-50%) rotate(-45deg);
     }
 
     .sidebar {
@@ -171,18 +171,24 @@
       height: 100vh;
       background-color: white;
       font-family: 'Oswald', sans-serif;
-      transition: left 0.5s ease;
-      z-index: 1100;
+      font-weight: 500;
       font-size: 24px;
-      padding: 80px 20px 20px;
+      padding: 80px 20px 20px 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       overflow-y: auto;
+      z-index: 1100;
+      color: black;
+      transition: left 0.4s ease-in-out;
     }
 
     .sidebar.open {
       left: 0;
+    }
+
+    main {
+      display: none;
     }
 
     @media (min-width: 768px) {
@@ -194,78 +200,89 @@
 </head>
 <body>
 
-<header>
-  <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
-    <div></div>
-    <div></div>
-    <div></div>
+  <header>
+    <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
+    </div>
+
+    <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </header>
+
+  <div class="image-box">
+    <div class="slider" id="slider">
+      <img class="slide-img" src="https://picsum.photos/800/800?random=1" alt="Image 1" />
+      <img class="slide-img" src="https://picsum.photos/800/800?random=2" alt="Image 2" />
+      <img class="slide-img" src="https://picsum.photos/800/800?random=3" alt="Image 3" />
+    </div>
+    <div class="arrow left" onclick="prevSlide()"></div>
+    <div class="arrow right" onclick="nextSlide()"></div>
   </div>
 
-  <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
-  </div>
+  <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
+    <p>Sidebar content goes here.</p>
+  </nav>
 
-  <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-    <div class="cart-count" id="cartCount">0</div>
-  </div>
-</header>
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const logoContainer = document.getElementById('logoContainer');
+    const cartCountEl = document.getElementById('cartCount');
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('.slide-img');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
 
-<div class="image-box" aria-label="Image slideshow">
-  <div class="slider" id="slider">
-    <div class="slide"><img src="https://picsum.photos/800/800?random=1" alt="Image 1" /></div>
-    <div class="slide"><img src="https://picsum.photos/800/800?random=2" alt="Image 2" /></div>
-    <div class="slide"><img src="https://picsum.photos/800/800?random=3" alt="Image 3" /></div>
-  </div>
-  <div class="arrow left"></div>
-  <div class="arrow right"></div>
-</div>
-
-<nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
-  <p>Sidebar content goes here.</p>
-</nav>
-
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const logoContainer = document.getElementById('logoContainer');
-  const cartCountEl = document.getElementById('cartCount');
-
-  menuToggle.addEventListener('click', () => {
-    const isOpen = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open', isOpen);
-    sidebar.setAttribute('aria-hidden', !isOpen);
-  });
-
-  logoContainer.addEventListener('click', () => {
-    window.location.reload();
-  });
-
-  ['menuToggle', 'logoContainer'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        el.click();
-      }
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.classList.toggle('open');
+      sidebar.classList.toggle('open', isOpen);
+      sidebar.setAttribute('aria-hidden', !isOpen);
     });
-  });
 
-  function updateCartCount(count) {
-    cartCountEl.textContent = count;
-    cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
-  }
+    logoContainer.addEventListener('click', () => {
+      window.location.reload();
+    });
 
-  updateCartCount(0);
+    ['menuToggle', 'logoContainer'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          el.click();
+        }
+      });
+    });
 
-  // Infinite slider logic (one image at a time, 10s delay)
-  const slider = document.getElementById('slider');
-  const slides = slider.children;
-  let index = 0;
+    function updateCartCount(count) {
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
+    }
 
-  setInterval(() => {
-    index = (index + 1) % slides.length;
-    slider.style.transform = `translateX(-${index * 100}vw)`;
-  }, 10000);
-</script>
+    updateCartCount(0);
+
+    function showSlide(index) {
+      const offset = index * -100;
+      slider.style.transform = `translateX(${offset}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    setInterval(nextSlide, 10000);
+  </script>
 </body>
 </html>

@@ -11,19 +11,16 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     html, body {
       height: 100%;
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
     }
-
     body {
       color: black;
       user-select: none;
     }
-
     img {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -34,7 +31,6 @@
       user-drag: none;
       pointer-events: none;
     }
-
     header {
       position: fixed;
       top: 0;
@@ -50,7 +46,6 @@
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
-
     .menu-icon, .cart-icon-container {
       display: flex;
       align-items: center;
@@ -58,9 +53,8 @@
       cursor: pointer;
       z-index: 1300;
       position: relative;
+      user-select: none;
     }
-
-    /* Adjust menu icon downward for alignment */
     .menu-icon {
       width: 22px;
       height: 16px;
@@ -69,7 +63,6 @@
       position: relative;
       transition: all 0.4s ease;
     }
-
     .menu-icon div {
       position: absolute;
       width: 22px;
@@ -79,56 +72,48 @@
       border-radius: 2px;
       transition: transform 0.4s ease, opacity 0.4s ease, top 0.4s ease;
     }
-
     .menu-icon div:nth-child(1) {
       top: 0;
     }
-
     .menu-icon div:nth-child(2) {
       top: 7px;
     }
-
     .menu-icon div:nth-child(3) {
       top: 14px;
     }
-
     /* Smooth X transition */
     .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg);
       top: 7px;
     }
-
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
     }
-
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
       top: 7px;
     }
-
     .logo-container {
       position: absolute;
       left: 50%;
       top: 57%;
       transform: translate(-50%, -50%);
       z-index: 1300;
+      cursor: pointer;
+      user-select: none;
     }
-
     .logo {
       height: 36px;
       user-select: none;
       -webkit-user-select: none;
       pointer-events: none;
     }
-
     .cart-icon {
       height: 22px;
       display: block;
       user-select: none;
       pointer-events: auto;
     }
-
     .cart-count {
       position: absolute;
       top: -6px;
@@ -142,8 +127,8 @@
       min-width: 16px;
       text-align: center;
       display: none;
+      user-select: none;
     }
-
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -153,7 +138,6 @@
       overflow: hidden;
       user-select: none;
     }
-
     .slide-img {
       position: absolute;
       width: 100%;
@@ -164,13 +148,11 @@
       pointer-events: none;
       user-select: none;
     }
-
     .slide-img.active {
       opacity: 1;
       pointer-events: auto;
       z-index: 1;
     }
-
     .arrow {
       position: absolute;
       top: 50%;
@@ -184,17 +166,14 @@
       z-index: 2;
       user-select: none;
     }
-
     .arrow.left {
       left: 10px;
       transform: rotate(135deg);
     }
-
     .arrow.right {
       right: 10px;
       transform: rotate(-45deg);
     }
-
     .sidebar {
       position: fixed;
       top: 0;
@@ -211,24 +190,20 @@
       flex-direction: column;
       align-items: flex-start;
       overflow-y: auto;
-
       pointer-events: none;
       transform: translateX(-100%);
       opacity: 0;
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-in-out;
       z-index: 1100;
     }
-
     .sidebar.open {
       transform: translateX(0);
       opacity: 1;
       pointer-events: auto;
     }
-
     main {
       display: none;
     }
-
     @media (min-width: 768px) {
       header {
         display: none;
@@ -258,8 +233,8 @@
   <div class="image-box" aria-label="Image slideshow">
     <img class="slide-img active" src="https://images.unsplash.com/photo-1603732551608-5fbc96b2c60d?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 1" />
     <img class="slide-img" src="https://images.unsplash.com/photo-1579982413367-39cdb401e9c4?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 2" />
-    <div class="arrow left" onclick="prevSlide()"></div>
-    <div class="arrow right" onclick="nextSlide()"></div>
+    <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
+    <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">
@@ -274,26 +249,69 @@
     const slides = document.querySelectorAll('.slide-img');
     let currentSlide = 0;
 
-    menuToggle.addEventListener('click', () => {
+    // Toggle sidebar open/close with smooth transition
+    function toggleSidebar() {
       const isOpen = menuToggle.classList.toggle('open');
       sidebar.classList.toggle('open', isOpen);
       sidebar.setAttribute('aria-hidden', !isOpen);
+    }
+
+    menuToggle.addEventListener('click', toggleSidebar);
+
+    // Support toggling with keyboard (Enter or Space)
+    menuToggle.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSidebar();
+      }
     });
 
+    // Clicking the logo reloads/navigates to homepage
     logoContainer.addEventListener('click', () => {
+      // Optional visual feedback
       document.querySelector('header').style.transition = 'opacity 0.3s ease';
       document.querySelector('header').style.opacity = '0.6';
       setTimeout(() => {
+        // Change this URL as needed to your homepage URL
         window.location.href = '/website/';
       }, 300);
     });
 
+    logoContainer.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        logoContainer.click();
+      }
+    });
+
+    // Slide controls
+    function showSlide(n) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === n);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    // Initialize
+    showSlide(currentSlide);
+
+    // Cart count example update function
     function updateCartCount(count) {
       cartCountEl.textContent = count;
       cartCountEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
 
     updateCartCount(0);
+  </script>
 
-    ['menuToggle', 'logoContainer'].forEach(id => {
-      const el = document.get
+</body>
+</html>

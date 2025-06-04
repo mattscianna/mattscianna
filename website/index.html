@@ -53,8 +53,8 @@
 
     .menu-icon div {
       position: absolute;
-      width: 16px; /* Adjusted width */
-      height: 2px; /* Height stays same */
+      width: 16px;
+      height: 2px;
       background-color: black;
       left: 0;
       transition: all 0.3s ease;
@@ -91,13 +91,13 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 58%; /* Tiniest bit lower */
+      top: 58%;
       transform: translate(-50%, -50%);
       z-index: 1300;
     }
 
     .logo {
-      height: 36px;
+      height: 30px; /* Slightly smaller */
     }
 
     .cart-icon-container {
@@ -157,21 +157,23 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 32px;
-      color: white;
-      background: none;
-      border: none;
+      width: 24px;
+      height: 24px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      padding: 6px;
       cursor: pointer;
       z-index: 2;
-      padding: 10px;
     }
 
     .arrow.left {
       left: 10px;
+      transform: rotate(135deg);
     }
 
     .arrow.right {
       right: 10px;
+      transform: rotate(-45deg);
     }
 
     .sidebar {
@@ -231,8 +233,8 @@
   <div class="image-box" aria-label="Image slideshow">
     <img class="slide-img active" src="https://images.unsplash.com/photo-1603732551608-5fbc96b2c60d?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 1" />
     <img class="slide-img" src="https://images.unsplash.com/photo-1579982413367-39cdb401e9c4?auto=format&fit=crop&w=1200&q=80" alt="Football Turf 2" />
-    <button class="arrow left" onclick="prevSlide()">&#10094;</button>
-    <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+    <div class="arrow left" onclick="prevSlide()"></div>
+    <div class="arrow right" onclick="nextSlide()"></div>
   </div>
 
   <nav id="sidebar" class="sidebar" aria-hidden="true" role="navigation" aria-label="Sidebar navigation">

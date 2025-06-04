@@ -10,7 +10,9 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       user-select: none;
     }
 
@@ -19,6 +21,9 @@
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
+    }
+
+    body {
       color: black;
     }
 
@@ -33,6 +38,7 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
+      color: black;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
@@ -47,21 +53,36 @@
     .menu-icon {
       width: 22px;
       height: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-top: 4px; /* aligned pixel tweak */
+      margin-top: 4px;
+      justify-content: center;
+      position: relative;
     }
 
     .menu-icon div {
+      position: absolute;
+      width: 100%;
       height: 2px;
       background-color: black;
-      border-radius: 1px;
+      left: 0;
+      border-radius: 2px;
       transition: all 0.3s ease;
     }
 
+    .menu-icon div:nth-child(1) {
+      top: 0;
+    }
+
+    .menu-icon div:nth-child(2) {
+      top: 7px;
+    }
+
+    .menu-icon div:nth-child(3) {
+      top: 14px;
+    }
+
     .menu-icon.open div:nth-child(1) {
-      transform: rotate(45deg) translateY(6px);
+      transform: rotate(45deg);
+      top: 7px;
     }
 
     .menu-icon.open div:nth-child(2) {
@@ -69,7 +90,8 @@
     }
 
     .menu-icon.open div:nth-child(3) {
-      transform: rotate(-45deg) translateY(-6px);
+      transform: rotate(-45deg);
+      top: 7px;
     }
 
     .logo-container {
@@ -83,12 +105,14 @@
     .logo {
       height: 36px;
       -webkit-user-drag: none;
+      pointer-events: none;
     }
 
     .cart-icon {
       height: 22px;
       display: block;
       -webkit-user-drag: none;
+      pointer-events: none;
     }
 
     .cart-count {
@@ -124,7 +148,6 @@
       transition: opacity 1s ease-in-out;
       pointer-events: none;
       -webkit-user-drag: none;
-      user-select: none;
     }
 
     .slide-img.active {

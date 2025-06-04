@@ -123,7 +123,8 @@
     .slider-container {
       display: flex;
       height: 100%;
-      transition: transform 0.4s ease-in-out;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
     }
 
     .slide-wrapper {
@@ -168,7 +169,7 @@
       width: 100vw;
       height: 100vh;
       background-color: white;
-      font-family: 'Cardo', serif;
+      font-family: 'Arial Black', Arial, sans-serif;
       transition: transform 0.4s ease;
       z-index: 1100;
       color: black;
@@ -240,21 +241,35 @@
     const logoContainer = document.getElementById('logoContainer');
     const cartCountEl = document.getElementById('cartCount');
     const slider = document.getElementById('slider');
-    const slides = slider.querySelectorAll('.slide-wrapper');
+
     let currentSlide = 0;
 
     function updateSlidePosition() {
-      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      slider.style.transition = 'transform 0.5s ease-in-out';
+      slider.style.transform = `translateX(-100%)`;
     }
 
     function nextSlide() {
-      currentSlide = (currentSlide + 1) % slides.length;
       updateSlidePosition();
+
+      setTimeout(() => {
+        const firstSlide = slider.firstElementChild;
+        slider.appendChild(firstSlide);
+        slider.style.transition = 'none';
+        slider.style.transform = 'translateX(0)';
+      }, 500);
     }
 
     function prevSlide() {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      updateSlidePosition();
+      const lastSlide = slider.lastElementChild;
+      slider.insertBefore(lastSlide, slider.firstElementChild);
+      slider.style.transition = 'none';
+      slider.style.transform = 'translateX(-100%)';
+
+      setTimeout(() => {
+        slider.style.transition = 'transform 0.5s ease-in-out';
+        slider.style.transform = 'translateX(0)';
+      }, 20);
     }
 
     setInterval(nextSlide, 10000);

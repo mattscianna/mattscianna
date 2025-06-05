@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
     }
 
     html, body {
@@ -18,6 +17,7 @@
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
+      user-select: none;
     }
 
     header {
@@ -31,24 +31,23 @@
       align-items: center;
       padding: 12px 16px;
       background-color: white;
-      border-bottom: 1px solid #ccc;
       z-index: 1200;
+      border-bottom: 1px solid #ccc;
     }
 
     .menu-icon {
       width: 22px;
       height: 16px;
+      margin-top: 3px;
       position: relative;
       cursor: pointer;
-      z-index: 1300;
     }
 
     .menu-icon div {
       position: absolute;
-      width: 22px;
+      width: 100%;
       height: 2px;
       background-color: black;
-      border-radius: 2px;
       transition: all 0.4s ease;
     }
 
@@ -60,9 +59,11 @@
       transform: rotate(45deg);
       top: 7px;
     }
+
     .menu-icon.open div:nth-child(2) {
       opacity: 0;
     }
+
     .menu-icon.open div:nth-child(3) {
       transform: rotate(-45deg);
       top: 7px;
@@ -73,7 +74,6 @@
       left: 50%;
       top: 57%;
       transform: translate(-50%, -50%);
-      z-index: 1300;
       cursor: pointer;
     }
 
@@ -85,8 +85,6 @@
       display: flex;
       align-items: center;
       height: 22px;
-      position: relative;
-      z-index: 1300;
       cursor: pointer;
     }
 
@@ -94,58 +92,37 @@
       height: 22px;
     }
 
-    .cart-count {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      background-color: white;
-      color: black;
-      border-radius: 50%;
-      font-size: 10px;
-      padding: 2px 5px;
-      min-width: 16px;
-      text-align: center;
-      display: none;
-    }
-
     .image-box {
       margin-top: 64px;
       width: 100%;
       height: 400px;
+      background: black;
       overflow: hidden;
       position: relative;
-      background-color: black;
     }
 
     .slider {
       display: flex;
-      height: 100%;
-      animation: scrollSlider 30s linear infinite;
+      width: 300%;
+      transition: transform 0.5s ease-in-out;
     }
 
-    .slide-img {
-      width: 100vw;
+    .slide {
+      flex: 0 0 100%;
       height: 400px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    @keyframes scrollSlider {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-100vw); }
-      50% { transform: translateX(-200vw); }
-      75% { transform: translateX(-300vw); }
-      100% { transform: translateX(-400vw); }
+      background-size: cover;
+      background-position: center;
     }
 
     .arrow {
       position: absolute;
       top: 50%;
-      width: 14px;
-      height: 14px;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
       border: solid white;
-      border-width: 0 2px 2px 0;
-      padding: 4px;
+      border-width: 0 3px 3px 0;
+      padding: 6px;
       cursor: pointer;
       z-index: 2;
     }
@@ -166,12 +143,11 @@
       left: -100%;
       width: 100vw;
       height: 100vh;
-      background-color: white;
+      background: white;
       font-family: 'Oswald', sans-serif;
+      font-weight: 400;
       font-size: 24px;
-      padding: 80px 20px 20px;
-      display: flex;
-      flex-direction: column;
+      padding: 80px 20px;
       transition: left 0.4s ease-in-out;
       z-index: 1100;
     }
@@ -181,75 +157,82 @@
     }
 
     @media (min-width: 768px) {
-      header {
-        display: none;
-      }
+      header { display: none; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div id="menuToggle" class="menu-icon">
-      <div></div><div></div><div></div>
-    </div>
 
-    <div class="logo-container" id="logoContainer">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
-    </div>
-
-    <div class="cart-icon-container">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-      <div class="cart-count" id="cartCount">0</div>
-    </div>
-  </header>
-
-  <div class="image-box">
-    <div class="slider">
-      <img class="slide-img" src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1" />
-      <img class="slide-img" src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2" />
-      <img class="slide-img" src="https://via.placeholder.com/800x400?text=Image+3" alt="Image 3" />
-      <img class="slide-img" src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1 repeat" />
-      <img class="slide-img" src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2 repeat" />
-    </div>
-    <div class="arrow left" onclick="manualPrevSlide()"></div>
-    <div class="arrow right" onclick="manualNextSlide()"></div>
+<header>
+  <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
+    <div></div><div></div><div></div>
   </div>
 
-  <nav id="sidebar" class="sidebar">
-    <p>Home</p>
-    <p>Shop</p>
-    <p>Contact</p>
-  </nav>
+  <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
+  </div>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const logoContainer = document.getElementById('logoContainer');
+  <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
+  </div>
+</header>
 
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('open');
-      sidebar.classList.toggle('open');
+<div class="image-box">
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
+  </div>
+  <div class="arrow left" onclick="prevSlide()"></div>
+  <div class="arrow right" onclick="nextSlide()"></div>
+</div>
+
+<nav id="sidebar" class="sidebar">
+  <p>Sidebar content goes here.</p>
+</nav>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const logoContainer = document.getElementById('logoContainer');
+  const slider = document.getElementById('slider');
+  let currentIndex = 0;
+  const slides = slider.children;
+  const totalSlides = slides.length;
+
+  function updateSlide(index) {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlide(currentIndex);
+  }
+
+  setInterval(nextSlide, 10000); // Auto slide every 10s
+
+  menuToggle.addEventListener('click', () => {
+    const open = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open', open);
+  });
+
+  logoContainer.addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  // Keyboard accessibility
+  ['menuToggle', 'logoContainer'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') el.click();
     });
+  });
+</script>
 
-    logoContainer.addEventListener('click', () => {
-      location.reload();
-    });
-
-    function manualPrevSlide() {
-      const slider = document.querySelector('.slider');
-      slider.style.animation = 'none';
-      slider.style.transform = 'translateX(0)';
-      void slider.offsetWidth;
-      slider.style.animation = '';
-    }
-
-    function manualNextSlide() {
-      const slider = document.querySelector('.slider');
-      slider.style.animation = 'none';
-      slider.style.transform = 'translateX(-100vw)';
-      void slider.offsetWidth;
-      slider.style.animation = '';
-    }
-  </script>
 </body>
 </html>

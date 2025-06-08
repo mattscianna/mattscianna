@@ -72,14 +72,17 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      height: 100%;
       cursor: pointer;
     }
 
     .logo {
       height: 36px;
       transition: opacity 0.3s ease, height 0.3s ease;
+      display: block;
     }
 
     .logo.alt {

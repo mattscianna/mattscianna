@@ -13,7 +13,6 @@
     }
 
     html, body {
-      height: 100%;
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
@@ -33,6 +32,7 @@
       background-color: white;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
+      transition: background-color 0.3s ease;
     }
 
     .menu-icon {
@@ -79,6 +79,11 @@
 
     .logo {
       height: 36px;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo.alt {
+      display: none;
     }
 
     .cart-icon-container {
@@ -170,6 +175,7 @@
       font-family: 'Oswald', sans-serif;
       text-align: center;
       padding: 0 16px;
+      margin-bottom: 32px;
     }
 
     .product-title {
@@ -196,7 +202,8 @@
   </div>
 
   <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo" class="logo" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo Text" class="logo" id="logoText" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Logo Icon" class="logo alt" id="logoImage" />
   </div>
 
   <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
@@ -223,9 +230,6 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<!-- Spacer -->
-<div style="height: 40px;"></div>
-
 <!-- Second Product Box and Info -->
 <a href="#" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
@@ -244,6 +248,9 @@
   const sidebar = document.getElementById('sidebar');
   const logoContainer = document.getElementById('logoContainer');
   const slider = document.getElementById('slider');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+
   let currentIndex = 0;
   const slides = slider.children;
   const totalSlides = slides.length;
@@ -279,6 +286,18 @@
     el.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') el.click();
     });
+  });
+
+  // Scroll-based logo switch
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY > 50) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
+    } else {
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
+    }
   });
 </script>
 

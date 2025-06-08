@@ -280,8 +280,8 @@
   });
 
   logoContainer.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => window.location.reload(), 200);
+    window.scrollTo(0, 0);
+    location.reload();
   });
 
   ['menuToggle', 'logoContainer'].forEach(id => {
@@ -292,15 +292,17 @@
   });
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY > 50) {
-      logoText.style.display = 'none';
-      logoImage.style.display = 'block';
-      logoImage.classList.add('scrolled');
-    } else {
-      logoText.style.display = 'block';
-      logoImage.style.display = 'none';
-      logoImage.classList.remove('scrolled');
+    if (!sidebar.classList.contains('open')) {
+      const scrollY = window.scrollY;
+      if (scrollY > 50) {
+        logoText.style.display = 'none';
+        logoImage.style.display = 'block';
+        logoImage.classList.add('scrolled');
+      } else {
+        logoText.style.display = 'block';
+        logoImage.style.display = 'none';
+        logoImage.classList.remove('scrolled');
+      }
     }
   });
 </script>

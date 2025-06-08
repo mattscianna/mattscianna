@@ -20,7 +20,7 @@
       user-select: none;
     }
 
-    /* Header & Sidebar Styles (from your main code) */
+    /* Header & Sidebar Styles */
     header {
       position: fixed;
       top: 0;
@@ -127,16 +127,57 @@
       left: 0;
     }
 
-    /* Product Image */
+    /* Main Content Font */
+    main, .product-image, .carousel-indicators, .color-label, .sizes, .sold-out-btn, h1 {
+      font-family: 'Oswald', sans-serif;
+    }
+
+    /* Remove the small left header text, add centered bolded heading */
+    h1.product-title {
+      margin-top: 80px; /* space under fixed header */
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    /* Product Image Container with arrows */
     .product-image {
-      margin-top: 80px; /* space below fixed header */
+      position: relative;
       width: 100%;
+      max-width: 600px;
+      margin: 0 auto 20px auto;
     }
 
     .product-image img {
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* Arrows styling */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+      fill: black;
+    }
+
+    .arrow:hover {
+      opacity: 1;
+    }
+
+    .arrow-left {
+      left: 8px;
+    }
+
+    .arrow-right {
+      right: 8px;
     }
 
     /* Carousel Indicators */
@@ -162,33 +203,36 @@
     /* Color Label */
     .color-label {
       margin: 10px 0;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 16px;
       color: black;
+      user-select: none;
     }
 
-    /* Sizes - black buttons with white text */
+    /* Sizes - black bold text, transparent background, no border */
     .sizes {
       display: flex;
       justify-content: center;
       gap: 16px;
       margin: 16px 0;
       font-size: 16px;
+      user-select: none;
     }
 
     .sizes button {
-      background-color: black;
-      color: white;
+      background: transparent;
+      color: black;
       border: none;
+      font-weight: 700;
       font-size: 16px;
-      padding: 8px 14px;
       cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
+      padding: 6px 8px;
+      transition: color 0.3s ease;
     }
 
     .sizes button:hover {
-      background-color: #333;
+      color: #555;
+      text-decoration: underline;
     }
 
     /* Sold Out Button */
@@ -204,6 +248,7 @@
       display: block;
       border-radius: 6px;
       cursor: pointer;
+      user-select: none;
     }
 
     footer {
@@ -234,8 +279,16 @@
   </div>
 </header>
 
+<h1 class="product-title">TWO-FIVE JERSEY (RED)</h1>
+
 <div class="product-image">
   <img src="https://via.placeholder.com/600x800?text=Product+Image" alt="TWO-FIVE JERSEY (RED)" />
+  <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Previous image" role="button" tabindex="0">
+    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+  </svg>
+  <svg class="arrow arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Next image" role="button" tabindex="0">
+    <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+  </svg>
 </div>
 
 <div class="carousel-indicators">

@@ -156,6 +156,32 @@
       left: 0;
     }
 
+    .product-image-box {
+      width: 90%;
+      max-width: 400px;
+      height: 500px;
+      background-color: #f2f2f2;
+      margin: 40px auto 16px auto;
+      border-radius: 6px;
+    }
+
+    .product-info {
+      font-family: 'Oswald', sans-serif;
+      text-align: center;
+      padding: 0 16px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .product-price {
+      font-weight: 400;
+      font-size: 20px;
+    }
+
     @media (min-width: 768px) {
       header { display: none; }
     }
@@ -187,14 +213,12 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<!-- Light Gray Product Image Box -->
-<div style="
-  width: 90%;
-  height: 500px; 
-  background-color: #f2f2f2; 
-  margin: 40px auto; 
-  border-radius: 10px;
-"></div>
+<!-- New Product Box and Text -->
+<div class="product-image-box"></div>
+<div class="product-info">
+  <div class="product-title">MATT SCIANNA JERSEY</div>
+  <div class="product-price">$55.00</div>
+</div>
 
 <nav id="sidebar" class="sidebar">
   <p>Sidebar content goes here.</p>

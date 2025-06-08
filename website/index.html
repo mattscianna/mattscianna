@@ -38,7 +38,7 @@
     .menu-icon {
       width: 22px;
       height: 16px;
-      margin-top: 3px;
+      margin-top: 0px;
       position: relative;
       cursor: pointer;
     }
@@ -72,18 +72,22 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 57%;
+      top: 50%;
       transform: translate(-50%, -50%);
       cursor: pointer;
     }
 
     .logo {
       height: 36px;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, height 0.3s ease;
     }
 
     .logo.alt {
       display: none;
+    }
+
+    .logo.alt.scrolled {
+      height: 48px;
     }
 
     .cart-icon-container {
@@ -203,7 +207,7 @@
 
   <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo Text" class="logo" id="logoText" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Logo Icon" class="logo alt" id="logoImage" />
+    <img src="https://via.placeholder.com/160x48?text=MS+LOGO" alt="Matt Scianna Icon Logo" class="logo alt" id="logoImage" />
   </div>
 
   <div class="cart-icon-container" title="View Cart" role="button" tabindex="0">
@@ -221,7 +225,6 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<!-- First Product Box and Info -->
 <a href="#" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -230,7 +233,6 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<!-- Second Product Box and Info -->
 <a href="#" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -288,15 +290,17 @@
     });
   });
 
-  // Scroll-based logo switch
+  // Scroll-based logo swap and size change
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     if (scrollY > 50) {
       logoText.style.display = 'none';
       logoImage.style.display = 'block';
+      logoImage.classList.add('scrolled');
     } else {
       logoText.style.display = 'block';
       logoImage.style.display = 'none';
+      logoImage.classList.remove('scrolled');
     }
   });
 </script>

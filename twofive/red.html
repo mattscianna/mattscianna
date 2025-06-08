@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RED JERSEY - Matt Scianna</title>
+  <title>TWO-FIVE JERSEY (RED) - Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -12,11 +12,10 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      overflow-x: hidden;
+    body, html {
+      font-family: 'Oswald', sans-serif;
       background-color: white;
-      font-family: Arial, sans-serif;
-      user-select: none;
+      overflow-x: hidden;
     }
 
     header {
@@ -37,7 +36,6 @@
     .menu-icon {
       width: 22px;
       height: 16px;
-      margin-top: -2px;
       position: relative;
       cursor: pointer;
     }
@@ -83,7 +81,6 @@
     .cart-icon-container {
       display: flex;
       align-items: flex-start;
-      margin-top: -2px;
       height: 22px;
       cursor: pointer;
     }
@@ -99,8 +96,6 @@
       width: 100vw;
       height: 100vh;
       background: white;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
       font-size: 24px;
       padding: 80px 20px;
       transition: left 0.4s ease-in-out;
@@ -111,8 +106,84 @@
       left: 0;
     }
 
+    .product-container {
+      margin-top: 100px;
+      padding: 40px 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     @media (min-width: 768px) {
-      header { display: none; }
+      .product-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      header { display: flex; }
+    }
+
+    .product-details {
+      max-width: 300px;
+      margin-bottom: 30px;
+    }
+
+    .product-details h1 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .product-details ul {
+      list-style: none;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .product-image {
+      max-width: 300px;
+    }
+
+    .product-image img {
+      width: 100%;
+    }
+
+    .product-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sizes {
+      display: flex;
+      gap: 10px;
+    }
+
+    .sizes button {
+      padding: 6px 14px;
+      font-size: 16px;
+      background: transparent;
+      border: 1px solid black;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .sizes button:hover {
+      background: black;
+      color: white;
+    }
+
+    .add-to-cart {
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+      background-color: #333;
     }
   </style>
 </head>
@@ -135,6 +206,36 @@
 <nav id="sidebar" class="sidebar">
   <p>Sidebar content goes here.</p>
 </nav>
+
+<div class="product-container">
+  <div class="product-details">
+    <h1>SPLIT ZIP JACKET USED<br>BLACK</h1>
+    <ul>
+      <li>• CROPPED LOOSE FIT</li>
+      <li>• HANDMADE DISTRESSING</li>
+      <li>• LINED</li>
+      <li>• EVERY IS UNIQUE</li>
+      <li>• LIMITED STOCK</li>
+      <li>• HEAVY COTTON</li>
+      <li>• YKK ZIPPER</li>
+    </ul>
+  </div>
+
+  <div class="product-image">
+    <img src="https://via.placeholder.com/300x400?text=Product+Image" alt="Product Image" />
+  </div>
+
+  <div class="product-actions">
+    <div class="sizes">
+      <button>S</button>
+      <button>M</button>
+      <button>L</button>
+      <button>XL</button>
+      <button>XXL</button>
+    </div>
+    <button class="add-to-cart">ADD TO CART — $185</button>
+  </div>
+</div>
 
 <script>
   const menuToggle = document.getElementById('menuToggle');

@@ -132,21 +132,25 @@
       font-family: 'Oswald', sans-serif;
     }
 
-    /* Remove the small left header text, add centered bolded heading */
+    /* Product title - smaller and no underline */
     h1.product-title {
       margin-top: 80px; /* space under fixed header */
       font-weight: 700;
-      font-size: 28px;
+      font-size: 24px; /* smaller size */
       margin-bottom: 20px;
       user-select: none;
+      border-bottom: none; /* removed underline */
     }
 
-    /* Product Image Container with arrows */
+    /* Product Image Container with arrows and black background */
     .product-image {
       position: relative;
       width: 100%;
       max-width: 600px;
       margin: 0 auto 20px auto;
+      background-color: black; /* black background */
+      padding: 10px;
+      border-radius: 8px;
     }
 
     .product-image img {
@@ -155,7 +159,7 @@
       display: block;
     }
 
-    /* Arrows styling */
+    /* Arrows styling - white color */
     .arrow {
       position: absolute;
       top: 50%;
@@ -165,7 +169,7 @@
       cursor: pointer;
       opacity: 0.7;
       transition: opacity 0.2s ease;
-      fill: black;
+      fill: white; /* white arrows */
     }
 
     .arrow:hover {
@@ -284,17 +288,15 @@
 <div class="product-image">
   <img src="https://via.placeholder.com/600x800?text=Product+Image" alt="TWO-FIVE JERSEY (RED)" />
   <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Previous image" role="button" tabindex="0">
-    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="white"/>
   </svg>
   <svg class="arrow arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Next image" role="button" tabindex="0">
-    <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+    <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" fill="white"/>
   </svg>
 </div>
 
 <div class="carousel-indicators">
   <div class="active"></div>
-  <div></div>
-  <div></div>
   <div></div>
   <div></div>
 </div>
@@ -306,51 +308,33 @@
   <button>M</button>
   <button>L</button>
   <button>XL</button>
-  <button>XXL</button>
 </div>
 
-<button class="sold-out-btn">ADD TO CART</button>
+<button class="sold-out-btn" disabled>SOLD OUT</button>
 
-<nav id="sidebar" class="sidebar">
-  <p>Sidebar content goes here.</p>
-</nav>
+<footer>
+  &copy; 2025 Matt Scianna
+</footer>
 
 <script>
+  // Sidebar toggle
   const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const logoContainer = document.getElementById('logoContainer');
-  const logoText = document.getElementById('logoText');
-  const logoImage = document.getElementById('logoImage');
+  const sidebar = document.querySelector('.sidebar');
 
   menuToggle.addEventListener('click', () => {
-    const open = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open', open);
+    menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open');
   });
 
+  // Logo click redirect to main front page
+  const logoContainer = document.getElementById('logoContainer');
   logoContainer.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    location.reload();
+    window.location.href = 'https://mattscianna.com/website/';
   });
 
-  ['menuToggle', 'logoContainer'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') el.click();
-    });
-  });
-
-  window.addEventListener('scroll', () => {
-    if (!sidebar.classList.contains('open')) {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-        logoImage.classList.add('scrolled');
-      } else {
-        logoText.style.display = 'block';
-        logoImage.style.display = 'none';
-        logoImage.classList.remove('scrolled');
-      }
+  logoContainer.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      window.location.href = 'https://mattscianna.com/website/';
     }
   });
 </script>

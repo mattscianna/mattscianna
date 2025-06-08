@@ -32,6 +32,7 @@
       background-color: white;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
+      transition: background-color 0.3s ease;
     }
 
     .menu-icon {
@@ -71,7 +72,7 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 55%; /* Made it slightly lower */
+      top: 50%;
       transform: translate(-50%, -50%);
       cursor: pointer;
     }
@@ -242,7 +243,7 @@
 </div>
 
 <nav id="sidebar" class="sidebar">
-  <!-- Sidebar content here if needed -->
+  <p>Sidebar content goes here.</p>
 </nav>
 
 <script>
@@ -271,7 +272,7 @@
     updateSlide(currentIndex);
   }
 
-  setInterval(nextSlide, 10000);
+  setInterval(nextSlide, 10000); // Auto slide every 10s
 
   menuToggle.addEventListener('click', () => {
     const open = menuToggle.classList.toggle('open');

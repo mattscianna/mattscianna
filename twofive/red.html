@@ -22,12 +22,10 @@
       transition: overflow 0.3s ease;
     }
 
-    /* Disable scrolling on body when sidebar open */
     body.sidebar-open {
       overflow: hidden;
     }
 
-    /* Header & Sidebar Styles */
     header {
       position: fixed;
       top: 0;
@@ -128,48 +126,47 @@
       transition: left 0.4s ease-in-out;
       z-index: 1100;
       text-align: left;
-      overflow-y: auto; /* sidebar scroll enabled */
+      overflow-y: auto;
     }
 
     .sidebar.open {
       left: 0;
     }
 
-    /* Main Content Font */
     main, .product-image, .carousel-indicators, .color-label, .sizes, .sold-out-btn, h1 {
       font-family: 'Oswald', sans-serif;
     }
 
-    /* Product title - smaller and no underline */
     h1.product-title {
-      margin-top: 80px; /* space under fixed header */
+      margin-top: 80px;
       font-weight: 700;
-      font-size: 20px; /* made smaller */
+      font-size: 20px;
       margin-bottom: 20px;
       user-select: none;
-      border-bottom: none; /* removed underline */
+      border-bottom: none;
     }
 
-    /* Product Image Container with arrows and black background */
     .product-image {
       position: relative;
       width: 100%;
-      max-width: 480px; /* match main page gray box size */
+      max-width: 480px;
+      height: 640px;
       margin: 0 auto 20px auto;
-      background-color: black; /* black background */
+      background-color: #f2f2f2; /* Light gray */
       border-radius: 8px;
-      /* removed padding and border to remove white border */
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .product-image img {
-      width: 100%;
-      height: auto;
+      max-width: 100%;
+      max-height: 100%;
       display: block;
-      user-select: none;
+      object-fit: contain;
     }
 
-    /* Arrows styling - white color */
     .arrow {
       position: absolute;
       top: 50%;
@@ -179,7 +176,7 @@
       cursor: pointer;
       opacity: 0.7;
       transition: opacity 0.2s ease;
-      fill: white; /* white arrows */
+      fill: white;
       user-select: none;
     }
 
@@ -187,15 +184,9 @@
       opacity: 1;
     }
 
-    .arrow-left {
-      left: 8px;
-    }
+    .arrow-left { left: 8px; }
+    .arrow-right { right: 8px; }
 
-    .arrow-right {
-      right: 8px;
-    }
-
-    /* Carousel Indicators */
     .carousel-indicators {
       display: flex;
       justify-content: center;
@@ -215,7 +206,6 @@
       background-color: black;
     }
 
-    /* Color Label */
     .color-label {
       margin: 10px 0;
       font-weight: 700;
@@ -224,7 +214,6 @@
       user-select: none;
     }
 
-    /* Sizes - black bold text, transparent background, no border */
     .sizes {
       display: flex;
       justify-content: center;
@@ -250,7 +239,6 @@
       text-decoration: underline;
     }
 
-    /* Sold Out Button */
     .sold-out-btn {
       background-color: black;
       color: white;
@@ -259,14 +247,13 @@
       font-size: 16px;
       width: 90%;
       max-width: 400px;
-      margin: 20px auto 40px auto; /* added bottom margin for spacing */
+      margin: 20px auto 20px auto;
       display: block;
       border-radius: 6px;
       cursor: pointer;
       user-select: none;
     }
 
-    /* Story text box under Add to Cart button */
     .story-textbox {
       max-width: 480px;
       margin: 0 auto 40px auto;
@@ -282,6 +269,18 @@
       background-color: #f9f9f9;
       min-height: 100px;
       white-space: pre-wrap;
+    }
+
+    .image-url-input {
+      margin: 10px auto 30px auto;
+      display: block;
+      padding: 8px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
     }
 
     footer {
@@ -313,7 +312,6 @@
 </header>
 
 <div class="sidebar" role="navigation" aria-label="Main Sidebar">
-  <!-- Sidebar content here -->
   <p>Link 1</p>
   <p>Link 2</p>
   <p>Link 3</p>
@@ -327,15 +325,17 @@
 <main>
   <h1 class="product-title">TWO-FIVE JERSEY (RED)</h1>
 
-  <div class="product-image" aria-label="Product images carousel">
-    <img src="https://via.placeholder.com/480x640/000000/FFFFFF?text=Product+Image+1" alt="TWO-FIVE JERSEY (RED) - Image 1" />
-    <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Previous image" role="button" tabindex="0">
-      <path d="M15.41 7.41 10.83 12l4.58 4.59L14 18l-6-6 6-6z" fill="white"/>
-    </svg>
-    <svg class="arrow arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Next image" role="button" tabindex="0">
-      <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" fill="white"/>
-    </svg>
+  <div class="product-image" id="productImageBox">
+    <img id="productImage" src="" alt="Product image will appear here" />
   </div>
+
+  <!-- Input box for user to paste image URL -->
+  <input
+    type="url"
+    class="image-url-input"
+    id="imageUrlInput"
+    placeholder="Paste image URL here to preview it"
+  />
 
   <div class="carousel-indicators" role="tablist" aria-label="Image carousel navigation">
     <div class="active" role="tab" aria-selected="true" tabindex="0"></div>
@@ -353,9 +353,9 @@
     <button role="listitem">XXL</button>
   </div>
 
-  <button class="sold-out-btn" disabled aria-disabled="true">SOLD OUT</button>
+  <button class="sold-out-btn">ADD TO CART</button>
 
-  <div class="story-textbox" contenteditable="true" aria-label="Add story about the jersey here" spellcheck="true" placeholder="Write the story of the jerseys here..."></div>
+  <div class="story-textbox" contenteditable="true" aria-label="Add story about the jersey here" spellcheck="true"></div>
 </main>
 
 <footer>
@@ -363,7 +363,7 @@
 </footer>
 
 <script>
-  // Sidebar toggle and scroll lock
+  // Sidebar toggle
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.querySelector('.sidebar');
   const body = document.body;
@@ -381,7 +381,7 @@
     }
   });
 
-  // Logo click redirect to main front page
+  // Logo click
   const logoContainer = document.getElementById('logoContainer');
   logoContainer.addEventListener('click', () => {
     window.location.href = 'https://mattscianna.com/website/';
@@ -391,6 +391,14 @@
     if (e.key === 'Enter' || e.key === ' ') {
       window.location.href = 'https://mattscianna.com/website/';
     }
+  });
+
+  // Image URL input
+  const imageUrlInput = document.getElementById('imageUrlInput');
+  const productImage = document.getElementById('productImage');
+
+  imageUrlInput.addEventListener('input', () => {
+    productImage.src = imageUrlInput.value;
   });
 </script>
 

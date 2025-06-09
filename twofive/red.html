@@ -39,7 +39,6 @@
       background-color: white;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
-      transition: background-color 0.3s ease;
     }
 
     .menu-icon {
@@ -96,10 +95,6 @@
       display: none;
     }
 
-    .logo.alt.scrolled {
-      height: 75px;
-    }
-
     .cart-icon-container {
       display: flex;
       align-items: flex-start;
@@ -150,9 +145,9 @@
       position: relative;
       width: 100%;
       max-width: 480px;
-      height: 640px;
+      height: 480px; /* Reduced height */
       margin: 0 auto 20px auto;
-      background-color: #f2f2f2; /* Light gray */
+      background-color: transparent; /* No background */
       border-radius: 8px;
       overflow: hidden;
       display: flex;
@@ -165,6 +160,7 @@
       max-height: 100%;
       display: block;
       object-fit: contain;
+      background: transparent;
     }
 
     .arrow {
@@ -254,35 +250,6 @@
       user-select: none;
     }
 
-    .story-textbox {
-      max-width: 480px;
-      margin: 0 auto 40px auto;
-      padding: 16px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #222;
-      text-align: left;
-      font-weight: 400;
-      user-select: text;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background-color: #f9f9f9;
-      min-height: 100px;
-      white-space: pre-wrap;
-    }
-
-    .image-url-input {
-      margin: 10px auto 30px auto;
-      display: block;
-      padding: 8px;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-family: 'Oswald', sans-serif;
-      font-size: 14px;
-    }
-
     footer {
       padding: 20px 0;
       font-size: 14px;
@@ -326,16 +293,12 @@
   <h1 class="product-title">TWO-FIVE JERSEY (RED)</h1>
 
   <div class="product-image" id="productImageBox">
-    <img id="productImage" src="" alt="Product image will appear here" />
+    <img 
+      id="productImage" 
+      src="https://github.com/mattscianna/mattscianna/blob/main/JERSEYPNG.png?raw=true" 
+      alt="TWO-FIVE Jersey Red" 
+    />
   </div>
-
-  <!-- Input box for user to paste image URL -->
-  <input
-    type="url"
-    class="image-url-input"
-    id="imageUrlInput"
-    placeholder="https://github.com/mattscianna/mattscianna/blob/main/JERSEYPNG.png?raw=true"
-  />
 
   <div class="carousel-indicators" role="tablist" aria-label="Image carousel navigation">
     <div class="active" role="tab" aria-selected="true" tabindex="0"></div>
@@ -354,8 +317,6 @@
   </div>
 
   <button class="sold-out-btn">ADD TO CART</button>
-
-  <div class="story-textbox" contenteditable="true" aria-label="Add story about the jersey here" spellcheck="true"></div>
 </main>
 
 <footer>
@@ -391,14 +352,6 @@
     if (e.key === 'Enter' || e.key === ' ') {
       window.location.href = 'https://mattscianna.com/website/';
     }
-  });
-
-  // Image URL input
-  const imageUrlInput = document.getElementById('imageUrlInput');
-  const productImage = document.getElementById('productImage');
-
-  imageUrlInput.addEventListener('input', () => {
-    productImage.src = imageUrlInput.value;
   });
 </script>
 

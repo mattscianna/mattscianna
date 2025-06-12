@@ -106,7 +106,7 @@
       display: flex;
       align-items: flex-start;
       height: 26px;
-      margin-top: -3px; /* slightly lowered */
+      margin-top: -2px; /* Updated here */
       cursor: pointer;
     }
 
@@ -217,142 +217,142 @@
   </style>
 </head>
 <body>
-  <header>
-    <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
-      <div></div><div></div><div></div>
-    </div>
-
-    <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
-      <span class="logo-text" id="logoText">MATT SCIANNA</span>
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo-image" id="logoImage" />
-    </div>
-
-    <div class="cart-icon-container" title="View Cart" role="button" tabindex="0" id="cartIcon">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-    </div>
-  </header>
-
-  <div class="image-box">
-    <div class="slider" id="slider">
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-    </div>
-    <div class="arrow left" onclick="prevSlide()"></div>
-    <div class="arrow right" onclick="nextSlide()"></div>
+<header>
+  <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
+    <div></div><div></div><div></div>
   </div>
 
-  <!-- RED Jersey -->
-  <a href="/jersey/red" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box"></div>
-  </a>
-  <div class="product-info">
-    <div class="product-title">TWO-FIVE JERSEY (RED)</div>
-    <div class="product-price">$50.00</div>
+  <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+    <span class="logo-text" id="logoText">MATT SCIANNA</span>
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo-image" id="logoImage" />
   </div>
 
-  <!-- WHITE Jersey -->
-  <a href="/jersey/white" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box"></div>
-  </a>
-  <div class="product-info">
-    <div class="product-title">TWO-FIVE JERSEY (WHITE)</div>
-    <div class="product-price">$50.00</div>
+  <div class="cart-icon-container" title="View Cart" role="button" tabindex="0" id="cartIcon">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
   </div>
+</header>
 
-  <nav id="sidebar" class="sidebar">
-    <p>Sidebar content goes here.</p>
-  </nav>
+<div class="image-box">
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
+  </div>
+  <div class="arrow left" onclick="prevSlide()"></div>
+  <div class="arrow right" onclick="nextSlide()"></div>
+</div>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const logoText = document.getElementById('logoText');
-    const logoImage = document.getElementById('logoImage');
-    const logoContainer = document.getElementById('logoContainer');
-    const slider = document.getElementById('slider');
+<!-- RED Jersey -->
+<a href="/jersey/red" style="text-decoration: none; color: inherit;">
+  <div class="product-image-box"></div>
+</a>
+<div class="product-info">
+  <div class="product-title">TWO-FIVE JERSEY (RED)</div>
+  <div class="product-price">$50.00</div>
+</div>
 
-    let currentIndex = 0;
-    const slides = slider.children;
-    const totalSlides = slides.length;
+<!-- WHITE Jersey -->
+<a href="/jersey/white" style="text-decoration: none; color: inherit;">
+  <div class="product-image-box"></div>
+</a>
+<div class="product-info">
+  <div class="product-title">TWO-FIVE JERSEY (WHITE)</div>
+  <div class="product-price">$50.00</div>
+</div>
 
-    function updateSlide(index) {
-      slider.style.transform = `translateX(-${index * 100}%)`;
+<nav id="sidebar" class="sidebar">
+  <p>Sidebar content goes here.</p>
+</nav>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const logoContainer = document.getElementById('logoContainer');
+  const slider = document.getElementById('slider');
+
+  let currentIndex = 0;
+  const slides = slider.children;
+  const totalSlides = slides.length;
+
+  function updateSlide(index) {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlide(currentIndex);
+  }
+
+  setInterval(nextSlide, 10000);
+
+  let scrollPosition = 0;
+  let currentLogoState = 'text';
+
+  function updateLogoVisibility() {
+    if (window.scrollY > 40) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
+      currentLogoState = 'image';
+    } else {
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
+      currentLogoState = 'text';
     }
+  }
 
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      updateSlide(currentIndex);
+  window.addEventListener('scroll', () => {
+    if (!document.body.classList.contains('sidebar-open')) {
+      updateLogoVisibility();
     }
+  });
 
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      updateSlide(currentIndex);
-    }
+  menuToggle.addEventListener('click', () => {
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open', isOpen);
 
-    setInterval(nextSlide, 10000);
+    if (isOpen) {
+      scrollPosition = window.scrollY;
+      document.body.classList.add('sidebar-open');
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
 
-    let scrollPosition = 0;
-    let currentLogoState = 'text';
-
-    function updateLogoVisibility() {
-      if (window.scrollY > 40) {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-        currentLogoState = 'image';
-      } else {
+      if (currentLogoState === 'text') {
         logoText.style.display = 'block';
         logoImage.style.display = 'none';
-        currentLogoState = 'text';
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!document.body.classList.contains('sidebar-open')) {
-        updateLogoVisibility();
-      }
-    });
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.classList.toggle('open');
-      sidebar.classList.toggle('open', isOpen);
-
-      if (isOpen) {
-        scrollPosition = window.scrollY;
-        document.body.classList.add('sidebar-open');
-        document.body.style.top = `-${scrollPosition}px`;
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-
-        if (currentLogoState === 'text') {
-          logoText.style.display = 'block';
-          logoImage.style.display = 'none';
-        } else {
-          logoText.style.display = 'none';
-          logoImage.style.display = 'block';
-        }
       } else {
-        document.body.classList.remove('sidebar-open');
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, scrollPosition);
-        updateLogoVisibility();
+        logoText.style.display = 'none';
+        logoImage.style.display = 'block';
       }
-    });
+    } else {
+      document.body.classList.remove('sidebar-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollPosition);
+      updateLogoVisibility();
+    }
+  });
 
-    logoContainer.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+  logoContainer.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-    ['menuToggle', 'logoContainer'].forEach(id => {
-      const el = document.getElementById(id);
-      el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') el.click();
-      });
+  ['menuToggle', 'logoContainer'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') el.click();
     });
+  });
 
-    document.addEventListener('DOMContentLoaded', updateLogoVisibility);
-  </script>
+  document.addEventListener('DOMContentLoaded', updateLogoVisibility);
+</script>
 </body>
 </html>

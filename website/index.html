@@ -87,11 +87,15 @@
 
     .logo-text {
       font-family: 'Cardo', serif;
-      font-size: 28px;
-      font-weight: normal;
-      transition: opacity 0.3s ease;
-      display: block;
+      font-size: 75px;
+      font-weight: bold;
       line-height: 1;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
     }
 
     .logo-image {
@@ -216,7 +220,6 @@
   </style>
 </head>
 <body>
-
 <header>
   <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
     <div></div><div></div><div></div>
@@ -242,7 +245,6 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<!-- RED JERSEY LINKED -->
 <a href="/twofive/red" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -251,7 +253,6 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<!-- WHITE JERSEY UNLINKED FOR NOW -->
 <a href="#" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -335,6 +336,5 @@
     }
   });
 </script>
-
 </body>
 </html>

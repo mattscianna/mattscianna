@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -85,17 +85,22 @@
       cursor: pointer;
     }
 
-    .logo {
-      height: 36px;
-      transition: opacity 0.3s ease, height 0.3s ease;
+    .logo-text {
+      font-family: 'Cardo', serif;
+      font-size: 28px;
+      font-weight: normal;
+      transition: opacity 0.3s ease;
       display: block;
+      line-height: 1;
     }
 
-    .logo.alt {
+    .logo-image {
+      height: 36px;
       display: none;
+      transition: opacity 0.3s ease, height 0.3s ease;
     }
 
-    .logo.alt.scrolled {
+    .logo-image.scrolled {
       height: 75px;
     }
 
@@ -218,8 +223,8 @@
   </div>
 
   <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/MATTSCIANNA.png?raw=true" alt="Matt Scianna Logo Text" class="logo" id="logoText" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo alt" id="logoImage" />
+    <span class="logo-text" id="logoText">MATT SCIANNA</span>
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo-image" id="logoImage" />
   </div>
 
   <div class="cart-icon-container" title="View Cart" role="button" tabindex="0" id="cartIcon">
@@ -263,9 +268,9 @@
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
+  const slider = document.getElementById('slider');
 
   let currentIndex = 0;
   const slides = slider.children;
@@ -285,9 +290,8 @@
     updateSlide(currentIndex);
   }
 
-  setInterval(nextSlide, 10000); // Auto slide every 10s
+  setInterval(nextSlide, 10000);
 
-  // Preserve scroll position when opening sidebar
   let scrollPosition = 0;
   menuToggle.addEventListener('click', () => {
     const isOpen = menuToggle.classList.toggle('open');

@@ -36,7 +36,7 @@
       border-bottom: 1px solid #ccc;
     }
 
-    .menu-icon, .cart-icon {
+    .cart-icon-x {
       width: 22px;
       height: 16px;
       position: relative;
@@ -45,7 +45,7 @@
       align-items: center;
     }
 
-    .menu-icon div, .cart-icon div {
+    .cart-icon-x div {
       position: absolute;
       width: 100%;
       height: 2px;
@@ -53,27 +53,19 @@
       transition: all 0.4s ease;
     }
 
-    .menu-icon div:nth-child(1),
-    .cart-icon div:nth-child(1) { top: 0; }
+    .cart-icon-x div:nth-child(1) { top: 0; }
+    .cart-icon-x div:nth-child(2) { top: 7px; }
+    .cart-icon-x div:nth-child(3) { top: 14px; }
 
-    .menu-icon div:nth-child(2),
-    .cart-icon div:nth-child(2) { top: 7px; }
-
-    .menu-icon div:nth-child(3),
-    .cart-icon div:nth-child(3) { top: 14px; }
-
-    .menu-icon.open div:nth-child(1),
-    .cart-icon.open div:nth-child(1) {
+    .cart-icon-x.open div:nth-child(1) {
       transform: rotate(45deg); top: 7px;
     }
 
-    .menu-icon.open div:nth-child(2),
-    .cart-icon.open div:nth-child(2) {
+    .cart-icon-x.open div:nth-child(2) {
       opacity: 0;
     }
 
-    .menu-icon.open div:nth-child(3),
-    .cart-icon.open div:nth-child(3) {
+    .cart-icon-x.open div:nth-child(3) {
       transform: rotate(-45deg); top: 7px;
     }
 
@@ -90,14 +82,15 @@
 
     .logo-text {
       font-family: 'Cardo', serif;
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
+      margin-top: 2px;
     }
 
     .logo-image {
-      height: 90px;
+      height: 88px;
       display: none;
     }
 
@@ -212,16 +205,12 @@
 </head>
 <body>
 <header>
-  <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
-    <div></div><div></div><div></div>
-  </div>
-
   <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <div id="cartToggle" class="cart-icon" role="button" tabindex="0" title="Cart">
+  <div id="cartIcon" class="cart-icon-x" title="Cart">
     <div></div><div></div><div></div>
   </div>
 </header>
@@ -256,16 +245,13 @@
 <nav id="cartSidebar" class="cart-sidebar"> <p>Cart sidebar content goes here.</p> </nav>
 
 <script>
-  const menuToggle = document.getElementById('menuToggle');
-  const cartToggle = document.getElementById('cartToggle');
-  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
   const logoContainer = document.getElementById('logoContainer');
   const slider = document.getElementById('slider');
   let currentIndex = 0;
-  let currentLogoState = 'text';
   let scrollPosition = 0;
 
   const slides = slider.children;
@@ -290,11 +276,9 @@
     if (window.scrollY > 40) {
       logoText.style.display = 'none';
       logoImage.style.display = 'block';
-      currentLogoState = 'image';
     } else {
       logoText.style.display = 'block';
       logoImage.style.display = 'none';
-      currentLogoState = 'text';
     }
   }
 
@@ -304,38 +288,9 @@
     }
   });
 
-  menuToggle.addEventListener('click', () => {
-    const isOpen = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open', isOpen);
-
-    if (cartSidebar.classList.contains('open')) {
-      cartSidebar.classList.remove('open');
-      cartToggle.classList.remove('open');
-      document.body.classList.remove('cart-open');
-    }
-
-    if (isOpen) {
-      scrollPosition = window.scrollY;
-      document.body.classList.add('sidebar-open');
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = 'fixed';
-    } else {
-      document.body.classList.remove('sidebar-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
-    }
-  });
-
-  cartToggle.addEventListener('click', () => {
+  cartIcon.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
-    cartToggle.classList.toggle('open', isOpen);
-
-    if (sidebar.classList.contains('open')) {
-      sidebar.classList.remove('open');
-      menuToggle.classList.remove('open');
-      document.body.classList.remove('sidebar-open');
-    }
+    cartIcon.classList.toggle('open', isOpen);
 
     if (isOpen) {
       scrollPosition = window.scrollY;
@@ -355,7 +310,7 @@
     window.location.reload();
   });
 
-  ['menuToggle', 'logoContainer', 'cartToggle'].forEach(id => {
+  ['logoContainer', 'cartIcon'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', (e) => {
       if (e.key === 'Enter') e.target.click();
     });

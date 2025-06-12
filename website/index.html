@@ -78,7 +78,7 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 54%;
       transform: translate(-50%, -50%);
       display: flex;
       align-items: center;
@@ -91,7 +91,6 @@
       font-size: 28px;
       font-weight: 900;
       line-height: 1;
-      margin-top: 1px;
       height: 36px;
       display: flex;
       align-items: center;
@@ -322,9 +321,16 @@
     });
   });
 
-  // Keep logo fixed — disable scroll-based switching
-  logoText.style.display = 'block';
-  logoImage.style.display = 'none';
+  // Scroll-based logo switching
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
+    } else {
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
+    }
+  });
 </script>
 </body>
 </html>

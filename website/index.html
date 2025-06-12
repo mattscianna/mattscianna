@@ -20,8 +20,9 @@
     }
 
     body.no-scroll {
+      position: fixed;
       overflow: hidden;
-      height: 100vh;
+      width: 100%;
     }
 
     header {
@@ -286,10 +287,21 @@
 
   setInterval(nextSlide, 10000); // Auto slide every 10s
 
+  // Preserve scroll position when opening sidebar
+  let scrollPosition = 0;
   menuToggle.addEventListener('click', () => {
-    const open = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open', open);
-    document.body.classList.toggle('no-scroll', open);
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open', isOpen);
+
+    if (isOpen) {
+      scrollPosition = window.pageYOffset;
+      document.body.classList.add('no-scroll');
+      document.body.style.top = `-${scrollPosition}px`;
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
+    }
   });
 
   logoContainer.addEventListener('click', () => {

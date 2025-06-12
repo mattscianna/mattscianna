@@ -92,11 +92,6 @@
       font-family: 'Cardo', serif;
       font-size: 28px;
       font-weight: 900;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
       margin-top: 2px;
     }
 
@@ -107,9 +102,15 @@
 
     .cart-icon-container {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       height: 26px;
-      margin-top: -2px;
+      width: 26px;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .cart-icon-container.open {
+      position: relative;
     }
 
     .cart-icon {
@@ -119,6 +120,7 @@
 
     .cart-icon-container.open .cart-icon {
       transform: rotate(45deg);
+      content: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>');
     }
 
     .image-box {
@@ -171,7 +173,6 @@
       top: 0;
       background: white;
       font-family: 'Oswald', sans-serif;
-      font-weight: 400;
       font-size: 24px;
       transition: transform 0.4s ease-in-out;
       z-index: 1100;
@@ -193,8 +194,8 @@
 
     .cart-sidebar {
       right: 0;
-      width: 45vw;
-      max-width: 340px;
+      width: 90vw;
+      max-width: 400px;
       height: 100vh;
       padding: 80px 20px;
       transform: translateX(100%);
@@ -234,12 +235,16 @@
 
     @media (min-width: 768px) {
       header { display: none; }
+      .cart-sidebar {
+        width: 45vw;
+        max-width: 340px;
+      }
     }
   </style>
 </head>
 <body>
 <header>
-  <div id="menuToggle" class="menu-icon" aria-label="Toggle sidebar" role="button" tabindex="0">
+  <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
     <div></div><div></div><div></div>
   </div>
 
@@ -263,7 +268,6 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<!-- RED Jersey -->
 <a href="/jersey/red" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -272,7 +276,6 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<!-- WHITE Jersey -->
 <a href="/jersey/white" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
@@ -354,21 +357,14 @@
       document.body.classList.add('sidebar-open');
       document.body.style.top = `-${scrollPosition}px`;
       document.body.style.position = 'fixed';
-
-      if (currentLogoState === 'text') {
-        logoText.style.display = 'block';
-        logoImage.style.display = 'none';
-      } else {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-      }
     } else {
       document.body.classList.remove('sidebar-open');
       document.body.style.position = '';
       document.body.style.top = '';
       window.scrollTo(0, scrollPosition);
-      updateLogoVisibility();
     }
+
+    updateLogoVisibility();
   });
 
   cartIcon.addEventListener('click', () => {

@@ -90,23 +90,22 @@
       font-size: 28px;
       font-weight: 900;
       line-height: 1;
-      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
       white-space: nowrap;
-      margin-top: 4px; /* Adjusted lower */
+      margin-top: 6px; /* Slightly lowered */
     }
 
     .logo-image {
-      height: 48px;
+      height: 56px; /* Made the MS logo larger */
       display: none;
     }
 
     .cart-icon-container {
       display: flex;
       align-items: flex-start;
-      margin-top: -6px; /* Raised slightly */
+      margin-top: -6px;
       height: 22px;
       cursor: pointer;
     }
@@ -325,7 +324,6 @@
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
 
-      // Maintain logo state
       if (currentLogoState === 'text') {
         logoText.style.display = 'block';
         logoImage.style.display = 'none';

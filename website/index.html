@@ -6,11 +6,7 @@
   <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       overflow-x: hidden;
@@ -40,18 +36,16 @@
       border-bottom: 1px solid #ccc;
     }
 
-    .menu-icon, .cart-icon-container {
-      cursor: pointer;
-    }
-
-    .menu-icon {
+    .menu-icon, .cart-icon-x {
       width: 22px;
       height: 16px;
-      margin-top: -2px;
       position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
-    .menu-icon div {
+    .menu-icon div, .cart-icon-x div {
       position: absolute;
       width: 100%;
       height: 2px;
@@ -59,22 +53,20 @@
       transition: all 0.4s ease;
     }
 
-    .menu-icon div:nth-child(1) { top: 0; }
-    .menu-icon div:nth-child(2) { top: 7px; }
-    .menu-icon div:nth-child(3) { top: 14px; }
+    .menu-icon div:nth-child(1), .cart-icon-x div:nth-child(1) { top: 0; }
+    .menu-icon div:nth-child(2), .cart-icon-x div:nth-child(2) { top: 7px; }
+    .menu-icon div:nth-child(3), .cart-icon-x div:nth-child(3) { top: 14px; }
 
-    .menu-icon.open div:nth-child(1) {
-      transform: rotate(45deg);
-      top: 7px;
+    .menu-icon.open div:nth-child(1), .cart-icon-x.open div:nth-child(1) {
+      transform: rotate(45deg); top: 7px;
     }
 
-    .menu-icon.open div:nth-child(2) {
+    .menu-icon.open div:nth-child(2), .cart-icon-x.open div:nth-child(2) {
       opacity: 0;
     }
 
-    .menu-icon.open div:nth-child(3) {
-      transform: rotate(-45deg);
-      top: 7px;
+    .menu-icon.open div:nth-child(3), .cart-icon-x.open div:nth-child(3) {
+      transform: rotate(-45deg); top: 7px;
     }
 
     .logo-container {
@@ -90,43 +82,23 @@
 
     .logo-text {
       font-family: 'Cardo', serif;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
+      line-height: 1;
       white-space: nowrap;
+      margin-top: 2px;
     }
 
     .logo-image {
-      height: 80px;
+      height: 88px;
       display: none;
     }
 
     .cart-icon-container {
       display: flex;
       align-items: center;
-      justify-content: center;
+      margin-top: -4px;
       height: 26px;
-      width: 26px;
-      position: relative;
-      margin-top: -2px; /* 👈 This line moves the bag icon higher */
-    }
-
-    .cart-icon, .cart-x-icon {
-      height: 26px;
-      width: 26px;
-      position: absolute;
-      transition: opacity 0.3s ease;
-    }
-
-    .cart-x-icon {
-      opacity: 0;
-    }
-
-    .cart-icon-container.open .cart-icon {
-      opacity: 0;
-    }
-
-    .cart-icon-container.open .cart-x-icon {
-      opacity: 1;
     }
 
     .image-box {
@@ -164,21 +136,15 @@
       z-index: 2;
     }
 
-    .arrow.left {
-      left: 10px;
-      transform: translateY(-50%) rotate(135deg);
-    }
-
-    .arrow.right {
-      right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
+    .arrow.left { left: 10px; transform: translateY(-50%) rotate(135deg); }
+    .arrow.right { right: 10px; transform: translateY(-50%) rotate(-45deg); }
 
     .sidebar, .cart-sidebar {
       position: fixed;
       top: 0;
       background: white;
       font-family: 'Oswald', sans-serif;
+      font-weight: 400;
       font-size: 24px;
       transition: transform 0.4s ease-in-out;
       z-index: 1100;
@@ -201,7 +167,7 @@
     .cart-sidebar {
       right: 0;
       width: 50vw;
-      max-width: 260px;
+      max-width: 280px;
       height: 100vh;
       padding: 80px 20px;
       transform: translateX(100%);
@@ -250,17 +216,13 @@
     <div></div><div></div><div></div>
   </div>
 
-  <div class="logo-container" id="logoContainer" title="Refresh page" role="button" tabindex="0">
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo-image" id="logoImage" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <div class="cart-icon-container" title="View Cart" role="button" tabindex="0" id="cartIcon">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
-    <svg class="cart-x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="black" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
+  <div id="cartIcon" class="cart-icon-x" title="Cart">
+    <div></div><div></div><div></div>
   </div>
 </header>
 
@@ -290,40 +252,35 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<nav id="sidebar" class="sidebar">
-  <p>Menu sidebar content goes here.</p>
-</nav>
-
-<nav id="cartSidebar" class="cart-sidebar">
-  <p>Cart sidebar content goes here.</p>
-</nav>
+<nav id="sidebar" class="sidebar"> <p>Menu sidebar content goes here.</p> </nav>
+<nav id="cartSidebar" class="cart-sidebar"> <p>Cart sidebar content goes here.</p> </nav>
 
 <script>
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
   const logoContainer = document.getElementById('logoContainer');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar');
   const slider = document.getElementById('slider');
-
-  let scrollPosition = 0;
   let currentIndex = 0;
+  let currentLogoState = 'text';
+  let scrollPosition = 0;
+
   const slides = slider.children;
-  const totalSlides = slides.length;
 
   function updateSlide(index) {
     slider.style.transform = `translateX(-${index * 100}%)`;
   }
 
   function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
+    currentIndex = (currentIndex + 1) % slides.length;
     updateSlide(currentIndex);
   }
 
   function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
     updateSlide(currentIndex);
   }
 
@@ -333,9 +290,11 @@
     if (window.scrollY > 40) {
       logoText.style.display = 'none';
       logoImage.style.display = 'block';
+      currentLogoState = 'image';
     } else {
       logoText.style.display = 'block';
       logoImage.style.display = 'none';
+      currentLogoState = 'text';
     }
   }
 
@@ -366,8 +325,6 @@
       document.body.style.top = '';
       window.scrollTo(0, scrollPosition);
     }
-
-    updateLogoVisibility();
   });
 
   cartIcon.addEventListener('click', () => {
@@ -394,13 +351,14 @@
   });
 
   logoContainer.addEventListener('click', () => {
-    location.reload();
+    logoText.style.display = 'block';
+    logoImage.style.display = 'none';
+    window.location.reload();
   });
 
   ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') el.click();
+    document.getElementById(id).addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') e.target.click();
     });
   });
 

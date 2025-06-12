@@ -92,7 +92,7 @@
       font-family: 'Cardo', serif;
       font-size: 28px;
       font-weight: 900;
-      margin-top: 2px;
+      white-space: nowrap;
     }
 
     .logo-image {
@@ -103,24 +103,29 @@
     .cart-icon-container {
       display: flex;
       align-items: center;
+      justify-content: center;
       height: 26px;
       width: 26px;
-      justify-content: center;
-      transition: transform 0.4s ease;
-    }
-
-    .cart-icon-container.open {
       position: relative;
     }
 
-    .cart-icon {
+    .cart-icon, .cart-x-icon {
       height: 26px;
-      transition: transform 0.3s ease;
+      width: 26px;
+      position: absolute;
+      transition: opacity 0.3s ease;
+    }
+
+    .cart-x-icon {
+      opacity: 0;
     }
 
     .cart-icon-container.open .cart-icon {
-      transform: rotate(45deg);
-      content: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>');
+      opacity: 0;
+    }
+
+    .cart-icon-container.open .cart-x-icon {
+      opacity: 1;
     }
 
     .image-box {
@@ -194,8 +199,8 @@
 
     .cart-sidebar {
       right: 0;
-      width: 90vw;
-      max-width: 400px;
+      width: 50vw;
+      max-width: 260px;
       height: 100vh;
       padding: 80px 20px;
       transform: translateX(100%);
@@ -235,10 +240,6 @@
 
     @media (min-width: 768px) {
       header { display: none; }
-      .cart-sidebar {
-        width: 45vw;
-        max-width: 340px;
-      }
     }
   </style>
 </head>
@@ -248,13 +249,17 @@
     <div></div><div></div><div></div>
   </div>
 
-  <div class="logo-container" id="logoContainer" title="Go to main page" role="button" tabindex="0">
+  <div class="logo-container" id="logoContainer" title="Refresh page" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="Matt Scianna Icon Logo" class="logo-image" id="logoImage" />
   </div>
 
   <div class="cart-icon-container" title="View Cart" role="button" tabindex="0" id="cartIcon">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/SHOPPINGBAG.png?raw=true" alt="Cart" class="cart-icon" />
+    <svg class="cart-x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="black" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
   </div>
 </header>
 
@@ -303,7 +308,6 @@
   const slider = document.getElementById('slider');
 
   let scrollPosition = 0;
-  let currentLogoState = 'text';
   let currentIndex = 0;
   const slides = slider.children;
   const totalSlides = slides.length;
@@ -328,11 +332,9 @@
     if (window.scrollY > 40) {
       logoText.style.display = 'none';
       logoImage.style.display = 'block';
-      currentLogoState = 'image';
     } else {
       logoText.style.display = 'block';
       logoImage.style.display = 'none';
-      currentLogoState = 'text';
     }
   }
 
@@ -391,7 +393,7 @@
   });
 
   logoContainer.addEventListener('click', () => {
-    window.location.href = '/';
+    location.reload();
   });
 
   ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

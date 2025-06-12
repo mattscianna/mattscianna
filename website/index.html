@@ -97,17 +97,11 @@
       align-items: center;
       justify-content: center;
       white-space: nowrap;
-      transition: opacity 0.3s ease;
     }
 
     .logo-image {
       height: 36px;
       display: none;
-      transition: opacity 0.3s ease, height 0.3s ease;
-    }
-
-    .logo-image.scrolled {
-      height: 75px;
     }
 
     .cart-icon-container {
@@ -250,7 +244,8 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<a href="/twofive/red" style="text-decoration: none; color: inherit;">
+<!-- RED Jersey -->
+<a href="/jersey/red" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
 <div class="product-info">
@@ -258,7 +253,8 @@
   <div class="product-price">$50.00</div>
 </div>
 
-<a href="#" style="text-decoration: none; color: inherit;">
+<!-- WHITE Jersey -->
+<a href="/jersey/white" style="text-decoration: none; color: inherit;">
   <div class="product-image-box"></div>
 </a>
 <div class="product-info">
@@ -326,20 +322,9 @@
     });
   });
 
-  window.addEventListener('scroll', () => {
-    if (!sidebar.classList.contains('open')) {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-        logoImage.classList.add('scrolled');
-      } else {
-        logoText.style.display = 'block';
-        logoImage.style.display = 'none';
-        logoImage.classList.remove('scrolled');
-      }
-    }
-  });
+  // Keep logo fixed — disable scroll-based switching
+  logoText.style.display = 'block';
+  logoImage.style.display = 'none';
 </script>
 </body>
 </html>

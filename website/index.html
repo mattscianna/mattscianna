@@ -17,6 +17,7 @@
       background-color: white;
       font-family: Arial, sans-serif;
       user-select: none;
+      scroll-behavior: smooth;
     }
 
     body.sidebar-open, body.cart-open {
@@ -40,26 +41,6 @@
       border-bottom: 1px solid #ccc;
     }
 
-    .icon-btn {
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-btn img {
-      width: 100%;
-      height: auto;
-      transition: opacity 0.3s ease;
-    }
-
-    .icon-btn img.cross-icon {
-      content: url('https://upload.wikimedia.org/wikipedia/commons/7/71/Black_x_icon.svg');
-    }
-
     .logo-container {
       position: absolute;
       left: 50%;
@@ -78,13 +59,96 @@
       line-height: 1;
       white-space: nowrap;
       margin-top: 2px;
-      transition: opacity 0.3s ease;
     }
 
     .logo-image {
       height: 88px;
       display: none;
+    }
+
+    .icon-btn.menu-toggle {
+      width: 28px;
+      height: 22px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .icon-btn.menu-toggle span {
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background-color: black;
+      left: 0;
+      transition: 0.3s ease;
+    }
+
+    .icon-btn.menu-toggle span:nth-child(1) { top: 0; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
+    .icon-btn.menu-toggle span:nth-child(3) { bottom: 0; }
+
+    .icon-btn.menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .icon-btn.menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .icon-btn.menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      bottom: 9px;
+    }
+
+    .icon-btn.cart-toggle {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .icon-btn.cart-toggle img {
+      width: 100%;
+      height: auto;
       transition: opacity 0.3s ease;
+    }
+
+    .icon-btn.cart-toggle.open::before,
+    .icon-btn.cart-toggle.open::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: black;
+      top: 11px;
+      left: 0;
+      transform-origin: center;
+      transition: 0.3s ease;
+    }
+
+    .icon-btn.cart-toggle.open::before {
+      transform: rotate(45deg);
+    }
+
+    .icon-btn.cart-toggle.open::after {
+      transform: rotate(-45deg);
+    }
+
+    .icon-btn.cart-toggle.open img {
+      opacity: 0;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background-color: red;
+      color: white;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 999px;
+      font-family: sans-serif;
+      display: none;
     }
 
     .image-box {
@@ -215,17 +279,23 @@
 <body>
 
 <header>
-  <div id="menuToggle" class="icon-btn" role="button" tabindex="0">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Hamburger_icon.svg" alt="Menu" />
+  <!-- MENU ICON -->
+  <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
+  <!-- LOGO -->
   <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <div id="cartIcon" class="icon-btn" title="Cart">
+  <!-- SHOPPING BAG -->
+  <div id="cartIcon" class="icon-btn cart-toggle" title="Cart">
     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
+    <div id="cartCount" class="cart-count">0</div>
   </div>
 </header>
 
@@ -269,8 +339,11 @@
   const logoImage = document.getElementById('logoImage');
   const logoContainer = document.getElementById('logoContainer');
   const slider = document.getElementById('slider');
+  const cartCount = document.getElementById('cartCount');
+
   let currentIndex = 0;
   let scrollPosition = 0;
+  let cartItems = 0; // Start with 0 items
 
   const slides = slider.children;
 
@@ -290,63 +363,26 @@
 
   setInterval(nextSlide, 10000);
 
-  const toggleIcon = (element, isOpen) => {
-    const img = element.querySelector('img');
-    if (isOpen) {
-      img.classList.add('cross-icon');
-    } else {
-      img.classList.remove('cross-icon');
-    }
-  };
-
   menuToggle.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    toggleIcon(menuToggle, isOpen);
-
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open');
     if (cartSidebar.classList.contains('open')) {
       cartSidebar.classList.remove('open');
-      toggleIcon(cartIcon, false);
-      document.body.classList.remove('cart-open');
-    }
-
-    if (isOpen) {
-      scrollPosition = window.scrollY;
-      document.body.classList.add('sidebar-open');
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = 'fixed';
-    } else {
-      document.body.classList.remove('sidebar-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
+      cartIcon.classList.remove('open');
     }
   });
 
   cartIcon.addEventListener('click', () => {
-    const isOpen = cartSidebar.classList.toggle('open');
-    toggleIcon(cartIcon, isOpen);
-
-    if (sidebar.classList.contains('open')) {
+    const isOpen = cartIcon.classList.toggle('open');
+    cartSidebar.classList.toggle('open');
+    if (menuToggle.classList.contains('open')) {
       sidebar.classList.remove('open');
-      toggleIcon(menuToggle, false);
-      document.body.classList.remove('sidebar-open');
-    }
-
-    if (isOpen) {
-      scrollPosition = window.scrollY;
-      document.body.classList.add('cart-open');
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = 'fixed';
-    } else {
-      document.body.classList.remove('cart-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
+      menuToggle.classList.remove('open');
     }
   });
 
   logoContainer.addEventListener('click', () => {
-    location.reload();
+    location.href = location.origin + location.pathname;
   });
 
   window.addEventListener('scroll', () => {
@@ -360,11 +396,15 @@
     }
   });
 
-  ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
-    document.getElementById(id).addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') e.target.click();
-    });
-  });
+  // Example: Simulate adding an item to the cart
+  function addToCart() {
+    cartItems++;
+    cartCount.innerText = cartItems;
+    cartCount.style.display = cartItems > 0 ? 'block' : 'none';
+  }
+
+  // Optional: Automatically show count after 3 seconds (demo only)
+  setTimeout(addToCart, 3000);
 </script>
 </body>
 </html>

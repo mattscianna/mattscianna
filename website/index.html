@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
     html, body {
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
       user-select: none;
     }
-
     body.sidebar-open, body.cart-open {
       overflow: hidden;
       position: fixed;
@@ -23,8 +25,7 @@
 
     header {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 64px;
       display: flex;
@@ -32,11 +33,12 @@
       align-items: center;
       padding: 8px 16px;
       background-color: white;
-      z-index: 1200;
       border-bottom: 1px solid #ccc;
+      z-index: 1200;
     }
 
-    .cart-icon {
+    /* Hamburger menu icon left */
+    #menuToggle {
       width: 22px;
       height: 16px;
       position: relative;
@@ -44,250 +46,139 @@
       display: flex;
       align-items: center;
     }
-
-    .cart-icon div {
+    #menuToggle div {
       position: absolute;
       width: 100%;
       height: 2px;
       background-color: black;
       transition: all 0.4s ease;
     }
+    #menuToggle div:nth-child(1) { top: 0; }
+    #menuToggle div:nth-child(2) { top: 7px; }
+    #menuToggle div:nth-child(3) { top: 14px; }
 
-    .cart-icon div:nth-child(1) { top: 0; }
-    .cart-icon div:nth-child(2) { top: 7px; }
-    .cart-icon div:nth-child(3) { top: 14px; }
-
-    .cart-icon.open div:nth-child(1) {
-      transform: rotate(45deg); top: 7px;
+    #menuToggle.open div:nth-child(1) {
+      transform: rotate(45deg);
+      top: 7px;
     }
-    .cart-icon.open div:nth-child(2) {
+    #menuToggle.open div:nth-child(2) {
       opacity: 0;
     }
-    .cart-icon.open div:nth-child(3) {
-      transform: rotate(-45deg); top: 7px;
+    #menuToggle.open div:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 7px;
     }
 
+    /* Logo container in center */
     .logo-container {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      cursor: pointer;
       display: flex;
       align-items: center;
       height: 64px;
-      cursor: pointer;
     }
-
     .logo-text {
       font-family: 'Cardo', serif;
-      font-size: 26px;
       font-weight: 900;
-      line-height: 1;
+      font-size: 26px;
       white-space: nowrap;
       margin-top: 2px;
     }
-
     .logo-image {
       height: 88px;
       display: none;
     }
 
-    .image-box {
-      margin-top: 64px;
-      width: 100%;
-      height: 400px;
-      background: black;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 100%;
-      height: 400px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      padding: 6px;
+    /* Shopping bag on right */
+    #cartIcon {
+      width: 28px;
+      height: 28px;
       cursor: pointer;
-      z-index: 2;
     }
 
-    .arrow.left { left: 10px; transform: translateY(-50%) rotate(135deg); }
-    .arrow.right { right: 10px; transform: translateY(-50%) rotate(-45deg); }
-
-    .sidebar, .cart-sidebar {
+    /* Sidebar styles for demo */
+    #sidebar, #cartSidebar {
       position: fixed;
-      top: 0;
-      background: white;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      transition: transform 0.4s ease-in-out;
-      z-index: 1100;
+      top: 64px;
+      bottom: 0;
+      width: 280px;
+      background: #eee;
+      padding: 1rem;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      transition: transform 0.3s ease;
+      z-index: 1100;
     }
-
-    .sidebar {
+    #sidebar {
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      padding: 80px 20px;
       transform: translateX(-100%);
     }
-
-    .sidebar.open { transform: translateX(0); }
-
-    .cart-sidebar {
+    #sidebar.open {
+      transform: translateX(0);
+    }
+    #cartSidebar {
       right: 0;
-      width: 50vw;
-      max-width: 280px;
-      height: 100vh;
-      padding: 80px 20px;
       transform: translateX(100%);
     }
-
-    .cart-sidebar.open { transform: translateX(0); }
-
-    .product-image-box {
-      width: 90%;
-      max-width: 400px;
-      height: 500px;
-      background-color: #f2f2f2;
-      margin: 40px auto 16px auto;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .product-info {
-      font-family: 'Oswald', sans-serif;
-      text-align: center;
-      padding: 0 16px;
-      margin-bottom: 32px;
-    }
-
-    .product-title {
-      font-weight: 700;
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
-
-    .product-color {
-      font-weight: 400;
-      font-size: 16px;
-      color: black;
-      margin-bottom: 4px;
-    }
-
-    .product-price {
-      font-weight: 400;
-      font-size: 20px;
-    }
-
-    @media (min-width: 768px) {
-      header { display: none; }
+    #cartSidebar.open {
+      transform: translateX(0);
     }
   </style>
 </head>
 <body>
-<header>
-  <div id="menuToggle" class="cart-icon" role="button" tabindex="0">
-    <div></div><div></div><div></div>
-  </div>
+  <header>
+    <!-- Left hamburger menu -->
+    <div id="menuToggle" aria-label="Toggle menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
 
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
-    <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
-  </div>
+    <!-- Center logo -->
+    <div class="logo-container" id="logoContainer" aria-label="Reload page" role="button" tabindex="0">
+      <span class="logo-text">MATT SCIANNA</span>
+      <img
+        src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true"
+        alt="Logo"
+        class="logo-image"
+        id="logoImage"
+      />
+    </div>
 
-  <div id="cartIcon" class="cart-icon" title="Cart">
-    <div></div><div></div><div></div>
-  </div>
-</header>
+    <!-- Right shopping bag icon -->
+    <img
+      src="https://github.com/mattscianna/mattscianna/blob/main/shopping-bag-black.png?raw=true"
+      alt="Shopping Bag"
+      id="cartIcon"
+      title="Cart"
+      role="button"
+      tabindex="0"
+    />
+  </header>
 
-<div class="image-box">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-  </div>
-  <div class="arrow left" onclick="prevSlide()"></div>
-  <div class="arrow right" onclick="nextSlide()"></div>
-</div>
-
-<a href="/jersey/red" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">RED</div>
-  <div class="product-price">$50.00</div>
-</div>
-
-<a href="/jersey/white" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">WHITE</div>
-  <div class="product-price">$50.00</div>
-</div>
-
-<nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
-<nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+  <!-- Sidebars -->
+  <nav id="sidebar"><p>Menu sidebar content here.</p></nav>
+  <nav id="cartSidebar"><p>Cart sidebar content here.</p></nav>
 
 <script>
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
-  const logoText = document.getElementById('logoText');
-  const logoImage = document.getElementById('logoImage');
   const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
-  let currentIndex = 0;
+
   let scrollPosition = 0;
 
-  const slides = slider.children;
-
-  function updateSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  setInterval(nextSlide, 10000);
-
+  // Hamburger menu toggle
   menuToggle.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open', isOpen);
 
+    // Close cart if open
     if (cartSidebar.classList.contains('open')) {
       cartSidebar.classList.remove('open');
-      cartIcon.classList.remove('open');
       document.body.classList.remove('cart-open');
     }
 
@@ -304,10 +195,11 @@
     }
   });
 
+  // Shopping bag toggle cart sidebar
   cartIcon.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
-    cartIcon.classList.toggle('open', isOpen);
 
+    // Close menu if open
     if (sidebar.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
@@ -327,13 +219,15 @@
     }
   });
 
+  // Logo click reloads page and scrolls to top
   logoContainer.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    location.reload(true);
+    window.location.reload();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
-    document.getElementById(id).addEventListener('keydown', (e) => {
+  // Keyboard accessibility for enter key
+  [menuToggle, cartIcon, logoContainer].forEach(el => {
+    el.addEventListener('keydown', e => {
       if (e.key === 'Enter') e.target.click();
     });
   });

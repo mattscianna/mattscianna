@@ -28,34 +28,44 @@
       width: 100%;
       height: 64px;
       display: flex;
-      justify-content: space-between; /* menu left, cart right */
+      justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
+      padding: 0 16px;
       background-color: white;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
 
-    /* Menu icon on left */
-    #menuToggle {
-      width: 26px;
-      height: 20px;
+    /* ===== MENU ICON (HAMBURGER) ===== */
+    .menu-icon {
+      width: 30px;
+      height: 24px;
+      position: relative;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-
-    #menuToggle span {
+    .menu-icon span {
       display: block;
       height: 3px;
       background-color: black;
       border-radius: 2px;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+    }
+    /* Hamburger to X animation */
+    .menu-icon.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-icon.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    /* Original shopping bag icon style from earlier */
-    #cartIcon {
+    /* ===== CART ICON (SHOPPING BAG) ===== */
+    .cart-icon {
       width: 24px;
       height: 24px;
       position: relative;
@@ -63,15 +73,32 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.4s ease;
     }
 
-    #cartIcon svg {
-      fill: black;
-      width: 24px;
-      height: 24px;
+    /* Shopping bag outline */
+    .cart-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: black;
+      stroke-width: 2;
+      fill: none;
+      transition: all 0.4s ease;
     }
 
-    /* Logo centered absolute */
+    /* X lines for close icon */
+    .cart-icon.open svg path.x-line {
+      stroke-dashoffset: 0;
+    }
+
+    /* Hide X lines when closed */
+    .cart-icon svg path.x-line {
+      stroke-dasharray: 14;
+      stroke-dashoffset: 14;
+      transition: stroke-dashoffset 0.4s ease;
+    }
+
+    /* ===== LOGO ===== */
     .logo-container {
       position: absolute;
       left: 50%;
@@ -81,6 +108,11 @@
       align-items: center;
       height: 64px;
       cursor: pointer;
+      transition: opacity 0.6s ease;
+    }
+
+    .logo-container.fade-out {
+      opacity: 0;
     }
 
     .logo-text {
@@ -90,13 +122,17 @@
       line-height: 1;
       white-space: nowrap;
       margin-top: 2px;
+      user-select: none;
     }
 
     .logo-image {
       height: 88px;
-      display: none;
+      display: block;
+      user-select: none;
+      margin-left: 8px;
     }
 
+    /* ===== Rest of styles unchanged ===== */
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -211,24 +247,27 @@
 </head>
 <body>
 <header>
-  <!-- Menu icon on the LEFT -->
-  <div id="menuToggle" role="button" tabindex="0" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
+  <!-- MENU ICON -->
+  <div id="menuToggle" class="menu-icon" role="button" tabindex="0" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
   </div>
 
-  <!-- Logo centered -->
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
+  <!-- LOGO -->
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Home">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Logo" />
+    <!-- Original logo image URL used -->
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Matt Scianna Logo" />
   </div>
 
-  <!-- Shopping bag icon on the RIGHT -->
-  <div id="cartIcon" role="button" tabindex="0" title="Cart" aria-label="Open cart">
-    <!-- Original shopping bag SVG icon from earlier code -->
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6zm0 2h12l1.5 2H4.5L6 4zm0 4v10h12V8H6zM9 11h2v4H9v-4zm4 0h2v4h-2v-4z"/>
+  <!-- CART ICON -->
+  <div id="cartIcon" class="cart-icon" role="button" tabindex="0" aria-label="Toggle cart" title="Cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Shopping bag outline -->
+      <path d="M6 2L6 5H18L18 2" />
+      <path d="M5 5H19L17 20H7L5 5Z" />
+      <!-- X lines -->
+      <path class="x-line" d="M7 7L17 17" />
+      <path class="x-line" d="M17 7L7 17" />
     </svg>
   </div>
 </header>
@@ -340,9 +379,13 @@
     }
   });
 
+  // Smooth logo reload on click
   logoContainer.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    location.reload(true);
+    logoContainer.classList.add('fade-out');
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      location.reload(true);
+    }, 600); // matches CSS transition time
   });
 
   ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

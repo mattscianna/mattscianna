@@ -17,7 +17,6 @@
       background-color: white;
       font-family: Arial, sans-serif;
       user-select: none;
-      scroll-behavior: smooth;
     }
 
     body.sidebar-open, body.cart-open {
@@ -67,7 +66,7 @@
     }
 
     .icon-btn.menu-toggle {
-      width: 24px;
+      width: 28px;
       height: 18px;
       position: relative;
       cursor: pointer;
@@ -75,7 +74,7 @@
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2px;
+      height: 3px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -84,10 +83,11 @@
 
     .icon-btn.menu-toggle span:nth-child(1) { top: 0; }
     .icon-btn.menu-toggle span:nth-child(2) { top: 7.5px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
+    .icon-btn.menu-toggle span:nth-child(3) { bottom: 0; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
       top: 7.5px;
+      transform: rotate(45deg);
     }
 
     .icon-btn.menu-toggle.open span:nth-child(2) {
@@ -96,6 +96,7 @@
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
       top: 7.5px;
+      transform: rotate(-45deg);
     }
 
     .icon-btn.cart-toggle {
@@ -115,22 +116,21 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 100%;
+      width: 24px;
       height: 2px;
       background: black;
-      top: 50%;
+      top: 11px;
       left: 0;
+      transform-origin: center;
       transition: 0.3s ease;
     }
 
     .icon-btn.cart-toggle.open::before {
-      top: 50%;
-      transform: translateY(-50%) translateX(0);
+      transform: rotate(45deg);
     }
 
     .icon-btn.cart-toggle.open::after {
-      top: 50%;
-      transform: translateY(-50%) translateX(0);
+      transform: rotate(-45deg);
     }
 
     .icon-btn.cart-toggle.open img {
@@ -379,7 +379,7 @@
   logoContainer.addEventListener('click', () => {
     setTimeout(() => {
       location.href = location.origin + location.pathname;
-    }, 200);
+    }, 250); // Delayed reload for smoother effect
   });
 
   window.addEventListener('scroll', () => {
@@ -399,7 +399,9 @@
     cartCount.style.display = cartItems > 0 ? 'block' : 'none';
   }
 
+  // Demo: simulate adding to cart
   setTimeout(addToCart, 3000);
 </script>
+
 </body>
 </html>

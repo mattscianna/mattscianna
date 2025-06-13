@@ -211,16 +211,19 @@
 </head>
 <body>
   <header>
-    <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
+    <!-- Shopping Bag Icon (LEFT) -->
+    <div id="cartIcon" class="cart-icon" role="button" tabindex="0">
       <div></div><div></div><div></div>
     </div>
 
+    <!-- Logo (CENTER) -->
     <div class="logo-container" id="logoContainer" role="button" tabindex="0">
       <span class="logo-text" id="logoText">MATT SCIANNA</span>
       <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
     </div>
 
-    <div id="cartIcon" class="cart-icon" role="button" tabindex="0">
+    <!-- Menu Icon (RIGHT) -->
+    <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
       <div></div><div></div><div></div>
     </div>
   </header>
@@ -351,7 +354,7 @@
     });
 
     logoContainer.addEventListener('click', () => {
-      location.reload(); // refresh page and scroll to top
+      window.scrollTo(0, 0); // instantly go to the top
     });
 
     ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

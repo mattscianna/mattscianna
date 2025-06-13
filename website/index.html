@@ -38,11 +38,13 @@
 
     .menu-icon, .cart-icon {
       width: 22px;
-      height: 16px;
+      height: 22px;
       position: relative;
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
     }
 
     .menu-icon div, .cart-icon div {
@@ -53,21 +55,64 @@
       transition: all 0.4s ease;
     }
 
-    .menu-icon div:nth-child(1),
-    .cart-icon div:nth-child(1) { top: 0; }
-    .menu-icon div:nth-child(2),
-    .cart-icon div:nth-child(2) { top: 7px; }
-    .menu-icon div:nth-child(3),
-    .cart-icon div:nth-child(3) { top: 14px; }
+    /* MENU ICON ANIMATION */
+    .menu-icon div:nth-child(1) { top: 0; }
+    .menu-icon div:nth-child(2) { top: 7px; }
+    .menu-icon div:nth-child(3) { top: 14px; }
 
-    .cart-icon.open div:nth-child(1) {
+    .menu-icon.open div:nth-child(1) {
       transform: rotate(45deg); top: 7px;
     }
+
+    .menu-icon.open div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open div:nth-child(3) {
+      transform: rotate(-45deg); top: 7px;
+    }
+
+    /* CART ICON BAG STYLE + ANIMATION */
+    .cart-icon::before {
+      content: "\1F6CD";
+      font-size: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    .cart-icon.open::before {
+      content: '';
+      opacity: 0;
+    }
+
+    .cart-icon div:nth-child(1) {
+      transform: rotate(45deg); opacity: 0;
+    }
+
+    .cart-icon div:nth-child(3) {
+      transform: rotate(-45deg); opacity: 0;
+    }
+
+    .cart-icon.open div:nth-child(1) {
+      transform: rotate(45deg);
+      opacity: 1;
+      top: 7px;
+    }
+
     .cart-icon.open div:nth-child(2) {
       opacity: 0;
     }
+
     .cart-icon.open div:nth-child(3) {
-      transform: rotate(-45deg); top: 7px;
+      transform: rotate(-45deg);
+      opacity: 1;
+      top: 7px;
+    }
+
+    .cart-icon div:nth-child(1),
+    .cart-icon div:nth-child(2),
+    .cart-icon div:nth-child(3) {
+      background-color: black;
+      opacity: 0;
     }
 
     .logo-container {
@@ -94,44 +139,6 @@
       height: 88px;
       display: none;
     }
-
-    .image-box {
-      margin-top: 64px;
-      width: 100%;
-      height: 400px;
-      background: black;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 100%;
-      height: 400px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      padding: 6px;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .arrow.left { left: 10px; transform: translateY(-50%) rotate(135deg); }
-    .arrow.right { right: 10px; transform: translateY(-50%) rotate(-45deg); }
 
     .sidebar, .cart-sidebar {
       position: fixed;
@@ -167,179 +174,94 @@
 
     .cart-sidebar.open { transform: translateX(0); }
 
-    .product-image-box {
-      width: 90%;
-      max-width: 400px;
-      height: 500px;
-      background-color: #f2f2f2;
-      margin: 40px auto 16px auto;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .product-info {
-      font-family: 'Oswald', sans-serif;
-      text-align: center;
-      padding: 0 16px;
-      margin-bottom: 32px;
-    }
-
-    .product-title {
-      font-weight: 700;
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
-
-    .product-color {
-      font-weight: 400;
-      font-size: 16px;
-      color: black;
-      margin-bottom: 4px;
-    }
-
-    .product-price {
-      font-weight: 400;
-      font-size: 20px;
-    }
-
     @media (min-width: 768px) {
       header { display: none; }
     }
   </style>
 </head>
 <body>
-<header>
-  <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
-    <div></div><div></div><div></div>
-  </div>
+  <header>
+    <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
+      <div></div><div></div><div></div>
+    </div>
 
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
-    <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
-  </div>
+    <div class="logo-container" id="logoContainer" role="button" tabindex="0">
+      <span class="logo-text" id="logoText">MATT SCIANNA</span>
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
+    </div>
 
-  <div id="cartIcon" class="cart-icon" title="Cart">
-    <div></div><div></div><div></div>
-  </div>
-</header>
+    <div id="cartIcon" class="cart-icon" title="Cart">
+      <div></div><div></div><div></div>
+    </div>
+  </header>
 
-<div class="image-box">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-  </div>
-  <div class="arrow left" onclick="prevSlide()"></div>
-  <div class="arrow right" onclick="nextSlide()"></div>
-</div>
+  <nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
+  <nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
 
-<a href="/jersey/red" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">RED</div>
-  <div class="product-price">$50.00</div>
-</div>
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const cartIcon = document.getElementById('cartIcon');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const logoContainer = document.getElementById('logoContainer');
+    let scrollPosition = 0;
 
-<a href="/jersey/white" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">WHITE</div>
-  <div class="product-price">$50.00</div>
-</div>
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.classList.toggle('open');
+      sidebar.classList.toggle('open', isOpen);
 
-<nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
-<nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+      if (cartSidebar.classList.contains('open')) {
+        cartSidebar.classList.remove('open');
+        cartIcon.classList.remove('open');
+        document.body.classList.remove('cart-open');
+      }
 
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const logoText = document.getElementById('logoText');
-  const logoImage = document.getElementById('logoImage');
-  const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
-  let currentIndex = 0;
-  let scrollPosition = 0;
-
-  const slides = slider.children;
-
-  function updateSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  setInterval(nextSlide, 10000);
-
-  menuToggle.addEventListener('click', () => {
-    const isOpen = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open', isOpen);
-
-    if (cartSidebar.classList.contains('open')) {
-      cartSidebar.classList.remove('open');
-      cartIcon.classList.remove('open');
-      document.body.classList.remove('cart-open');
-    }
-
-    if (isOpen) {
-      scrollPosition = window.scrollY;
-      document.body.classList.add('sidebar-open');
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = 'fixed';
-    } else {
-      document.body.classList.remove('sidebar-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
-    }
-  });
-
-  cartIcon.addEventListener('click', () => {
-    const isOpen = cartSidebar.classList.toggle('open');
-    cartIcon.classList.toggle('open', isOpen);
-
-    if (sidebar.classList.contains('open')) {
-      sidebar.classList.remove('open');
-      menuToggle.classList.remove('open');
-      document.body.classList.remove('sidebar-open');
-    }
-
-    if (isOpen) {
-      scrollPosition = window.scrollY;
-      document.body.classList.add('cart-open');
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = 'fixed';
-    } else {
-      document.body.classList.remove('cart-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
-    }
-  });
-
-  logoContainer.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    location.reload(true);
-  });
-
-  ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
-    document.getElementById(id).addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') e.target.click();
+      if (isOpen) {
+        scrollPosition = window.scrollY;
+        document.body.classList.add('sidebar-open');
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.style.position = 'fixed';
+      } else {
+        document.body.classList.remove('sidebar-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+      }
     });
-  });
-</script>
+
+    cartIcon.addEventListener('click', () => {
+      const isOpen = cartSidebar.classList.toggle('open');
+      cartIcon.classList.toggle('open', isOpen);
+
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        menuToggle.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+      }
+
+      if (isOpen) {
+        scrollPosition = window.scrollY;
+        document.body.classList.add('cart-open');
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.style.position = 'fixed';
+      } else {
+        document.body.classList.remove('cart-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+      }
+    });
+
+    logoContainer.addEventListener('click', () => {
+      window.scrollTo(0, 0);
+      location.reload(true);
+    });
+
+    ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') e.target.click();
+      });
+    });
+  </script>
 </body>
 </html>

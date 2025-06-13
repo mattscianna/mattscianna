@@ -67,15 +67,15 @@
     }
 
     .icon-btn.menu-toggle {
-      width: 24px; /* slightly smaller */
-      height: 22px;
+      width: 24px;
+      height: 18px;
       position: relative;
       cursor: pointer;
     }
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 3px;
+      height: 2px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -83,12 +83,11 @@
     }
 
     .icon-btn.menu-toggle span:nth-child(1) { top: 0; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
-    .icon-btn.menu-toggle span:nth-child(3) { bottom: 0; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 7.5px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 9px;
+      top: 7.5px;
     }
 
     .icon-btn.menu-toggle.open span:nth-child(2) {
@@ -96,8 +95,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      transform: rotate(-45deg);
-      bottom: 9px;
+      top: 7.5px;
     }
 
     .icon-btn.cart-toggle {
@@ -117,21 +115,22 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 24px;
+      width: 100%;
       height: 2px;
       background: black;
-      top: 11px;
+      top: 50%;
       left: 0;
-      transform-origin: center;
       transition: 0.3s ease;
     }
 
     .icon-btn.cart-toggle.open::before {
-      transform: rotate(45deg);
+      top: 50%;
+      transform: translateY(-50%) translateX(0);
     }
 
     .icon-btn.cart-toggle.open::after {
-      transform: rotate(-45deg);
+      top: 50%;
+      transform: translateY(-50%) translateX(0);
     }
 
     .icon-btn.cart-toggle.open img {
@@ -140,11 +139,10 @@
 
     .cart-count {
       position: absolute;
-      top: -10px;
-      right: -10px;
+      top: -6px;
+      right: -6px;
       color: black;
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 10px;
       font-family: sans-serif;
       display: none;
     }
@@ -277,17 +275,20 @@
 <body>
 
 <header>
+  <!-- MENU ICON -->
   <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
+  <!-- LOGO -->
   <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
+  <!-- SHOPPING BAG -->
   <div id="cartIcon" class="icon-btn cart-toggle" title="Cart">
     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
     <div id="cartCount" class="cart-count">0</div>
@@ -337,7 +338,6 @@
   const cartCount = document.getElementById('cartCount');
 
   let currentIndex = 0;
-  let scrollPosition = 0;
   let cartItems = 0;
 
   const slides = slider.children;
@@ -376,8 +376,7 @@
     }
   });
 
-  logoContainer.addEventListener('click', (e) => {
-    e.preventDefault();
+  logoContainer.addEventListener('click', () => {
     setTimeout(() => {
       location.href = location.origin + location.pathname;
     }, 200);
@@ -402,6 +401,5 @@
 
   setTimeout(addToCart, 3000);
 </script>
-
 </body>
 </html>

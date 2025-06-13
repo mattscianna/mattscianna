@@ -6,13 +6,18 @@
   <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     html, body {
       overflow-x: hidden;
       background-color: white;
       font-family: Arial, sans-serif;
       user-select: none;
+      scroll-behavior: smooth;
     }
 
     body.sidebar-open, body.cart-open {
@@ -30,75 +35,32 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 16px;
+      padding: 8px 16px;
       background-color: white;
       z-index: 1200;
       border-bottom: 1px solid #ccc;
     }
 
-    /* ===== MENU ICON (HAMBURGER) ===== */
-    .menu-icon {
-      width: 30px;
-      height: 24px;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .menu-icon span {
-      display: block;
-      height: 3px;
-      background-color: black;
-      border-radius: 2px;
-      transition: all 0.4s ease;
-    }
-    /* Hamburger to X animation */
-    .menu-icon.open span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .menu-icon.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-icon.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-
-    /* ===== CART ICON (SHOPPING BAG) ===== */
-    .cart-icon {
+    .icon-btn {
       width: 24px;
       height: 24px;
-      position: relative;
       cursor: pointer;
+      transition: transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s ease;
     }
 
-    /* Shopping bag outline */
-    .cart-icon svg {
+    .icon-btn img {
       width: 100%;
-      height: 100%;
-      stroke: black;
-      stroke-width: 2;
-      fill: none;
-      transition: all 0.4s ease;
+      height: auto;
+      transition: transform 0.4s ease;
     }
 
-    /* X lines for close icon */
-    .cart-icon.open svg path.x-line {
-      stroke-dashoffset: 0;
+    .icon-btn.open img {
+      transform: rotate(45deg) scale(1.1);
     }
 
-    /* Hide X lines when closed */
-    .cart-icon svg path.x-line {
-      stroke-dasharray: 14;
-      stroke-dashoffset: 14;
-      transition: stroke-dashoffset 0.4s ease;
-    }
-
-    /* ===== LOGO ===== */
     .logo-container {
       position: absolute;
       left: 50%;
@@ -108,11 +70,6 @@
       align-items: center;
       height: 64px;
       cursor: pointer;
-      transition: opacity 0.6s ease;
-    }
-
-    .logo-container.fade-out {
-      opacity: 0;
     }
 
     .logo-text {
@@ -122,17 +79,13 @@
       line-height: 1;
       white-space: nowrap;
       margin-top: 2px;
-      user-select: none;
     }
 
     .logo-image {
       height: 88px;
-      display: block;
-      user-select: none;
-      margin-left: 8px;
+      display: none;
     }
 
-    /* ===== Rest of styles unchanged ===== */
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -168,8 +121,15 @@
       z-index: 2;
     }
 
-    .arrow.left { left: 10px; transform: translateY(-50%) rotate(135deg); }
-    .arrow.right { right: 10px; transform: translateY(-50%) rotate(-45deg); }
+    .arrow.left {
+      left: 10px;
+      transform: translateY(-50%) rotate(135deg);
+    }
+
+    .arrow.right {
+      right: 10px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
 
     .sidebar, .cart-sidebar {
       position: fixed;
@@ -192,7 +152,9 @@
       transform: translateX(-100%);
     }
 
-    .sidebar.open { transform: translateX(0); }
+    .sidebar.open {
+      transform: translateX(0);
+    }
 
     .cart-sidebar {
       right: 0;
@@ -203,7 +165,9 @@
       transform: translateX(100%);
     }
 
-    .cart-sidebar.open { transform: translateX(0); }
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
 
     .product-image-box {
       width: 90%;
@@ -241,34 +205,29 @@
     }
 
     @media (min-width: 768px) {
-      header { display: none; }
+      header {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
+
 <header>
-  <!-- MENU ICON -->
-  <div id="menuToggle" class="menu-icon" role="button" tabindex="0" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
+  <!-- MENU -->
+  <div id="menuToggle" class="icon-btn" role="button" tabindex="0">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Hamburger_icon.svg" alt="Menu" />
   </div>
 
   <!-- LOGO -->
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Home">
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <!-- Original logo image URL used -->
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Matt Scianna Logo" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <!-- CART ICON -->
-  <div id="cartIcon" class="cart-icon" role="button" tabindex="0" aria-label="Toggle cart" title="Cart">
-    <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Shopping bag outline -->
-      <path d="M6 2L6 5H18L18 2" />
-      <path d="M5 5H19L17 20H7L5 5Z" />
-      <!-- X lines -->
-      <path class="x-line" d="M7 7L17 17" />
-      <path class="x-line" d="M17 7L7 17" />
-    </svg>
+  <!-- SHOPPING BAG -->
+  <div id="cartIcon" class="icon-btn" title="Cart">
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
   </div>
 </header>
 
@@ -379,13 +338,9 @@
     }
   });
 
-  // Smooth logo reload on click
   logoContainer.addEventListener('click', () => {
-    logoContainer.classList.add('fade-out');
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      location.reload(true);
-    }, 600); // matches CSS transition time
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => location.reload(), 500);
   });
 
   ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

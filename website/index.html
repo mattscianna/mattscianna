@@ -93,13 +93,6 @@
       display: none;
     }
 
-    .cart-icon-container {
-      display: flex;
-      align-items: center;
-      margin-top: -4px;
-      height: 26px;
-    }
-
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -182,11 +175,13 @@
     }
 
     .colorway-circle {
-      width: 18px;
-      height: 18px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      margin: 8px auto;
-      background-color: gray;
+      margin: 12px auto;
+      background-size: cover;
+      background-position: center;
+      background-color: #ccc;
     }
 
     .product-title {
@@ -227,7 +222,7 @@
       <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
     </div>
 
-    <div id="cartIcon" class="cart-icon" title="Cart">
+    <div id="cartIcon" class="cart-icon" role="button" tabindex="0">
       <div></div><div></div><div></div>
     </div>
   </header>
@@ -242,20 +237,22 @@
     <div class="arrow right" onclick="nextSlide()"></div>
   </div>
 
+  <!-- PRODUCT 1 -->
   <a href="/jersey/red" style="text-decoration: none; color: inherit;">
     <div class="product-image-box"></div>
   </a>
   <div class="product-section">
-    <div class="colorway-circle"></div>
+    <div class="colorway-circle" style="background-image: url('YOUR_IMAGE_LINK_HERE_1');"></div>
     <div class="product-title">TWO-FIVE JERSEY</div>
     <div class="product-price">$50.00</div>
   </div>
 
+  <!-- PRODUCT 2 -->
   <a href="/jersey/white" style="text-decoration: none; color: inherit;">
     <div class="product-image-box"></div>
   </a>
   <div class="product-section">
-    <div class="colorway-circle"></div>
+    <div class="colorway-circle" style="background-image: url('YOUR_IMAGE_LINK_HERE_2');"></div>
     <div class="product-title">TWO-FIVE JERSEY</div>
     <div class="product-price">$50.00</div>
   </div>
@@ -273,7 +270,6 @@
     const logoContainer = document.getElementById('logoContainer');
     const slider = document.getElementById('slider');
     let currentIndex = 0;
-    let currentLogoState = 'text';
     let scrollPosition = 0;
 
     const slides = slider.children;
@@ -298,11 +294,9 @@
       if (window.scrollY > 40) {
         logoText.style.display = 'none';
         logoImage.style.display = 'block';
-        currentLogoState = 'image';
       } else {
         logoText.style.display = 'block';
         logoImage.style.display = 'none';
-        currentLogoState = 'text';
       }
     }
 
@@ -359,8 +353,7 @@
     });
 
     logoContainer.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      window.location.reload();
+      window.location.href = '/';
     });
 
     ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

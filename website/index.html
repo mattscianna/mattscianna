@@ -65,6 +65,7 @@
       display: none;
     }
 
+    /* MENU ICON */
     .icon-btn.menu-toggle {
       width: 24px;
       height: 24px;
@@ -81,12 +82,13 @@
       transition: 0.3s ease;
     }
 
-    .icon-btn.menu-toggle span:nth-child(1) { top: 5px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 10.5px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
+    /* Increased vertical spacing between lines */
+    .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 11.5px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 19px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 10.5px;
+      top: 11.5px;
       transform: rotate(45deg);
     }
 
@@ -95,14 +97,15 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 10.5px;
+      top: 11.5px;
       transform: rotate(-45deg);
     }
 
+    /* SHOPPING BAG ICON */
     .icon-btn.cart-toggle {
       position: relative;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
     }
 
@@ -116,10 +119,10 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 26px;
+      width: 24px;
       height: 2.5px;
       background: black;
-      top: 12px;
+      top: 11.5px;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;

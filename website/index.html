@@ -65,6 +65,12 @@
       display: none;
     }
 
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .icon-btn.menu-toggle {
       width: 20px;
       height: 20px;
@@ -74,7 +80,7 @@
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2.5px;
+      height: 3px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -101,8 +107,8 @@
 
     .icon-btn.cart-toggle {
       position: relative;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       cursor: pointer;
     }
 
@@ -116,21 +122,21 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 24px;
-      height: 2px;
+      width: 100%;
+      height: 3px;
       background: black;
-      top: 11px;
+      top: 50%;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;
     }
 
     .icon-btn.cart-toggle.open::before {
-      transform: rotate(45deg);
+      transform: translateY(-50%) rotate(45deg);
     }
 
     .icon-btn.cart-toggle.open::after {
-      transform: rotate(-45deg);
+      transform: translateY(-50%) rotate(-45deg);
     }
 
     .icon-btn.cart-toggle.open img {
@@ -295,34 +301,9 @@
   </div>
 </header>
 
-<div class="image-box">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-  </div>
-  <div class="arrow left" onclick="prevSlide()"></div>
-  <div class="arrow right" onclick="nextSlide()"></div>
-</div>
+<!-- Content omitted for brevity (keep your slider, product cards, etc.) -->
 
-<a href="/jersey/red" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">RED</div>
-  <div class="product-price">$50.00</div>
-</div>
-
-<a href="/jersey/white" style="text-decoration: none; color: inherit;">
-  <div class="product-image-box"></div>
-</a>
-<div class="product-info">
-  <div class="product-title">TWO-FIVE JERSEY</div>
-  <div class="product-color">WHITE</div>
-  <div class="product-price">$50.00</div>
-</div>
-
+<!-- Sidebars -->
 <nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
 <nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
 
@@ -334,29 +315,9 @@
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
   const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
   const cartCount = document.getElementById('cartCount');
 
-  let currentIndex = 0;
   let cartItems = 0;
-
-  const slides = slider.children;
-
-  function updateSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  setInterval(nextSlide, 10000);
 
   menuToggle.addEventListener('click', () => {
     const isOpen = menuToggle.classList.toggle('open');

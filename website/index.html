@@ -53,19 +53,20 @@
       transition: all 0.4s ease;
     }
 
-    .menu-icon div:nth-child(1), .cart-icon div:nth-child(1) { top: 0; }
-    .menu-icon div:nth-child(2), .cart-icon div:nth-child(2) { top: 7px; }
-    .menu-icon div:nth-child(3), .cart-icon div:nth-child(3) { top: 14px; }
+    .menu-icon div:nth-child(1),
+    .cart-icon div:nth-child(1) { top: 0; }
+    .menu-icon div:nth-child(2),
+    .cart-icon div:nth-child(2) { top: 7px; }
+    .menu-icon div:nth-child(3),
+    .cart-icon div:nth-child(3) { top: 14px; }
 
-    .menu-icon.open div:nth-child(1), .cart-icon.open div:nth-child(1) {
+    .cart-icon.open div:nth-child(1) {
       transform: rotate(45deg); top: 7px;
     }
-
-    .menu-icon.open div:nth-child(2), .cart-icon.open div:nth-child(2) {
+    .cart-icon.open div:nth-child(2) {
       opacity: 0;
     }
-
-    .menu-icon.open div:nth-child(3), .cart-icon.open div:nth-child(3) {
+    .cart-icon.open div:nth-child(3) {
       transform: rotate(-45deg); top: 7px;
     }
 
@@ -82,10 +83,11 @@
 
     .logo-text {
       font-family: 'Cardo', serif;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
+      margin-top: 2px;
     }
 
     .logo-image {
@@ -152,9 +154,7 @@
       transform: translateX(-100%);
     }
 
-    .sidebar.open {
-      transform: translateX(0);
-    }
+    .sidebar.open { transform: translateX(0); }
 
     .cart-sidebar {
       right: 0;
@@ -165,43 +165,41 @@
       transform: translateX(100%);
     }
 
-    .cart-sidebar.open {
-      transform: translateX(0);
-    }
-
-    .product-section {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .product-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .product-color {
-      font-family: 'Oswald', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      color: black;
-      margin: 4px 0;
-    }
-
-    .product-price {
-      font-family: 'Oswald', sans-serif;
-      font-size: 18px;
-      font-weight: 400;
-    }
+    .cart-sidebar.open { transform: translateX(0); }
 
     .product-image-box {
       width: 90%;
       max-width: 400px;
       height: 500px;
       background-color: #f2f2f2;
-      margin: 40px auto 12px auto;
+      margin: 40px auto 16px auto;
       border-radius: 6px;
       cursor: pointer;
+    }
+
+    .product-info {
+      font-family: 'Oswald', sans-serif;
+      text-align: center;
+      padding: 0 16px;
+      margin-bottom: 32px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .product-color {
+      font-weight: 400;
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-weight: 400;
+      font-size: 20px;
     }
 
     @media (min-width: 768px) {
@@ -210,160 +208,138 @@
   </style>
 </head>
 <body>
-  <header>
-    <!-- Shopping Bag Icon (LEFT) -->
-    <div id="cartIcon" class="cart-icon" role="button" tabindex="0">
-      <div></div><div></div><div></div>
-    </div>
-
-    <!-- Logo (CENTER) -->
-    <div class="logo-container" id="logoContainer" role="button" tabindex="0">
-      <span class="logo-text" id="logoText">MATT SCIANNA</span>
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
-    </div>
-
-    <!-- Menu Icon (RIGHT) -->
-    <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
-      <div></div><div></div><div></div>
-    </div>
-  </header>
-
-  <div class="image-box">
-    <div class="slider" id="slider">
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-    </div>
-    <div class="arrow left" onclick="prevSlide()"></div>
-    <div class="arrow right" onclick="nextSlide()"></div>
+<header>
+  <div id="menuToggle" class="menu-icon" role="button" tabindex="0">
+    <div></div><div></div><div></div>
   </div>
 
-  <!-- PRODUCT 1 -->
-  <a href="/jersey/red" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box"></div>
-  </a>
-  <div class="product-section">
-    <div class="product-title">TWO-FIVE JERSEY</div>
-    <div class="product-color">RED</div>
-    <div class="product-price">$50.00</div>
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0">
+    <span class="logo-text" id="logoText">MATT SCIANNA</span>
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <!-- PRODUCT 2 -->
-  <a href="/jersey/white" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box"></div>
-  </a>
-  <div class="product-section">
-    <div class="product-title">TWO-FIVE JERSEY</div>
-    <div class="product-color">WHITE</div>
-    <div class="product-price">$50.00</div>
+  <div id="cartIcon" class="cart-icon" title="Cart">
+    <div></div><div></div><div></div>
   </div>
+</header>
 
-  <nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
-  <nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+<div class="image-box">
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
+  </div>
+  <div class="arrow left" onclick="prevSlide()"></div>
+  <div class="arrow right" onclick="nextSlide()"></div>
+</div>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const cartIcon = document.getElementById('cartIcon');
-    const cartSidebar = document.getElementById('cartSidebar');
-    const logoText = document.getElementById('logoText');
-    const logoImage = document.getElementById('logoImage');
-    const logoContainer = document.getElementById('logoContainer');
-    const slider = document.getElementById('slider');
-    let currentIndex = 0;
-    let scrollPosition = 0;
+<a href="/jersey/red" style="text-decoration: none; color: inherit;">
+  <div class="product-image-box"></div>
+</a>
+<div class="product-info">
+  <div class="product-title">TWO-FIVE JERSEY</div>
+  <div class="product-color">RED</div>
+  <div class="product-price">$50.00</div>
+</div>
 
-    const slides = slider.children;
+<a href="/jersey/white" style="text-decoration: none; color: inherit;">
+  <div class="product-image-box"></div>
+</a>
+<div class="product-info">
+  <div class="product-title">TWO-FIVE JERSEY</div>
+  <div class="product-color">WHITE</div>
+  <div class="product-price">$50.00</div>
+</div>
 
-    function updateSlide(index) {
-      slider.style.transform = `translateX(-${index * 100}%)`;
+<nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
+<nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const logoContainer = document.getElementById('logoContainer');
+  const slider = document.getElementById('slider');
+  let currentIndex = 0;
+  let scrollPosition = 0;
+
+  const slides = slider.children;
+
+  function updateSlide(index) {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlide(currentIndex);
+  }
+
+  setInterval(nextSlide, 10000);
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open', isOpen);
+
+    if (cartSidebar.classList.contains('open')) {
+      cartSidebar.classList.remove('open');
+      cartIcon.classList.remove('open');
+      document.body.classList.remove('cart-open');
     }
 
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % slides.length;
-      updateSlide(currentIndex);
+    if (isOpen) {
+      scrollPosition = window.scrollY;
+      document.body.classList.add('sidebar-open');
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.style.position = 'fixed';
+    } else {
+      document.body.classList.remove('sidebar-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
+    }
+  });
+
+  cartIcon.addEventListener('click', () => {
+    const isOpen = cartSidebar.classList.toggle('open');
+    cartIcon.classList.toggle('open', isOpen);
+
+    if (sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      menuToggle.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
     }
 
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      updateSlide(currentIndex);
+    if (isOpen) {
+      scrollPosition = window.scrollY;
+      document.body.classList.add('cart-open');
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.style.position = 'fixed';
+    } else {
+      document.body.classList.remove('cart-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
     }
+  });
 
-    setInterval(nextSlide, 10000);
+  logoContainer.addEventListener('click', () => {
+    window.scrollTo(0, 0);
+    location.reload(true);
+  });
 
-    function updateLogoVisibility() {
-      if (window.scrollY > 40) {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-      } else {
-        logoText.style.display = 'block';
-        logoImage.style.display = 'none';
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!document.body.classList.contains('sidebar-open') && !document.body.classList.contains('cart-open')) {
-        updateLogoVisibility();
-      }
+  ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') e.target.click();
     });
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.classList.toggle('open');
-      sidebar.classList.toggle('open', isOpen);
-
-      if (cartSidebar.classList.contains('open')) {
-        cartSidebar.classList.remove('open');
-        cartIcon.classList.remove('open');
-        document.body.classList.remove('cart-open');
-      }
-
-      if (isOpen) {
-        scrollPosition = window.scrollY;
-        document.body.classList.add('sidebar-open');
-        document.body.style.top = `-${scrollPosition}px`;
-        document.body.style.position = 'fixed';
-      } else {
-        document.body.classList.remove('sidebar-open');
-        document.body.style.position = '';
-        document.body.style.top = '';
-        window.scrollTo(0, scrollPosition);
-      }
-    });
-
-    cartIcon.addEventListener('click', () => {
-      const isOpen = cartSidebar.classList.toggle('open');
-      cartIcon.classList.toggle('open', isOpen);
-
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-        menuToggle.classList.remove('open');
-        document.body.classList.remove('sidebar-open');
-      }
-
-      if (isOpen) {
-        scrollPosition = window.scrollY;
-        document.body.classList.add('cart-open');
-        document.body.style.top = `-${scrollPosition}px`;
-        document.body.style.position = 'fixed';
-      } else {
-        document.body.classList.remove('cart-open');
-        document.body.style.position = '';
-        document.body.style.top = '';
-        window.scrollTo(0, scrollPosition);
-      }
-    });
-
-    logoContainer.addEventListener('click', () => {
-      window.scrollTo(0, 0); // instantly go to the top
-    });
-
-    ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {
-      document.getElementById(id).addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') e.target.click();
-      });
-    });
-
-    document.addEventListener('DOMContentLoaded', updateLogoVisibility);
-  </script>
+  });
+</script>
 </body>
 </html>

@@ -66,15 +66,15 @@
     }
 
     .icon-btn.menu-toggle {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       position: relative;
       cursor: pointer;
     }
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 3px;
+      height: 2.5px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -82,11 +82,11 @@
     }
 
     .icon-btn.menu-toggle span:nth-child(1) { top: 2px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 10.5px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 8.5px; }
     .icon-btn.menu-toggle span:nth-child(3) { bottom: 2px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 10.5px;
+      top: 8.5px;
       transform: rotate(45deg);
     }
 
@@ -95,7 +95,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 10.5px;
+      top: 8.5px;
       transform: rotate(-45deg);
     }
 
@@ -370,7 +370,7 @@
   cartIcon.addEventListener('click', () => {
     const isOpen = cartIcon.classList.toggle('open');
     cartSidebar.classList.toggle('open');
-    cartCount.style.display = 'none'; // hide cart count on open
+    cartCount.style.display = 'none'; // hide cart count when opened
     if (menuToggle.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
@@ -380,7 +380,7 @@
   logoContainer.addEventListener('click', () => {
     setTimeout(() => {
       location.href = location.origin + location.pathname;
-    }, 250); // Delayed reload for smoother effect
+    }, 250);
   });
 
   window.addEventListener('scroll', () => {

@@ -58,7 +58,7 @@
     }
 
     .icon-btn.open img {
-      transform: rotate(45deg) scale(1.1);
+      transform: rotate(45deg);
     }
 
     .logo-container {
@@ -226,7 +226,7 @@
   </div>
 
   <!-- SHOPPING BAG -->
-  <div id="cartIcon" class="icon-btn" title="Cart">
+  <div id="cartIcon" class="icon-btn" title="Bag">
     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
   </div>
 </header>
@@ -340,7 +340,13 @@
 
   logoContainer.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => location.reload(), 500);
+    setTimeout(() => location.reload(), 700);
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 50;
+    logoText.style.display = scrolled ? 'none' : 'inline';
+    logoImage.style.display = scrolled ? 'inline' : 'none';
   });
 
   ['menuToggle', 'logoContainer', 'cartIcon'].forEach(id => {

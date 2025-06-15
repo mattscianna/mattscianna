@@ -197,12 +197,12 @@
       z-index: 1100;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      height: 100vh;
     }
 
     .sidebar {
       left: 0;
       width: 100vw;
-      height: 100vh;
       padding: 80px 20px;
       transform: translateX(-100%);
     }
@@ -215,7 +215,6 @@
       right: 0;
       width: 50vw;
       max-width: 280px;
-      height: 100vh;
       padding: 80px 20px;
       transform: translateX(100%);
     }
@@ -248,7 +247,6 @@
     .product-info {
       text-align: center;
       margin-bottom: 24px;
-      font-family: 'Oswald', sans-serif;
     }
 
     .product-title {
@@ -325,7 +323,7 @@
     <div class="product-info fade-scroll">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">RED</div>
-      <div class="product-price">$50.00</div>
+      <div class="product-price">$49.99 USD</div>
     </div>
   </a>
 
@@ -336,7 +334,7 @@
     <div class="product-info fade-scroll">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">WHITE</div>
-      <div class="product-price">$50.00</div>
+      <div class="product-price">$49.99 USD</div>
     </div>
   </a>
 </div>
@@ -377,19 +375,23 @@
   menuToggle.addEventListener('click', () => {
     const isOpen = menuToggle.classList.toggle('open');
     sidebar.classList.toggle('open');
+    document.body.classList.toggle('sidebar-open', isOpen);
     if (cartSidebar.classList.contains('open')) {
       cartSidebar.classList.remove('open');
       cartIcon.classList.remove('open');
+      document.body.classList.remove('cart-open');
     }
   });
 
   cartIcon.addEventListener('click', () => {
     const isOpen = cartIcon.classList.toggle('open');
     cartSidebar.classList.toggle('open');
+    document.body.classList.toggle('cart-open', isOpen);
     cartCount.style.display = 'none';
     if (menuToggle.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
     }
   });
 
@@ -417,7 +419,7 @@
       cartCount.style.display = cartItems > 0 ? 'block' : 'none';
     }
   }
-  
+
   setTimeout(addToCart, 3000);
 
   document.querySelectorAll('.product-image-box').forEach(box => {

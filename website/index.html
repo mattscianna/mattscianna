@@ -65,7 +65,6 @@
       display: none;
     }
 
-    /* MENU ICON */
     .icon-btn.menu-toggle {
       width: 24px;
       height: 24px;
@@ -82,7 +81,6 @@
       transition: 0.3s ease;
     }
 
-    /* Increased vertical spacing between lines */
     .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
     .icon-btn.menu-toggle span:nth-child(2) { top: 11.5px; }
     .icon-btn.menu-toggle span:nth-child(3) { top: 19px; }
@@ -101,7 +99,6 @@
       transform: rotate(-45deg);
     }
 
-    /* SHOPPING BAG ICON */
     .icon-btn.cart-toggle {
       position: relative;
       width: 24px;
@@ -241,6 +238,17 @@
       margin: 40px auto 16px auto;
       border-radius: 6px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .jersey-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      padding: 20px;
     }
 
     .product-info {
@@ -278,20 +286,17 @@
 <body>
 
 <header>
-  <!-- MENU ICON -->
   <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
-  <!-- LOGO -->
   <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
   </div>
 
-  <!-- SHOPPING BAG -->
   <div id="cartIcon" class="icon-btn cart-toggle" title="Cart">
     <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
     <div id="cartCount" class="cart-count">0</div>
@@ -310,10 +315,9 @@
 
 <a href="/jersey/red" style="text-decoration: none; color: inherit;">
   <div class="product-image-box">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey (Front)" class="jersey-img" />
+    <img src="YOUR_RED_JERSEY_IMAGE_URL_HERE.png" alt="Red Jersey" class="jersey-img" />
   </div>
 </a>
-
 <div class="product-info">
   <div class="product-title">TWO-FIVE JERSEY</div>
   <div class="product-color">RED</div>
@@ -322,10 +326,9 @@
 
 <a href="/jersey/white" style="text-decoration: none; color: inherit;">
   <div class="product-image-box">
-    <img src="YOUR_IMAGE_URL_HERE" alt="White Jersey (Front)" class="jersey-img" />
+    <img src="YOUR_WHITE_JERSEY_IMAGE_URL_HERE.png" alt="White Jersey" class="jersey-img" />
   </div>
 </a>
-
 <div class="product-info">
   <div class="product-title">TWO-FIVE JERSEY</div>
   <div class="product-color">WHITE</div>
@@ -379,7 +382,7 @@
   cartIcon.addEventListener('click', () => {
     const isOpen = cartIcon.classList.toggle('open');
     cartSidebar.classList.toggle('open');
-    cartCount.style.display = 'none'; // hide cart count when opened
+    cartCount.style.display = 'none';
     if (menuToggle.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
@@ -411,7 +414,6 @@
     }
   }
 
-  // Demo: simulate adding to cart
   setTimeout(addToCart, 3000);
 </script>
 

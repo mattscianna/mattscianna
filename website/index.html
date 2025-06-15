@@ -233,34 +233,27 @@
       transform: translateX(0);
     }
 
-    .product-image-box {
-      width: 90%;
-      max-width: 400px;
-      height: 420px;
-      background-color: #f2f2f2;
-      margin: 40px auto 16px auto;
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.2s ease;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+   .product-image-box {
+  width: 90vw;           /* almost full viewport width */
+  max-width: 600px;      /* max width so not too huge on big screens */
+  margin: 40px auto 16px auto;
+  padding: 0;            /* no extra box padding */
+  background: none;      /* no background box */
+  border-radius: 0;      /* no rounded corners */
+  box-shadow: none;      /* no shadow */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;     /* show full image */
+}
 
-    .product-info {
-      font-family: 'Oswald', sans-serif;
-      text-align: center;
-      padding: 0 16px;
-      margin-bottom: 32px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+.jersey-img {
+  width: 100%;           /* fill container width */
+  height: auto;          /* keep aspect ratio */
+  object-fit: contain;   /* ensure entire PNG is visible */
+  image-rendering: auto; /* normal smoothing */
+}
 
     .fade-in {
       opacity: 1 !important;

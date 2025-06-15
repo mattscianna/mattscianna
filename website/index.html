@@ -65,8 +65,8 @@
       display: none;
     }
 
-    /* Menu toggle button updated sizes and spacing */
-    .icon-btn.menu-toggle {
+    .icon-btn.menu-toggle,
+    .icon-btn.cart-toggle {
       width: 28px;
       height: 28px;
       position: relative;
@@ -98,14 +98,6 @@
     .icon-btn.menu-toggle.open span:nth-child(3) {
       top: 12px;
       transform: rotate(-45deg);
-    }
-
-    /* Cart toggle button updated sizes and spacing */
-    .icon-btn.cart-toggle {
-      position: relative;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
     }
 
     .icon-btn.cart-toggle img {
@@ -149,7 +141,6 @@
       display: none;
     }
 
-    /* Rest of your existing CSS */
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -233,31 +224,30 @@
       transform: translateX(0);
     }
 
-   .product-image-box {
-  width: 90vw;           /* almost full viewport width */
-  max-width: 600px;      /* max width so not too huge on big screens */
-  margin: 40px auto 16px auto;
-  padding: 0;            /* no extra box padding */
-  background: none;      /* no background box */
-  border-radius: 0;      /* no rounded corners */
-  box-shadow: none;      /* no shadow */
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: visible;     /* show full image */
-}
+    .product-image-box {
+      width: 90vw;
+      max-width: 600px;
+      margin: 40px auto 12px auto;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+      transition: transform 0.25s ease-in-out;
+    }
 
-.jersey-img {
-  width: 100%;           /* fill container width */
-  height: auto;          /* keep aspect ratio */
-  object-fit: contain;   /* ensure entire PNG is visible */
-  image-rendering: auto; /* normal smoothing */
-}
+    .jersey-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      image-rendering: auto;
+      transition: transform 0.25s ease-in-out;
+    }
 
-    .fade-in {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
+    .product-info {
+      text-align: center;
+      margin-bottom: 24px;
     }
 
     .product-title {
@@ -276,6 +266,17 @@
     .product-price {
       font-weight: 400;
       font-size: 20px;
+    }
+
+    .fade-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (min-width: 768px) {
@@ -317,10 +318,10 @@
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
   <a href="/jersey/red" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box">
+    <div class="product-image-box fade-scroll">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
     </div>
-    <div class="product-info">
+    <div class="product-info fade-scroll">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">RED</div>
       <div class="product-price">$50.00</div>
@@ -328,10 +329,10 @@
   </a>
 
   <a href="/jersey/white" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box">
+    <div class="product-image-box fade-scroll">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
     </div>
-    <div class="product-info">
+    <div class="product-info fade-scroll">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">WHITE</div>
       <div class="product-price">$50.00</div>
@@ -352,7 +353,6 @@
   const logoContainer = document.getElementById('logoContainer');
   const slider = document.getElementById('slider');
   const cartCount = document.getElementById('cartCount');
-
   let currentIndex = 0;
   let cartItems = 0;
   const slides = slider.children;
@@ -419,25 +419,30 @@
 
   setTimeout(addToCart, 3000);
 
-  // Click bounce animation
+  // Click animation
   document.querySelectorAll('.product-image-box').forEach(box => {
-    box.addEventListener('click', (e) => {
+    box.addEventListener('click', () => {
       const img = box.querySelector('img');
       img.style.transform = 'scale(1.06)';
       setTimeout(() => {
         img.style.transform = 'scale(1)';
-      }, 200);
+      }, 250);
     });
   });
 
-  // Fade-in on page load
-  window.onload = () => {
-    document.querySelectorAll('.product-image-box, .product-info').forEach(el => {
-      setTimeout(() => {
-        el.classList.add('fade-in');
-      }, 50);
+  // Scroll fade-in
+  function handleScrollFadeIn() {
+    const fadeEls = document.querySelectorAll('.fade-scroll');
+    fadeEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 50) {
+        el.classList.add('visible');
+      }
     });
-  };
+  }
+
+  window.addEventListener('scroll', handleScrollFadeIn);
+  window.addEventListener('load', handleScrollFadeIn);
 </script>
 
 </body>

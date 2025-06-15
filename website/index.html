@@ -58,8 +58,6 @@
       line-height: 1;
       white-space: nowrap;
       margin-top: 2px;
-      transition: color 0.3s ease;
-      color: black;
     }
 
     .logo-image {
@@ -317,7 +315,29 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<!-- Product section omitted for brevity -->
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+  <a href="/jersey/red" style="text-decoration: none; color: inherit;">
+    <div class="product-image-box fade-scroll">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
+    </div>
+    <div class="product-info fade-scroll">
+      <div class="product-title">TWO-FIVE JERSEY</div>
+      <div class="product-color">RED</div>
+      <div class="product-price">$49.99 USD</div>
+    </div>
+  </a>
+
+  <a href="/jersey/white" style="text-decoration: none; color: inherit;">
+    <div class="product-image-box fade-scroll">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
+    </div>
+    <div class="product-info fade-scroll">
+      <div class="product-title">TWO-FIVE JERSEY</div>
+      <div class="product-color">WHITE</div>
+      <div class="product-price">$49.99 USD</div>
+    </div>
+  </a>
+</div>
 
 <nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
 <nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
@@ -383,17 +403,12 @@
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    const sidebarOpen = document.body.classList.contains('sidebar-open');
-    const cartOpen = document.body.classList.contains('cart-open');
-
-    if (!sidebarOpen && !cartOpen) {
-      if (scrollY > 60) {
-        logoText.style.display = 'none';
-        logoImage.style.display = 'block';
-      } else {
-        logoText.style.display = 'block';
-        logoImage.style.display = 'none';
-      }
+    if (scrollY > 60) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
+    } else {
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
     }
   });
 
@@ -427,8 +442,10 @@
     });
   }
 
+  // Ensure fade-ins work on load + scroll
   window.addEventListener('scroll', handleScrollFadeIn);
   window.addEventListener('load', handleScrollFadeIn);
+  setTimeout(handleScrollFadeIn, 300);
 </script>
 
 </body>

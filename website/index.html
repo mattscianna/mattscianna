@@ -15,7 +15,7 @@
     html, body {
       overflow-x: hidden;
       background-color: white;
-      font-family: Arial, sans-serif;
+      font-family: 'Oswald', sans-serif;
       user-select: none;
     }
 
@@ -137,7 +137,7 @@
       right: -6px;
       color: black;
       font-size: 10px;
-      font-family: sans-serif;
+      font-family: 'Oswald', sans-serif;
       display: none;
     }
 
@@ -227,7 +227,7 @@
     .product-image-box {
       width: 90vw;
       max-width: 600px;
-      margin: 40px auto 12px auto;
+      margin: 40px auto 16px auto;
       background: none;
       cursor: pointer;
       display: flex;
@@ -248,6 +248,7 @@
     .product-info {
       text-align: center;
       margin-bottom: 24px;
+      font-family: 'Oswald', sans-serif;
     }
 
     .product-title {
@@ -416,10 +417,9 @@
       cartCount.style.display = cartItems > 0 ? 'block' : 'none';
     }
   }
-
+  
   setTimeout(addToCart, 3000);
 
-  // Click animation
   document.querySelectorAll('.product-image-box').forEach(box => {
     box.addEventListener('click', () => {
       const img = box.querySelector('img');
@@ -430,7 +430,6 @@
     });
   });
 
-  // Scroll fade-in
   function handleScrollFadeIn() {
     const fadeEls = document.querySelectorAll('.fade-scroll');
     fadeEls.forEach(el => {

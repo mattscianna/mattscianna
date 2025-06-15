@@ -244,17 +244,9 @@
       overflow: hidden;
       position: relative;
       transition: transform 0.2s ease;
-    }
-
-    .jersey-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      image-rendering: auto;
-      display: block;
-      padding: 20px;
-      transition: transform 0.2s ease;
-      will-change: transform;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
     .product-info {
@@ -262,6 +254,14 @@
       text-align: center;
       padding: 0 16px;
       margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
     }
 
     .product-title {
@@ -431,6 +431,15 @@
       }, 200);
     });
   });
+
+  // Fade-in on page load
+  window.onload = () => {
+    document.querySelectorAll('.product-image-box, .product-info').forEach(el => {
+      setTimeout(() => {
+        el.classList.add('fade-in');
+      }, 50);
+    });
+  };
 </script>
 
 </body>

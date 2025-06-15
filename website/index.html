@@ -65,9 +65,10 @@
       display: none;
     }
 
+    /* Menu toggle button updated sizes and spacing */
     .icon-btn.menu-toggle {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       position: relative;
       cursor: pointer;
     }
@@ -81,12 +82,12 @@
       transition: 0.3s ease;
     }
 
-    .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 11.5px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 19px; }
+    .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 12px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 21px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 11.5px;
+      top: 12px;
       transform: rotate(45deg);
     }
 
@@ -95,14 +96,15 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 11.5px;
+      top: 12px;
       transform: rotate(-45deg);
     }
 
+    /* Cart toggle button updated sizes and spacing */
     .icon-btn.cart-toggle {
       position: relative;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
     }
 
@@ -116,10 +118,10 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 24px;
+      width: 28px;
       height: 2.5px;
       background: black;
-      top: 11.5px;
+      top: 13px;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;
@@ -147,6 +149,7 @@
       display: none;
     }
 
+    /* Rest of your existing CSS */
     .image-box {
       margin-top: 64px;
       width: 100%;
@@ -300,7 +303,7 @@
 
   <div class="logo-container" id="logoContainer" role="button" tabindex="0">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Logo" />
   </div>
 
   <div id="cartIcon" class="icon-btn cart-toggle" title="Cart">

@@ -233,7 +233,7 @@
     .product-image-box {
       width: 90%;
       max-width: 400px;
-      height: 500px;
+      height: 420px;
       background-color: #f2f2f2;
       margin: 40px auto 16px auto;
       border-radius: 6px;
@@ -241,14 +241,20 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s ease;
     }
 
     .jersey-img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      image-rendering: auto;
       display: block;
       padding: 20px;
+      transition: transform 0.2s ease;
+      will-change: transform;
     }
 
     .product-info {
@@ -315,7 +321,7 @@
 
 <a href="/jersey/red" style="text-decoration: none; color: inherit;">
   <div class="product-image-box">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey (Front)" class="jersey-img" />
+    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/red-jersey.png" class="jersey-img" alt="Red Jersey" />
   </div>
 </a>
 <div class="product-info">
@@ -326,7 +332,7 @@
 
 <a href="/jersey/white" style="text-decoration: none; color: inherit;">
   <div class="product-image-box">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey (Front)" class="jersey-img" />
+    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/white-jersey.png" class="jersey-img" alt="White Jersey" />
   </div>
 </a>
 <div class="product-info">
@@ -351,7 +357,6 @@
 
   let currentIndex = 0;
   let cartItems = 0;
-
   const slides = slider.children;
 
   function updateSlide(index) {
@@ -415,6 +420,17 @@
   }
 
   setTimeout(addToCart, 3000);
+
+  // Click bounce animation
+  document.querySelectorAll('.product-image-box').forEach(box => {
+    box.addEventListener('click', (e) => {
+      const img = box.querySelector('img');
+      img.style.transform = 'scale(1.06)';
+      setTimeout(() => {
+        img.style.transform = 'scale(1)';
+      }, 200);
+    });
+  });
 </script>
 
 </body>

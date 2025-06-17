@@ -61,17 +61,21 @@
       margin-top: 0;
       user-select: none;
       transition: all 0.3s ease;
+      color: black;
+      display: block;
     }
 
     .logo-image {
       height: 88px;
       display: none;
+      cursor: pointer;
+      user-select: none;
     }
 
-    /* Smaller and higher menu icon */
+    /* Menu icon slightly bigger for alignment */
     .icon-btn.menu-toggle {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       position: relative;
       cursor: pointer;
       margin-top: 3px;
@@ -81,7 +85,7 @@
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2.5px;
+      height: 3px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -89,12 +93,12 @@
       border-radius: 2px;
     }
 
-    .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
+    .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 9px;
+      top: 10px;
       transform: rotate(45deg);
     }
 
@@ -103,7 +107,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 9px;
+      top: 10px;
       transform: rotate(-45deg);
     }
 
@@ -218,15 +222,19 @@
       z-index: 1100;
       overflow-y: auto;
       height: 100vh;
+      text-align: center; /* center all sidebar menu text */
+      padding-top: 80px;
     }
 
     .sidebar {
       left: 0;
       width: 100vw;
-      padding: 80px 20px;
+      padding-left: 0;
+      padding-right: 0;
       transform: translateX(-100%);
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
 
     .sidebar.open {
@@ -238,7 +246,10 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
-      margin-top: 20px;
+      margin-top: 0;
+      width: 100%;
+      max-width: 320px;
+      align-items: center;
     }
 
     /* Underline only exactly under text */
@@ -247,7 +258,7 @@
       text-decoration: none;
       font-size: 24px;
       font-weight: 400;
-      text-align: left;
+      text-align: center;
       transition: color 0.3s ease, border-bottom 0.3s ease;
       border-bottom: 2px solid transparent;
       padding-bottom: 2px;
@@ -256,6 +267,7 @@
       user-select: none;
       display: inline-block;
       max-width: max-content; /* shrink underline width to text only */
+      margin: 0 auto;
     }
 
     /* Hover underline for all links */
@@ -277,39 +289,34 @@
 
     /* POLICIES link special arrow */
     .sidebar nav a.policies-link::after {
-      content: "v";
+      content: "";
       position: absolute;
-      right: -12px; /* closer to text */
+      right: -18px;
       top: 50%;
-      transform: translateY(-50%) rotate(0deg);
-      font-weight: 700;
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-50%) rotate(90deg);
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
       pointer-events: none;
-      font-family: 'Oswald', sans-serif;
       user-select: none;
       cursor: pointer;
-      font-size: 20px;
-      line-height: 1;
     }
 
     .sidebar nav a.policies-link.arrow-open::after {
-      opacity: 1;
-      transform: translateY(-50%) rotate(0deg);
-      content: "v";
+      transform: translateY(-50%) rotate(45deg);
     }
 
     .sidebar nav a.policies-link.arrow-closed::after {
-      opacity: 1;
-      transform: translateY(-50%) rotate(-90deg);
-      content: ">";
+      transform: translateY(-50%) rotate(90deg);
     }
 
-    /* Show 'v' arrow on hover or if open */
+    /* Show arrow on hover or if open */
     .sidebar nav a.policies-link:hover::after {
       opacity: 1;
-      transform: translateY(-50%) rotate(0deg);
-      content: "v";
+      transform: translateY(-50%) rotate(45deg);
     }
 
     /* Dropdown container for policies */
@@ -321,10 +328,14 @@
       flex-direction: column;
       gap: 12px;
       margin-left: 16px;
-      font-size: 20px;
+      font-size: 18px; /* smaller font than main policies link */
       font-weight: 400;
       color: black;
       user-select: none;
+      text-align: left;
+      max-width: 320px;
+      margin-top: 0;
+      margin-bottom: 16px;
     }
 
     .policies-dropdown.open {
@@ -343,10 +354,18 @@
       user-select: none;
       display: inline-block;
       max-width: max-content;
+      margin-left: 8px;
     }
 
     .policies-dropdown a:hover {
       border-bottom: 1px solid black;
+    }
+
+    /* Fade-in animation for product images and text on all screen sizes */
+    .product-image-box, .product-info {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 0.3s;
     }
 
     /* Center links on mobile */
@@ -358,43 +377,6 @@
 
       .policies-dropdown {
         margin-left: 0;
-      }
-
-      /* Fade-in animation for product images and text - all fade at same time */
-      .product-image-box, .product-info {
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-        animation-delay: 0.3s;
-      }
-
-      /* Change logo text from MATT SCIANNA to MS */
-      .logo-text {
-        font-size: 24px;
-      }
-
-      .logo-text::after {
-        content: "MS";
-        display: inline-block;
-        font-family: 'Cardo', serif;
-        font-weight: 900;
-        font-size: 26px;
-        white-space: nowrap;
-        visibility: visible;
-      }
-
-      /* Hide original text on mobile and show MS */
-      .logo-text {
-        color: transparent;
-        position: relative;
-      }
-
-      .logo-text::after {
-        content: "MS";
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: black;
-        user-select: none;
       }
     }
 
@@ -410,6 +392,7 @@
       max-width: 280px;
       padding: 80px 20px;
       transform: translateX(100%);
+      text-align: left;
     }
 
     .cart-sidebar.open {
@@ -474,7 +457,7 @@
 
     @media (min-width: 768px) {
       header {
-        display: none;
+        display: flex; /* show header on desktop */
       }
     }
   </style>
@@ -490,7 +473,7 @@
 
   <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload page">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Logo" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
   </div>
 
   <div id="cartIcon" class="icon-btn cart-toggle" title="Cart" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false">
@@ -536,12 +519,12 @@
     <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
     <a href="https://mattscianna.com/vision">VISION</a>
     <a href="https://mattscianna.com/contact">CONTACT</a>
-    <a href="#" class="policies-link" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
     <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
       <!-- Dropdown items go here -->
-      <a href="/return-policy">RETURN POLICY</a>
-      <a href="/shipping-policy">SHIPPING POLICY</a>
-      <a href="/privacy-policy">PRIVACY POLICY</a>
+      <a href="/return-policy">Return Policy</a>
+      <a href="/shipping-policy">Shipping Policy</a>
+      <a href="/privacy-policy">Privacy Policy</a>
     </div>
   </nav>
 </nav>
@@ -551,127 +534,46 @@
 </nav>
 
 <script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
+  const policiesDropdown = document.querySelector('.dropdown-container');
+  const arrow = document.querySelector('.arrow');
+  const policiesBtn = document.querySelector('.policies-btn');
 
-  // Toggle sidebar menu
-  menuToggle.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
-    document.body.classList.toggle('sidebar-open', isOpen);
-    sidebar.setAttribute('aria-hidden', !isOpen);
-    menuToggle.setAttribute('aria-expanded', isOpen);
-    
-    // Close cart if open
-    if (cartSidebar.classList.contains('open')) {
-      cartSidebar.classList.remove('open');
-      cartIcon.classList.remove('open');
-      document.body.classList.remove('cart-open');
-      cartSidebar.setAttribute('aria-hidden', true);
-      cartIcon.setAttribute('aria-expanded', false);
+  policiesBtn.addEventListener('click', () => {
+    if (policiesDropdown.style.display === 'block') {
+      policiesDropdown.style.display = 'none';
+      arrow.classList.remove('down');
+      arrow.classList.add('right');
+    } else {
+      policiesDropdown.style.display = 'block';
+      arrow.classList.remove('right');
+      arrow.classList.add('down');
     }
   });
 
-  // Toggle cart sidebar
-  cartIcon.addEventListener('click', () => {
-    const isOpen = cartSidebar.classList.toggle('open');
-    cartIcon.classList.toggle('open', isOpen);
-    document.body.classList.toggle('cart-open', isOpen);
-    cartSidebar.setAttribute('aria-hidden', !isOpen);
-    cartIcon.setAttribute('aria-expanded', isOpen);
+  // Initialize arrow as right on load
+  arrow.classList.add('right');
 
-    // Close menu if open
-    if (sidebar.classList.contains('open')) {
-      sidebar.classList.remove('open');
-      menuToggle.classList.remove('open');
-      document.body.classList.remove('sidebar-open');
-      sidebar.setAttribute('aria-hidden', true);
-      menuToggle.setAttribute('aria-expanded', false);
+  // Logo fade switch on scroll
+  window.addEventListener('scroll', () => {
+    const logoText = document.getElementById('logo-text');
+    const logoImg = document.getElementById('logo-img');
+    const scrollPos = window.scrollY;
+
+    if (scrollPos > 50) {
+      logoText.style.opacity = '0';
+      logoImg.style.opacity = '1';
+    } else {
+      logoText.style.opacity = '1';
+      logoImg.style.opacity = '0';
     }
   });
 
-  // Toggle policies dropdown
-  policiesLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isOpen = policiesDropdown.classList.toggle('open');
-    policiesDropdown.setAttribute('aria-hidden', !isOpen);
-    policiesLink.setAttribute('aria-expanded', isOpen);
-    policiesLink.classList.toggle('arrow-open', isOpen);
-    policiesLink.classList.toggle('arrow-closed', !isOpen);
-  });
-
-  // Accessibility: allow keyboard toggling of menu and cart
-  menuToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      menuToggle.click();
-    }
-  });
-
-  cartIcon.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      cartIcon.click();
-    }
-  });
-
-  policiesLink.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      policiesLink.click();
-    }
-  });
-
-  // Slider logic
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide');
-  const totalSlides = slides.length;
-
-  function showSlide(index) {
-    if (index >= totalSlides) currentSlide = 0;
-    else if (index < 0) currentSlide = totalSlides - 1;
-    else currentSlide = index;
-
-    const slider = document.getElementById('slider');
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  // Clicking logos reload page and scroll to top smoothly
+  function reloadTop() {
+    window.location.href = window.location.pathname + "#top";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  // Keyboard support for slider arrows
-  document.querySelector('.arrow.left').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      prevSlide();
-    }
-  });
-
-  document.querySelector('.arrow.right').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      nextSlide();
-    }
-  });
-
-  // Auto slide every 5 seconds
-  setInterval(() => {
-    nextSlide();
-  }, 5000);
-
-  // Initialize first slide
-  showSlide(currentSlide);
-
+  document.getElementById('logo-text').addEventListener('click', reloadTop);
+  document.getElementById('logo-img').addEventListener('click', reloadTop);
 </script>
-
-</body>
-</html>

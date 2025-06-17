@@ -267,15 +267,17 @@
       font-size: 20px;
     }
 
-    .fade-scroll {
+    .fade-in {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      animation: fadeInUp 1s ease-out forwards;
     }
 
-    .fade-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (min-width: 768px) {
@@ -317,10 +319,10 @@
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
   <a href="/jersey/red" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box fade-scroll">
+    <div class="product-image-box fade-in">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
     </div>
-    <div class="product-info fade-scroll">
+    <div class="product-info fade-in">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">RED</div>
       <div class="product-price">$49.99 USD</div>
@@ -328,10 +330,10 @@
   </a>
 
   <a href="/jersey/white" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box fade-scroll">
+    <div class="product-image-box fade-in">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
     </div>
-    <div class="product-info fade-scroll">
+    <div class="product-info fade-in">
       <div class="product-title">TWO-FIVE JERSEY</div>
       <div class="product-color">WHITE</div>
       <div class="product-price">$49.99 USD</div>
@@ -431,21 +433,6 @@
       }, 250);
     });
   });
-
-  function handleScrollFadeIn() {
-    const fadeEls = document.querySelectorAll('.fade-scroll');
-    fadeEls.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 50) {
-        el.classList.add('visible');
-      }
-    });
-  }
-
-  // Ensure fade-ins work on load + scroll
-  window.addEventListener('scroll', handleScrollFadeIn);
-  window.addEventListener('load', handleScrollFadeIn);
-  setTimeout(handleScrollFadeIn, 300);
 </script>
 
 </body>

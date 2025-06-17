@@ -67,28 +67,35 @@
 
     .icon-btn.menu-toggle,
     .icon-btn.cart-toggle {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       position: relative;
       cursor: pointer;
-      margin-top: 6px; /* lowered */
+    }
+
+    .icon-btn.menu-toggle {
+      margin-top: -2px; /* higher */
+    }
+
+    .icon-btn.cart-toggle {
+      margin-top: -2px; /* higher */
     }
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2.5px;
+      height: 2px;
       width: 100%;
       background-color: black;
       left: 0;
       transition: 0.3s ease;
     }
 
-    .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 12px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 21px; }
+    .icon-btn.menu-toggle span:nth-child(1) { top: 2px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 8px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 14px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 12px;
+      top: 8px;
       transform: rotate(45deg);
     }
 
@@ -97,7 +104,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 12px;
+      top: 8px;
       transform: rotate(-45deg);
     }
 
@@ -111,10 +118,10 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 24px;
-      height: 2.5px;
+      width: 18px;
+      height: 2px;
       background: black;
-      top: 11px;
+      top: 8px;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;
@@ -142,139 +149,40 @@
       display: none;
     }
 
-    .image-box {
-      margin-top: 64px;
-      width: 100%;
-      height: 400px;
-      background: black;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 100%;
-      height: 400px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      padding: 6px;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .arrow.left {
-      left: 10px;
-      transform: translateY(-50%) rotate(135deg);
-    }
-
-    .arrow.right {
-      right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-
-    .sidebar, .cart-sidebar {
+    .sidebar {
       position: fixed;
       top: 0;
-      background: white;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      transition: transform 0.4s ease-in-out;
-      z-index: 1100;
-      overflow-y: auto;
-      height: 100vh;
-    }
-
-    .sidebar {
       left: 0;
       width: 100vw;
-      padding: 80px 20px;
+      height: 100vh;
+      background: white;
+      z-index: 1100;
       transform: translateX(-100%);
+      transition: transform 0.4s ease-in-out;
+      padding-top: 80px;
+      text-align: center;
     }
 
     .sidebar.open {
       transform: translateX(0);
     }
 
-    .cart-sidebar {
-      right: 0;
-      width: 50vw;
-      max-width: 280px;
-      padding: 80px 20px;
-      transform: translateX(100%);
-    }
-
-    .cart-sidebar.open {
-      transform: translateX(0);
-    }
-
-    .product-image-box {
-      width: 90vw;
-      max-width: 600px;
-      margin: 40px auto 8px auto;
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: visible;
-    }
-
-    .jersey-img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      transition: transform 0.25s ease-in-out;
-      image-rendering: auto;
-      cursor: pointer;
-    }
-
-    .jersey-img:hover {
-      transform: scale(1.03);
-    }
-
-    .product-info {
-      text-align: center;
-      margin-bottom: 24px;
-      margin-top: 16px;
-    }
-
-    .product-title {
-      font-weight: 700;
-      font-size: 22px;
-      margin-bottom: 4px;
-      cursor: pointer;
-      transition: border-bottom 0.2s ease;
-    }
-
-    .product-title:hover {
-      border-bottom: 1.5px solid black;
-    }
-
-    .product-color {
-      font-weight: 400;
-      font-size: 16px;
+    .sidebar a {
+      display: block;
+      font-size: 24px;
+      padding: 20px 0;
+      text-decoration: none;
       color: black;
-      margin-bottom: 4px;
+      font-weight: 500;
+      transition: color 0.2s ease;
     }
 
-    .product-price {
-      font-weight: 400;
-      font-size: 20px;
+    .sidebar a.active {
+      color: #777; /* lighter to indicate active page */
+    }
+
+    .sidebar a:hover {
+      color: #444;
     }
 
     @media (min-width: 768px) {
@@ -304,68 +212,25 @@
   </div>
 </header>
 
-<div class="image-box">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
-  </div>
-  <div class="arrow left" onclick="prevSlide()"></div>
-  <div class="arrow right" onclick="nextSlide()"></div>
-</div>
+<nav id="sidebar" class="sidebar">
+  <a href="#" class="active">HOME</a>
+  <a href="#">LOOKBOOKS</a>
+  <a href="#">VISION</a>
+  <a href="#">POLICIES</a>
+  <a href="#">CONTACT</a>
+</nav>
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-  <div class="product-image-box" onclick="location.href='/jersey/red'">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/red'">TWO-FIVE JERSEY</div>
-    <div class="product-color">RED</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <div class="product-image-box" onclick="location.href='/jersey/white'">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/white'">TWO-FIVE JERSEY</div>
-    <div class="product-color">WHITE</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-</div>
-
-<nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
-<nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+<nav id="cartSidebar" class="cart-sidebar">
+  <p>Cart sidebar content goes here.</p>
+</nav>
 
 <script>
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
-  const logoText = document.getElementById('logoText');
-  const logoImage = document.getElementById('logoImage');
-  const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
   const cartCount = document.getElementById('cartCount');
-  let currentIndex = 0;
   let cartItems = 0;
-  const slides = slider.children;
-
-  function updateSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  setInterval(nextSlide, 10000);
 
   menuToggle.addEventListener('click', () => {
     const isOpen = menuToggle.classList.toggle('open');
@@ -387,23 +252,6 @@
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
       document.body.classList.remove('sidebar-open');
-    }
-  });
-
-  logoContainer.addEventListener('click', () => {
-    setTimeout(() => {
-      location.href = location.origin + location.pathname;
-    }, 250);
-  });
-
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY > 60) {
-      logoText.style.display = 'none';
-      logoImage.style.display = 'block';
-    } else {
-      logoText.style.display = 'block';
-      logoImage.style.display = 'none';
     }
   });
 

@@ -550,6 +550,558 @@
     }, 250);
   });
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matt Scianna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      background-color: white;
+      font-family: 'Oswald', sans-serif;
+      user-select: none;
+    }
+
+    body.sidebar-open, body.cart-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: white;
+      z-index: 1200;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      /* Move the text just a little higher */
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      height: 64px;
+      cursor: pointer;
+    }
+
+    .logo-text {
+      font-family: 'Cardo', serif;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
+      margin-top: 0; /* Removed extra margin for slight upward */
+    }
+
+    .logo-image {
+      height: 88px;
+      display: none;
+    }
+
+    /* Smaller and higher menu icon */
+    .icon-btn.menu-toggle {
+      width: 20px; /* smaller */
+      height: 20px; /* smaller */
+      position: relative;
+      cursor: pointer;
+      margin-top: 3px; /* higher */
+      margin-left: 0;
+    }
+
+    .icon-btn.menu-toggle span {
+      position: absolute;
+      height: 2.5px;
+      width: 100%;
+      background-color: black;
+      left: 0;
+      transition: 0.3s ease;
+    }
+
+    .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
+
+    .icon-btn.menu-toggle.open span:nth-child(1) {
+      top: 9px;
+      transform: rotate(45deg);
+    }
+
+    .icon-btn.menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .icon-btn.menu-toggle.open span:nth-child(3) {
+      top: 9px;
+      transform: rotate(-45deg);
+    }
+
+    /* Cart icon higher only */
+    .icon-btn.cart-toggle {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      cursor: pointer;
+      margin-top: 3px; /* higher */
+    }
+
+    .icon-btn.cart-toggle img {
+      width: 100%;
+      height: auto;
+      transition: opacity 0.3s ease;
+    }
+
+    .icon-btn.cart-toggle.open::before,
+    .icon-btn.cart-toggle.open::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 2.5px;
+      background: black;
+      top: 11px;
+      left: 0;
+      transform-origin: center;
+      transition: 0.3s ease;
+    }
+
+    .icon-btn.cart-toggle.open::before {
+      transform: rotate(45deg);
+    }
+
+    .icon-btn.cart-toggle.open::after {
+      transform: rotate(-45deg);
+    }
+
+    .icon-btn.cart-toggle.open img {
+      opacity: 0;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      color: black;
+      font-size: 10px;
+      font-family: 'Oswald', sans-serif;
+      display: none;
+    }
+
+    .image-box {
+      margin-top: 64px;
+      width: 100%;
+      height: 400px;
+      background: black;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      padding: 6px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .arrow.left {
+      left: 10px;
+      transform: translateY(-50%) rotate(135deg);
+    }
+
+    .arrow.right {
+      right: 10px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .sidebar, .cart-sidebar {
+      position: fixed;
+      top: 0;
+      background: white;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      transition: transform 0.4s ease-in-out;
+      z-index: 1100;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    .sidebar {
+      left: 0;
+      width: 100vw;
+      padding: 80px 20px;
+      transform: translateX(-100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    /* Sidebar menu links styling */
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    /* Underline only under text, not full width */
+    .sidebar nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 400;
+      text-align: left;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+      display: inline-block; /* shrink to text width */
+    }
+
+    /* Hover underline for all links, underline color same as text */
+    .sidebar nav a:hover {
+      border-bottom-color: currentColor;
+    }
+
+    /* Selected link style - less bold (from 600 to 550) */
+    .sidebar nav a.current {
+      color: #555555; /* darker grey */
+      font-weight: 550;
+      border-bottom-color: #555555; /* underline same color */
+    }
+
+    /* Underline on hover even on selected */
+    .sidebar nav a.current:hover {
+      border-bottom-color: #555555;
+    }
+
+    /* POLICIES link special arrow (v) right next to text */
+    .sidebar nav a.policies-link::after {
+      content: "v";
+      position: absolute;
+      right: -16px; /* very close to text */
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      font-family: 'Oswald', sans-serif;
+      user-select: none;
+    }
+
+    /* Show 'v' arrow on hover or when open */
+    .sidebar nav a.policies-link:hover::after,
+    .sidebar nav a.policies-link.open::after {
+      opacity: 1;
+    }
+
+    /* Dropdown container for policies */
+    .policies-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-left: 20px;
+      font-size: 20px;
+      font-weight: 400;
+      color: black;
+    }
+
+    .policies-dropdown.open {
+      max-height: 500px; /* enough to show content */
+      margin-top: 8px;
+    }
+
+    /* Dropdown links style */
+    .policies-dropdown a {
+      color: black;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+      transition: border-bottom 0.3s ease;
+      user-select: none;
+      display: inline-block; /* underline only text */
+    }
+
+    .policies-dropdown a:hover {
+      border-bottom: 1px solid black;
+    }
+
+    /* Center links on mobile */
+    @media (max-width: 767px) {
+      .sidebar nav a {
+        text-align: center;
+        display: inline-block; /* keep inline-block for underline */
+      }
+
+      .policies-dropdown {
+        margin-left: 0;
+      }
+
+      /* Fade-in animation for product images and text - all fade at same time */
+      .product-image-box, .product-info {
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.3s; /* all start at same time */
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .cart-sidebar {
+      right: 0;
+      width: 50vw;
+      max-width: 280px;
+      padding: 80px 20px;
+      transform: translateX(100%);
+    }
+
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .product-image-box {
+      width: 90vw;
+      max-width: 600px;
+      margin: 40px auto 8px auto;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .jersey-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.25s ease-in-out;
+      image-rendering: auto;
+      cursor: pointer;
+    }
+
+    .jersey-img:hover {
+      transform: scale(1.03);
+    }
+
+    .product-info {
+      text-align: center;
+      margin-bottom: 24px;
+      margin-top: 16px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: border-bottom 0.2s ease;
+    }
+
+    .product-title:hover {
+      border-bottom: 1.5px solid black;
+    }
+
+    .product-color {
+      font-weight: 400;
+      font-size: 16px;
+      color: black;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-weight: 400;
+      font-size: 20px;
+    }
+
+    @media (min-width: 768px) {
+      header {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Home">
+    <span class="logo-text" id="logoText">MATT SCIANNA</span>
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Logo" />
+  </div>
+
+  <div id="cartIcon" class="icon-btn cart-toggle" title="Cart" role="button" tabindex="0">
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
+    <div id="cartCount" class="cart-count">0</div>
+  </div>
+</header>
+
+<div class="image-box">
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
+  </div>
+  <div class="arrow left" onclick="prevSlide()"></div>
+  <div class="arrow right" onclick="nextSlide()"></div>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+  <div class="product-image-box" onclick="location.href='/jersey/red'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" onclick="location.href='/jersey/red'">TWO-FIVE JERSEY</div>
+    <div class="product-color">RED</div>
+    <div class="product-price">$49.99 USD</div>
+  </div>
+
+  <div class="product-image-box" onclick="location.href='/jersey/white'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" onclick="location.href='/jersey/white'">TWO-FIVE JERSEY</div>
+    <div class="product-color">WHITE</div>
+    <div class="product-price">$49.99 USD</div>
+  </div>
+</div>
+
+<!-- Sidebar with menu items -->
+<nav id="sidebar" class="sidebar" aria-label="Main navigation">
+  <nav>
+    <a href="https://mattscianna.com/home" class="current">HOME</a>
+    <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+    <a href="https://mattscianna.com/vision">VISION</a>
+    <a href="https://mattscianna.com/contact">CONTACT</a>
+    <a href="#" class="policies-link" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+      <!-- Dropdown items will go here -->
+      <!-- Example: <a href="#">Privacy Policy</a> -->
+    </div>
+  </nav>
+</nav>
+
+<nav id="cartSidebar" class="cart-sidebar"><p>Cart sidebar content goes here.</p></nav>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const logoContainer = document.getElementById('logoContainer');
+  const slider = document.getElementById('slider');
+  const cartCount = document.getElementById('cartCount');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+
+  let currentIndex = 0;
+  let cartItems = 0;
+  const slides = slider.children;
+
+  function updateSlide(index) {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlide(currentIndex);
+  }
+
+  setInterval(nextSlide, 10000);
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open');
+    document.body.classList.toggle('sidebar-open', isOpen);
+    // Close cart if open
+    if (cartSidebar.classList.contains('open')) {
+      cartSidebar.classList.remove('open');
+      cartIcon.classList.remove('open');
+      document.body.classList.remove('cart-open');
+    }
+  });
+
+  cartIcon.addEventListener('click', () => {
+    const isOpen = cartIcon.classList.toggle('open');
+    cartSidebar.classList.toggle('open');
+    document.body.classList.toggle('cart-open', isOpen);
+    cartCount.style.display = 'none';
+    // Close sidebar if open
+    if (menuToggle.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      menuToggle.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
+    }
+  });
+
+  logoContainer.addEventListener('click', () => {
+    setTimeout(() => {
+      location.href = location.origin + location.pathname;
+    }, 250);
+  });
+
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     if (scrollY >

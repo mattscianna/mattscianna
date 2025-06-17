@@ -67,15 +67,15 @@
 
     .icon-btn.menu-toggle,
     .icon-btn.cart-toggle {
-      width: 28px;
-      height: 28px;
+      width: 22px;
+      height: 22px;
       position: relative;
       cursor: pointer;
     }
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2.5px;
+      height: 2px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -83,11 +83,11 @@
     }
 
     .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 12px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 21px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 12px;
+      top: 9px;
       transform: rotate(45deg);
     }
 
@@ -96,7 +96,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 12px;
+      top: 9px;
       transform: rotate(-45deg);
     }
 
@@ -110,10 +110,10 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 28px;
-      height: 2.5px;
+      width: 22px;
+      height: 2px;
       background: black;
-      top: 13px;
+      top: 10px;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;
@@ -223,36 +223,55 @@
       transform: translateX(0);
     }
 
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
     .product-image-box {
       width: 90vw;
       max-width: 600px;
-      margin: 40px auto 16px auto;
       background: none;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: visible;
-      transition: transform 0.25s ease-in-out;
     }
 
     .jersey-img {
       width: 100%;
       height: auto;
       object-fit: contain;
-      image-rendering: auto;
-      transition: transform 0.25s ease-in-out;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .jersey-img:hover {
+      transform: scale(1.06);
     }
 
     .product-info {
       text-align: center;
       margin-bottom: 24px;
+      pointer-events: none;
     }
 
     .product-title {
       font-weight: 700;
       font-size: 22px;
       margin-bottom: 4px;
+      transition: border-bottom 0.2s ease;
+      pointer-events: auto;
+    }
+
+    .product-title:hover {
+      border-bottom: 1.5px solid black;
+    }
+
+    .product-title.clicked {
+      border-bottom: 1.5px solid black;
     }
 
     .product-color {
@@ -265,17 +284,6 @@
     .product-price {
       font-weight: 400;
       font-size: 20px;
-    }
-
-    .fade-scroll {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .fade-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     @media (min-width: 768px) {
@@ -315,28 +323,26 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-  <a href="/jersey/red" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box fade-scroll">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
-    </div>
-    <div class="product-info fade-scroll">
-      <div class="product-title">TWO-FIVE JERSEY</div>
-      <div class="product-color">RED</div>
-      <div class="product-price">$49.99 USD</div>
-    </div>
-  </a>
+<div class="product">
+  <div class="product-image-box" onclick="window.location.href='/jersey/red'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" onclick="handleClick(event, '/jersey/red')">TWO-FIVE JERSEY</div>
+    <div class="product-color">RED</div>
+    <div class="product-price">$49.99 USD</div>
+  </div>
+</div>
 
-  <a href="/jersey/white" style="text-decoration: none; color: inherit;">
-    <div class="product-image-box fade-scroll">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
-    </div>
-    <div class="product-info fade-scroll">
-      <div class="product-title">TWO-FIVE JERSEY</div>
-      <div class="product-color">WHITE</div>
-      <div class="product-price">$49.99 USD</div>
-    </div>
-  </a>
+<div class="product">
+  <div class="product-image-box" onclick="window.location.href='/jersey/white'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" onclick="handleClick(event, '/jersey/white')">TWO-FIVE JERSEY</div>
+    <div class="product-color">WHITE</div>
+    <div class="product-price">$49.99 USD</div>
+  </div>
 </div>
 
 <nav id="sidebar" class="sidebar"><p>Menu sidebar content goes here.</p></nav>
@@ -422,30 +428,13 @@
 
   setTimeout(addToCart, 3000);
 
-  document.querySelectorAll('.product-image-box').forEach(box => {
-    box.addEventListener('click', () => {
-      const img = box.querySelector('img');
-      img.style.transform = 'scale(1.06)';
-      setTimeout(() => {
-        img.style.transform = 'scale(1)';
-      }, 250);
-    });
-  });
-
-  function handleScrollFadeIn() {
-    const fadeEls = document.querySelectorAll('.fade-scroll');
-    fadeEls.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 50) {
-        el.classList.add('visible');
-      }
-    });
+  function handleClick(event, url) {
+    event.stopPropagation();
+    event.currentTarget.classList.add('clicked');
+    setTimeout(() => {
+      window.location.href = url;
+    }, 150);
   }
-
-  // Ensure fade-ins work on load + scroll
-  window.addEventListener('scroll', handleScrollFadeIn);
-  window.addEventListener('load', handleScrollFadeIn);
-  setTimeout(handleScrollFadeIn, 300);
 </script>
 
 </body>

@@ -51,6 +51,13 @@
       cursor: pointer;
       user-select: none;
     }
+    
+.logo-text { font-size: 24px; top: 53%; position: relative; }
+.scrolled .logo-text { display: none; }
+.scrolled .logo-image { display: block; height: 40px; }
+
+.policies-dropdown { transition: max-height 0.3s ease-out; 
+    }
 
     .logo-text {
       font-family: 'Cardo', serif;
@@ -585,7 +592,7 @@
 <script>
   // Populate cart sidebar with sample items
   cartSidebar.innerHTML = `
-    <h2 style="font-size: 20px; margin-bottom: 20px;">Your Cart</h2>
+    <h2 style="font-size: 20px; margin-bottom: 20px;">YOUR CART</h2>
 
     <div style="margin-bottom: 30px;">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
@@ -601,6 +608,82 @@
       <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
     </div>
   `;
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+  const logoContainer = document.getElementById('logoContainer');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const slider = document.getElementById('slider');
+  let scrolled = false;
+
+  // Fade-in products on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.product-image-box, .product-info').forEach(el => {
+      el.style.opacity = '0';
+      el.style.animation = 'fadeIn 1s ease forwards';
+    });
+  });
+
+  // Swap logo on scroll
+  window.addEventListener('scroll', () => {
+    if (!scrolled && window.scrollY > 50) {
+      document.body.classList.add('scrolled');
+      scrolled = true;
+    } else if (scrolled && window.scrollY <= 50) {
+      document.body.classList.remove('scrolled');
+      scrolled = false;
+    }
+  });
+
+  // Both logos reload to top
+  logoContainer.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Prevent sidebar + cart simultaneous open
+  function closeCart() {
+    cartSidebar.classList.remove('open');
+    cartIcon.classList.remove('open');
+    document.body.classList.remove('cart-open');
+  }
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    menuToggle.classList.remove('open');
+    document.body.classList.remove('sidebar-open');
+  }
+  menuToggle.addEventListener('click', () => {
+    const open = sidebar.classList.toggle('open');
+    menuToggle.classList.toggle('open');
+    document.body.classList.toggle('sidebar-open', open);
+    if (open) closeCart();
+  });
+  cartIcon.addEventListener('click', () => {
+    const open = cartSidebar.classList.toggle('open');
+    cartIcon.classList.toggle('open');
+    document.body.classList.toggle('cart-open', open);
+    if (open) closeMenu();
+  });
+
+  // Policies toggle with smooth animation
+  policiesLink.addEventListener('click', () => {
+    const open = policiesDropdown.classList.toggle('open');
+    policiesLink.classList.toggle('arrow-open', open);
+    policiesLink.classList.toggle('arrow-closed', !open);
+    policiesLink.setAttribute('aria-expanded', open);
+    policiesDropdown.setAttribute('aria-hidden', !open);
+  });
+
+  // Arrow fade on hover
+  policiesLink.addEventListener('mouseover', () => policiesLink.classList.add('arrow-hover'));
+  policiesLink.addEventListener('mouseout', () => {
+    if (!policiesDropdown.classList.contains('open')) policiesLink.classList.remove('arrow-hover');
+  });
+
+  // Empty cart on open
+  cartSidebar.innerHTML = '';
 </script>
 
 </body>

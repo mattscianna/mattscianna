@@ -4,297 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* Your existing CSS (the part you shared) */
 
-    html, body {
-      overflow-x: hidden;
-      background-color: white;
-      font-family: 'Oswald', sans-serif;
-      user-select: none;
-    }
-
-    body.sidebar-open, body.cart-open {
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 16px;
-      background-color: white;
-      z-index: 1200;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .logo-container {
-      position: absolute;
-      left: 50%;
-      top: 56%; /* lowered from 50% */
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      height: 64px;
-      cursor: pointer;
-      user-select: none;
-    }
-    
-.logo-text { font-size: 24px; top: 53%; position: relative; }
-.scrolled .logo-text { display: none; }
-.scrolled .logo-image { display: block; height: 40px; }
-
-.policies-dropdown { transition: max-height 0.3s ease-out; 
-    }
-
-    .logo-text {
-      font-family: 'Cardo', serif;
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-      margin-top: 0;
-      user-select: none;
-      transition: all 0.3s ease;
-      color: black;
-      display: block;
-    }
-
-    .logo-image {
-      height: 88px;
-      display: none;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    /* Menu icon slightly bigger for alignment */
-    .icon-btn.menu-toggle {
-      width: 24px;
-      height: 24px;
-      position: relative;
-      cursor: pointer;
-      margin-top: 3px;
-      margin-left: 0;
-      user-select: none;
-    }
-
-    .icon-btn.menu-toggle span {
-      position: absolute;
-      height: 3px;
-      width: 100%;
-      background-color: black;
-      left: 0;
-      transition: 0.3s ease;
-      border-radius: 2px;
-    }
-
-    .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
-
-    .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 10px;
-      transform: rotate(45deg);
-    }
-
-    .icon-btn.menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 10px;
-      transform: rotate(-45deg);
-    }
-
-    /* Cart icon higher only */
-    .icon-btn.cart-toggle {
-      width: 24px;
-      height: 24px;
-      position: relative;
-      cursor: pointer;
-      margin-top: 3px;
-      user-select: none;
-    }
-
-    .icon-btn.cart-toggle img {
-      width: 100%;
-      height: auto;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .icon-btn.cart-toggle.open::before,
-    .icon-btn.cart-toggle.open::after {
-      content: "";
-      position: absolute;
-      width: 24px;
-      height: 2.5px;
-      background: black;
-      top: 11px;
-      left: 0;
-      transform-origin: center;
-      transition: 0.3s ease;
-      border-radius: 2px;
-    }
-
-    .icon-btn.cart-toggle.open::before {
-      transform: rotate(45deg);
-    }
-
-    .icon-btn.cart-toggle.open::after {
-      transform: rotate(-45deg);
-    }
-
-    .icon-btn.cart-toggle.open img {
-      opacity: 0;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      color: black;
-      font-size: 10px;
-      font-family: 'Oswald', sans-serif;
-      display: none;
-      user-select: none;
-    }
-
-    .image-box {
-      margin-top: 64px;
-      width: 100%;
-      height: 400px;
-      background: black;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 100%;
-      height: 400px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      padding: 6px;
-      cursor: pointer;
-      z-index: 2;
-      user-select: none;
-    }
-
-    .arrow.left {
-      left: 10px;
-      transform: translateY(-50%) rotate(135deg);
-    }
-
-    .arrow.right {
-      right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-
-    .sidebar, .cart-sidebar {
-      position: fixed;
-      top: 0;
-      background: white;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      transition: transform 0.4s ease-in-out;
-      z-index: 1100;
-      overflow-y: auto;
-      height: 100vh;
-      text-align: center; /* center all sidebar menu text */
-      padding-top: 80px;
-    }
-
-    .sidebar {
-      left: 0;
-      width: 100vw;
-      padding-left: 0;
-      padding-right: 0;
-      transform: translateX(-100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    /* Sidebar menu links styling */
-    .sidebar nav {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 0;
-      width: 100%;
-      max-width: 320px;
-      align-items: center;
-    }
-
-    /* Underline only exactly under text */
-    .sidebar nav a {
-      color: black;
-      text-decoration: none;
-      font-size: 24px;
-      font-weight: 400;
-      text-align: center;
-      transition: color 0.3s ease, border-bottom 0.3s ease;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 2px;
-      cursor: pointer;
-      position: relative;
-      user-select: none;
-      display: inline-block;
-      max-width: max-content; /* shrink underline width to text only */
-      margin: 0 auto;
-    }
-
-    /* Hover underline for all links */
-    .sidebar nav a:hover {
-      border-bottom-color: currentColor;
-    }
-
-    /* Selected link style - less bold */
-    .sidebar nav a.current {
-      color: #555555;
-      font-weight: 550;
-      border-bottom-color: #555555;
-    }
-
-    /* Underline on hover even on selected */
-    .sidebar nav a.current:hover {
-      border-bottom-color: #555555;
-    }
-
-    /* POLICIES link special arrow */
     .sidebar nav a.policies-link::after {
       content: "";
       position: absolute;
@@ -335,7 +47,7 @@
       flex-direction: column;
       gap: 12px;
       margin-left: 16px;
-      font-size: 18px; /* smaller font than main policies link */
+      font-size: 18px;
       font-weight: 400;
       color: black;
       user-select: none;
@@ -528,7 +240,6 @@
     <a href="https://mattscianna.com/contact">CONTACT</a>
     <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
     <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
-      <!-- Dropdown items go here -->
       <a href="/return-policy">Return Policy</a>
       <a href="/shipping-policy">Shipping Policy</a>
       <a href="/privacy-policy">Privacy Policy</a>
@@ -546,80 +257,13 @@
   const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
   const policiesLink = document.getElementById('policiesLink');
-  const slider = document.getElementById('slider');
-  let currentSlide = 0;
-
-  function updateSlider() {
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % 3;
-    updateSlider();
-  }
-
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + 3) % 3;
-    updateSlider();
-  }
-
-  menuToggle.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    document.body.classList.toggle('sidebar-open', isOpen);
-    menuToggle.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', isOpen);
-    sidebar.setAttribute('aria-hidden', !isOpen);
-  });
-
-  cartIcon.addEventListener('click', () => {
-    const isOpen = cartSidebar.classList.toggle('open');
-    document.body.classList.toggle('cart-open', isOpen);
-    cartIcon.classList.toggle('open');
-    cartIcon.setAttribute('aria-expanded', isOpen);
-    cartSidebar.setAttribute('aria-hidden', !isOpen);
-  });
-
-  policiesLink.addEventListener('click', () => {
-    const isOpen = policiesDropdown.classList.toggle('open');
-    policiesLink.classList.toggle('arrow-open', isOpen);
-    policiesLink.classList.toggle('arrow-closed', !isOpen);
-    policiesLink.setAttribute('aria-expanded', isOpen);
-    policiesDropdown.setAttribute('aria-hidden', !isOpen);
-  });
-</script>
-
-<!-- Cart Sidebar Contents -->
-<script>
-  // Populate cart sidebar with sample items
-  cartSidebar.innerHTML = `
-    <h2 style="font-size: 20px; margin-bottom: 20px;">YOUR CART</h2>
-
-    <div style="margin-bottom: 30px;">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
-      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
-      <div style="font-size: 14px;">Color: RED</div>
-      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
-    </div>
-
-    <div>
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
-      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
-      <div style="font-size: 14px;">Color: WHITE</div>
-      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
-    </div>
-  `;
-<script>
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const policiesLink = document.getElementById('policiesLink');
   const policiesDropdown = document.getElementById('policiesDropdown');
   const logoContainer = document.getElementById('logoContainer');
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
   const slider = document.getElementById('slider');
   let scrolled = false;
+  let currentSlide = 0;
 
   // Fade-in products on load
   window.addEventListener('load', () => {
@@ -654,17 +298,23 @@
     menuToggle.classList.remove('open');
     document.body.classList.remove('sidebar-open');
   }
+
   menuToggle.addEventListener('click', () => {
     const open = sidebar.classList.toggle('open');
     menuToggle.classList.toggle('open');
     document.body.classList.toggle('sidebar-open', open);
     if (open) closeCart();
+    sidebar.setAttribute('aria-hidden', !open);
+    menuToggle.setAttribute('aria-expanded', open);
   });
+
   cartIcon.addEventListener('click', () => {
     const open = cartSidebar.classList.toggle('open');
     cartIcon.classList.toggle('open');
     document.body.classList.toggle('cart-open', open);
     if (open) closeMenu();
+    cartSidebar.setAttribute('aria-hidden', !open);
+    cartIcon.setAttribute('aria-expanded', open);
   });
 
   // Policies toggle with smooth animation
@@ -682,8 +332,41 @@
     if (!policiesDropdown.classList.contains('open')) policiesLink.classList.remove('arrow-hover');
   });
 
-  // Empty cart on open
-  cartSidebar.innerHTML = '';
+  // Slider functions
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % 3;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + 3) % 3;
+    updateSlider();
+  }
+</script>
+
+<script>
+  // Populate cart sidebar with sample items
+  cartSidebar.innerHTML = `
+    <h2 style="font-size: 20px; margin-bottom: 20px;">YOUR CART</h2>
+
+    <div style="margin-bottom: 30px;">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
+      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
+      <div style="font-size: 14px;">Color: RED</div>
+      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
+    </div>
+
+    <div>
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
+      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
+      <div style="font-size: 14px;">Color: WHITE</div>
+      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
+    </div>
+  `;
 </script>
 
 </body>

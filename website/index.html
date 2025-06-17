@@ -44,8 +44,8 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      /* Move the text just a little lower */
-      transform: translate(-50%, -45%);
+      /* Move the text just a little higher */
+      transform: translate(-50%, -50%);
       display: flex;
       align-items: center;
       height: 64px;
@@ -58,7 +58,7 @@
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
-      margin-top: 2px;
+      margin-top: 0; /* Removed extra margin for slight upward */
     }
 
     .logo-image {
@@ -232,6 +232,7 @@
       margin-top: 20px;
     }
 
+    /* Underline only under text, not full width */
     .sidebar nav a {
       color: black;
       text-decoration: none;
@@ -244,6 +245,7 @@
       cursor: pointer;
       position: relative;
       user-select: none;
+      display: inline-block; /* shrink to text width */
     }
 
     /* Hover underline for all links, underline color same as text */
@@ -251,10 +253,10 @@
       border-bottom-color: currentColor;
     }
 
-    /* Selected link style */
+    /* Selected link style - less bold (from 600 to 550) */
     .sidebar nav a.current {
       color: #555555; /* darker grey */
-      font-weight: 600;
+      font-weight: 550;
       border-bottom-color: #555555; /* underline same color */
     }
 
@@ -263,22 +265,24 @@
       border-bottom-color: #555555;
     }
 
-    /* POLICIES link special hover arrow */
+    /* POLICIES link special arrow (v) right next to text */
     .sidebar nav a.policies-link::after {
-      content: "";
+      content: "v";
       position: absolute;
-      right: -20px;
+      right: -16px; /* very close to text */
       top: 50%;
-      transform: translateY(-50%) rotate(45deg);
-      border: solid #000;
-      border-width: 0 2px 2px 0;
-      padding: 4px;
+      transform: translateY(-50%);
+      font-weight: 700;
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
+      font-family: 'Oswald', sans-serif;
+      user-select: none;
     }
 
-    .sidebar nav a.policies-link:hover::after {
+    /* Show 'v' arrow on hover or when open */
+    .sidebar nav a.policies-link:hover::after,
+    .sidebar nav a.policies-link.open::after {
       opacity: 1;
     }
 
@@ -310,6 +314,7 @@
       cursor: pointer;
       transition: border-bottom 0.3s ease;
       user-select: none;
+      display: inline-block; /* underline only text */
     }
 
     .policies-dropdown a:hover {
@@ -320,10 +325,24 @@
     @media (max-width: 767px) {
       .sidebar nav a {
         text-align: center;
+        display: inline-block; /* keep inline-block for underline */
       }
 
       .policies-dropdown {
         margin-left: 0;
+      }
+
+      /* Fade-in animation for product images and text - all fade at same time */
+      .product-image-box, .product-info {
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.3s; /* all start at same time */
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
       }
     }
 
@@ -453,10 +472,10 @@
 <!-- Sidebar with menu items -->
 <nav id="sidebar" class="sidebar" aria-label="Main navigation">
   <nav>
-    <a href="#" class="current">HOME</a>
-    <a href="#">LOOKBOOKS</a>
-    <a href="#">VISION</a>
-    <a href="#">CONTACT</a>
+    <a href="https://mattscianna.com/home" class="current">HOME</a>
+    <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+    <a href="https://mattscianna.com/vision">VISION</a>
+    <a href="https://mattscianna.com/contact">CONTACT</a>
     <a href="#" class="policies-link" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
     <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
       <!-- Dropdown items will go here -->
@@ -533,33 +552,4 @@
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    if (scrollY > 60) {
-      logoText.style.display = 'none';
-      logoImage.style.display = 'block';
-    } else {
-      logoText.style.display = 'block';
-      logoImage.style.display = 'none';
-    }
-  });
-
-  function addToCart() {
-    cartItems++;
-    cartCount.innerText = cartItems;
-    if (!cartIcon.classList.contains('open')) {
-      cartCount.style.display = cartItems > 0 ? 'block' : 'none';
-    }
-  }
-
-  setTimeout(addToCart, 3000);
-
-  // POLICIES dropdown toggle
-  policiesLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isOpen = policiesDropdown.classList.toggle('open');
-    policiesLink.setAttribute('aria-expanded', isOpen);
-    policiesDropdown.setAttribute('aria-hidden', !isOpen);
-  });
-</script>
-
-</body>
-</html>
+    if (scrollY >

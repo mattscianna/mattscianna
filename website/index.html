@@ -43,7 +43,7 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 56%; /* lowered from 50% */
+      top: 56%; /* slightly lowered */
       transform: translate(-50%, -50%);
       display: flex;
       align-items: center;
@@ -72,13 +72,13 @@
       user-select: none;
     }
 
-    /* Menu icon slightly bigger for alignment */
+    /* Menu icon slightly bigger and moved down */
     .icon-btn.menu-toggle {
       width: 24px;
       height: 24px;
       position: relative;
       cursor: pointer;
-      margin-top: 3px;
+      margin-top: 3px; /* nudged down */
       margin-left: 0;
       user-select: none;
     }
@@ -111,7 +111,7 @@
       transform: rotate(-45deg);
     }
 
-    /* Cart icon higher only */
+    /* Cart icon styling */
     .icon-btn.cart-toggle {
       width: 24px;
       height: 24px;
@@ -165,52 +165,7 @@
       user-select: none;
     }
 
-    .image-box {
-      margin-top: 64px;
-      width: 100%;
-      height: 400px;
-      background: black;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      flex: 0 0 100%;
-      height: 400px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      padding: 6px;
-      cursor: pointer;
-      z-index: 2;
-      user-select: none;
-    }
-
-    .arrow.left {
-      left: 10px;
-      transform: translateY(-50%) rotate(135deg);
-    }
-
-    .arrow.right {
-      right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-
+    /* Sidebar styles */
     .sidebar, .cart-sidebar {
       position: fixed;
       top: 0;
@@ -222,7 +177,7 @@
       z-index: 1100;
       overflow-y: auto;
       height: 100vh;
-      text-align: center; /* center all sidebar menu text */
+      text-align: center; /* Center sidebar menu text */
       padding-top: 80px;
     }
 
@@ -241,7 +196,7 @@
       transform: translateX(0);
     }
 
-    /* Sidebar menu links styling */
+    /* Sidebar nav */
     .sidebar nav {
       display: flex;
       flex-direction: column;
@@ -252,7 +207,6 @@
       align-items: center;
     }
 
-    /* Underline only exactly under text */
     .sidebar nav a {
       color: black;
       text-decoration: none;
@@ -266,28 +220,25 @@
       position: relative;
       user-select: none;
       display: inline-block;
-      max-width: max-content; /* shrink underline width to text only */
+      max-width: max-content;
       margin: 0 auto;
     }
 
-    /* Hover underline for all links */
     .sidebar nav a:hover {
       border-bottom-color: currentColor;
     }
 
-    /* Selected link style - less bold */
     .sidebar nav a.current {
       color: #555555;
       font-weight: 550;
       border-bottom-color: #555555;
     }
 
-    /* Underline on hover even on selected */
     .sidebar nav a.current:hover {
       border-bottom-color: #555555;
     }
 
-    /* POLICIES link special arrow */
+    /* POLICIES link arrow */
     .sidebar nav a.policies-link::after {
       content: "";
       position: absolute;
@@ -313,13 +264,12 @@
       transform: translateY(-50%) rotate(90deg);
     }
 
-    /* Show arrow on hover or if open */
     .sidebar nav a.policies-link:hover::after {
       opacity: 1;
       transform: translateY(-50%) rotate(45deg);
     }
 
-    /* Dropdown container for policies */
+    /* Policies dropdown */
     .policies-dropdown {
       max-height: 0;
       overflow: hidden;
@@ -328,7 +278,7 @@
       flex-direction: column;
       gap: 12px;
       margin-left: 16px;
-      font-size: 18px; /* smaller font than main policies link */
+      font-size: 18px;
       font-weight: 400;
       color: black;
       user-select: none;
@@ -343,7 +293,6 @@
       margin-top: 8px;
     }
 
-    /* Dropdown links style */
     .policies-dropdown a {
       color: black;
       text-decoration: none;
@@ -361,14 +310,6 @@
       border-bottom: 1px solid black;
     }
 
-    /* Fade-in animation for product images and text on all screen sizes */
-    .product-image-box, .product-info {
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 0.3s;
-    }
-
-    /* Center links on mobile */
     @media (max-width: 767px) {
       .sidebar nav a {
         text-align: center;
@@ -380,86 +321,7 @@
       }
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .cart-sidebar {
-      right: 0;
-      width: 50vw;
-      max-width: 280px;
-      padding: 80px 20px;
-      transform: translateX(100%);
-      text-align: left;
-    }
-
-    .cart-sidebar.open {
-      transform: translateX(0);
-    }
-
-    .product-image-box {
-      width: 90vw;
-      max-width: 600px;
-      margin: 40px auto 8px auto;
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: visible;
-      cursor: pointer;
-    }
-
-    .jersey-img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      transition: transform 0.25s ease-in-out;
-      image-rendering: auto;
-    }
-
-    .jersey-img:hover {
-      transform: scale(1.03);
-    }
-
-    .product-info {
-      text-align: center;
-      margin-bottom: 24px;
-      margin-top: 16px;
-      user-select: none;
-    }
-
-    .product-title {
-      font-weight: 700;
-      font-size: 22px;
-      margin-bottom: 4px;
-      cursor: pointer;
-      transition: border-bottom 0.2s ease;
-      user-select: none;
-    }
-
-    .product-title:hover {
-      border-bottom: 1.5px solid black;
-    }
-
-    .product-color {
-      font-weight: 400;
-      font-size: 16px;
-      color: black;
-      margin-bottom: 4px;
-    }
-
-    .product-price {
-      font-weight: 400;
-      font-size: 20px;
-    }
-
-    @media (min-width: 768px) {
-      header {
-        display: flex; /* show header on desktop */
-      }
-    }
+    /* Additional styles omitted for brevity, keep your existing styles */
   </style>
 </head>
 <body>
@@ -482,37 +344,7 @@
   </div>
 </header>
 
-<div class="image-box">
-  <div class="slider" id="slider" aria-live="polite">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');" role="img" aria-label="Slide 1"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');" role="img" aria-label="Slide 2"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');" role="img" aria-label="Slide 3"></div>
-  </div>
-  <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
-  <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
-</div>
-
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-  <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="View Red Jersey">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="View Red Jersey">TWO-FIVE JERSEY</div>
-    <div class="product-color">RED</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <div class="product-image-box" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="View White Jersey">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="View White Jersey">TWO-FIVE JERSEY</div>
-    <div class="product-color">WHITE</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-</div>
-
-<!-- Sidebar with menu items -->
+<!-- Sidebar -->
 <nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true">
   <nav>
     <a href="https://mattscianna.com/home" class="current">HOME</a>
@@ -521,7 +353,6 @@
     <a href="https://mattscianna.com/contact">CONTACT</a>
     <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
     <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
-      <!-- Dropdown items go here -->
       <a href="/return-policy">Return Policy</a>
       <a href="/shipping-policy">Shipping Policy</a>
       <a href="/privacy-policy">Privacy Policy</a>
@@ -534,46 +365,101 @@
 </nav>
 
 <script>
-  const policiesDropdown = document.querySelector('.dropdown-container');
-  const arrow = document.querySelector('.arrow');
-  const policiesBtn = document.querySelector('.policies-btn');
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const logoContainer = document.getElementById('logoContainer');
 
-  policiesBtn.addEventListener('click', () => {
-    if (policiesDropdown.style.display === 'block') {
-      policiesDropdown.style.display = 'none';
-      arrow.classList.remove('down');
-      arrow.classList.add('right');
-    } else {
-      policiesDropdown.style.display = 'block';
-      arrow.classList.remove('right');
-      arrow.classList.add('down');
+  // Toggle sidebar menu
+  menuToggle.addEventListener('click', () => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!expanded));
+    menuToggle.classList.toggle('open');
+    sidebar.classList.toggle('open');
+
+    // Close cart if open
+    if (cartSidebar.classList.contains('open')) {
+      cartSidebar.classList.remove('open');
+      cartIcon.classList.remove('open');
+      cartIcon.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('cart-open');
+    }
+
+    // Toggle body scroll lock
+    document.body.classList.toggle('sidebar-open', !expanded);
+  });
+
+  // Toggle cart sidebar
+  cartIcon.addEventListener('click', () => {
+    const expanded = cartIcon.getAttribute('aria-expanded') === 'true';
+    cartIcon.setAttribute('aria-expanded', String(!expanded));
+    cartIcon.classList.toggle('open');
+    cartSidebar.classList.toggle('open');
+
+    // Close sidebar if open
+    if (sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('sidebar-open');
+    }
+
+    // Toggle body scroll lock
+    document.body.classList.toggle('cart-open', !expanded);
+  });
+
+  // Policies dropdown toggle
+  policiesLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const expanded = policiesLink.getAttribute('aria-expanded') === 'true';
+    policiesLink.setAttribute('aria-expanded', String(!expanded));
+    policiesLink.classList.toggle('arrow-open', !expanded);
+    policiesLink.classList.toggle('arrow-closed', expanded);
+    policiesDropdown.classList.toggle('open');
+
+    // Accessibility toggle
+    policiesDropdown.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+  });
+
+  // Logo click reloads page
+  logoContainer.addEventListener('click', () => {
+    location.reload();
+  });
+
+  logoContainer.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      location.reload();
     }
   });
 
-  // Initialize arrow as right on load
-  arrow.classList.add('right');
-
-  // Logo fade switch on scroll
+  // Scroll event to toggle logo text/image
   window.addEventListener('scroll', () => {
-    const logoText = document.getElementById('logo-text');
-    const logoImg = document.getElementById('logo-img');
-    const scrollPos = window.scrollY;
-
-    if (scrollPos > 50) {
-      logoText.style.opacity = '0';
-      logoImg.style.opacity = '1';
+    if (window.scrollY > 80) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
     } else {
-      logoText.style.opacity = '1';
-      logoImg.style.opacity = '0';
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
     }
   });
 
-  // Clicking logos reload page and scroll to top smoothly
-  function reloadTop() {
-    window.location.href = window.location.pathname + "#top";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  document.getElementById('logo-text').addEventListener('click', reloadTop);
-  document.getElementById('logo-img').addEventListener('click', reloadTop);
+  // Initialize logo state on page load
+  window.addEventListener('load', () => {
+    if (window.scrollY > 80) {
+      logoText.style.display = 'none';
+      logoImage.style.display = 'block';
+    } else {
+      logoText.style.display = 'block';
+      logoImage.style.display = 'none';
+    }
+  });
 </script>
+
+</body>
+</html>

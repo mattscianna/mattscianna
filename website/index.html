@@ -67,15 +67,16 @@
 
     .icon-btn.menu-toggle,
     .icon-btn.cart-toggle {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       position: relative;
       cursor: pointer;
+      margin-top: 6px; /* lowered */
     }
 
     .icon-btn.menu-toggle span {
       position: absolute;
-      height: 2px;
+      height: 2.5px;
       width: 100%;
       background-color: black;
       left: 0;
@@ -83,11 +84,11 @@
     }
 
     .icon-btn.menu-toggle span:nth-child(1) { top: 3px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 9px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 15px; }
+    .icon-btn.menu-toggle span:nth-child(2) { top: 12px; }
+    .icon-btn.menu-toggle span:nth-child(3) { top: 21px; }
 
     .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 9px;
+      top: 12px;
       transform: rotate(45deg);
     }
 
@@ -96,7 +97,7 @@
     }
 
     .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 9px;
+      top: 12px;
       transform: rotate(-45deg);
     }
 
@@ -110,10 +111,10 @@
     .icon-btn.cart-toggle.open::after {
       content: "";
       position: absolute;
-      width: 22px;
-      height: 2px;
+      width: 24px;
+      height: 2.5px;
       background: black;
-      top: 10px;
+      top: 11px;
       left: 0;
       transform-origin: center;
       transition: 0.3s ease;
@@ -196,7 +197,6 @@
       transition: transform 0.4s ease-in-out;
       z-index: 1100;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       height: 100vh;
     }
 
@@ -223,18 +223,11 @@
       transform: translateX(0);
     }
 
-    .product {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 40px;
-    }
-
     .product-image-box {
       width: 90vw;
       max-width: 600px;
+      margin: 40px auto 8px auto;
       background: none;
-      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -245,32 +238,30 @@
       width: 100%;
       height: auto;
       object-fit: contain;
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.25s ease-in-out;
+      image-rendering: auto;
+      cursor: pointer;
     }
 
     .jersey-img:hover {
-      transform: scale(1.06);
+      transform: scale(1.03);
     }
 
     .product-info {
       text-align: center;
       margin-bottom: 24px;
-      pointer-events: none;
+      margin-top: 16px;
     }
 
     .product-title {
       font-weight: 700;
       font-size: 22px;
       margin-bottom: 4px;
+      cursor: pointer;
       transition: border-bottom 0.2s ease;
-      pointer-events: auto;
     }
 
     .product-title:hover {
-      border-bottom: 1.5px solid black;
-    }
-
-    .product-title.clicked {
       border-bottom: 1.5px solid black;
     }
 
@@ -323,23 +314,21 @@
   <div class="arrow right" onclick="nextSlide()"></div>
 </div>
 
-<div class="product">
-  <div class="product-image-box" onclick="window.location.href='/jersey/red'">
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+  <div class="product-image-box" onclick="location.href='/jersey/red'">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
   </div>
   <div class="product-info">
-    <div class="product-title" onclick="handleClick(event, '/jersey/red')">TWO-FIVE JERSEY</div>
+    <div class="product-title" onclick="location.href='/jersey/red'">TWO-FIVE JERSEY</div>
     <div class="product-color">RED</div>
     <div class="product-price">$49.99 USD</div>
   </div>
-</div>
 
-<div class="product">
-  <div class="product-image-box" onclick="window.location.href='/jersey/white'">
+  <div class="product-image-box" onclick="location.href='/jersey/white'">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
   </div>
   <div class="product-info">
-    <div class="product-title" onclick="handleClick(event, '/jersey/white')">TWO-FIVE JERSEY</div>
+    <div class="product-title" onclick="location.href='/jersey/white'">TWO-FIVE JERSEY</div>
     <div class="product-color">WHITE</div>
     <div class="product-price">$49.99 USD</div>
   </div>
@@ -427,14 +416,6 @@
   }
 
   setTimeout(addToCart, 3000);
-
-  function handleClick(event, url) {
-    event.stopPropagation();
-    event.currentTarget.classList.add('clicked');
-    setTimeout(() => {
-      window.location.href = url;
-    }, 150);
-  }
 </script>
 
 </body>

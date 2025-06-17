@@ -43,7 +43,7 @@
     .logo-container {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 56%; /* lowered from 50% */
       transform: translate(-50%, -50%);
       display: flex;
       align-items: center;
@@ -59,6 +59,8 @@
       line-height: 1;
       white-space: nowrap;
       margin-top: 0;
+      user-select: none;
+      transition: all 0.3s ease;
     }
 
     .logo-image {
@@ -239,7 +241,7 @@
       margin-top: 20px;
     }
 
-    /* Underline only under text, not full width */
+    /* Underline only exactly under text */
     .sidebar nav a {
       color: black;
       text-decoration: none;
@@ -253,9 +255,10 @@
       position: relative;
       user-select: none;
       display: inline-block;
+      max-width: max-content; /* shrink underline width to text only */
     }
 
-    /* Hover underline for all links, underline color same as text */
+    /* Hover underline for all links */
     .sidebar nav a:hover {
       border-bottom-color: currentColor;
     }
@@ -272,25 +275,41 @@
       border-bottom-color: #555555;
     }
 
-    /* POLICIES link special arrow (v) */
+    /* POLICIES link special arrow */
     .sidebar nav a.policies-link::after {
       content: "v";
       position: absolute;
-      right: -16px;
+      right: -12px; /* closer to text */
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) rotate(0deg);
       font-weight: 700;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       pointer-events: none;
       font-family: 'Oswald', sans-serif;
       user-select: none;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
     }
 
-    /* Show 'v' arrow on hover or open */
-    .sidebar nav a.policies-link:hover::after,
-    .sidebar nav a.policies-link.open::after {
+    .sidebar nav a.policies-link.arrow-open::after {
       opacity: 1;
+      transform: translateY(-50%) rotate(0deg);
+      content: "v";
+    }
+
+    .sidebar nav a.policies-link.arrow-closed::after {
+      opacity: 1;
+      transform: translateY(-50%) rotate(-90deg);
+      content: ">";
+    }
+
+    /* Show 'v' arrow on hover or if open */
+    .sidebar nav a.policies-link:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) rotate(0deg);
+      content: "v";
     }
 
     /* Dropdown container for policies */
@@ -301,10 +320,11 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-left: 20px;
+      margin-left: 16px;
       font-size: 20px;
       font-weight: 400;
       color: black;
+      user-select: none;
     }
 
     .policies-dropdown.open {
@@ -322,6 +342,7 @@
       transition: border-bottom 0.3s ease;
       user-select: none;
       display: inline-block;
+      max-width: max-content;
     }
 
     .policies-dropdown a:hover {
@@ -344,6 +365,36 @@
         opacity: 0;
         animation: fadeIn 1s ease forwards;
         animation-delay: 0.3s;
+      }
+
+      /* Change logo text from MATT SCIANNA to MS */
+      .logo-text {
+        font-size: 24px;
+      }
+
+      .logo-text::after {
+        content: "MS";
+        display: inline-block;
+        font-family: 'Cardo', serif;
+        font-weight: 900;
+        font-size: 26px;
+        white-space: nowrap;
+        visibility: visible;
+      }
+
+      /* Hide original text on mobile and show MS */
+      .logo-text {
+        color: transparent;
+        position: relative;
+      }
+
+      .logo-text::after {
+        content: "MS";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: black;
+        user-select: none;
       }
     }
 
@@ -437,7 +488,7 @@
     <span></span>
   </div>
 
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Home">
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload page">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="Logo" />
   </div>
@@ -488,6 +539,9 @@
     <a href="#" class="policies-link" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
     <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
       <!-- Dropdown items go here -->
+      <a href="/return-policy">RETURN POLICY</a>
+      <a href="/shipping-policy">SHIPPING POLICY</a>
+      <a href="/privacy-policy">PRIVACY POLICY</a>
     </div>
   </nav>
 </nav>
@@ -501,151 +555,123 @@
   const sidebar = document.getElementById('sidebar');
   const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
-  const logoContainer = document.getElementById('logoContainer');
-  const slider = document.getElementById('slider');
-  const cartCount = document.getElementById('cartCount');
   const policiesLink = document.getElementById('policiesLink');
   const policiesDropdown = document.getElementById('policiesDropdown');
 
-  let currentIndex = 0;
-  const slides = slider.children;
-
-  function updateSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(currentIndex);
-  }
-
-  setInterval(nextSlide, 10000);
-
   // Toggle sidebar menu
-  function toggleMenu() {
-    const isOpen = menuToggle.classList.toggle('open');
-    sidebar.classList.toggle('open');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = sidebar.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
     document.body.classList.toggle('sidebar-open', isOpen);
-
-    menuToggle.setAttribute('aria-expanded', isOpen);
     sidebar.setAttribute('aria-hidden', !isOpen);
-
+    menuToggle.setAttribute('aria-expanded', isOpen);
+    
     // Close cart if open
     if (cartSidebar.classList.contains('open')) {
       cartSidebar.classList.remove('open');
       cartIcon.classList.remove('open');
       document.body.classList.remove('cart-open');
-      cartIcon.setAttribute('aria-expanded', false);
       cartSidebar.setAttribute('aria-hidden', true);
+      cartIcon.setAttribute('aria-expanded', false);
     }
-  }
+  });
 
   // Toggle cart sidebar
-  function toggleCart() {
-    const isOpen = cartIcon.classList.toggle('open');
-    cartSidebar.classList.toggle('open');
+  cartIcon.addEventListener('click', () => {
+    const isOpen = cartSidebar.classList.toggle('open');
+    cartIcon.classList.toggle('open', isOpen);
     document.body.classList.toggle('cart-open', isOpen);
-
-    cartIcon.setAttribute('aria-expanded', isOpen);
     cartSidebar.setAttribute('aria-hidden', !isOpen);
+    cartIcon.setAttribute('aria-expanded', isOpen);
 
     // Close menu if open
     if (sidebar.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
       document.body.classList.remove('sidebar-open');
-      menuToggle.setAttribute('aria-expanded', false);
       sidebar.setAttribute('aria-hidden', true);
+      menuToggle.setAttribute('aria-expanded', false);
     }
-  }
+  });
 
-  // Toggle policies dropdown in sidebar
-  function togglePolicies() {
+  // Toggle policies dropdown
+  policiesLink.addEventListener('click', (e) => {
+    e.preventDefault();
     const isOpen = policiesDropdown.classList.toggle('open');
-    policiesLink.classList.toggle('open', isOpen);
-    policiesLink.setAttribute('aria-expanded', isOpen);
     policiesDropdown.setAttribute('aria-hidden', !isOpen);
-  }
+    policiesLink.setAttribute('aria-expanded', isOpen);
+    policiesLink.classList.toggle('arrow-open', isOpen);
+    policiesLink.classList.toggle('arrow-closed', !isOpen);
+  });
 
-  // Keyboard accessibility for menuToggle and cartIcon
-  menuToggle.addEventListener('click', toggleMenu);
+  // Accessibility: allow keyboard toggling of menu and cart
   menuToggle.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleMenu();
+      menuToggle.click();
     }
   });
 
-  cartIcon.addEventListener('click', toggleCart);
   cartIcon.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleCart();
+      cartIcon.click();
     }
   });
 
-  policiesLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    togglePolicies();
-  });
   policiesLink.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      togglePolicies();
+      policiesLink.click();
     }
   });
 
-  // Close sidebars when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-        menuToggle.classList.remove('open');
-        document.body.classList.remove('sidebar-open');
-        menuToggle.setAttribute('aria-expanded', false);
-        sidebar.setAttribute('aria-hidden', true);
-      }
-    }
-    if (!cartSidebar.contains(e.target) && !cartIcon.contains(e.target)) {
-      if (cartSidebar.classList.contains('open')) {
-        cartSidebar.classList.remove('open');
-        cartIcon.classList.remove('open');
-        document.body.classList.remove('cart-open');
-        cartIcon.setAttribute('aria-expanded', false);
-        cartSidebar.setAttribute('aria-hidden', true);
-      }
-    }
-  });
+  // Slider logic
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
 
-  // Keyboard navigation for arrows
-  document.querySelectorAll('.arrow').forEach(arrow => {
-    arrow.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (arrow.classList.contains('left')) {
-          prevSlide();
-        } else {
-          nextSlide();
-        }
-      }
-    });
-  });
+  function showSlide(index) {
+    if (index >= totalSlides) currentSlide = 0;
+    else if (index < 0) currentSlide = totalSlides - 1;
+    else currentSlide = index;
 
-  // Keyboard navigation for logo (go home)
-  logoContainer.addEventListener('click', () => {
-    window.location.href = '/';
-  });
-  logoContainer.addEventListener('keydown', (e) => {
+    const slider = document.getElementById('slider');
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  // Keyboard support for slider arrows
+  document.querySelector('.arrow.left').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      window.location.href = '/';
+      prevSlide();
     }
   });
+
+  document.querySelector('.arrow.right').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      nextSlide();
+    }
+  });
+
+  // Auto slide every 5 seconds
+  setInterval(() => {
+    nextSlide();
+  }, 5000);
+
+  // Initialize first slide
+  showSlide(currentSlide);
+
 </script>
+
 </body>
 </html>

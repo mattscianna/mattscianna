@@ -44,7 +44,8 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      /* Move the text just a little lower */
+      transform: translate(-50%, -45%);
       display: flex;
       align-items: center;
       height: 64px;
@@ -237,19 +238,92 @@
       font-size: 24px;
       font-weight: 400;
       text-align: left;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
     }
 
-    /* Lighter color for current page link */
+    /* Hover underline for all links, underline color same as text */
+    .sidebar nav a:hover {
+      border-bottom-color: currentColor;
+    }
+
+    /* Selected link style */
     .sidebar nav a.current {
-      color: #888888; /* lighter gray */
-      font-weight: 700;
+      color: #555555; /* darker grey */
+      font-weight: 600;
+      border-bottom-color: #555555; /* underline same color */
+    }
+
+    /* Underline on hover even on selected */
+    .sidebar nav a.current:hover {
+      border-bottom-color: #555555;
+    }
+
+    /* POLICIES link special hover arrow */
+    .sidebar nav a.policies-link::after {
+      content: "";
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      border: solid #000;
+      border-width: 0 2px 2px 0;
+      padding: 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .sidebar nav a.policies-link:hover::after {
+      opacity: 1;
+    }
+
+    /* Dropdown container for policies */
+    .policies-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-left: 20px;
+      font-size: 20px;
+      font-weight: 400;
+      color: black;
+    }
+
+    .policies-dropdown.open {
+      max-height: 500px; /* enough to show content */
+      margin-top: 8px;
+    }
+
+    /* Dropdown links style */
+    .policies-dropdown a {
+      color: black;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+      transition: border-bottom 0.3s ease;
+      user-select: none;
+    }
+
+    .policies-dropdown a:hover {
+      border-bottom: 1px solid black;
     }
 
     /* Center links on mobile */
     @media (max-width: 767px) {
       .sidebar nav a {
         text-align: center;
+      }
+
+      .policies-dropdown {
+        margin-left: 0;
       }
     }
 
@@ -383,7 +457,11 @@
     <a href="#">LOOKBOOKS</a>
     <a href="#">VISION</a>
     <a href="#">CONTACT</a>
-    <a href="#">POLICIES</a>
+    <a href="#" class="policies-link" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+      <!-- Dropdown items will go here -->
+      <!-- Example: <a href="#">Privacy Policy</a> -->
+    </div>
   </nav>
 </nav>
 
@@ -399,6 +477,9 @@
   const logoContainer = document.getElementById('logoContainer');
   const slider = document.getElementById('slider');
   const cartCount = document.getElementById('cartCount');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+
   let currentIndex = 0;
   let cartItems = 0;
   const slides = slider.children;
@@ -423,6 +504,7 @@
     const isOpen = menuToggle.classList.toggle('open');
     sidebar.classList.toggle('open');
     document.body.classList.toggle('sidebar-open', isOpen);
+    // Close cart if open
     if (cartSidebar.classList.contains('open')) {
       cartSidebar.classList.remove('open');
       cartIcon.classList.remove('open');
@@ -435,6 +517,7 @@
     cartSidebar.classList.toggle('open');
     document.body.classList.toggle('cart-open', isOpen);
     cartCount.style.display = 'none';
+    // Close sidebar if open
     if (menuToggle.classList.contains('open')) {
       sidebar.classList.remove('open');
       menuToggle.classList.remove('open');
@@ -468,6 +551,14 @@
   }
 
   setTimeout(addToCart, 3000);
+
+  // POLICIES dropdown toggle
+  policiesLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isOpen = policiesDropdown.classList.toggle('open');
+    policiesLink.setAttribute('aria-expanded', isOpen);
+    policiesDropdown.setAttribute('aria-hidden', !isOpen);
+  });
 </script>
 
 </body>

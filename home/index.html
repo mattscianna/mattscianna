@@ -599,19 +599,17 @@
     <div style="margin-bottom: 30px;">
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
       <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
-      [601-694]
 
-  <div style="font-size: 14px;">Color: RED</div>
-      This is all that’s left of the code
-
-<div style="font-size: 14px;">Color: RED</div>
+  <div style="font-size: 14px;">RED</div>
+      
+<div style="font-size: 14px;">RED</div>
       <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
     </div>
 
     <div>
       <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
       <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
-      <div style="font-size: 14px;">Color: WHITE</div>
+      <div style="font-size: 14px;">WHITE</div>
       <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
     </div>
   `;
@@ -826,7 +824,7 @@
 
   let scrolled = false;
 
-  // Show/hide logo image on scroll
+  // Logo swap on scroll
   window.addEventListener('scroll', () => {
     if (!scrolled && window.scrollY > 50) {
       document.body.classList.add('scrolled');
@@ -860,11 +858,13 @@
     sidebar.setAttribute('aria-hidden', 'true');
   }
 
-  // Toggle menu sidebar
+  // Open menu sidebar and ensure cart sidebar is closed
   menuToggle.addEventListener('click', () => {
     const menuIsOpen = sidebar.classList.contains('open');
+    const cartIsOpen = cartSidebar.classList.contains('open');
+
     if (!menuIsOpen) {
-      closeCart(); // close cart if open
+      if (cartIsOpen) closeCart();
       sidebar.classList.add('open');
       menuToggle.classList.add('open');
       document.body.classList.add('sidebar-open');
@@ -875,11 +875,13 @@
     }
   });
 
-  // Toggle cart sidebar
+  // Open cart sidebar and ensure menu sidebar is closed
   cartIcon.addEventListener('click', () => {
     const cartIsOpen = cartSidebar.classList.contains('open');
+    const menuIsOpen = sidebar.classList.contains('open');
+
     if (!cartIsOpen) {
-      closeMenu(); // close menu if open
+      if (menuIsOpen) closeMenu();
       cartSidebar.classList.add('open');
       cartIcon.classList.add('open');
       document.body.classList.add('cart-open');
@@ -890,6 +892,5 @@
     }
   });
 </script>
-
 </body>
 </html>

@@ -2,334 +2,620 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
   <style>
+    /* ====== General styles ====== */
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      background: white;
+      color: black;
+      user-select: none;
       overflow-x: hidden;
     }
 
+    /* ====== Header ====== */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background: white;
       position: fixed;
+      top: 0;
       width: 100%;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
       z-index: 1000;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.scrolled header {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .logo-container {
       display: flex;
       align-items: center;
       cursor: pointer;
-      transition: 0.3s;
+      gap: 10px;
     }
 
     .logo-text {
-      font-size: 18px;
-      font-weight: bold;
-      margin-right: 10px;
-      transition: opacity 0.3s;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      user-select: none;
+      transition: opacity 0.3s ease;
+    }
+
+    body.scrolled .logo-text {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .logo-image {
-      width: 40px;
-      height: auto;
-      transition: opacity 0.3s;
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+      user-select: none;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .icon-btn {
+    body.scrolled .logo-image {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ====== Menu Toggle Icon ====== */
+    #menuToggle {
+      width: 28px;
+      height: 22px;
       cursor: pointer;
       display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .menu-toggle span {
+    #menuToggle span {
       display: block;
-      width: 24px;
-      height: 2px;
+      height: 3px;
       background: black;
-      margin: 4px 0;
-      transition: all 0.3s;
+      border-radius: 2px;
+      transition: all 0.3s ease;
     }
 
-    .cart-toggle img {
-      width: 24px;
-      height: 24px;
+    #menuToggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    #menuToggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #menuToggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* ====== Cart Icon ====== */
+    #cartIcon {
+      position: relative;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      user-select: none;
+    }
+
+    #cartIcon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .cart-count {
-      font-size: 14px;
+      position: absolute;
+      top: -6px;
+      right: -6px;
       background: black;
       color: white;
+      font-size: 12px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      padding: 2px 6px;
-      margin-left: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
     }
 
+    /* ====== Sliding Image Box (Carousel) ====== */
     .image-box {
-      margin-top: 80px;
+      margin-top: 70px; /* to clear fixed header */
       position: relative;
       width: 100%;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
       overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .slider {
+    #slider {
       display: flex;
       transition: transform 0.5s ease;
-      width: 300%;
+      will-change: transform;
     }
 
     .slide {
       min-width: 100%;
-      height: 300px;
+      height: 350px;
       background-size: cover;
       background-position: center;
+      flex-shrink: 0;
     }
 
     .arrow {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
-      background: rgba(0,0,0,0.4);
+      width: 36px;
+      height: 36px;
+      background: rgba(0,0,0,0.3);
       border-radius: 50%;
       cursor: pointer;
-      z-index: 10;
+      transform: translateY(-50%);
+      user-select: none;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arrow:hover {
+      background: rgba(0,0,0,0.5);
     }
 
     .arrow.left {
-      left: 10px;
+      left: 12px;
     }
 
     .arrow.right {
-      right: 10px;
+      right: 12px;
     }
+
+    /* Arrow shapes using CSS */
+    .arrow.left::before,
+    .arrow.right::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-top: 2.5px solid white;
+      border-right: 2.5px solid white;
+    }
+
+    .arrow.left::before {
+      transform: rotate(-135deg);
+    }
+
+    .arrow.right::before {
+      transform: rotate(45deg);
+    }
+
+    /* ====== Product section ====== */
+    .products-container {
+      max-width: 900px;
+      margin: 40px auto 80px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      user-select: none;
+    }
+
+    .product-image-box {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      cursor: pointer;
+      overflow: visible;
+      transition: transform 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .jersey-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      image-rendering: auto;
+      transition: transform 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .jersey-img:hover {
+      transform: scale(1.03);
+    }
+
+    .product-info {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 22px;
+      cursor: pointer;
+      transition: border-bottom 0.2s ease;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .product-title:hover {
+      border-bottom: 1.5px solid black;
+    }
+
+    .product-color {
+      font-weight: 400;
+      font-size: 16px;
+      color: black;
+      margin-top: 4px;
+      user-select: none;
+    }
+
+    .product-price {
+      font-weight: 400;
+      font-size: 20px;
+      margin-top: 4px;
+      user-select: none;
+    }
+
+    /* ====== Sidebar Menu ====== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: white;
+      box-shadow: 3px 0 12px rgba(0,0,0,0.1);
+      padding: 80px 24px 24px 24px;
+      transition: left 0.3s ease;
+      z-index: 1200;
+      overflow-y: auto;
+      user-select: none;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar nav a {
+      display: block;
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 18px;
+      color: black;
+      text-decoration: none;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sidebar nav a.current {
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    /* Policies link arrow */
+    .sidebar nav a.policies-link::after {
+      content: "";
+      position: absolute;
+      right: -24px;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      transform: translateY(-50%) rotate(90deg);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+      pointer-events: none;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .sidebar nav a.policies-link.arrow-open::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .sidebar nav a.policies-link.arrow-closed::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    /* Dropdown container for policies */
+    .policies-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-left: 20px;
+      font-size: 18px;
+      font-weight: 400;
+      color: black;
+      text-align: left;
+      max-width: 240px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      user-select: none;
+    }
+
+    .policies-dropdown.open {
+      max-height: 500px;
+      margin-top: 8px;
+    }
+
+    /* Dropdown links style */
+    .policies-dropdown a {
+      color: black;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+      transition: border-bottom 0.3s ease;
+      user-select: none;
+      display: inline-block;
+      max-width: max-content;
+      margin-left: 8px;
+    }
+
+    .policies-dropdown a:hover {
+      border-bottom: 1px solid black;
+    }
+
+    /* ====== Cart Sidebar ====== */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 320px;
+      max-width: 90vw;
+      height: 100vh;
+      background: white;
+      box-shadow: -3px 0 12px rgba(0,0,0,0.1);
+      padding: 80px 24px 24px 24px;
+      transition: right 0.3s ease;
+      z-index: 1300;
+      overflow-y: auto;
+      user-select: none;
+    }
+
+    .cart-sidebar.open {
+      right: 0;
+    }
+
+    /* ====== Accessibility Focus Styles ====== */
+    a:focus, button:focus, div[role="button"]:focus {
+      outline: 2px solid black;
+      outline-offset: 2px;
+    }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 768px) {
+      .products-container {
+        padding: 0 12px;
+      }
+      .sidebar {
+        width: 260px;
+      }
+      .cart-sidebar {
+        width: 260px;
+      }
+      header {
+        padding: 12px 15px;
+      }
+    }
+
   </style>
 </head>
 <body>
 
 <header>
-  <div id="menuToggle" class="icon-btn menu-toggle" role="button" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
+  <div id="menuToggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
-  <div class="logo-container" id="logoContainer">
+  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload page">
     <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" alt="MS Logo" class="logo-image" id="logoImage" />
   </div>
 
-  <div id="cartIcon" class="icon-btn cart-toggle" role="button" aria-label="Toggle cart">
-    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
-    <div id="cartCount" class="cart-count">0</div>
+  <div id="cartIcon" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false" title="Cart">
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart Icon" />
+    <div class="cart-count" id="cartCount">0</div>
   </div>
 </header>
 
-<div class="image-box">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x300/FF5733');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x300/33C3FF');"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x300/8D33FF');"></div>
+<div class="image-box" aria-label="Sliding image carousel">
+  <div id="slider" aria-live="polite">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/900x350/FF5733/ffffff?text=Slide+1');" role="img" aria-label="Slide 1"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/900x350/33C3FF/ffffff?text=Slide+2');" role="img" aria-label="Slide 2"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/900x350/8D33FF/ffffff?text=Slide+3');" role="img" aria-label="Slide 3"></div>
   </div>
-  <div class="arrow left" onclick="prevSlide()"></div>
-  <div class="arrow right" onclick="nextSlide()"></div>
+  <div class="arrow left" role="button" tabindex="0" aria-label="Previous slide" onclick="prevSlide()"></div>
+  <div class="arrow right" role="button" tabindex="0" aria-label="Next slide" onclick="nextSlide()"></div>
 </div>
-<!-- Products Section -->
-<section style="padding: 40px 20px; max-width: 900px; margin: auto;">
-  <h2 style="text-align:center; margin-bottom: 30px;">Jerseys</h2>
-  <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
 
-    <!-- Jersey 1 -->
-    <div class="product-card" style="width: 280px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s;">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="Red Jersey" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" />
-      <div style="padding: 15px;">
-        <div style="font-size: 14px; color: #555;">Color: RED</div>
-        <div style="font-size: 16px; margin-top: 4px; font-weight: bold;">$49.99 USD</div>
-      </div>
-    </div>
+<section class="products-container" aria-label="Products">
+  <div class="product-image-box" role="link" tabindex="0" aria-label="View Red Jersey" onclick="location.href='/jersey/red'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" class="jersey-img" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" role="link" tabindex="0" aria-label="View Red Jersey" onclick="location.href='/jersey/red'">TWO-FIVE JERSEY</div>
+    <div class="product-color">RED</div>
+    <div class="product-price">$49.99 USD</div>
+  </div>
 
-    <!-- Jersey 2 -->
-    <div class="product-card" style="width: 280px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s;">
-      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1176.png?raw=true" alt="Black Jersey" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" />
-      <div style="padding: 15px;">
-        <div style="font-size: 14px; color: #555;">Color: WHITE</div>
-        <div style="font-size: 16px; margin-top: 4px; font-weight: bold;">$49.99 USD</div>
-      </div>
-    </div>
-
+  <div class="product-image-box" role="link" tabindex="0" aria-label="View White Jersey" onclick="location.href='/jersey/white'">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" class="jersey-img" />
+  </div>
+  <div class="product-info">
+    <div class="product-title" role="link" tabindex="0" aria-label="View White Jersey" onclick="location.href='/jersey/white'">TWO-FIVE JERSEY</div>
+    <div class="product-color">WHITE</div>
+    <div class="product-price">$49.99 USD</div>
   </div>
 </section>
 
-<style>
-  .product-card:hover {
-    transform: scale(1.05);
-  }
-
-  .product-card:hover img {
-    transform: scale(1.1);
-  }
-</style>
-
-<!-- Menu Sidebar -->
-<nav id="menuSidebar" style="
-  position: fixed;
-  top: 0; left: -300px;
-  width: 280px;
-  height: 100%;
-  background: white;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-  padding: 60px 20px 20px 20px;
-  transition: left 0.3s ease;
-  z-index: 1500;
-  overflow-y: auto;
-">
-  <button id="menuCloseBtn" style="
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  " aria-label="Close menu">&times;</button>
-
-  <ul style="list-style: none; padding: 0; margin: 0;">
-    <li><a href="#" style="display: block; padding: 10px 0; text-decoration: none; color: black;">HOME</a></li>
-    <li><a href="#" style="display: block; padding: 10px 0; text-decoration: none; color: black;">SHOP</a></li>
-    <li>
-      <button id="policiesToggle" style="
-        background: none;
-        border: none;
-        width: 100%;
-        text-align: left;
-        padding: 10px 0;
-        cursor: pointer;
-        font-weight: bold;
-        color: black;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      ">
-        POLICIES
-        <span id="policiesArrow" style="transition: transform 0.3s;">&#x25BC;</span>
-      </button>
-      <ul id="policiesDropdown" style="list-style: none; padding-left: 15px; margin: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-        <li><a href="#" style="display: block; padding: 8px 0; text-decoration: none; color: black;">Shipping Policy</a></li>
-        <li><a href="#" style="display: block; padding: 8px 0; text-decoration: none; color: black;">Refund Policy</a></li>
-        <li><a href="#" style="display: block; padding: 8px 0; text-decoration: none; color: black;">Privacy Policy</a></li>
-      </ul>
-    </li>
-    <li><a href="#" style="display: block; padding: 10px 0; text-decoration: none; color: black;">CONTACT</a></li>
-  </ul>
+<nav id="sidebar" class="sidebar" aria-label="Main menu" aria-hidden="true">
+  <nav>
+    <a href="https://mattscianna.com/home" class="current">HOME</a>
+    <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+    <a href="https://mattscianna.com/vision">VISION</a>
+    <a href="https://mattscianna.com/contact">CONTACT</a>
+    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+      <a href="/return-policy">Return Policy</a>
+      <a href="/shipping-policy">Shipping Policy</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+    </div>
+  </nav>
 </nav>
 
-<!-- Cart Sidebar -->
-<aside id="cartSidebar" style="
-  position: fixed;
-  top: 0; right: -320px;
-  width: 300px;
-  height: 100%;
-  background: white;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-  padding: 60px 20px 20px 20px;
-  transition: right 0.3s ease;
-  z-index: 1500;
-  overflow-y: auto;
-">
-  <button id="cartCloseBtn" style="
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  " aria-label="Close cart">&times;</button>
+<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">
+  <!-- Cart content will go here later -->
+</nav>
 
-  <h2 style="margin-top: 0;">Your Cart</h2>
-  <!-- Cart content empty for now -->
-</aside>
 <script>
-  // Carousel Slider
-  const slides = document.querySelectorAll('.slider img');
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+  const logoContainer = document.getElementById('logoContainer');
+  const logoText = document.getElementById('logoText');
+  const logoImage = document.getElementById('logoImage');
+  const slider = document.getElementById('slider');
+  let scrolled = false;
   let currentSlide = 0;
-  const slideInterval = 4000; // 4 seconds
+  const totalSlides = slider.children.length;
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.opacity = i === index ? '1' : '0';
-    });
+  // Logo swap on scroll
+  window.addEventListener('scroll', () => {
+    if (!scrolled && window.scrollY > 50) {
+      document.body.classList.add('scrolled');
+      scrolled = true;
+    } else if (scrolled && window.scrollY <= 50) {
+      document.body.classList.remove('scrolled');
+      scrolled = false;
+    }
+  });
+
+  // Scroll to top on logo click
+  logoContainer.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+
+  // Menu toggle
+  menuToggle.addEventListener('click', () => {
+    const open = sidebar.classList.toggle('open');
+    menuToggle.classList.toggle('open');
+    document.body.classList.toggle('sidebar-open', open);
+    if (open) {
+      // Close cart if open
+      cartSidebar.classList.remove('open');
+      cartIcon.classList.remove('open');
+      document.body.classList.remove('cart-open');
+      cartSidebar.setAttribute('aria-hidden', 'true');
+      cartIcon.setAttribute('aria-expanded', 'false');
+    }
+    sidebar.setAttribute('aria-hidden', !open);
+    menuToggle.setAttribute('aria-expanded', open);
+  });
+
+  // Keyboard accessibility for menu toggle
+  menuToggle.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      menuToggle.click();
+    }
+  });
+
+  // Cart toggle
+  cartIcon.addEventListener('click', () => {
+    const open = cartSidebar.classList.toggle('open');
+    cartIcon.classList.toggle('open');
+    document.body.classList.toggle('cart-open', open);
+    if (open) {
+      // Close menu if open
+      sidebar.classList.remove('open');
+      menuToggle.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    cartSidebar.setAttribute('aria-hidden', !open);
+    cartIcon.setAttribute('aria-expanded', open);
+  });
+
+  // Keyboard accessibility for cart toggle
+  cartIcon.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      cartIcon.click();
+    }
+  });
+
+  // Policies dropdown toggle
+  policiesLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const open = policiesDropdown.classList.toggle('open');
+    policiesLink.classList.toggle('arrow-open', open);
+    policiesLink.classList.toggle('arrow-closed', !open);
+    policiesDropdown.setAttribute('aria-hidden', !open);
+    policiesLink.setAttribute('aria-expanded', open);
+  });
+
+  policiesLink.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      policiesLink.click();
+    }
+  });
+
+  // Carousel functions
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
   }
 
   function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
   }
 
-  let sliderTimer = setInterval(nextSlide, slideInterval);
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlider();
+  }
 
-  // Initialize slider
-  showSlide(currentSlide);
-
-  // Menu Sidebar
-  const menuSidebar = document.getElementById('menuSidebar');
-  const menuOpenBtn = document.getElementById('menuIcon');
-  const menuCloseBtn = document.getElementById('menuCloseBtn');
-
-  menuOpenBtn.addEventListener('click', () => {
-    menuSidebar.style.left = '0';
+  // Add keyboard support for arrows
+  document.querySelectorAll('.arrow').forEach(arrow => {
+    arrow.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        arrow.click();
+      }
+    });
   });
 
-  menuCloseBtn.addEventListener('click', () => {
-    menuSidebar.style.left = '-300px';
-  });
-
-  // POLICIES Dropdown toggle
-  const policiesToggle = document.getElementById('policiesToggle');
-  const policiesDropdown = document.getElementById('policiesDropdown');
-  const policiesArrow = document.getElementById('policiesArrow');
-
-  policiesToggle.addEventListener('click', () => {
-    if (policiesDropdown.style.maxHeight && policiesDropdown.style.maxHeight !== '0px') {
-      policiesDropdown.style.maxHeight = '0';
-      policiesArrow.style.transform = 'rotate(0deg)';
-    } else {
-      policiesDropdown.style.maxHeight = policiesDropdown.scrollHeight + 'px';
-      policiesArrow.style.transform = 'rotate(180deg)';
-    }
-  });
-
-  // Cart Sidebar
-  const cartSidebar = document.getElementById('cartSidebar');
-  const cartOpenBtn = document.getElementById('cartIcon');
-  const cartCloseBtn = document.getElementById('cartCloseBtn');
-
-  cartOpenBtn.addEventListener('click', () => {
-    cartSidebar.style.right = '0';
-  });
-
-  cartCloseBtn.addEventListener('click', () => {
-    cartSidebar.style.right = '-320px';
-  });
-
-  // Logo swap on scroll
-  const logoImg = document.getElementById('logoImg');
-  const scrollLogoImg = document.getElementById('scrollLogoImg');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      logoImg.style.display = 'none';
-      scrollLogoImg.style.display = 'block';
-    } else {
-      logoImg.style.display = 'block';
-      scrollLogoImg.style.display = 'none';
-    }
-  });
 </script>
+
+</body>
+</html>

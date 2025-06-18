@@ -651,28 +651,41 @@
   logoContainer.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   // Prevent sidebar + cart simultaneous open
-  function closeCart() {
-    cartSidebar.classList.remove('open');
-    cartIcon.classList.remove('open');
-    document.body.classList.remove('cart-open');
-  }
-  function closeMenu() {
-    sidebar.classList.remove('open');
-    menuToggle.classList.remove('open');
-    document.body.classList.remove('sidebar-open');
-  }
-  menuToggle.addEventListener('click', () => {
-    const open = sidebar.classList.toggle('open');
-    menuToggle.classList.toggle('open');
-    document.body.classList.toggle('sidebar-open', open);
-    if (open) closeCart();
-  });
-  cartIcon.addEventListener('click', () => {
-    const open = cartSidebar.classList.toggle('open');
-    cartIcon.classList.toggle('open');
-    document.body.classList.toggle('cart-open', open);
-    if (open) closeMenu();
-  });
+function closeCart() {
+  cartSidebar.classList.remove('open');
+  cartIcon.classList.remove('open');
+  document.body.classList.remove('cart-open');
+}
+
+function closeMenu() {
+  sidebar.classList.remove('open');
+  menuToggle.classList.remove('open');
+  document.body.classList.remove('sidebar-open');
+}
+
+menuToggle.addEventListener('click', () => {
+  const isOpeningMenu = !sidebar.classList.contains('open');
+
+  // Close cart if menu is about to open
+  if (isOpeningMenu) closeCart();
+
+  // Toggle menu sidebar
+  sidebar.classList.toggle('open');
+  menuToggle.classList.toggle('open');
+  document.body.classList.toggle('sidebar-open', isOpeningMenu);
+});
+
+cartIcon.addEventListener('click', () => {
+  const isOpeningCart = !cartSidebar.classList.contains('open');
+
+  // Close menu if cart is about to open
+  if (isOpeningCart) closeMenu();
+
+  // Toggle cart sidebar
+  cartSidebar.classList.toggle('open');
+  cartIcon.classList.toggle('open');
+  document.body.classList.toggle('cart-open', isOpeningCart);
+});
 
   // Policies toggle with smooth animation
   policiesLink.addEventListener('click', () => {

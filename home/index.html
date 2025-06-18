@@ -647,54 +647,51 @@
     }
   });
 
-  // Both logos reload to top
+  // Scroll to top on logo click
   logoContainer.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+  // --- Sidebar Logic ---
+
   function closeCart() {
-  cartSidebar.classList.remove('open');
-  cartIcon.classList.remove('open');
-  document.body.classList.remove('cart-open');
-}
-
-function closeMenu() {
-  sidebar.classList.remove('open');
-  menuToggle.classList.remove('open');
-  document.body.classList.remove('sidebar-open');
-}
-
-menuToggle.addEventListener('click', () => {
-  const menuIsOpen = sidebar.classList.contains('open');
-
-  if (!menuIsOpen) {
-    closeCart(); // If we're about to open the menu, close cart
-    sidebar.classList.add('open');
-    menuToggle.classList.add('open');
-    document.body.classList.add('sidebar-open');
-  } else {
-    closeMenu(); // If menu is already open, close it
+    cartSidebar.classList.remove('open');
+    cartIcon.classList.remove('open');
+    document.body.classList.remove('cart-open');
   }
-});
 
-cartIcon.addEventListener('click', () => {
-  const cartIsOpen = cartSidebar.classList.contains('open');
-
-  if (!cartIsOpen) {
-    closeMenu(); // If we're about to open the cart, close menu
-    cartSidebar.classList.add('open');
-    cartIcon.classList.add('open');
-    document.body.classList.add('cart-open');
-  } else {
-    closeCart(); // If cart is already open, close it
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    menuToggle.classList.remove('open');
+    document.body.classList.remove('sidebar-open');
   }
-});
 
-  // Toggle cart sidebar
-  cartSidebar.classList.toggle('open');
-  cartIcon.classList.toggle('open');
-  document.body.classList.toggle('cart-open', isOpeningCart);
-});
+  menuToggle.addEventListener('click', () => {
+    const menuIsOpen = sidebar.classList.contains('open');
 
-  // Policies toggle with smooth animation
+    if (!menuIsOpen) {
+      closeCart(); // Close cart if menu is opening
+      sidebar.classList.add('open');
+      menuToggle.classList.add('open');
+      document.body.classList.add('sidebar-open');
+    } else {
+      closeMenu(); // Close menu if it's already open
+    }
+  });
+
+  cartIcon.addEventListener('click', () => {
+    const cartIsOpen = cartSidebar.classList.contains('open');
+
+    if (!cartIsOpen) {
+      closeMenu(); // Close menu if cart is opening
+      cartSidebar.classList.add('open');
+      cartIcon.classList.add('open');
+      document.body.classList.add('cart-open');
+    } else {
+      closeCart(); // Close cart if it's already open
+    }
+  });
+
+  // --- Policies dropdown toggle ---
+
   policiesLink.addEventListener('click', () => {
     const open = policiesDropdown.classList.toggle('open');
     policiesLink.classList.toggle('arrow-open', open);
@@ -704,14 +701,16 @@ cartIcon.addEventListener('click', () => {
   });
 
   // Arrow fade on hover
-  policiesLink.addEventListener('mouseover', () => policiesLink.classList.add('arrow-hover'));
-  policiesLink.addEventListener('mouseout', () => {
-    if (!policiesDropdown.classList.contains('open')) policiesLink.classList.remove('arrow-hover');
+  policiesLink.addEventListener('mouseover', () => {
+    policiesLink.classList.add('arrow-hover');
   });
 
-  // Empty cart on open
+  policiesLink.addEventListener('mouseout', () => {
+    if (!policiesDropdown.classList.contains('open')) {
+      policiesLink.classList.remove('arrow-hover');
+    }
+  });
+
+  // (Optional) Empty cart on page load — remove this if you're filling the cart dynamically
   cartSidebar.innerHTML = '';
 </script>
-
-</body>
-</html>

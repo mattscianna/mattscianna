@@ -650,8 +650,7 @@
   // Both logos reload to top
   logoContainer.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // Prevent sidebar + cart simultaneous open
-function closeCart() {
+  function closeCart() {
   cartSidebar.classList.remove('open');
   cartIcon.classList.remove('open');
   document.body.classList.remove('cart-open');
@@ -664,22 +663,30 @@ function closeMenu() {
 }
 
 menuToggle.addEventListener('click', () => {
-  const isOpeningMenu = !sidebar.classList.contains('open');
+  const menuIsOpen = sidebar.classList.contains('open');
 
-  // Close cart if menu is about to open
-  if (isOpeningMenu) closeCart();
-
-  // Toggle menu sidebar
-  sidebar.classList.toggle('open');
-  menuToggle.classList.toggle('open');
-  document.body.classList.toggle('sidebar-open', isOpeningMenu);
+  if (!menuIsOpen) {
+    closeCart(); // If we're about to open the menu, close cart
+    sidebar.classList.add('open');
+    menuToggle.classList.add('open');
+    document.body.classList.add('sidebar-open');
+  } else {
+    closeMenu(); // If menu is already open, close it
+  }
 });
 
 cartIcon.addEventListener('click', () => {
-  const isOpeningCart = !cartSidebar.classList.contains('open');
+  const cartIsOpen = cartSidebar.classList.contains('open');
 
-  // Close menu if cart is about to open
-  if (isOpeningCart) closeMenu();
+  if (!cartIsOpen) {
+    closeMenu(); // If we're about to open the cart, close menu
+    cartSidebar.classList.add('open');
+    cartIcon.classList.add('open');
+    document.body.classList.add('cart-open');
+  } else {
+    closeCart(); // If cart is already open, close it
+  }
+});
 
   // Toggle cart sidebar
   cartSidebar.classList.toggle('open');

@@ -4,593 +4,341 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matt Scianna</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    /* Reset and base */
-    * {
+    /* --- General Reset and Font --- */
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
+      font-family: 'Arial', sans-serif; /* Use your desired font here */
+      background: #fff;
       overflow-x: hidden;
-      background-color: white;
-      font-family: 'Oswald', sans-serif;
-      user-select: none;
-      scroll-behavior: smooth;
-    }
-    body.sidebar-open, body.cart-open {
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
     }
 
-    /* Header */
+    /* --- Header --- */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
-      background-color: white;
-      z-index: 1200;
+      justify-content: space-between;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      background: white;
+      z-index: 1001;
+      box-sizing: border-box;
       border-bottom: 1px solid #ccc;
     }
-    .logo-container {
-      position: absolute;
-      left: 50%;
-      top: 56%; /* slightly lowered */
-      transform: translate(-50%, -50%);
+
+    /* Logo container */
+    #logoContainer {
+      cursor: pointer;
       display: flex;
       align-items: center;
-      height: 64px;
-      cursor: pointer;
-      user-select: none;
+      gap: 8px;
+      outline: none;
     }
-    .logo-text {
-      font-family: 'Cardo', serif;
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-      margin-top: 0;
-      user-select: none;
-      transition: all 0.3s ease;
-      color: black;
+    #logoContainer img {
+      height: 28px; /* Slightly smaller MS image logo */
+      transition: height 0.3s ease;
+    }
+    #logoText {
+      font-weight: 700;
+      font-size: 24px;
       display: block;
+      user-select: none;
     }
-    .logo-image {
-      height: 88px;
+    #logoImage {
       display: none;
-      cursor: pointer;
-      user-select: none;
+      height: 28px; /* same smaller size */
     }
 
-    /* Menu icon */
-    .icon-btn.menu-toggle {
-      width: 24px;
-      height: 24px;
-      position: relative;
+    /* --- Menu icon (hamburger) --- */
+    #menuToggle {
       cursor: pointer;
-      margin-top: 3px;
-      margin-left: 0;
-      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 48px; /* Taller to match logo vertical size */
+      outline: none;
     }
-    .icon-btn.menu-toggle span {
-      position: absolute;
-      height: 3px;
-      width: 100%;
-      background-color: black;
-      left: 0;
-      transition: 0.3s ease;
-      border-radius: 2px;
-    }
-    .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
-    .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
-    .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
-    .icon-btn.menu-toggle.open span:nth-child(1) {
-      top: 10px;
-      transform: rotate(45deg);
-    }
-    .icon-btn.menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .icon-btn.menu-toggle.open span:nth-child(3) {
-      top: 10px;
-      transform: rotate(-45deg);
-    }
-
-    /* Cart icon */
-    .icon-btn.cart-toggle {
-      width: 24px;
-      height: 24px;
-      position: relative;
-      cursor: pointer;
-      margin-top: 3px;
-      user-select: none;
-    }
-    .icon-btn.cart-toggle img {
-      width: 100%;
-      height: auto;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    .icon-btn.cart-toggle.open::before,
-    .icon-btn.cart-toggle.open::after {
-      content: "";
-      position: absolute;
-      width: 24px;
-      height: 2.5px;
+    #menuToggle span {
+      display: block;
+      height: 4px;
       background: black;
-      top: 11px;
-      left: 0;
-      transform-origin: center;
-      transition: 0.3s ease;
       border-radius: 2px;
+      transition: background 0.3s ease;
     }
-    .icon-btn.cart-toggle.open::before {
-      transform: rotate(45deg);
+
+    /* --- Cart icon --- */
+    #cartIcon {
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      position: relative;
+      outline: none;
     }
-    .icon-btn.cart-toggle.open::after {
-      transform: rotate(-45deg);
+    #cartIcon svg {
+      fill: black;
+      width: 100%;
+      height: 100%;
     }
-    .icon-btn.cart-toggle.open img {
-      opacity: 0;
-    }
-    .cart-count {
+    #cartCount {
       position: absolute;
       top: -6px;
       right: -6px;
-      color: black;
-      font-size: 10px;
-      font-family: 'Oswald', sans-serif;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
       display: none;
       user-select: none;
     }
 
-    /* Sidebar styles */
-    .sidebar, .cart-sidebar {
+    /* --- Sidebars: menu and cart --- */
+    .sidebar {
       position: fixed;
       top: 0;
-      background: white;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      transition: transform 0.4s ease-in-out;
-      z-index: 1100;
-      overflow-y: auto;
+      right: 0;
+      width: 280px;
       height: 100vh;
-      text-align: center;
-      padding-top: 80px;
-    }
-    .sidebar {
-      left: 0;
-      width: 100vw;
-      padding-left: 0;
-      padding-right: 0;
-      transform: translateX(-100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: white;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1002;
+      overflow-y: auto;
     }
     .sidebar.open {
       transform: translateX(0);
     }
-    .cart-sidebar {
-      right: 0;
-      width: 320px;
-      padding: 20px;
-      transform: translateX(100%);
-      text-align: left;
-      font-size: 18px;
-      font-weight: 400;
-    }
-    .cart-sidebar.open {
-      transform: translateX(0);
-    }
 
-    /* Sidebar nav */
-    .sidebar nav {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 0;
-      width: 100%;
-      max-width: 320px;
-      align-items: center;
-    }
-    .sidebar nav a {
-      color: black;
-      text-decoration: none;
-      font-size: 24px;
-      font-weight: 400;
-      text-align: center;
-      transition: color 0.3s ease, border-bottom 0.3s ease;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 2px;
-      cursor: pointer;
-      position: relative;
-      user-select: none;
-      display: inline-block;
-      max-width: max-content;
-      margin: 0 auto;
-    }
-    .sidebar nav a:hover {
-      border-bottom-color: currentColor;
-    }
-    .sidebar nav a.current {
-      color: #555555;
-      font-weight: 550;
-      border-bottom-color: #555555;
-    }
-    .sidebar nav a.current:hover {
-      border-bottom-color: #555555;
-    }
-
-    /* POLICIES link arrow */
-    .sidebar nav a.policies-link::after {
-      content: "";
-      position: absolute;
-      right: -18px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      width: 10px;
-      height: 10px;
-      border-right: 2px solid black;
-      border-bottom: 2px solid black;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      opacity: 1;
-      pointer-events: none;
-      user-select: none;
-      cursor: pointer;
-    }
-    .sidebar nav a.policies-link.arrow-open::after {
-      transform: translateY(-50%) rotate(45deg);
-    }
-    .sidebar nav a.policies-link.arrow-closed::after {
-      transform: translateY(-50%) rotate(90deg);
-    }
-    .sidebar nav a.policies-link:hover::after {
-      opacity: 1;
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    /* Policies dropdown */
-    .policies-dropdown {
-      max-height: 0;
+    /* Full overlay to cover entire site incl logos when sidebar open */
+    .menu-open, .cart-open {
       overflow: hidden;
-      transition: max-height 0.4s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-left: 16px;
-      font-size: 18px;
-      font-weight: 400;
-      color: black;
-      user-select: none;
-      text-align: left;
-      max-width: 320px;
-      margin-top: 0;
-      margin-bottom: 16px;
     }
-    .policies-dropdown.open {
-      max-height: 500px;
-      margin-top: 8px;
+    /* Overlay full screen cover */
+    .sidebar-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      display: none;
     }
-    .policies-dropdown a {
-      color: black;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      cursor: pointer;
-      transition: border-bottom 0.3s ease;
-      user-select: none;
-      display: inline-block;
-      max-width: max-content;
-      margin-left: 8px;
-    }
-    .policies-dropdown a:hover {
-      border-bottom: 1px solid black;
+    .sidebar.open + .sidebar-backdrop {
+      display: block;
     }
 
-    /* Sliding image box / carousel */
-    .carousel-container {
-      margin-top: 64px; /* below header */
+    /* --- Carousel container --- */
+    #carouselContainer {
+      margin-top: 80px; /* space below fixed header */
+      position: relative;
+      overflow: hidden;
       width: 100vw;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      user-select: none;
-      overflow: hidden;
-      height: 380px;
+      height: 250px;
+      background: black; /* make background black */
     }
-    .carousel-slide {
+    #carouselSlide {
       display: flex;
-      transition: transform 0.7s ease-in-out;
+      transition: transform 0.5s ease;
       height: 100%;
     }
-    .carousel-slide img {
+    #carouselSlide img {
       width: 100vw;
-      max-width: 1200px;
-      height: 380px;
-      object-fit: cover;
+      height: 250px;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%); /* make images black */
       user-select: none;
     }
     /* Carousel arrows */
-    .carousel-arrow {
+    #prevBtn, #nextBtn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 40px;
-      color: black;
-      background: rgba(255 255 255 / 0.6);
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      line-height: 48px;
-      text-align: center;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 18px; /* smaller */
       cursor: pointer;
+      width: 30px;
+      height: 30px;
       user-select: none;
-      z-index: 1300;
-      transition: background 0.3s ease;
+      outline: none;
+      z-index: 10;
     }
-    .carousel-arrow:hover {
-      background: rgba(0 0 0 / 0.2);
-      color: #333;
-    }
-    .carousel-arrow.left {
+    #prevBtn {
       left: 10px;
     }
-    .carousel-arrow.right {
+    #nextBtn {
       right: 10px;
     }
-    /* Carousel dots */
-    .carousel-dots {
+    /* Dots */
+    #carouselDots {
       position: absolute;
-      bottom: 12px;
-      width: 100%;
-      text-align: center;
-      z-index: 1300;
-      user-select: none;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
     }
     .carousel-dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin: 0 6px;
-      background: rgba(0,0,0,0.3);
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
+      background: white;
+      opacity: 0.5;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
     .carousel-dot.active {
-      background: black;
-    }
-
-    /* Jersey products container */
-    .products-container {
-      max-width: 1200px;
-      margin: 32px auto 80px auto;
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      padding: 0 16px;
-      user-select: none;
-    }
-    /* Single product */
-    .product {
-      position: relative;
-      width: 320px;
-      cursor: pointer;
-      overflow: hidden;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: box-shadow 0.3s ease;
-    }
-    .product:hover {
-      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-    }
-    .product img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.6s ease;
-    }
-    /* On hover, fade the main image out and the hover image in */
-    .product img.hover-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-    }
-    .product:hover img.hover-img {
       opacity: 1;
     }
-    .product:hover img.main-img {
-      opacity: 0;
+
+    /* --- Jerseys Section --- */
+    #jerseySection {
+      max-width: 1000px;
+      margin: 40px auto 80px auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
     }
-    /* Text overlay */
-    .product-info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255 255 255 / 0.9);
-      padding: 16px 20px;
-      font-family: 'Cardo', serif;
-      font-weight: 700;
-      color: black;
-      text-align: left;
-      border-top: 1px solid #ccc;
+    .jersey-item {
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      flex: 1 1 250px;
+      position: relative;
+    }
+    .jersey-item img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      border: none; /* no visible boxes */
+      box-shadow: none;
       user-select: none;
     }
-    .product-info .color {
-      font-size: 14px;
-      font-weight: 400;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .product-info .price {
+    .jersey-text {
+      margin-top: 12px;
+      font-family: 'Arial Black', Arial, sans-serif; /* your desired font */
+      font-weight: 900;
       font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      color: #222;
+      user-select: none;
     }
 
-    @media (max-width: 768px) {
-      .products-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .product {
-        width: 90vw;
-        max-width: 400px;
-      }
-      .carousel-container {
-        height: 260px;
-      }
-      .carousel-slide img {
-        height: 260px;
-      }
-    }
   </style>
 </head>
 <body>
 
 <header>
-  <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div id="logoContainer" tabindex="0" aria-label="Homepage logo and link">
+    <img id="logoImage" src="https://github.com/mattscianna/mattscianna/blob/main/MS_Logo.png?raw=true" alt="MS Logo" />
+    <div id="logoText">MATT SCIANNA</div>
   </div>
 
-  <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload page">
-    <span class="logo-text" id="logoText">MATT SCIANNA</span>
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
-  </div>
+  <button id="menuToggle" aria-label="Toggle menu" aria-expanded="false" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-  <div id="cartIcon" class="icon-btn cart-toggle" title="Cart" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false">
-    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
-    <div id="cartCount" class="cart-count">0</div>
+  <div id="cartIcon" tabindex="0" aria-label="Toggle cart" aria-expanded="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7 4h-2l-3 9v2h2a3 3 0 1 0 6 0h6a3 3 0 1 0 6 0h2v-2l-3-9h-2l-1-2h-6l-1 2zm1 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    </svg>
+    <div id="cartCount">0</div>
   </div>
 </header>
 
-<!-- Sidebar -->
-<nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true">
-  <nav>
-    <a href="https://mattscianna.com/home" class="current">HOME</a>
-    <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
-    <a href="https://mattscianna.com/vision">VISION</a>
-    <a href="https://mattscianna.com/contact">CONTACT</a>
-    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
-    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
-      <a href="/return-policy">Return Policy</a>
-      <a href="/shipping-policy">Shipping Policy</a>
-      <a href="/privacy-policy">Privacy Policy</a>
-    </div>
-  </nav>
+<!-- Sidebars -->
+<nav id="sidebarMenu" class="sidebar" aria-hidden="true">
+  <!-- menu content here -->
 </nav>
+<div class="sidebar-backdrop" id="menuBackdrop"></div>
 
-<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">
-  <p>Cart sidebar content goes here.</p>
+<nav id="cartSidebar" class="sidebar" aria-hidden="true">
+  <!-- cart content here -->
 </nav>
+<div class="sidebar-backdrop" id="cartBackdrop"></div>
 
-<!-- Sliding Image Box / Carousel -->
-<div class="carousel-container" aria-label="Featured images carousel">
-  <div class="carousel-slide" id="carouselSlide">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/slide1.png?raw=true" alt="Slide 1" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/slide2.png?raw=true" alt="Slide 2" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/slide3.png?raw=true" alt="Slide 3" />
+<!-- Carousel -->
+<div id="carouselContainer" aria-label="Image carousel">
+  <button id="prevBtn" aria-label="Previous slide">&#9664;</button>
+  <div id="carouselSlide" role="list">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/black-slide1.png?raw=true" alt="Slide 1" role="listitem" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/black-slide2.png?raw=true" alt="Slide 2" role="listitem" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/black-slide3.png?raw=true" alt="Slide 3" role="listitem" />
   </div>
-  <div class="carousel-arrow left" id="prevBtn" aria-label="Previous slide" role="button" tabindex="0">&#10094;</div>
-  <div class="carousel-arrow right" id="nextBtn" aria-label="Next slide" role="button" tabindex="0">&#10095;</div>
-  <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Carousel navigation dots"></div>
+  <button id="nextBtn" aria-label="Next slide">&#9654;</button>
+  <div id="carouselDots" role="tablist"></div>
 </div>
 
-<!-- Products -->
-<section class="products-container" aria-label="Jersey Products">
-  <article class="product" tabindex="0" aria-labelledby="product1Title product1Color product1Price">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey1-front.png?raw=true" alt="Matt Scianna Red Jersey Front" class="main-img" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey1-back.png?raw=true" alt="Matt Scianna Red Jersey Back" class="hover-img" />
-    <div class="product-info">
-      <div id="product1Color" class="color">Color: RED</div>
-      <div id="product1Price" class="price">$49.99 USD</div>
-    </div>
-  </article>
-
-  <article class="product" tabindex="0" aria-labelledby="product2Title product2Color product2Price">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey2-front.png?raw=true" alt="Matt Scianna Black Jersey Front" class="main-img" />
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey2-back.png?raw=true" alt="Matt Scianna Black Jersey Back" class="hover-img" />
-    <div class="product-info">
-      <div id="product2Color" class="color">Color: BLACK</div>
-      <div id="product2Price" class="price">$49.99 USD</div>
-    </div>
-  </article>
+<!-- Jerseys -->
+<section id="jerseySection" aria-label="Jerseys for sale">
+  <div class="jersey-item">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey1.png?raw=true" alt="Matt Scianna Jersey 1" />
+    <div class="jersey-text">Matt Scianna Jersey 1</div>
+  </div>
+  <div class="jersey-item">
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/jersey2.png?raw=true" alt="Matt Scianna Jersey 2" />
+    <div class="jersey-text">Matt Scianna Jersey 2</div>
+  </div>
 </section>
-
 <script>
-  // Elements
   const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
+  const sidebarMenu = document.getElementById('sidebarMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
   const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
-  const cartCount = document.getElementById('cartCount');
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
+  const cartBackdrop = document.getElementById('cartBackdrop');
   const logoContainer = document.getElementById('logoContainer');
   const logoText = document.getElementById('logoText');
   const logoImage = document.getElementById('logoImage');
+  const cartCount = document.getElementById('cartCount');
 
-  // Toggle sidebar menu
-  function toggleMenu() {
-    const open = sidebar.classList.toggle('open');
-    menuToggle.classList.toggle('open', open);
-    document.body.classList.toggle('sidebar-open', open);
-    sidebar.setAttribute('aria-hidden', !open);
+  // Toggle menu sidebar
+  function toggleMenu(forceState) {
+    let open;
+    if (typeof forceState === 'boolean') open = forceState;
+    else open = !sidebarMenu.classList.contains('open');
+
+    sidebarMenu.classList.toggle('open', open);
+    menuBackdrop.style.display = open ? 'block' : 'none';
     menuToggle.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('menu-open', open);
+
     // Close cart if open
-    if (cartSidebar.classList.contains('open')) {
+    if (open && cartSidebar.classList.contains('open')) {
       toggleCart(false);
     }
   }
-  menuToggle.addEventListener('click', toggleMenu);
+  menuToggle.addEventListener('click', () => toggleMenu());
   menuToggle.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggleMenu();
     }
   });
+  menuBackdrop.addEventListener('click', () => toggleMenu(false));
 
   // Toggle cart sidebar
   function toggleCart(forceState) {
     let open;
-    if (typeof forceState === 'boolean') {
-      open = forceState;
-    } else {
-      open = !cartSidebar.classList.contains('open');
-    }
+    if (typeof forceState === 'boolean') open = forceState;
+    else open = !cartSidebar.classList.contains('open');
+
     cartSidebar.classList.toggle('open', open);
-    cartIcon.classList.toggle('open', open);
-    document.body.classList.toggle('cart-open', open);
-    cartSidebar.setAttribute('aria-hidden', !open);
+    cartBackdrop.style.display = open ? 'block' : 'none';
     cartIcon.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('cart-open', open);
+
     // Close menu if open
-    if (open && sidebar.classList.contains('open')) {
-      toggleMenu();
+    if (open && sidebarMenu.classList.contains('open')) {
+      toggleMenu(false);
     }
   }
   cartIcon.addEventListener('click', () => toggleCart());
@@ -600,18 +348,10 @@
       toggleCart();
     }
   });
+  cartBackdrop.addEventListener('click', () => toggleCart(false));
 
-  // Policies dropdown toggle
-  let policiesOpen = false;
-  policiesLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    policiesOpen = !policiesOpen;
-    policiesDropdown.classList.toggle('open', policiesOpen);
-    policiesLink.classList.toggle('arrow-open', policiesOpen);
-    policiesLink.classList.toggle('arrow-closed', !policiesOpen);
-    policiesLink.setAttribute('aria-expanded', policiesOpen);
-    policiesDropdown.setAttribute('aria-hidden', !policiesOpen);
-  });
+  // Prevent scrolling page on sidebar open
+  // (body overflow hidden on menu-open or cart-open classes)
 
   // Logo swap on scroll
   function updateLogoOnScroll() {
@@ -626,18 +366,24 @@
   window.addEventListener('scroll', updateLogoOnScroll);
   updateLogoOnScroll();
 
-  // Logo click reload
+  // Logo click: smooth scroll to top and reload content after short delay
   logoContainer.addEventListener('click', () => {
-    window.location.reload();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    setTimeout(() => {
+      window.location.reload();
+    }, 400); // adjust delay to allow smooth scroll first
   });
   logoContainer.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      window.location.reload();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      setTimeout(() => {
+        window.location.reload();
+      }, 400);
     }
   });
 
-  // Initialize cart count to zero and hide if zero
+  // Initialize cart count (example)
   function updateCartCount(count) {
     if (count > 0) {
       cartCount.textContent = count;
@@ -648,7 +394,7 @@
   }
   updateCartCount(0);
 
-  // Carousel functionality
+  // Carousel
   const carouselSlide = document.getElementById('carouselSlide');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
@@ -658,7 +404,7 @@
   let currentIndex = 0;
   let autoSlideInterval;
 
-  // Create dots
+  // Create dots dynamically
   for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('span');
     dot.classList.add('carousel-dot');
@@ -692,12 +438,8 @@
     resetAutoSlide();
   }
 
-  prevBtn.addEventListener('click', () => {
-    goToSlide(currentIndex - 1);
-  });
-  nextBtn.addEventListener('click', () => {
-    goToSlide(currentIndex + 1);
-  });
+  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
 
   prevBtn.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -721,6 +463,7 @@
   }
   updateCarousel();
   resetAutoSlide();
+
 </script>
 
 </body>

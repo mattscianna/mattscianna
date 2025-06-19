@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    /* Reset and basics */
+    /* ... all your CSS combined here ... */
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     html, body {
       overflow-x: hidden;
       background-color: white;
       font-family: 'Oswald', sans-serif;
       user-select: none;
     }
+
     body.sidebar-open, body.cart-open {
       overflow: hidden;
       position: fixed;
       width: 100%;
     }
 
-    /* Header */
     header {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -36,14 +38,16 @@
       align-items: center;
       padding: 8px 16px;
       background-color: transparent;
-      z-index: 1200;
+      z-index: 10;
       pointer-events: none;
     }
+
     .icon-btn.menu-toggle,
     .icon-btn.cart-toggle,
     .logo-container {
       pointer-events: auto;
     }
+
     .logo-container {
       display: flex;
       align-items: center;
@@ -51,45 +55,45 @@
       cursor: pointer;
       user-select: none;
       margin: 0 auto;
+      margin-top: -64px;
       line-height: 1;
       font-size: 24px;
     }
+
+    /* Keep MATT SCIANNA text logo always visible */
     .logo-text {
       font-family: 'Cardo', serif;
       font-size: 26px;
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
+      margin-top: 0;
+      user-select: none;
+      transition: all 0.3s ease;
       color: white;
       display: block;
       position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-      user-select: none;
-      transition: opacity 0.3s ease;
+      top: 53%;
     }
+
     .logo-image {
-      height: 40px;
+      height: 88px;
       display: none;
       cursor: pointer;
       user-select: none;
     }
-    body.scrolled .logo-text {
-      opacity: 0;
-    }
-    body.scrolled .logo-image {
-      display: block;
-    }
 
-    /* Menu toggle button (hamburger) */
     .icon-btn.menu-toggle {
       width: 24px;
       height: 24px;
       position: relative;
       cursor: pointer;
-      user-select: none;
       margin-top: 4px;
+      margin-left: 0;
+      user-select: none;
     }
+
+    /* Hamburger lines */
     .icon-btn.menu-toggle span {
       position: absolute;
       height: 3px;
@@ -99,37 +103,44 @@
       transition: 0.3s ease;
       border-radius: 2px;
     }
+
     .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
     .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
     .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
+
+    /* Transform hamburger to X */
     .icon-btn.menu-toggle.open span:nth-child(1) {
       top: 10px;
       transform: rotate(45deg);
     }
+
     .icon-btn.menu-toggle.open span:nth-child(2) {
       opacity: 0;
     }
+
     .icon-btn.menu-toggle.open span:nth-child(3) {
       top: 10px;
       transform: rotate(-45deg);
     }
 
-    /* Cart toggle button */
     .icon-btn.cart-toggle {
-      width: 28px;
-      height: 28px;
+      width: 25px;
+      height: 24px;
       position: relative;
       cursor: pointer;
+      margin-top: -1px;
       user-select: none;
-      margin-top: 0;
-      filter: brightness(0) invert(1);
     }
+
     .icon-btn.cart-toggle img {
       width: 100%;
       height: auto;
-      pointer-events: none;
       transition: opacity 0.3s ease;
+      pointer-events: none;
+      filter: brightness(0) invert(1);
     }
+
+    /* Cart icon to X */
     .icon-btn.cart-toggle.open::before,
     .icon-btn.cart-toggle.open::after {
       content: "";
@@ -137,23 +148,25 @@
       width: 24px;
       height: 2.5px;
       background: white;
-      top: 13px;
+      top: 11px;
       left: 0;
-      border-radius: 2px;
-      transition: 0.3s ease;
       transform-origin: center;
+      transition: 0.3s ease;
+      border-radius: 2px;
     }
+
     .icon-btn.cart-toggle.open::before {
       transform: rotate(45deg);
     }
+
     .icon-btn.cart-toggle.open::after {
       transform: rotate(-45deg);
     }
+
     .icon-btn.cart-toggle.open img {
       opacity: 0;
     }
 
-    /* Cart count bubble */
     .cart-count {
       position: absolute;
       top: -6px;
@@ -165,7 +178,56 @@
       user-select: none;
     }
 
-    /* Sidebars */
+    .image-box {
+      margin-top: 0;
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 3 / 4;
+      background: black;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      padding: 6px;
+      cursor: pointer;
+      z-index: 20;
+      user-select: none;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .arrow.left {
+      left: 10px;
+      transform: translateY(-50%) rotate(135deg);
+    }
+
+    .arrow.right {
+      right: 10px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
     .sidebar, .cart-sidebar {
       position: fixed;
       top: 0;
@@ -174,17 +236,16 @@
       font-weight: 400;
       font-size: 24px;
       transition: transform 0.4s ease-in-out;
-      z-index: 1150;
+      z-index: 1100;
       overflow-y: auto;
       height: 100vh;
       text-align: center;
       padding-top: 80px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
     }
+
     .sidebar {
       left: 0;
       width: 100vw;
-      max-width: 320px;
       padding-left: 0;
       padding-right: 0;
       transform: translateX(-100%);
@@ -192,55 +253,11 @@
       flex-direction: column;
       align-items: center;
     }
+
     .sidebar.open {
       transform: translateX(0);
     }
-    .cart-sidebar {
-      right: 0;
-      width: 50vw;
-      max-width: 320px;
-      padding: 80px 20px 20px;
-      transform: translateX(100%);
-      text-align: left;
-    }
-    .cart-sidebar.open {
-      transform: translateX(0);
-    }
 
-    /* Close button inside sidebars */
-    .sidebar .close-btn,
-    .cart-sidebar .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
-      user-select: none;
-      z-index: 1200;
-    }
-    .sidebar .close-btn::before,
-    .sidebar .close-btn::after,
-    .cart-sidebar .close-btn::before,
-    .cart-sidebar .close-btn::after {
-      content: "";
-      position: absolute;
-      left: 14px;
-      top: 0;
-      width: 2px;
-      height: 28px;
-      background-color: black;
-    }
-    .sidebar .close-btn::before,
-    .cart-sidebar .close-btn::before {
-      transform: rotate(45deg);
-    }
-    .sidebar .close-btn::after,
-    .cart-sidebar .close-btn::after {
-      transform: rotate(-45deg);
-    }
-
-    /* Sidebar nav styles */
     .sidebar nav {
       display: flex;
       flex-direction: column;
@@ -249,8 +266,8 @@
       width: 100%;
       max-width: 320px;
       align-items: center;
-      padding: 0 16px;
     }
+
     .sidebar nav a {
       color: black;
       text-decoration: none;
@@ -267,19 +284,21 @@
       max-width: max-content;
       margin: 0 auto;
     }
+
     .sidebar nav a:hover {
       border-bottom-color: currentColor;
     }
+
     .sidebar nav a.current {
       color: #555555;
       font-weight: 550;
       border-bottom-color: #555555;
     }
+
     .sidebar nav a.current:hover {
       border-bottom-color: #555555;
     }
 
-    /* Policies dropdown arrow and toggle */
     .sidebar nav a.policies-link::after {
       content: "";
       position: absolute;
@@ -295,12 +314,15 @@
       pointer-events: none;
       user-select: none;
     }
+
     .sidebar nav a.policies-link.arrow-open::after {
       transform: translateY(-50%) rotate(45deg);
     }
+
     .sidebar nav a.policies-link.arrow-closed::after {
       transform: translateY(-50%) rotate(90deg);
     }
+
     .sidebar nav a.policies-link:hover::after {
       opacity: 1;
       transform: translateY(-50%) rotate(45deg);
@@ -323,10 +345,12 @@
       margin-top: 0;
       margin-bottom: 16px;
     }
+
     .policies-dropdown.open {
       max-height: 500px;
       margin-top: 8px;
     }
+
     .policies-dropdown a {
       color: black;
       text-decoration: none;
@@ -339,60 +363,55 @@
       max-width: max-content;
       margin-left: 8px;
     }
+
     .policies-dropdown a:hover {
       border-bottom: 1px solid black;
     }
 
-    /* Image box slider */
-    .image-box {
-      margin-top: 80px; /* to clear fixed header */
-      width: 100%;
-      max-width: 600px;
-      aspect-ratio: 3 / 4;
-      background: black;
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .slider {
-      display: flex;
-      width: 300%;
-      transition: transform 0.5s ease-in-out;
-      height: 100%;
-    }
-    .slide {
-      flex: 0 0 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-    }
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-      border: solid white;
-      border-width: 0 4px 4px 0;
-      padding: 6px;
-      cursor: pointer;
-      z-index: 20;
-      user-select: none;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
-    .arrow.left {
-      left: 10px;
-      transform: translateY(-50%) rotate(135deg);
-    }
-    .arrow.right {
-      right: 10px;
-      transform: translateY(-50%) rotate(-45deg);
+    .product-image-box,
+    .product-info {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 0.3s;
     }
 
-    /* Product list */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .sidebar nav a {
+        text-align: center;
+        display: inline-block;
+      }
+
+      .policies-dropdown {
+        margin-left: 0;
+      }
+    }
+
+    .cart-sidebar {
+      right: 0;
+      width: 50vw;
+      max-width: 280px;
+      padding: 80px 20px;
+      transform: translateX(100%);
+      text-align: left;
+      background: white;
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1100;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+
     .product-image-box {
       width: 90vw;
       max-width: 600px;
@@ -404,26 +423,26 @@
       overflow: visible;
       cursor: pointer;
     }
+
     .jersey-img {
       width: 100%;
       height: auto;
       object-fit: contain;
       transition: transform 0.25s ease-in-out;
       image-rendering: auto;
-      user-select: none;
     }
+
     .jersey-img:hover {
       transform: scale(1.03);
     }
+
     .product-info {
       text-align: center;
       margin-bottom: 24px;
       margin-top: 16px;
       user-select: none;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
     }
+
     .product-title {
       font-weight: 700;
       font-size: 22px;
@@ -432,48 +451,24 @@
       transition: border-bottom 0.2s ease;
       user-select: none;
     }
+
     .product-title:hover {
       border-bottom: 1.5px solid black;
     }
+
     .product-color {
       font-weight: 400;
       font-size: 16px;
       color: black;
       margin-bottom: 4px;
     }
+
     .product-price {
       font-weight: 400;
       font-size: 20px;
       color: black;
     }
 
-    /* Animations */
-    .product-image-box,
-    .product-info {
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 0.3s;
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 767px) {
-      .sidebar nav a {
-        text-align: center;
-        display: inline-block;
-      }
-      .policies-dropdown {
-        margin-left: 0;
-      }
-      .cart-sidebar {
-        width: 80vw;
-        max-width: none;
-      }
-    }
     @media (min-width: 768px) {
       header {
         display: flex;
@@ -501,14 +496,14 @@
   </div>
 </header>
 
-<div class="image-box" aria-label="Image slider">
-  <div class="slider" id="slider" aria-live="polite" role="list">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800/FF5733');" role="listitem" aria-label="Slide 1"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800/33C3FF');" role="listitem" aria-label="Slide 2"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800/8D33FF');" role="listitem" aria-label="Slide 3"></div>
+<div class="image-box">
+  <div class="slider" id="slider" aria-live="polite">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');" role="img" aria-label="Slide 1"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');" role="img" aria-label="Slide 2"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');" role="img" aria-label="Slide 3"></div>
   </div>
-  <div class="arrow left" id="leftArrow" role="button" tabindex="0" aria-label="Previous slide"></div>
-  <div class="arrow right" id="rightArrow" role="button" tabindex="0" aria-label="Next slide"></div>
+  <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
+  <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
@@ -531,195 +526,180 @@
   </div>
 </div>
 
-<!-- Sidebar menu -->
 <nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true">
-  <div class="close-btn" id="sidebarClose" role="button" tabindex="0" aria-label="Close menu"></div>
   <nav>
     <a href="https://mattscianna.com/home" class="current">HOME</a>
     <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
     <a href="https://mattscianna.com/vision">VISION</a>
     <a href="https://mattscianna.com/contact">CONTACT</a>
-    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false">POLICIES</a>
-    <div id="policiesDropdown" class="policies-dropdown" aria-hidden="true" style="pointer-events:none;">
-      <a href="https://mattscianna.com/terms">TERMS</a>
-      <a href="https://mattscianna.com/refunds">REFUNDS</a>
-      <a href="https://mattscianna.com/shipping">SHIPPING</a>
+    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+      <a href="/return-policy">RETURN POLICY</a>
+      <a href="/shipping-policy">SHIPPING POLICY</a>
+      <a href="/privacy-policy">PRIVACY POLICY</a>
     </div>
   </nav>
 </nav>
 
-<!-- Cart sidebar -->
-<aside id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">
-  <div class="close-btn" id="cartClose" role="button" tabindex="0" aria-label="Close cart"></div>
-  <p style="margin: 0 auto; max-width: 320px; font-size: 18px; user-select:none;">Your cart is empty.</p>
-</aside>
+<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">
+  <!-- Cart sidebar content is dynamically inserted -->
+</nav>
 
 <script>
-  // DOM references
+  // DOM elements
   const menuToggle = document.getElementById('menuToggle');
-  const cartIcon = document.getElementById('cartIcon');
   const sidebar = document.getElementById('sidebar');
+  const cartIcon = document.getElementById('cartIcon');
   const cartSidebar = document.getElementById('cartSidebar');
-  const sidebarClose = document.getElementById('sidebarClose');
-  const cartClose = document.getElementById('cartClose');
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
-  const body = document.body;
+  const logoContainer = document.getElementById('logoContainer');
 
-  // Toggle sidebar menu
-  function openSidebar() {
-    sidebar.classList.add('open');
-    menuToggle.classList.add('open');
-    menuToggle.setAttribute('aria-expanded', 'true');
-    sidebar.setAttribute('aria-hidden', 'false');
-    // Close cart if open
-    closeCart();
-    // Prevent page scroll
-    body.classList.add('sidebar-open');
-  }
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    menuToggle.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    sidebar.setAttribute('aria-hidden', 'true');
-    body.classList.remove('sidebar-open');
-  }
+  let currentSlide = 0;
+  const slider = document.getElementById('slider');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+
+  // Keep MATT SCIANNA logo visible (no fade)
+  // Removed scroll event related to logo fading
+
+  // Scroll to top on logo click
+  logoContainer.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Toggle sidebar open/close with mutual exclusivity
   menuToggle.addEventListener('click', () => {
-    if(sidebar.classList.contains('open')) {
+    const isSidebarOpen = sidebar.classList.contains('open');
+    const isCartOpen = cartSidebar.classList.contains('open');
+
+    if (isSidebarOpen) {
       closeSidebar();
     } else {
+      if (isCartOpen) closeCart();
       openSidebar();
     }
   });
+
+  cartIcon.addEventListener('click', () => {
+    const isCartOpen = cartSidebar.classList.contains('open');
+    const isSidebarOpen = sidebar.classList.contains('open');
+
+    if (isCartOpen) {
+      closeCart();
+    } else {
+      if (isSidebarOpen) closeSidebar();
+      openCart();
+    }
+  });
+
+  // Keyboard accessibility for toggles
   menuToggle.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       menuToggle.click();
     }
   });
-  sidebarClose.addEventListener('click', closeSidebar);
-  sidebarClose.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      closeSidebar();
-    }
-  });
 
-  // Toggle cart sidebar
-  function openCart() {
-    cartSidebar.classList.add('open');
-    cartIcon.classList.add('open');
-    cartIcon.setAttribute('aria-expanded', 'true');
-    cartSidebar.setAttribute('aria-hidden', 'false');
-    // Close menu sidebar if open
-    closeSidebar();
-    // Prevent page scroll
-    body.classList.add('cart-open');
-  }
-  function closeCart() {
-    cartSidebar.classList.remove('open');
-    cartIcon.classList.remove('open');
-    cartIcon.setAttribute('aria-expanded', 'false');
-    cartSidebar.setAttribute('aria-hidden', 'true');
-    body.classList.remove('cart-open');
-  }
-  cartIcon.addEventListener('click', () => {
-    if(cartSidebar.classList.contains('open')) {
-      closeCart();
-    } else {
-      openCart();
-    }
-  });
   cartIcon.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       cartIcon.click();
     }
   });
-  cartClose.addEventListener('click', closeCart);
-  cartClose.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      closeCart();
-    }
-  });
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    menuToggle.classList.add('open');
+    cartIcon.classList.remove('open');
+    cartSidebar.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    cartIcon.setAttribute('aria-expanded', 'false');
+    document.body.classList.add('sidebar-open');
+    document.body.classList.remove('cart-open');
+    sidebar.setAttribute('aria-hidden', 'false');
+    cartSidebar.setAttribute('aria-hidden', 'true');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('sidebar-open');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+
+  function openCart() {
+    cartSidebar.classList.add('open');
+    cartIcon.classList.add('open');
+    menuToggle.classList.remove('open');
+    sidebar.classList.remove('open');
+    cartIcon.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.add('cart-open');
+    document.body.classList.remove('sidebar-open');
+    cartSidebar.setAttribute('aria-hidden', 'false');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+
+  function closeCart() {
+    cartSidebar.classList.remove('open');
+    cartIcon.classList.remove('open');
+    cartIcon.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('cart-open');
+    cartSidebar.setAttribute('aria-hidden', 'true');
+  }
 
   // Policies dropdown toggle
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+
   policiesLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const open = policiesDropdown.classList.toggle('open');
-    policiesLink.classList.toggle('arrow-open', open);
-    policiesLink.classList.toggle('arrow-closed', !open);
-    policiesLink.setAttribute('aria-expanded', open.toString());
-    policiesDropdown.setAttribute('aria-hidden', (!open).toString());
-    policiesDropdown.style.pointerEvents = open ? 'auto' : 'none';
-  });
-  policiesLink.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      policiesLink.click();
-    }
-  });
+    const isOpen = policiesDropdown.classList.contains('open');
 
-  // Logo reload page on click
-  const logoContainer = document.getElementById('logoContainer');
-  logoContainer.addEventListener('click', () => {
-    location.reload();
-  });
-  logoContainer.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      location.reload();
-    }
-  });
-
-  // Header scroll effect for logo switch
-  window.addEventListener('scroll', () => {
-    if(window.scrollY > 20) {
-      body.classList.add('scrolled');
+    if (isOpen) {
+      policiesDropdown.classList.remove('open');
+      policiesLink.classList.remove('arrow-open');
+      policiesLink.classList.add('arrow-closed');
+      policiesLink.setAttribute('aria-expanded', 'false');
+      policiesDropdown.setAttribute('aria-hidden', 'true');
     } else {
-      body.classList.remove('scrolled');
+      policiesDropdown.classList.add('open');
+      policiesLink.classList.remove('arrow-closed');
+      policiesLink.classList.add('arrow-open');
+      policiesLink.setAttribute('aria-expanded', 'true');
+      policiesDropdown.setAttribute('aria-hidden', 'false');
     }
   });
 
-  // Image slider logic
-  const slider = document.getElementById('slider');
-  const leftArrow = document.getElementById('leftArrow');
-  const rightArrow = document.getElementById('rightArrow');
-  let currentSlide = 0;
-  const totalSlides = slider.children.length;
-
-  function updateSlider() {
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  // Simple slider controls
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+    slider.style.transform = `translateX(-${index * 100}%)`;
   }
-  leftArrow.addEventListener('click', () => {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    updateSlider();
-  });
-  rightArrow.addEventListener('click', () => {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateSlider();
-  });
-  leftArrow.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      leftArrow.click();
-    }
-  });
-  rightArrow.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      rightArrow.click();
-    }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  // Accessibility for arrows
+  document.querySelectorAll('.arrow').forEach(arrow => {
+    arrow.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (arrow.classList.contains('left')) prevSlide();
+        if (arrow.classList.contains('right')) nextSlide();
+      }
+    });
   });
 
-  // Accessibility: close sidebars on Escape key
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape') {
-      if(sidebar.classList.contains('open')) closeSidebar();
-      if(cartSidebar.classList.contains('open')) closeCart();
-    }
-  });
+  // Initialize slider
+  showSlide(0);
 </script>
 
 </body>

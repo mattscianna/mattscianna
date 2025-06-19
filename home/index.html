@@ -53,14 +53,16 @@
     }
 
     .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       pointer-events: auto;
       cursor: pointer;
       user-select: none;
-      flex: 1 1 auto;
+      height: 64px; /* same as header height */
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
     }
 
     .logo-image {
@@ -553,13 +555,13 @@
   window.location.reload();
 });
 
-  // Smooth scroll to top
+ logoContainer.addEventListener('click', (e) => {
+  e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Reload after smooth scroll (600ms delay)
   setTimeout(() => {
-    window.location.reload();
+  window.location.reload();
   }, 600);
+});
 
   // Sidebar open/close functions
   function closeCart() {

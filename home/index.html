@@ -6,241 +6,401 @@
   <title>Matt Scianna</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { overflow-x: hidden; background: white; font-family: 'Oswald', sans-serif; user-select: none; height: 100%; }
-    body.sidebar-open, body.cart-open { overflow: hidden; position: fixed; width: 100%; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      background-color: white;
+      font-family: 'Oswald', sans-serif;
+      user-select: none;
+      height: 100%;
+    }
+
+    body.sidebar-open, body.cart-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
 
     header {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 8px 16px;
-      background: white;
-      z-index: 1500;
+      background-color: transparent;
+      z-index: 1600;
       pointer-events: none;
     }
 
-    .icon-btn, .logo-container, .icon-group { pointer-events: auto; cursor: pointer; }
+    .icon-btn.menu-toggle,
+    .icon-btn.cart-toggle,
+    .icon-btn.search-toggle,
     .logo-container {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      height: 100%;
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+      color: white;
+      display: flex;
+      align-items: center;
     }
-    .logo-text { display: none; } /* hidden text for mobile */
-    .logo-image {
-      height: 48px;
-      filter: brightness(0) invert(0);
+
+    .logo-container {
+      margin: 0 auto;
+      font-size: 24px;
       user-select: none;
     }
 
-    .icon-btn { width: 24px; height: 24px; margin-left: 12px; position: relative; }
-    .icon-btn.menu-toggle { margin-left: 0; }
-    .icon-btn.menu-toggle span {
-      position: absolute; left: 0; width: 100%; height: 3px; background: black; border-radius: 2px; transition: 0.3s ease;
+    .logo-text {
+      font-family: 'Cardo', serif;
+      font-size: 26px;
+      font-weight: 900;
+      white-space: nowrap;
+      position: relative;
+      top: 3px;
+      color: white;
     }
+
+    .logo-image {
+      height: 88px;
+      display: none;
+      user-select: none;
+      filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 767px) {
+      .logo-text {
+        display: none;
+      }
+      .logo-image {
+        display: block;
+      }
+    }
+
+    .icon-btn.menu-toggle {
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    .icon-btn.menu-toggle span {
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background-color: white;
+      left: 0;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
     .icon-btn.menu-toggle span:nth-child(1) { top: 4px; }
     .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
     .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
 
-    .icon-btn.search-toggle img,
-    .icon-btn.cart-toggle img {
-      width: 100%; filter: brightness(0) invert(0);
+    .icon-btn.cart-toggle {
+      width: 25px;
+      height: 24px;
+      margin-left: 16px;
+      position: relative;
     }
 
-    .icon-group { display: flex; align-items: center; }
+    .icon-btn.cart-toggle img {
+      width: 100%;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
 
-    /* Sidebars */
+    .icon-btn.search-toggle {
+      width: 24px;
+      height: 24px;
+      margin-left: 16px;
+      position: relative;
+    }
+
+    .icon-btn.search-toggle svg {
+      fill: white;
+      width: 100%;
+      height: 100%;
+    }
+
     .sidebar, .cart-sidebar {
-      position: fixed; top: 0; width: 100%; height: 100vh;
-      background: white; color: black; font-family: 'Oswald', sans-serif;
+      position: fixed;
+      top: 0;
+      background: white;
+      color: black;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
       font-size: 24px;
       transition: transform 0.4s ease-in-out;
-      z-index: 2000;
+      z-index: 1700;
       overflow-y: auto;
+      height: 100vh;
+      text-align: center;
       padding-top: 80px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
-    .sidebar { left: 0; max-width: 320px; transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); }
-    .cart-sidebar { right: 0; max-width: 320px; transform: translateX(100%); padding: 80px 20px; text-align: left; }
-    .cart-sidebar.open { transform: translateX(0); }
 
-    .sidebar .close-btn, .cart-sidebar .close-btn {
-      position: absolute; top: 16px; left: 16px;
-      width: 24px; height: 24px; cursor: pointer; user-select: none; z-index: 2100;
+    .sidebar {
+      left: 0;
+      width: 100vw;
+      max-width: 320px;
+      transform: translateX(-100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
     }
-    .close-btn:before, .close-btn:after {
-      content: ''; position: absolute;
-      left: 11px; top: 0; width: 2px; height: 24px; background: black;
-    }
-    .close-btn:before { transform: rotate(45deg); }
-    .close-btn:after { transform: rotate(-45deg); }
 
-    /* Carousel (raised) */
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 0;
+      width: 100%;
+      max-width: 320px;
+      align-items: center;
+    }
+
+    .sidebar nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 400;
+      text-align: center;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      cursor: pointer;
+    }
+
+    .sidebar nav a:hover {
+      border-bottom-color: currentColor;
+      color: #333;
+    }
+
+    .sidebar nav a.current {
+      color: #444;
+      font-weight: 550;
+      border-bottom-color: #444;
+    }
+
+    .cart-sidebar {
+      right: 0;
+      width: 50vw;
+      max-width: 280px;
+      padding: 80px 20px;
+      transform: translateX(100%);
+      background: white;
+      color: black;
+    }
+
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .close-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 1800;
+    }
+
+    .close-btn:before,
+    .close-btn:after {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 0;
+      width: 2px;
+      height: 24px;
+      background-color: black;
+    }
+
+    .close-btn:before {
+      transform: rotate(45deg);
+    }
+
+    .close-btn:after {
+      transform: rotate(-45deg);
+    }
+
     .image-box {
-      margin: 80px auto 0 auto;
-      width: 100%; max-width: 600px;
-      aspect-ratio: 3/4;
-      background: black;
-      position: relative;
+      margin-top: 120px;
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 3 / 4;
+      background: white;
       overflow: hidden;
-      z-index: 1;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .slider { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
-    .slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
     .arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 18px; height: 18px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: solid black;
+      border-width: 0 3px 3px 0;
       padding: 6px;
-      border: solid white; border-width: 0 3px 3px 0;
-      background: rgba(255,255,255,0.3);
       cursor: pointer;
       z-index: 20;
+      background-color: rgba(0, 0, 0, 0.05);
     }
-    .arrow.left { left: 10px; transform: translateY(-50%) rotate(135deg); }
-    .arrow.right { right: 10px; transform: translateY(-50%) rotate(-45deg); }
 
-    /* Products */
-    .product-image-box {
-      margin: 40px auto 8px auto;
-      width: 90vw; max-width: 600px;
-      cursor: pointer;
+    .arrow.left {
+      left: 10px;
+      transform: translateY(-50%) rotate(135deg);
     }
-    .product-info {
-      text-align: center;
-      margin: 8px auto 24px auto;
-      max-width: 600px;
-      font-size: 18px;
+
+    .arrow.right {
+      right: 10px;
+      transform: translateY(-50%) rotate(-45deg);
     }
-    .product-title { font-weight: 700; font-size: 22px; margin-bottom: 4px; }
-    .product-color, .product-price { font-size: 16px; color: black; }
   </style>
 </head>
 <body>
-
   <header>
-    <div id="menuToggle" class="icon-btn menu-toggle" aria-label="Toggle menu">
+    <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </div>
 
-    <div class="logo-container" id="logoContainer" aria-label="Home">
+    <div class="logo-container" id="logoContainer">
+      <span class="logo-text">MATT SCIANNA</span>
       <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" alt="MS Logo" />
     </div>
 
-    <div class="icon-group">
-      <div id="searchIcon" class="icon-btn search-toggle" aria-label="Search">
-        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Search" />
+    <div style="display: flex; align-items: center;">
+      <div id="searchIcon" class="icon-btn search-toggle">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471..."/></svg>
       </div>
-      <div id="cartIcon" class="icon-btn cart-toggle" aria-label="Cart">
-        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart" />
+      <div id="cartIcon" class="icon-btn cart-toggle">
+        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart Icon" />
       </div>
     </div>
   </header>
 
-  <div class="image-box" aria-live="polite">
+  <div class="image-box">
     <div class="slider" id="slider">
-      <div class="slide" style="background-image:url('https://via.placeholder.com/600x400/FF5733')"></div>
-      <div class="slide" style="background-image:url('https://via.placeholder.com/600x400/33C3FF')"></div>
-      <div class="slide" style="background-image:url('https://via.placeholder.com/600x400/8D33FF')"></div>
+      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/FF5733');"></div>
+      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/33C3FF');"></div>
+      <div class="slide" style="background-image: url('https://via.placeholder.com/600x400/8D33FF');"></div>
     </div>
-    <div class="arrow left" onclick="prevSlide()" aria-label="Previous"></div>
-    <div class="arrow right" onclick="nextSlide()" aria-label="Next"></div>
+    <div class="arrow left" onclick="prevSlide()"></div>
+    <div class="arrow right" onclick="nextSlide()"></div>
   </div>
 
-  <div class="product-image-box" onclick="location.href='/jersey/red'">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title">TWO‑FIVE JERSEY</div>
-    <div class="product-color">RED</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <div class="product-image-box" onclick="location.href='/jersey/white'">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title">TWO‑FIVE JERSEY</div>
-    <div class="product-color">WHITE</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <nav id="sidebar" class="sidebar" aria-hidden="true">
-    <div class="close-btn" onclick="closeMenu()" aria-label="Close menu"></div>
+  <nav id="sidebar" class="sidebar">
+    <div class="close-btn" onclick="closeMenu()"></div>
     <nav>
-      <a href="#" class="current">HOME</a>
-      <a href="#">LOOKBOOKS</a>
-      <a href="#">VISION</a>
-      <a href="#">CONTACT</a>
-      <a href="#" id="policiesLink" class="policies-link arrow-closed" aria-expanded="false">POLICIES</a>
-      <div id="policiesDropdown" class="policies-dropdown" aria-hidden="true">
-        <a href="#">RETURN POLICY</a>
-        <a href="#">SHIPPING POLICY</a>
-        <a href="#">PRIVACY POLICY</a>
-      </div>
+      <a href="/">HOME</a>
+      <a href="/lookbooks">LOOKBOOKS</a>
+      <a href="/vision">VISION</a>
+      <a href="/contact">CONTACT</a>
     </nav>
   </nav>
 
-  <nav id="cartSidebar" class="cart-sidebar" aria-hidden="true">
-    <div class="close-btn" onclick="closeCart()" aria-label="Close cart"></div>
-    <!-- dynamically populate cart here -->
+  <nav id="cartSidebar" class="cart-sidebar">
+    <div class="close-btn" onclick="closeCart()"></div>
+    <p>Your cart is empty.</p>
   </nav>
 
   <script>
-    // Logo reload + scroll
-    document.getElementById('logoContainer').addEventListener('click', () => {
+    const logoContainer = document.getElementById('logoContainer');
+    logoContainer.addEventListener('click', () => {
       setTimeout(() => {
-        window.scrollTo(0,0);
+        window.scrollTo({ top: 0, behavior: 'instant' });
         location.reload();
-      }, 1000);
+      }, 500);
     });
 
-    // Carousel
-    const slider = document.getElementById('slider');
-    let currentSlide = 0;
-    function showSlide(i) {
-      const slides = slider.children;
-      currentSlide = (i + slides.length) % slides.length;
-      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
-    function prevSlide() { showSlide(currentSlide - 1); }
-    function nextSlide() { showSlide(currentSlide + 1); }
-    showSlide(0);
-
-    // Sidebar toggles
     const sidebar = document.getElementById('sidebar');
-    document.getElementById('menuToggle').addEventListener('click', () => {
-      const open = sidebar.classList.toggle('open');
-      document.body.classList.toggle('sidebar-open', open);
-    });
+    const cartSidebar = document.getElementById('cartSidebar');
+
     function closeMenu() {
       sidebar.classList.remove('open');
       document.body.classList.remove('sidebar-open');
     }
 
-    // Policies dropdown
-    const policiesLink = document.getElementById('policiesLink');
-    const policiesDropdown = document.getElementById('policiesDropdown');
-    policiesLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const expanded = policiesLink.getAttribute('aria-expanded') === 'true';
-      policiesLink.setAttribute('aria-expanded', !expanded);
-      policiesLink.classList.toggle('arrow-open', !expanded);
-      policiesLink.classList.toggle('arrow-closed', expanded);
-      policiesDropdown.setAttribute('aria-hidden', expanded);
-      policiesDropdown.classList.toggle('open', !expanded);
-    });
+    function openMenu() {
+      cartSidebar.classList.remove('open');
+      document.body.classList.remove('cart-open');
+      sidebar.classList.add('open');
+      document.body.classList.add('sidebar-open');
+    }
 
-    // Cart sidebar toggle
-    const cartSidebar = document.getElementById('cartSidebar');
-    document.getElementById('cartIcon').addEventListener('click', () => {
-      const open = cartSidebar.classList.toggle('open');
-      document.body.classList.toggle('cart-open', open);
-    });
     function closeCart() {
       cartSidebar.classList.remove('open');
       document.body.classList.remove('cart-open');
     }
-  </script>
 
+    function openCart() {
+      sidebar.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
+      cartSidebar.classList.add('open');
+      document.body.classList.add('cart-open');
+    }
+
+    document.getElementById('menuToggle').addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    document.getElementById('cartIcon').addEventListener('click', () => {
+      cartSidebar.classList.contains('open') ? closeCart() : openCart();
+    });
+
+    let currentSlide = 0;
+    const slider = document.getElementById('slider');
+    const slides = slider.children;
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+      currentSlide = index;
+      slider.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    showSlide(0);
+  </script>
 </body>
 </html>

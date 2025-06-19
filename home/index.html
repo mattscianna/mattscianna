@@ -466,7 +466,6 @@
   </div>
 
   <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
-    <span class="logo-text" id="logoText">MATT SCIANNA</span>
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
   </div>
 
@@ -483,6 +482,16 @@
     </div>
   </div>
 </header>
+
+<script>
+  // Reload current page and scroll to top after 1 second
+  document.getElementById('logoContainer').addEventListener('click', () => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 1000);
+    location.reload();
+  });
+</script>
 
 <div class="image-box" aria-live="polite" aria-label="Product image slider">
   <div class="slider" id="slider">

@@ -30,11 +30,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
+      padding: 0 16px;
       height: 64px;
       position: fixed;
       top: 0;
-      left: 0;
       width: 100%;
       background-color: transparent;
       pointer-events: none;
@@ -57,7 +56,7 @@
       pointer-events: auto;
       cursor: pointer;
       user-select: none;
-      flex-grow: 1;
+      flex: 1 1 auto;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -459,7 +458,7 @@
   </div>
 
   <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
-    <img src="..." class="logo-image" id="logoImage" alt="MS Logo" />
+    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
   </div>
 
   <div class="right-icons" style="width: 96px; display: flex; justify-content: flex-end; align-items: center;">
@@ -561,7 +560,6 @@
   setTimeout(() => {
     window.location.reload();
   }, 600);
-});
 
   // Sidebar open/close functions
   function closeCart() {

@@ -552,4 +552,140 @@
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar
+  const cartSidebar = document.getElementById('cartSidebar');
+  const logoContainer = document.getElementById('logoContainer');
+
+  let scrolled = false;
+  let currentSlide = 0;
+  const slider = document.getElementById('slider');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+
+  // Logo swap on scroll
+  window.addEventListener('scroll', () => {
+    if (!scrolled && window.scrollY > 50) {
+      document.body.classList.add('scrolled');
+      scrolled = true;
+    } else if (scrolled && window.scrollY <= 50) {
+      document.body.classList.remove('scrolled');
+      scrolled = false;
+    }
+  });
+
+  // Scroll to top on logo click
+  logoContainer.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Sidebar toggle functions
+  function closeCart() {
+    cartSidebar.classList.remove('open');
+    cartIcon.classList.remove('open');
+    document.body.classList.remove('cart-open');
+    cartIcon.setAttribute('aria-expanded', 'false');
+    cartSidebar.setAttribute('aria-hidden', 'true');
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    menuToggle.classList.remove('open');
+    document.body.classList.remove('sidebar-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+
+  menuToggle.addEventListener('click', () => {
+    const menuIsOpen = sidebar.classList.contains('open');
+    const cartIsOpen = cartSidebar.classList.contains('open');
+
+    if (!menuIsOpen) {
+      if (cartIsOpen) closeCart();
+      sidebar.classList.add('open');
+      menuToggle.classList.add('open');
+      document.body.classList.add('sidebar-open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      sidebar.setAttribute('aria-hidden', 'false');
+    } else {
+      closeMenu();
+    }
+  });
+
+  cartIcon.addEventListener('click', () => {
+    const cartIsOpen = cartSidebar.classList.contains('open');
+    const menuIsOpen = sidebar.classList.contains('open');
+
+    if (!cartIsOpen) {
+      if (menuIsOpen) closeMenu();
+      cartSidebar.classList.add('open');
+      cartIcon.classList.add('open');
+      document.body.classList.add('cart-open');
+      cartIcon.setAttribute('aria-expanded', 'true');
+      cartSidebar.setAttribute('aria-hidden', 'false');
+    } else {
+      closeCart();
+    }
+  });
+
+  // Policies dropdown toggle
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+
+  policiesLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isOpen = policiesDropdown.classList.toggle('open');
+    policiesLink.classList.toggle('arrow-open', isOpen);
+    policiesLink.classList.toggle('arrow-closed', !isOpen);
+    policiesLink.setAttribute('aria-expanded', isOpen);
+    policiesDropdown.setAttribute('aria-hidden', !isOpen);
+  });
+
+  // Slider navigation
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    else if (index >= totalSlides) index = 0;
+    currentSlide = index;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  // Keyboard support for arrows
+  document.querySelectorAll('.arrow').forEach(arrow => {
+    arrow.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        arrow.classList.contains('left') ? prevSlide() : nextSlide();
+      }
+    });
+  });
+
+  // Initialize slider
+  showSlide(0);
+
+  // Populate cart sidebar content
+  cartSidebar.innerHTML = `
+    <h2 style="font-size: 20px; margin-bottom: 20px;">YOUR CART</h2>
+
+    <div style="margin-bottom: 30px;">
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" alt="Red Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
+      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
+      <div style="font-size: 14px;">RED</div>
+      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
+    </div>
+
+    <div>
+      <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" alt="White Jersey" style="width: 100%; max-width: 200px; height: auto; margin-bottom: 8px;" />
+      <div style="font-weight: bold;">TWO-FIVE JERSEY</div>
+      <div style="font-size: 14px;">WHITE</div>
+      <div style="font-size: 16px; margin-top: 4px;">$49.99 USD</div>
+    </div>
+  `;
+</script>
+</body>
+</html>

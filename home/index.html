@@ -54,27 +54,21 @@
     }
 
     .logo-container {
-      margin: 0 auto;
-      font-size: 24px;
-      color: white;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      pointer-events: auto;
+      cursor: pointer;
       user-select: none;
-    }
-
-    .logo-text {
-      font-family: 'Cardo', serif;
-      font-size: 26px;
-      font-weight: 900;
-      white-space: nowrap;
-      position: relative;
-      top: 3px;
-      color: white;
     }
 
     .logo-image {
-      height: 88px;
-      display: none;
+      height: 64px;
+      display: block;
       user-select: none;
-      filter: brightness(0) invert(1);
+      filter: none;
     }
 
     /* Hamburger menu icon */
@@ -130,8 +124,8 @@
     .sidebar, .cart-sidebar {
       position: fixed;
       top: 0;
-      background: black;
-      color: white;
+      background: white;
+      color: black;
       font-family: 'Oswald', sans-serif;
       font-weight: 400;
       font-size: 24px;
@@ -141,7 +135,7 @@
       height: 100vh;
       text-align: center;
       padding-top: 80px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
 
     /* Sidebar (left) */
@@ -156,7 +150,7 @@
       flex-direction: column;
       align-items: center;
       position: fixed;
-      background-color: black;
+      background-color: white;
     }
 
     .sidebar.open {
@@ -174,7 +168,7 @@
     }
 
     .sidebar nav a {
-      color: white;
+      color: black;
       text-decoration: none;
       font-size: 24px;
       font-weight: 400;
@@ -191,14 +185,14 @@
     }
 
     .sidebar nav a:hover {
-      border-bottom-color: currentColor;
-      color: #ccc;
+      color: #333;
+      border-bottom-color: #333;
     }
 
     .sidebar nav a.current {
-      color: #888;
+      color: #666;
       font-weight: 550;
-      border-bottom-color: #888;
+      border-bottom-color: #666;
     }
 
     .sidebar nav a.current:hover {
@@ -213,8 +207,8 @@
       transform: translateY(-50%) rotate(90deg);
       width: 10px;
       height: 10px;
-      border-right: 2px solid white;
-      border-bottom: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
       transition: transform 0.3s ease, opacity 0.3s ease;
       opacity: 1;
       pointer-events: none;
@@ -392,12 +386,12 @@
     }
 
     /* Slider and arrows */
-    .image-box {
-      margin-top: 80px; /* raised image */
+     .image-box {
+      margin-top: 72px; /* just enough to clear the 64px header + 8px space */
       width: 100%;
       max-width: 600px;
       aspect-ratio: 3 / 4;
-      background: black;
+      background: white;
       overflow: hidden;
       position: relative;
       z-index: 1;

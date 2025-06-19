@@ -27,18 +27,18 @@
     }
 
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 8px 16px;
+      height: 64px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       background-color: transparent;
-      z-index: 1600;
       pointer-events: none;
+      z-index: 1600;
     }
 
     .icon-btn.menu-toggle,
@@ -54,20 +54,19 @@
     }
 
     .logo-container {
-      flex: 1;
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+      flex-grow: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100%;
-      pointer-events: auto;
-      cursor: pointer;
-      user-select: none;
     }
 
     .logo-image {
-      height: 64px;
+      height: 96px;
       display: block;
-      user-select: none;
       filter: none;
     }
 
@@ -135,7 +134,7 @@
       height: 100vh;
       text-align: center;
       padding-top: 80px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: none;
     }
 
     /* Sidebar (left) */
@@ -284,7 +283,7 @@
       overflow-y: auto;
       z-index: 1700;
       transition: transform 0.4s ease-in-out;
-      box-shadow: -2px 0 20px rgba(0,0,0,0.8);
+      box-shadow: none;
     }
 
     .cart-sidebar.open {
@@ -296,7 +295,7 @@
     .cart-sidebar .close-btn {
       position: fixed;
       top: 16px;
-      left: 16px;
+      right: 16px;
       width: 24px;
       height: 24px;
       cursor: pointer;
@@ -313,7 +312,7 @@
       top: 0;
       width: 2px;
       height: 24px;
-      background-color: white;
+      background-color: black;
     }
 
     .close-btn:before {
@@ -365,7 +364,7 @@
       cursor: pointer;
       transition: border-bottom 0.2s ease;
       user-select: none;
-      color: white;
+      color: black;
     }
 
     .product-title:hover {
@@ -375,14 +374,14 @@
     .product-color {
       font-weight: 400;
       font-size: 16px;
-      color: white;
+      color: grey;
       margin-bottom: 4px;
     }
 
     .product-price {
       font-weight: 400;
       font-size: 20px;
-      color: white;
+      color: black;
     }
 
     /* Slider and arrows */
@@ -391,7 +390,7 @@
       width: 100%;
       max-width: 600px;
       aspect-ratio: 3 / 4;
-      background: white;
+      background: black;
       overflow: hidden;
       position: relative;
       z-index: 1;
@@ -453,30 +452,37 @@
 <body>
 
 <header>
-  <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="left-icons" style="width: 64px; display: flex; align-items: center;">
+    <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 
   <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
+    <img src="..." class="logo-image" id="logoImage" alt="MS Logo" />
   </div>
 
-  <div style="display: flex; align-items: center;">
+  <div class="right-icons" style="width: 96px; display: flex; justify-content: flex-end; align-items: center;">
     <div id="searchIcon" class="icon-btn search-toggle" role="button" tabindex="0" aria-label="Search">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-      </svg>
+      <!-- SVG -->
     </div>
-
-    <div id="cartIcon" class="icon-btn cart-toggle" title="Cart" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false">
-      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Bag" />
+    <div id="cartIcon" class="icon-btn cart-toggle" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false" title="Cart" style="margin-left: 16px;">
+      <img src="..." alt="Bag" />
       <div id="cartCount" class="cart-count" style="display:none;">0</div>
     </div>
   </div>
 </header>
 
+<div class="image-box" aria-live="polite" aria-label="Product image slider">
+    <div class="slider" id="slider">
+      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 1"></div>
+      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 2"></div>
+      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 3"></div>
+    </div>
+    <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
+    <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
+  </div>
+  
 <script>
   // Reload current page and scroll to top after 1 second
   document.getElementById('logoContainer').addEventListener('click', () => {
@@ -553,10 +559,19 @@
   const slides = slider.children;
   const totalSlides = slides.length;
 
-  // Clicking logo reloads home page
-  logoContainer.addEventListener('click', () => {
-    window.location.href = '/';
-  });
+ logoContainer.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.reload();
+});
+
+  // Smooth scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Reload after smooth scroll (600ms delay)
+  setTimeout(() => {
+    window.location.reload();
+  }, 600);
+});
 
   // Sidebar open/close functions
   function closeCart() {

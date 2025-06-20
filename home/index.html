@@ -548,10 +548,6 @@
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
   </div>
-
-  <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide">&#10094;</div>
-  <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide">&#10095;</div>
-</div>
   
 <script>
   // Reload current page and scroll to top after 1 second
@@ -605,77 +601,199 @@
 </nav>
 
 <script>
-  // Variables
-const slider = document.getElementById('slider');
-const slides = slider.children;
-const totalSlides = slides.length;
+  // Elements
+  const body = document.body;
+  const sidebar = document.getElementById('sidebar');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const cartToggle = document.getElementById('cartIcon');
+  const searchToggle = document.getElementById('searchIcon');
+  const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
 
-let currentSlide = 0;
-
-// Show the slide at given index
-function showSlide(index) {
-  if (index < 0) {
-    currentSlide = totalSlides - 1;
-  } else if (index >= totalSlides) {
-    currentSlide = 0;
-  } else {
-    currentSlide = index;
-  }
-  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-  updateDots();
-}
-
-// Show previous slide
-function prevSlide() {
-  showSlide(currentSlide - 1);
-}
-
-// Show next slide
-function nextSlide() {
-  showSlide(currentSlide + 1);
-}
-
-// Dot navigation (optional)
-// Create dots dynamically if needed
-const dotsContainer = document.createElement('div');
-dotsContainer.id = 'custom-carousel-controls';
-dotsContainer.style.marginTop = '10px';
-dotsContainer.style.display = 'flex';
-dotsContainer.style.justifyContent = 'center';
-dotsContainer.style.gap = '10px';
-slider.parentElement.appendChild(dotsContainer);
-
-const dots = [];
-
-for (let i = 0; i < totalSlides; i++) {
-  const dot = document.createElement('button');
-  dot.classList.add('dot');
-  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-  dot.addEventListener('click', () => showSlide(i));
-  dotsContainer.appendChild(dot);
-  dots.push(dot);
-}
-
-function updateDots() {
-  dots.forEach((dot, i) => {
-    if (i === currentSlide) dot.classList.add('active');
-    else dot.classList.remove('active');
+  // Sidebar toggle
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    cartSidebar.classList.remove('open');
+    body.classList.toggle('sidebar-open');
+    body.classList.remove('cart-open');
+    sidebar.setAttribute('aria-hidden', !sidebar.classList.contains('open'));
+    cartSidebar.setAttribute('aria-hidden', 'true');
   });
-}
 
-// Keyboard support for arrows
-document.querySelectorAll('.arrow').forEach(arrow => {
-  arrow.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (arrow.classList.contains('left')) prevSlide();
-      else nextSlide();
+  // Cart toggle
+  cartToggle.addEventListener('click', () => {
+    cartSidebar.classList.toggle('open');
+    sidebar.classList.remove('open');
+    body.classList.toggle('cart-open');
+    body.classList.remove('sidebar-open');
+    cartSidebar.setAttribute('aria-hidden', !cartSidebar.classList.contains('open'));
+    sidebar.setAttribute('aria-hidden', 'true');
+  });
+
+  // Search
+  searchToggle.addEventListener('click', () => {
+    alert('Search toggled! Implement your search UI here.');
+  });
+
+  // Close buttons
+  sidebarCloseBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      cartSidebar.classList.remove('open');
+      body.classList.remove('sidebar-open', 'cart-open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      cartSidebar.setAttribute('aria-hidden', 'true');
+    });
+  });
+
+  // Keyboard toggles
+  [menuToggle, cartToggle, searchToggle].forEach(toggle => {
+    toggle.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle.click();
+      }
+    });
+  });
+
+  // ESC key closes sidebars
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      sidebar.classList.remove('open');
+      cartSidebar.classList.remove('open');
+      body.classList.remove('sidebar-open', 'cart-open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      cartSidebar.setAttribute('aria-hidden', 'true');
     }
   });
-});
 
-// Initialize first slide and dots
-showSlide(0);
+  // Carousel
+  const slider = document.getElementById('slider');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    if (index < 0) currentSlide = totalSlides - 1;
+    else if (index >= totalSlides) currentSlide = 0;
+    else currentSlide = index;
+
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateDots();
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  // Carousel controls container (below image)
+  const controlsContainer = document.createElement('div');
+  controlsContainer.id = 'custom-carousel-controls';
+  controlsContainer.style.display = 'flex';
+  controlsContainer.style.justifyContent = 'center';
+  controlsContainer.style.alignItems = 'center';
+  controlsContainer.style.gap = '12px';
+  controlsContainer.style.marginTop = '8px';
+
+  const leftBtn = document.createElement('button');
+  leftBtn.innerHTML = '&#10094;';
+  leftBtn.className = 'arrow left';
+  leftBtn.style.position = 'static';
+  leftBtn.style.fontSize = '20px';
+  leftBtn.style.background = 'none';
+  leftBtn.style.border = 'none';
+  leftBtn.style.cursor = 'pointer';
+  leftBtn.style.color = 'black';
+  leftBtn.addEventListener('click', prevSlide);
+
+  const rightBtn = document.createElement('button');
+  rightBtn.innerHTML = '&#10095;';
+  rightBtn.className = 'arrow right';
+  rightBtn.style.position = 'static';
+  rightBtn.style.fontSize = '20px';
+  rightBtn.style.background = 'none';
+  rightBtn.style.border = 'none';
+  rightBtn.style.cursor = 'pointer';
+  rightBtn.style.color = 'black';
+  rightBtn.addEventListener('click', nextSlide);
+
+  const dots = [];
+
+  const dotContainer = document.createElement('div');
+  dotContainer.style.display = 'flex';
+  dotContainer.style.gap = '10px';
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.classList.add('dot');
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => showSlide(i));
+    dots.push(dot);
+    dotContainer.appendChild(dot);
+  }
+
+  controlsContainer.appendChild(leftBtn);
+  controlsContainer.appendChild(dotContainer);
+  controlsContainer.appendChild(rightBtn);
+
+  slider.parentElement.appendChild(controlsContainer);
+
+  function updateDots() {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  // Keyboard arrow button support
+  [leftBtn, rightBtn].forEach(btn => {
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  });
+
+  showSlide(0);
+
+  // Policies dropdown
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+
+  policiesLink.addEventListener('click', e => {
+    e.preventDefault();
+    const isOpen = policiesDropdown.classList.contains('open');
+    if (isOpen) {
+      policiesDropdown.classList.remove('open');
+      policiesLink.classList.remove('arrow-open');
+      policiesLink.classList.add('arrow-closed');
+      policiesLink.setAttribute('aria-expanded', 'false');
+      policiesDropdown.setAttribute('aria-hidden', 'true');
+    } else {
+      policiesDropdown.classList.add('open');
+      policiesLink.classList.add('arrow-open');
+      policiesLink.classList.remove('arrow-closed');
+      policiesLink.setAttribute('aria-expanded', 'true');
+      policiesDropdown.setAttribute('aria-hidden', 'false');
+    }
+  });
+
+  policiesLink.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      policiesLink.click();
+    }
+  });
+
+  // Logo click scroll + reload
+  document.getElementById('logoContainer').addEventListener('click', () => {
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 1000);
+    location.reload();
+  });
 </script>
 
 </body>

@@ -22,11 +22,10 @@
 
   body.sidebar-open, body.cart-open {
     overflow: hidden;
-    position: fixed;
     width: 100%;
   }
 
-  header {
+   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,7 +35,6 @@
     top: 0;
     width: 100%;
     background-color: #cfcdce; /* Light gray as requested */
-    pointer-events: none;
     z-index: 1600;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
 
@@ -601,6 +599,7 @@
 </nav>
 
 <script>
+  <script>
   // Elements
   const body = document.body;
   const sidebar = document.getElementById('sidebar');
@@ -794,6 +793,7 @@
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 1000);
     location.reload();
   });
+</script>
 </script>
 
 </body>

@@ -55,18 +55,19 @@
     .logo-container {
       position: absolute;
       left: 50%;
+      top: 8px; /* add this to lower it by 8px from top */
       transform: translateX(-50%);
       pointer-events: auto;
       cursor: pointer;
       user-select: none;
-      height: 64px; /* same as header height */
+      height: auto; /* allow height to adapt */
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .logo-image {
-      height: 96px;
+      height: 120px;
       display: block;
       filter: none;
     }

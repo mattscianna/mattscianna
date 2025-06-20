@@ -209,6 +209,36 @@
     border-bottom-color: #aaa;
   }
 
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;       /* size of the arrow */
+    color: white;          /* arrow color */
+    background-color: rgba(0, 0, 0, 0.4); /* semi-transparent background for visibility */
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+  }
+
+  .arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .arrow.left {
+    left: 10px;  /* position left arrow */
+  }
+
+  .arrow.right {
+    right: 10px; /* position right arrow */
+  }
+
   .sidebar nav a.policies-link::after {
     content: "";
     position: absolute;
@@ -499,28 +529,29 @@
   <div class="right-icons" style="width: 96px; display: flex; justify-content: flex-end; align-items: center;">
     <!-- Search Button -->
     <div id="searchIcon" class="icon-btn search-toggle" role="button" tabindex="0" aria-label="Search" style="margin-right: 16px;">
-      <svg xmlns="..." fill="white" width="20" height="20" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M10,2A8,8 0 0,1 18,10C18,12.21 17.21,14.21 15.83,15.59L21.71,21.46L20.29,22.88L14.41,17C13.04,18.38 11.04,19.17 9,19.17A8,8 0 0,1 1,11.17A8,8 0 0,1 10,2M10,4A6,6 0 0,0 4,10A6,6 0 0,0 10,16A6,6 0 0,0 16,10A6,6 0 0,0 10,4Z"/>
       </svg>
     </div>
 
     <!-- Cart Button -->
     <div id="cartIcon" class="icon-btn cart-toggle" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false" title="Cart">
-      <img src="..." alt="Bag" />
+      <img src="https://via.placeholder.com/24?text=🛍️" alt="Bag" />
       <div id="cartCount" class="cart-count" style="display:none;">0</div>
     </div>
   </div>
 </header>
 
-<div class="image-box" aria-live="polite" aria-label="Product image slider">
-    <div class="slider" id="slider">
-      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 1"></div>
-      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 2"></div>
-      <div class="slide" style="background-image: url('...');" role="img" aria-label="Slide 3"></div>
-    </div>
-    <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide"></div>
-    <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide"></div>
+<div class="image-box" aria-live="polite" aria-label="Product image slider" style="position: relative;">
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+1');" role="img" aria-label="Slide 1"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
   </div>
+
+  <div class="arrow left" onclick="prevSlide()" role="button" tabindex="0" aria-label="Previous slide">&#10094;</div>
+  <div class="arrow right" onclick="nextSlide()" role="button" tabindex="0" aria-label="Next slide">&#10095;</div>
+</div>
   
 <script>
   // Reload current page and scroll to top after 1 second
@@ -533,7 +564,7 @@
 </script>
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-  <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="View Red Jersey">
+  <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="Red Jersey">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
   </div>
   <div class="product-info">
@@ -542,7 +573,7 @@
     <div class="product-price">$49.99 USD</div>
   </div>
 
-  <div class="product-image-box" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="View White Jersey">
+  <div class="product-image-box" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="White Jersey">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
   </div>
   <div class="product-info">
@@ -574,201 +605,77 @@
 </nav>
 
 <script>
-  // DOM elements
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const sidebarCloseBtn = sidebar.querySelector('.close-btn');
-  const cartIcon = document.getElementById('cartIcon');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const cartCloseBtn = cartSidebar.querySelector('.close-btn');
-  const logoContainer = document.getElementById('logoContainer');
-  const searchIcon = document.getElementById('searchIcon');
-  const header = document.querySelector('header');
+  // Variables
+const slider = document.getElementById('slider');
+const slides = slider.children;
+const totalSlides = slides.length;
 
-  let currentSlide = 0;
-  const slider = document.getElementById('slider');
-  const slides = slider.children;
-  const totalSlides = slides.length;
+let currentSlide = 0;
 
-  // Reload and scroll to top on logo click
-  logoContainer.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      window.location.reload();
-    }, 600);
+// Show the slide at given index
+function showSlide(index) {
+  if (index < 0) {
+    currentSlide = totalSlides - 1;
+  } else if (index >= totalSlides) {
+    currentSlide = 0;
+  } else {
+    currentSlide = index;
+  }
+  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  updateDots();
+}
+
+// Show previous slide
+function prevSlide() {
+  showSlide(currentSlide - 1);
+}
+
+// Show next slide
+function nextSlide() {
+  showSlide(currentSlide + 1);
+}
+
+// Dot navigation (optional)
+// Create dots dynamically if needed
+const dotsContainer = document.createElement('div');
+dotsContainer.id = 'custom-carousel-controls';
+dotsContainer.style.marginTop = '10px';
+dotsContainer.style.display = 'flex';
+dotsContainer.style.justifyContent = 'center';
+dotsContainer.style.gap = '10px';
+slider.parentElement.appendChild(dotsContainer);
+
+const dots = [];
+
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('button');
+  dot.classList.add('dot');
+  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+  dot.addEventListener('click', () => showSlide(i));
+  dotsContainer.appendChild(dot);
+  dots.push(dot);
+}
+
+function updateDots() {
+  dots.forEach((dot, i) => {
+    if (i === currentSlide) dot.classList.add('active');
+    else dot.classList.remove('active');
   });
+}
 
-  // Header highlight on interaction
-  function addHeaderHighlight() {
-    header.classList.add('active-highlight');
-    clearTimeout(header.highlightTimeout);
-    header.highlightTimeout = setTimeout(() => {
-      header.classList.remove('active-highlight');
-    }, 1000); // Highlight for 1 second after interaction
-  }
-
-  // Sidebar open/close functions
-  function closeCart() {
-    cartSidebar.classList.remove('open');
-    cartIcon.setAttribute('aria-expanded', 'false');
-    cartSidebar.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('cart-open');
-  }
-
-  function closeMenu() {
-    sidebar.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    sidebar.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('sidebar-open');
-  }
-
-  function closeSearch() {
-    searchIcon.classList.remove('active');
-    searchIcon.setAttribute('aria-expanded', 'false');
-    // Add any extra search close logic here
-  }
-
-  function openMenu() {
-    // Close cart and search if open
-    if (cartSidebar.classList.contains('open')) closeCart();
-    closeSearch();
-
-    sidebar.classList.add('open');
-    menuToggle.setAttribute('aria-expanded', 'true');
-    sidebar.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('sidebar-open');
-  }
-
-  function openCart() {
-    // Close menu and search if open
-    if (sidebar.classList.contains('open')) closeMenu();
-    closeSearch();
-
-    cartSidebar.classList.add('open');
-    cartIcon.setAttribute('aria-expanded', 'true');
-    cartSidebar.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('cart-open');
-  }
-
-  function toggleSearch() {
-    const isActive = searchIcon.classList.contains('active');
-
-    // Close menu and cart if open
-    if (sidebar.classList.contains('open')) closeMenu();
-    if (cartSidebar.classList.contains('open')) closeCart();
-
-    if (isActive) {
-      closeSearch();
-    } else {
-      searchIcon.classList.add('active');
-      searchIcon.setAttribute('aria-expanded', 'true');
-      // Add logic to show search input or modal here
-    }
-  }
-
-  // Toggle menu sidebar
-  menuToggle.addEventListener('click', () => {
-    addHeaderHighlight();
-    if (sidebar.classList.contains('open')) closeMenu();
-    else openMenu();
-  });
-
-  // Toggle cart sidebar
-  cartIcon.addEventListener('click', () => {
-    addHeaderHighlight();
-    if (cartSidebar.classList.contains('open')) closeCart();
-    else openCart();
-  });
-
-  // Toggle search
-  searchIcon.addEventListener('click', () => {
-    addHeaderHighlight();
-    toggleSearch();
-  });
-
-  // Close buttons inside sidebars
-  sidebarCloseBtn.addEventListener('click', () => {
-    addHeaderHighlight();
-    closeMenu();
-  });
-  cartCloseBtn.addEventListener('click', () => {
-    addHeaderHighlight();
-    closeCart();
-  });
-
-  // Keyboard accessibility for close buttons
-  sidebarCloseBtn.addEventListener('keydown', e => {
+// Keyboard support for arrows
+document.querySelectorAll('.arrow').forEach(arrow => {
+  arrow.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      addHeaderHighlight();
-      closeMenu();
+      if (arrow.classList.contains('left')) prevSlide();
+      else nextSlide();
     }
   });
+});
 
-  cartCloseBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      addHeaderHighlight();
-      closeCart();
-    }
-  });
-
-  // Policies dropdown toggle
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
-
-  policiesLink.addEventListener('click', e => {
-    e.preventDefault();
-    const expanded = policiesLink.getAttribute('aria-expanded') === 'true';
-    if (expanded) {
-      policiesLink.setAttribute('aria-expanded', 'false');
-      policiesLink.classList.remove('arrow-open');
-      policiesLink.classList.add('arrow-closed');
-      policiesDropdown.classList.remove('open');
-      policiesDropdown.setAttribute('aria-hidden', 'true');
-    } else {
-      policiesLink.setAttribute('aria-expanded', 'true');
-      policiesLink.classList.remove('arrow-closed');
-      policiesLink.classList.add('arrow-open');
-      policiesDropdown.classList.add('open');
-      policiesDropdown.setAttribute('aria-hidden', 'false');
-    }
-  });
-
-  // Slider functions
-  function showSlide(index) {
-    if (index < 0) {
-      currentSlide = totalSlides - 1;
-    } else if (index >= totalSlides) {
-      currentSlide = 0;
-    } else {
-      currentSlide = index;
-    }
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  // Keyboard controls for slider arrows
-  document.querySelectorAll('.arrow').forEach(arrow => {
-    arrow.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (arrow.classList.contains('left')) prevSlide();
-        else nextSlide();
-      }
-    });
-  });
-
-  // Initialize first slide
-  showSlide(0);
+// Initialize first slide and dots
+showSlide(0);
 </script>
 
 </body>

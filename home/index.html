@@ -92,7 +92,6 @@
     .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
     .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
 
-    /* Cart bag icon */
     .icon-btn.cart-toggle {
       width: 25px;
       height: 24px;
@@ -291,12 +290,10 @@
       transform: translateX(0);
     }
 
-    /* X close buttons inside sidebars placed top-left over menu icon */
-    .sidebar .close-btn,
-    .cart-sidebar .close-btn {
+   .sidebar .close-btn {
       position: fixed;
       top: 16px;
-      right: 16px;
+      left: 16px; /* Move X to top left for sidebar */
       width: 24px;
       height: 24px;
       cursor: pointer;

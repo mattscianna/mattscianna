@@ -31,19 +31,19 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    height: 64px;
+    height: 120px; /* Increased to match the MS logo height */
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: transparent;
+    background-color: #cfcdce; /* Light gray as requested */
     pointer-events: none;
     z-index: 1600;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  }
 
-  header.active-highlight {
-    box-shadow: 0 0 0 2px #e0e0e0; /* light gray border */
-    background-color: rgba(240, 240, 240, 0.3);
+  /* Clean up any unwanted border effects */
+    border: none;
+    box-shadow: none;
+    outline: none;
   }
 
   .icon-btn.menu-toggle,
@@ -405,7 +405,6 @@
     color: black;
   }
 
-  /* Slider and arrows */
   .image-box {
     margin-top: 0px;
     width: 100%;
@@ -454,7 +453,7 @@
   }
 
   #custom-carousel-controls button:hover {
-    color: gray;
+    color: black;
   }
 
   .dot {

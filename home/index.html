@@ -20,10 +20,9 @@
     height: 100%;
   }
 
-  body.sidebar-open, body.cart-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
+  body.sidebar-open,
+  body.cart-open {
+    overflow-y: hidden;
   }
 
   header {
@@ -31,19 +30,19 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    height: 120px; /* Increased to match the MS logo height */
+    height: 120px;
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #cfcdce; /* Light gray as requested */
-    pointer-events: none;
+    background-color: transparent;
     z-index: 1600;
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+    pointer-events: none; /* Disable pointer events initially */
+  }
 
-  /* Clean up any unwanted border effects */
-    border: none;
-    box-shadow: none;
-    outline: none;
+  body.header-active header {
+    background-color: #cfcdce;
+    pointer-events: auto; /* Enable pointer events when header is active */
   }
 
   .icon-btn.menu-toggle,
@@ -63,9 +62,6 @@
     left: 50%;
     top: 4px;
     transform: translateX(-50%);
-    pointer-events: auto;
-    cursor: pointer;
-    user-select: none;
     height: auto;
     display: flex;
     justify-content: center;
@@ -78,7 +74,6 @@
     filter: none;
   }
 
-  /* Hamburger menu icon */
   .icon-btn.menu-toggle {
     width: 24px;
     height: 24px;
@@ -99,29 +94,10 @@
   .icon-btn.menu-toggle span:nth-child(2) { top: 10px; }
   .icon-btn.menu-toggle span:nth-child(3) { top: 16px; }
 
-  /* Cart icon */
-  .icon-btn.cart-toggle {
-    width: 25px;
-    height: 24px;
-    margin-left: 16px;
-    position: relative;
-  }
-
   .icon-btn.cart-toggle img {
     width: 100%;
     height: auto;
     filter: brightness(0) invert(1);
-  }
-
-  /* Search icon */
-  .icon-btn.search-toggle {
-    width: 24px;
-    height: 24px;
-    margin-left: 8px; /* a bit of space before cart */
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .icon-btn.search-toggle svg {
@@ -130,315 +106,9 @@
     height: 100%;
   }
 
-  /* Sidebars */
-  .sidebar, .cart-sidebar {
-    position: fixed;
-    top: 0;
-    background: white;
-    color: black;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 400;
-    font-size: 24px;
-    transition: transform 0.4s ease-in-out;
-    z-index: 1700;
-    overflow-y: auto;
-    height: 100vh;
-    text-align: center;
-    padding-top: 80px;
-    box-shadow: none;
-  }
-
-  /* Sidebar (left) */
-  .sidebar {
-    left: 0;
-    width: 100vw;
-    max-width: 320px;
-    padding-left: 0;
-    padding-right: 0;
-    transform: translateX(-100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    background-color: white;
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-top: 0;
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
-  }
-
-  .sidebar nav a {
-    color: black;
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: 400;
-    text-align: center;
-    transition: color 0.3s ease, border-bottom 0.3s ease;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 2px;
-    cursor: pointer;
-    position: relative;
-    user-select: none;
-    display: inline-block;
-    max-width: max-content;
-    margin: 0 auto;
-  }
-
-  .sidebar nav a:hover {
-    color: #333;
-    border-bottom-color: #333;
-  }
-
-  .sidebar nav a.current {
-    color: #666;
-    font-weight: 550;
-    border-bottom-color: #666;
-  }
-
-  .sidebar nav a.current:hover {
-    border-bottom-color: #aaa;
-  }
-
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 40px;       /* size of the arrow */
-    color: white;          /* arrow color */
-    background-color: rgba(0, 0, 0, 0.4); /* semi-transparent background for visibility */
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    cursor: pointer;
-    user-select: none;
-    z-index: 10;
-    transition: background-color 0.3s ease;
-  }
-
-  .arrow:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-
-  .arrow.left {
-    left: 10px;  /* position left arrow */
-  }
-
-  .arrow.right {
-    right: 10px; /* position right arrow */
-  }
-
-  .sidebar nav a.policies-link::after {
-    content: "";
-    position: absolute;
-    right: -18px;
-    top: 50%;
-    transform: translateY(-50%) rotate(90deg);
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .sidebar nav a.policies-link.arrow-open::after {
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  .sidebar nav a.policies-link.arrow-closed::after {
-    transform: translateY(-50%) rotate(90deg);
-  }
-
-  .sidebar nav a.policies-link:hover::after {
-    opacity: 1;
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  .policies-dropdown {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-left: 16px;
-    font-size: 18px;
-    font-weight: 400;
-    color: white;
-    user-select: none;
-    text-align: left;
-    max-width: 320px;
-    margin-top: 0;
-    margin-bottom: 16px;
-  }
-
-  .policies-dropdown.open {
-    max-height: 500px;
-    margin-top: 8px;
-  }
-
-  .policies-dropdown a {
-    color: white;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    cursor: pointer;
-    transition: border-bottom 0.3s ease;
-    user-select: none;
-    display: inline-block;
-    max-width: max-content;
-    margin-left: 8px;
-  }
-
-  .policies-dropdown a:hover {
-    border-bottom: 1px solid white;
-  }
-
-  /* Cart sidebar (right) */
-  .cart-sidebar {
-    right: 0;
-    width: 50vw;
-    max-width: 280px;
-    padding: 80px 20px;
-    transform: translateX(100%);
-    text-align: left;
-    background: white;
-    color: black;
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    z-index: 1700;
-    transition: transform 0.4s ease-in-out;
-    box-shadow: none;
-  }
-
-  .cart-sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar .close-btn {
-    position: fixed;
-    top: 17px;
-    left: 17px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 1800;
-    background: transparent;
-  }
-
-  .cart-sidebar .close-btn {
-    position: fixed;
-    top: 17px;
-    right: 17px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 1800;
-    background: transparent;
-  }
-
-  .close-btn:before,
-  .close-btn:after {
-    content: '';
-    position: absolute;
-    left: 11px;
-    top: 0;
-    width: 2px;
-    height: 24px;
-    background-color: black;
-  }
-
-  .close-btn:before {
-    transform: rotate(45deg);
-  }
-
-  .close-btn:after {
-    transform: rotate(-45deg);
-  }
-
-  /* Product image and info */
-  .product-image-box {
-    width: 90vw;
-    max-width: 600px;
-    margin: 0 auto 8px auto;
-    background: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: visible;
-    cursor: pointer;
-    margin-top: 120px;
-  }
-
-  .jersey-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    transition: transform 0.25s ease-in-out;
-    image-rendering: auto;
-  }
-
-  .jersey-img:hover {
-    transform: scale(1.03);
-  }
-
-  .product-info {
-    text-align: center;
-    margin-bottom: 24px;
-    margin-top: 16px;
-    user-select: none;
-    color: white;
-  }
-
-  .product-title {
-    font-weight: 700;
-    font-size: 22px;
-    margin-bottom: 4px;
-    cursor: pointer;
-    transition: border-bottom 0.2s ease;
-    user-select: none;
-    color: black;
-  }
-
-  .product-title:hover {
-    border-bottom: 1.5px solid white;
-  }
-
-  .product-color {
-    font-weight: 400;
-    font-size: 16px;
-    color: grey;
-    margin-bottom: 4px;
-  }
-
-  .product-price {
-    font-weight: 400;
-    font-size: 20px;
-    color: black;
-  }
-
   .image-box {
-    margin-top: 0px;
+    margin-top: 120px;
     width: 100%;
-    top: 0;
     max-width: 600px;
     aspect-ratio: 3 / 4;
     background: black;
@@ -482,10 +152,6 @@
     transition: color 0.3s ease;
   }
 
-  #custom-carousel-controls button:hover {
-    color: black;
-  }
-
   .dot {
     width: 10px;
     height: 10px;
@@ -497,26 +163,15 @@
     transition: background-color 0.3s ease;
   }
 
-.dot.active {
-  background-color: black;
-}
-
-  @media (max-width: 767px) {
-    .sidebar nav a {
-      text-align: center;
-      display: inline-block;
-    }
-
-    .policies-dropdown {
-      margin-left: 0;
-    }
+  .dot.active {
+    background-color: black;
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="left-icons" style="width: 64px; display: flex; align-items: center;">
+<header id="siteHeader">
+  <div class="left-icons">
     <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </div>
@@ -526,28 +181,31 @@
     <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo-WHITE.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
   </div>
 
-  <div class="right-icons" style="width: 96px; display: flex; justify-content: flex-end; align-items: center;">
-    <!-- Search Button -->
-    <div id="searchIcon" class="icon-btn search-toggle" role="button" tabindex="0" aria-label="Search" style="margin-right: 16px;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <div class="right-icons">
+    <div id="searchIcon" class="icon-btn search-toggle" role="button" tabindex="0" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="20" height="20" viewBox="0 0 24 24">
         <path d="M10,2A8,8 0 0,1 18,10C18,12.21 17.21,14.21 15.83,15.59L21.71,21.46L20.29,22.88L14.41,17C13.04,18.38 11.04,19.17 9,19.17A8,8 0 0,1 1,11.17A8,8 0 0,1 10,2M10,4A6,6 0 0,0 4,10A6,6 0 0,0 10,16A6,6 0 0,0 16,10A6,6 0 0,0 10,4Z"/>
       </svg>
     </div>
 
-    <!-- Cart Button -->
-    <div id="cartIcon" class="icon-btn cart-toggle" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false" title="Cart">
+    <div id="cartIcon" class="icon-btn cart-toggle" role="button" tabindex="0" aria-label="Toggle cart">
       <img src="https://via.placeholder.com/24?text=🛍️" alt="Bag" />
-      <div id="cartCount" class="cart-count" style="display:none;">0</div>
     </div>
   </div>
 </header>
 
-<div class="image-box" aria-live="polite" aria-label="Product image slider" style="position: relative;">
+<div class="image-box">
   <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+1');" role="img" aria-label="Slide 1"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+1');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');"></div>
+    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');"></div>
   </div>
+  <div id="custom-carousel-controls">
+    <button class="carousel-arrow" onclick="prevSlide()">&#10094;</button>
+    <div id="carouselDots"></div>
+    <button class="carousel-arrow" onclick="nextSlide()">&#10095;</button>
+  </div>
+</div>
   
 <script>
   // Reload current page and scroll to top after 1 second
@@ -601,198 +259,185 @@
 </nav>
 
 <script>
-  // Elements
+  // Body reference
   const body = document.body;
+
+  // Sidebar elements
   const sidebar = document.getElementById('sidebar');
-  const cartSidebar = document.getElementById('cartSidebar');
+  const cart = document.getElementById('cartSidebar');
   const menuToggle = document.getElementById('menuToggle');
   const cartToggle = document.getElementById('cartIcon');
+  const allCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
   const searchToggle = document.getElementById('searchIcon');
-  const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
 
-  // Sidebar toggle
-  menuToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-    cartSidebar.classList.remove('open');
-    body.classList.toggle('sidebar-open');
-    body.classList.remove('cart-open');
-    sidebar.setAttribute('aria-hidden', !sidebar.classList.contains('open'));
-    cartSidebar.setAttribute('aria-hidden', 'true');
+  // Header gray background on interaction
+  let headerActive = false;
+  const headerEl = document.querySelector('header');
+
+  function activateHeader() {
+    if (!headerActive) {
+      body.classList.add('header-active');
+      headerActive = true;
+    }
+  }
+
+  function deactivateHeader() {
+    if (headerActive) {
+      body.classList.remove('header-active');
+      headerActive = false;
+    }
+  }
+
+  headerEl.addEventListener('click', e => {
+    activateHeader();
+    e.stopPropagation();
   });
 
-  // Cart toggle
-  cartToggle.addEventListener('click', () => {
-    cartSidebar.classList.toggle('open');
+  document.addEventListener('click', e => {
+    if (!e.target.closest('header')) deactivateHeader();
+  });
+
+  // Sidebar toggle logic
+  function closeSidebars() {
     sidebar.classList.remove('open');
-    body.classList.toggle('cart-open');
-    body.classList.remove('sidebar-open');
-    cartSidebar.setAttribute('aria-hidden', !cartSidebar.classList.contains('open'));
-    sidebar.setAttribute('aria-hidden', 'true');
+    cart.classList.remove('open');
+    body.classList.remove('sidebar-open', 'cart-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    cartToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  menuToggle.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) closeSidebars();
+    else {
+      sidebar.classList.add('open');
+      body.classList.add('sidebar-open');
+      sidebar.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      cart.classList.remove('open');
+      cartToggle.setAttribute('aria-expanded', 'false');
+      body.classList.remove('cart-open');
+    }
   });
 
-  // Search
-  searchToggle.addEventListener('click', () => {
-    alert('Search toggled! Implement your search UI here.');
-  });
-
-  // Close buttons
-  sidebarCloseBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+  cartToggle.addEventListener('click', () => {
+    if (cart.classList.contains('open')) closeSidebars();
+    else {
+      cart.classList.add('open');
+      body.classList.add('cart-open');
+      cart.setAttribute('aria-hidden', 'false');
+      cartToggle.setAttribute('aria-expanded', 'true');
       sidebar.classList.remove('open');
-      cartSidebar.classList.remove('open');
-      body.classList.remove('sidebar-open', 'cart-open');
-      sidebar.setAttribute('aria-hidden', 'true');
-      cartSidebar.setAttribute('aria-hidden', 'true');
-    });
+      menuToggle.setAttribute('aria-expanded', 'false');
+      body.classList.remove('sidebar-open');
+    }
   });
 
-  // Keyboard toggles
-  [menuToggle, cartToggle, searchToggle].forEach(toggle => {
-    toggle.addEventListener('keydown', e => {
+  allCloseBtns.forEach(btn => {
+    btn.addEventListener('click', closeSidebars);
+  });
+
+  [menuToggle, cartToggle, searchToggle].forEach(el => {
+    el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggle.click();
+        el.click();
       }
     });
   });
 
-  // ESC key closes sidebars
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      sidebar.classList.remove('open');
-      cartSidebar.classList.remove('open');
-      body.classList.remove('sidebar-open', 'cart-open');
-      sidebar.setAttribute('aria-hidden', 'true');
-      cartSidebar.setAttribute('aria-hidden', 'true');
-    }
+    if (e.key === 'Escape') closeSidebars();
   });
 
-  // Carousel
+  // SEARCH toggle placeholder
+  searchToggle.addEventListener('click', () => {
+    activateHeader();
+    alert('Search UI toggle here');
+  });
+
+  // CAROUSEL setup
   const slider = document.getElementById('slider');
-  const slides = slider.children;
-  const totalSlides = slides.length;
-  let currentSlide = 0;
+  const slides = Array.from(slider.children);
+  const numSlides = slides.length;
+  let current = 0;
 
-  function showSlide(index) {
-    if (index < 0) currentSlide = totalSlides - 1;
-    else if (index >= totalSlides) currentSlide = 0;
-    else currentSlide = index;
-
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    updateDots();
+  function showSlide(idx) {
+    current = (idx + numSlides) % numSlides;
+    slider.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
+  function prevSlide() { showSlide(current - 1); }
+  function nextSlide() { showSlide(current + 1); }
 
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  // Carousel controls container (below image)
-  const controlsContainer = document.createElement('div');
-  controlsContainer.id = 'custom-carousel-controls';
-  controlsContainer.style.display = 'flex';
-  controlsContainer.style.justifyContent = 'center';
-  controlsContainer.style.alignItems = 'center';
-  controlsContainer.style.gap = '12px';
-  controlsContainer.style.marginTop = '8px';
+  // Build `<- ••• ->` controls
+  const ctrls = document.createElement('div');
+  ctrls.id = 'custom-carousel-controls';
 
   const leftBtn = document.createElement('button');
-  leftBtn.innerHTML = '&#10094;';
-  leftBtn.className = 'arrow left';
-  leftBtn.style.position = 'static';
-  leftBtn.style.fontSize = '20px';
-  leftBtn.style.background = 'none';
-  leftBtn.style.border = 'none';
-  leftBtn.style.cursor = 'pointer';
-  leftBtn.style.color = 'black';
+  leftBtn.innerHTML = '&#8249;'; // Unicode for ‹
   leftBtn.addEventListener('click', prevSlide);
+  leftBtn.className = 'arrow left';
+  leftBtn.setAttribute('aria-label', 'Previous slide');
 
   const rightBtn = document.createElement('button');
-  rightBtn.innerHTML = '&#10095;';
-  rightBtn.className = 'arrow right';
-  rightBtn.style.position = 'static';
-  rightBtn.style.fontSize = '20px';
-  rightBtn.style.background = 'none';
-  rightBtn.style.border = 'none';
-  rightBtn.style.cursor = 'pointer';
-  rightBtn.style.color = 'black';
+  rightBtn.innerHTML = '&#8250;'; // Unicode for ›
   rightBtn.addEventListener('click', nextSlide);
+  rightBtn.className = 'arrow right';
+  rightBtn.setAttribute('aria-label', 'Next slide');
 
-  const dots = [];
+  const dots = slides.map((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot';
+    d.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    d.addEventListener('click', () => showSlide(i));
+    return d;
+  });
 
-  const dotContainer = document.createElement('div');
-  dotContainer.style.display = 'flex';
-  dotContainer.style.gap = '10px';
+  const dotsWrapper = document.createElement('div');
+  dotsWrapper.style.display = 'flex';
+  dotsWrapper.style.gap = '8px';
+  dots.forEach(d => dotsWrapper.appendChild(d));
 
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.classList.add('dot');
-    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-    dot.addEventListener('click', () => showSlide(i));
-    dots.push(dot);
-    dotContainer.appendChild(dot);
-  }
+  ctrls.append(leftBtn, dotsWrapper, rightBtn);
+  slider.parentElement.appendChild(ctrls);
 
-  controlsContainer.appendChild(leftBtn);
-  controlsContainer.appendChild(dotContainer);
-  controlsContainer.appendChild(rightBtn);
+  showSlide(0);
 
-  slider.parentElement.appendChild(controlsContainer);
-
-  function updateDots() {
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentSlide);
-    });
-  }
-
-  // Keyboard arrow button support
   [leftBtn, rightBtn].forEach(btn => {
     btn.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (['Enter', ' '].includes(e.key)) {
         e.preventDefault();
         btn.click();
       }
     });
   });
 
-  showSlide(0);
-
-  // Policies dropdown
+  // Policies dropdown toggle
   const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
+  const polDrop = document.getElementById('policiesDropdown');
 
   policiesLink.addEventListener('click', e => {
     e.preventDefault();
-    const isOpen = policiesDropdown.classList.contains('open');
-    if (isOpen) {
-      policiesDropdown.classList.remove('open');
-      policiesLink.classList.remove('arrow-open');
-      policiesLink.classList.add('arrow-closed');
-      policiesLink.setAttribute('aria-expanded', 'false');
-      policiesDropdown.setAttribute('aria-hidden', 'true');
-    } else {
-      policiesDropdown.classList.add('open');
-      policiesLink.classList.add('arrow-open');
-      policiesLink.classList.remove('arrow-closed');
-      policiesLink.setAttribute('aria-expanded', 'true');
-      policiesDropdown.setAttribute('aria-hidden', 'false');
-    }
+    const open = polDrop.classList.toggle('open');
+    policiesLink.classList.toggle('arrow-open', open);
+    policiesLink.classList.toggle('arrow-closed', !open);
+    polDrop.setAttribute('aria-hidden', !open);
+    policiesLink.setAttribute('aria-expanded', open);
   });
 
   policiesLink.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (['Enter', ' '].includes(e.key)) {
       e.preventDefault();
       policiesLink.click();
     }
   });
 
-  // Logo click scroll + reload
+  // Logo reload + scroll
   document.getElementById('logoContainer').addEventListener('click', () => {
-    setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 1000);
-    location.reload();
+    activateHeader();
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 300);
+    setTimeout(() => location.reload(), 600);
   });
 </script>
 

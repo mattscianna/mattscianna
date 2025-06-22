@@ -554,7 +554,7 @@
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
   </div>
-</div> <!-- ✅ This closes the image-box correctly -->
+</div>
 
 <script>
   // Reload current page and scroll to top after 1 second
@@ -566,7 +566,7 @@
   });
 </script>
 
-<!-- ✅ Product section now OUTSIDE the image-box -->
+<!-- Product section -->
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
   <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="Red Jersey">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
@@ -589,18 +589,16 @@
 
 <nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true">
   <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar"></div>
-  <nav>
-    <a href="https://mattscianna.com/home" class="current">HOME</a>
-    <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
-    <a href="https://mattscianna.com/vision">VISION</a>
-    <a href="https://mattscianna.com/contact">CONTACT</a>
-    <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
-    <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
-      <a href="/return-policy">RETURN POLICY</a>
-      <a href="/shipping-policy">SHIPPING POLICY</a>
-      <a href="/privacy-policy">PRIVACY POLICY</a>
-    </div>
-  </nav>
+  <a href="https://mattscianna.com/home" class="current">HOME</a>
+  <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+  <a href="https://mattscianna.com/vision">VISION</a>
+  <a href="https://mattscianna.com/contact">CONTACT</a>
+  <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+  <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+    <a href="/return-policy">RETURN POLICY</a>
+    <a href="/shipping-policy">SHIPPING POLICY</a>
+    <a href="/privacy-policy">PRIVACY POLICY</a>
+  </div>
 </nav>
 
 <nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">

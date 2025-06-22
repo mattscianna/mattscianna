@@ -98,7 +98,7 @@ header {
   left: 0;
   right: 0;
   height: 56px;
-  background-color: transparent; /* transparent by default */
+  background-color: transparent;
   z-index: 2000;
   border-bottom: none;
   transition: background-color 0.4s ease, border-bottom 0.4s ease;
@@ -111,7 +111,7 @@ header {
 header.active-search-bg {
   background-color: white;
   border-bottom: 1px solid #eee;
-  /* This white background is layered underneath icons */
+  /* white background layered underneath icons */
 }
 
 /* Header container with icons and logo */
@@ -164,28 +164,30 @@ header.active-search-bg {
   transition: filter 0.3s ease;
 }
 
-/* When search is active, header background turns black, icons & logo turn white */
-/* But you want white header bar under icons, so we handle header background as white */
-/* and invert icons to black normally, then icons invert on black background inside search bar */
-
+/* When search is active: header background is black, but inner container has white bg */
+/* Icons and logo inside container turn black for contrast */
 header.search-active {
   background-color: black;
   border-bottom: 1px solid #222;
   color: white;
-  /* Keep header container background white to layer behind icons */
 }
 header.search-active .header-container {
   background-color: white;
-  z-index: 2001; /* layered above header black background */
+  z-index: 2001;
   padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+/* Logo black on white container */
 header.search-active #logoContainer {
   color: black;
   transition: color 0.3s ease;
 }
+/* Icons black on white container */
 header.search-active .icon-btn svg,
 header.search-active .icon-btn img {
-  filter: invert(0); /* icons black on white */
+  filter: invert(0);
 }
 
 /* Cart count */
@@ -202,20 +204,20 @@ header.search-active .icon-btn img {
   display: none;
 }
 
-/* Search bar container */
+/* Search bar container - overlays carousel */
 #searchBarContainer {
   position: fixed;
-  top: 56px;
+  top: 56px; /* just below fixed header */
   left: 0;
   right: 0;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.85); /* semi-transparent black */
   border-top: 1px solid #222;
   transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
   padding: 0 16px;
-  z-index: 1999;
+  z-index: 2100; /* above header and carousel */
 }
 #searchBarContainer.active {
   max-height: 60px;
@@ -238,13 +240,14 @@ header.search-active .icon-btn img {
 
 /* Image box and slider */
 .image-box {
-  margin: 88px auto 32px; /* margin top to clear fixed header + search */
+  margin: 0 auto 32px; /* no top margin */
   width: 100%;
   max-width: 600px;
   aspect-ratio: 3 / 4;
   background: black;
   overflow: hidden;
   position: relative;
+  z-index: 1; /* below search bar */
 }
 .slider {
   display: flex;
@@ -361,7 +364,7 @@ header.search-active .icon-btn img {
     padding: 80px 16px;
   }
   .image-box {
-    margin-top: 120px;
+    margin-top: 0;
     padding: 0 16px;
   }
   .sidebar a {
@@ -375,17 +378,16 @@ header.search-active .icon-btn img {
 }
 </style>
 
-<header>
+<!-- Header -->
+<header id="mainHeader">
   <div class="header-container">
     <button id="menuToggle" aria-label="Toggle menu" class="icon-btn">
       <img src="https://img.icons8.com/ios-filled/24/menu--v1.png" alt="Menu Icon" />
     </button>
-    <div id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
-      MATT SCIANNA
-    </div>
+    <div id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">MATT SCIANNA</div>
     <div class="header-icons">
       <button id="searchIcon" aria-label="Search" class="icon-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M10,2A8,8 0 0,1 18,10C18,12.21 17.21,14.21 15.83,15.59L21.71,21.46L20.29,22.88L14.41,17C13.04,18.38 11.04,19.17 9,19.17A8,8 0 0,1 1,11.17A8,8 0 0,1 10,2M10,4A6,6 0 0,0 4,10A6,6 0 0,0 10,16A6,6 0 0,0 16,10A6,6 0 0,0 10,4Z"/>
         </svg>
       </button>
@@ -397,351 +399,280 @@ header.search-active .icon-btn img {
   </div>
 </header>
 
-<div id="searchBarContainer" style="max-height: 0; opacity: 0; overflow: hidden; background-color: white; border-top: 1px solid #eee; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;">
-  <input type="text" id="searchInput" placeholder="Search..." />
+<!-- Search Bar -->
+<div id="searchBarContainer">
+  <input type="text" id="searchInput" placeholder="SEARCH FOR ITEMS..." />
 </div>
 
-<div class="image-box" aria-live="polite" aria-label="Product image slider" style="position: relative;">
+<!-- Image Carousel -->
+<div class="image-box">
   <div class="slider" id="slider">
-    <div class="slide" role="img" aria-label="Slide 1" style="background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png');"></div>
-    <div class="slide" role="img" aria-label="Slide 2" style="background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1178.png');"></div>
-    <div class="slide" role="img" aria-label="Slide 3" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');"></div>
+    <div class="slide" style="background-image: url(...);" aria-label="Slide 1"></div>
+    <div class="slide" style="background-image: url(...);" aria-label="Slide 2"></div>
+    <div class="slide" style="background-image: url(...);" aria-label="Slide 3"></div>
   </div>
 </div>
 
-<!-- New product grid below the carousel -->
-<div id="product-list" style="
-  max-width: 600px;
-  margin: 32px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-">
-  <div class="product-item" style="text-align: center; cursor: pointer;">
-    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png" alt="TWO-FIVE JERSEY - RED" style="width: 100%; height: auto; border-radius: 8px;" />
-    <div style="font-weight: 700; margin-top: 8px; font-size: 14px;">TWO-FIVE JERSEY - RED</div>
-    <div style="font-size: 13px;">$49.99</div>
+<!-- Product Grid -->
+<div id="product-list">
+  <div class="product-item">
+    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png" alt="TWO-FIVE JERSEY - RED" />
+    <div class="title">TWO-FIVE JERSEY - RED</div>
+    <div class="price">$49.99</div>
   </div>
-  <div class="product-item" style="text-align: center; cursor: pointer;">
-    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1178.png" alt="TWO-FIVE JERSEY - WHITE" style="width: 100%; height: auto; border-radius: 8px;" />
-    <div style="font-weight: 700; margin-top: 8px; font-size: 14px;">TWO-FIVE JERSEY - WHITE</div>
-    <div style="font-size: 13px;">$49.99</div>
+  <div class="product-item">
+    <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1178.png" alt="TWO-FIVE JERSEY - WHITE" />
+    <div class="title">TWO-FIVE JERSEY - WHITE</div>
+    <div class="price">$49.99</div>
   </div>
-  <!-- Add more products here if needed -->
 </div>
-
-<nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true" tabindex="-1">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar"></div>
-  <a href="https://mattscianna.com/home" class="current">HOME</a>
-  <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
-  <a href="https://mattscianna.com/contact">CONTACT</a>
-  <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
-  <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
-    <a href="/return-policy">RETURN POLICY</a>
-    <a href="/shipping-policy">SHIPPING POLICY</a>
-    <a href="/privacy-policy">PRIVACY POLICY</a>
-  </div>
-</nav>
-
-<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1" role="dialog" aria-modal="true">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close cart sidebar"></div>
-  <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals">
-    <div class="cart-item">
-      <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png" alt="Red Jersey" />
-      <div class="cart-item-details">
-        <div class="cart-item-title">TWO-FIVE JERSEY - RED</div>
-        <div class="cart-item-quantity">Quantity: 1</div>
-      </div>
-      <div class="cart-item-price">$49.99</div>
-    </div>
-    <div class="cart-total">Total: $49.99</div>
-    <button class="checkout-btn" type="button">Checkout</button>
-  </div>
-</nav>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const body = document.body;
-    const sidebar = document.getElementById('sidebar');
-    const cartSidebar = document.getElementById('cartSidebar');
-    const menuToggle = document.getElementById('menuToggle');
-    const cartToggle = document.getElementById('cartIcon');
-    const searchToggle = document.getElementById('searchIcon');
-    const closeButtons = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
-    const policiesLink = document.getElementById('policiesLink');
-    const policiesDropdown = document.getElementById('policiesDropdown');
-    const slider = document.getElementById('slider');
-    const logo = document.getElementById('logoContainer');
-    const searchBarContainer = document.getElementById('searchBarContainer');
-    const searchInput = document.getElementById('searchInput');
-    const menuToggleImg = menuToggle.querySelector('img');
-    const cartIconImg = cartToggle.querySelector('img');
-    const searchSvg = searchToggle.querySelector('svg');
-    const slides = slider?.children || [];
+document.addEventListener('DOMContentLoaded', () => {
+  const body = document.body;
+  const sidebar = document.getElementById('sidebar');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const cartToggle = document.getElementById('cartIcon');
+  const searchToggle = document.getElementById('searchIcon');
+  const closeButtons = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+  const slider = document.getElementById('slider');
+  const logo = document.getElementById('logoContainer');
+  const searchBarContainer = document.getElementById('searchBarContainer');
+  const searchInput = document.getElementById('searchInput');
+  const menuToggleImg = menuToggle?.querySelector('img');
+  const cartIconImg = cartToggle?.querySelector('img');
+  const searchSvg = searchToggle?.querySelector('svg');
+  const slides = slider?.children || [];
 
-    let scrollTop = 0;
-    let searchOpen = false;
+  let scrollTop = 0;
+  let searchOpen = false;
 
-    function lockBodyScroll() {
-      scrollTop = window.scrollY || window.pageYOffset;
-      body.style.position = 'fixed';
-      body.style.top = `-${scrollTop}px`;
-      body.style.width = '100%';
-      body.classList.add('sidebar-open');
-    }
+  function lockBodyScroll() {
+    scrollTop = window.scrollY || window.pageYOffset;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollTop}px`;
+    body.classList.add('sidebar-open');
+  }
 
-    function unlockBodyScroll() {
-      body.classList.remove('sidebar-open');
-      body.style.position = '';
-      body.style.top = '';
-      window.scrollTo(0, scrollTop);
-    }
+  function unlockBodyScroll() {
+    body.classList.remove('sidebar-open');
+    body.style.position = '';
+    body.style.top = '';
+    window.scrollTo(0, scrollTop);
+  }
 
-    function toggleSidebar(target, other, toggleBtn) {
-      const isOpen = target.classList.contains('open');
-
-      if (isOpen) {
-        target.classList.remove('open');
-        target.setAttribute('aria-hidden', 'true');
-        unlockBodyScroll();
-        toggleBtn?.focus();
-      } else {
-        other?.classList.remove('open');
-        other?.setAttribute('aria-hidden', 'true');
-
-        if (target === cartSidebar && window.innerWidth <= 767) {
-          cartSidebar.style.width = '50vw';
-        } else if (target === cartSidebar) {
-          cartSidebar.style.width = '';
-        }
-
-        target.classList.add('open');
-        target.setAttribute('aria-hidden', 'false');
-        lockBodyScroll();
-
-        const focusable = target.querySelector('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])');
-        focusable?.focus();
-      }
-    }
-
-    function closeSidebars() {
-      sidebar?.classList.remove('open');
-      cartSidebar?.classList.remove('open');
-      sidebar?.setAttribute('aria-hidden', 'true');
-      cartSidebar?.setAttribute('aria-hidden', 'true');
+  function toggleSidebar(target, other, toggleBtn) {
+    const isOpen = target.classList.contains('open');
+    if (isOpen) {
+      target.classList.remove('open');
+      target.setAttribute('aria-hidden', 'true');
       unlockBodyScroll();
+      toggleBtn?.focus();
+    } else {
+      other?.classList.remove('open');
+      other?.setAttribute('aria-hidden', 'true');
+      target.classList.add('open');
+      target.setAttribute('aria-hidden', 'false');
+      lockBodyScroll();
+      target.querySelector('a, button, [tabindex]')?.focus();
     }
+  }
 
-    function openSearch() {
-      if (!searchBarContainer) return;
-      searchOpen = true;
+  function closeSidebars() {
+    sidebar?.classList.remove('open');
+    cartSidebar?.classList.remove('open');
+    sidebar?.setAttribute('aria-hidden', 'true');
+    cartSidebar?.setAttribute('aria-hidden', 'true');
+    unlockBodyScroll();
+  }
 
-      // Show white background behind header container
-      const headerContainer = document.querySelector('.header-container');
-      headerContainer.style.backgroundColor = 'white';
-      headerContainer.style.borderBottom = '1px solid #eee';
+  function openSearch() {
+    searchOpen = true;
+    document.querySelector('header')?.classList.add('search-active');
+    searchBarContainer.classList.add('active');
+    searchInput.focus();
+  }
 
-      // Icons black on white
-      menuToggleImg.style.filter = 'invert(0)';
-      cartIconImg.style.filter = 'invert(0)';
-      searchSvg.setAttribute('fill', 'black');
+  function closeSearch() {
+    searchOpen = false;
+    document.querySelector('header')?.classList.remove('search-active');
+    searchBarContainer.classList.remove('active');
+    searchInput.value = '';
+  }
 
-      // Show search bar with smooth transitions
-      searchBarContainer.style.maxHeight = '60px';
-      searchBarContainer.style.opacity = '1';
-      searchBarContainer.style.padding = '8px 16px';
-
-      searchInput.focus();
+  function toggleSearchBar() {
+    if (searchOpen) closeSearch();
+    else {
+      closeSidebars();
+      openSearch();
     }
+  }
 
-    function closeSearch() {
-      if (!searchBarContainer) return;
-      searchOpen = false;
+  menuToggle?.addEventListener('click', () => {
+    closeSearch();
+    toggleSidebar(sidebar, cartSidebar, menuToggle);
+  });
 
-      // Transparent header container
-      const headerContainer = document.querySelector('.header-container');
-      headerContainer.style.backgroundColor = 'transparent';
-      headerContainer.style.borderBottom = 'none';
+  cartToggle?.addEventListener('click', () => {
+    closeSearch();
+    toggleSidebar(cartSidebar, sidebar, cartToggle);
+  });
 
-      // Icons remain black (no invert)
-      menuToggleImg.style.filter = 'invert(0)';
-      cartIconImg.style.filter = 'invert(0)';
-      searchSvg.setAttribute('fill', 'black');
-
-      // Hide search bar smoothly
-      searchBarContainer.style.maxHeight = '0';
-      searchBarContainer.style.opacity = '0';
-      searchBarContainer.style.padding = '0 16px';
-
-      searchInput.value = '';
-    }
-
-    function toggleSearchBar() {
-      if (searchOpen) {
-        closeSearch();
-      } else {
-        closeSidebars(); // Close sidebars if open
-        openSearch();
-      }
-    }
-
-    menuToggle?.addEventListener('click', () => {
-      closeSearch();
-      toggleSidebar(sidebar, cartSidebar, menuToggle);
-    });
-    cartToggle?.addEventListener('click', () => {
-      closeSearch();
-      toggleSidebar(cartSidebar, sidebar, cartToggle);
-    });
-    closeButtons.forEach(btn => btn.addEventListener('click', () => {
+  closeButtons.forEach(btn =>
+    btn.addEventListener('click', () => {
       closeSidebars();
       closeSearch();
-    }));
-    searchToggle?.addEventListener('click', toggleSearchBar);
+    })
+  );
 
-    // Close search or sidebars on Escape
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        closeSidebars();
-        closeSearch();
+  searchToggle?.addEventListener('click', toggleSearchBar);
+
+  // ESC closes search or sidebar
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeSidebars();
+      closeSearch();
+    }
+  });
+
+  // Accessibility keyboard trigger
+  [menuToggle, cartToggle, searchToggle].forEach(el =>
+    el?.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
       }
+    })
+  );
+
+  logo?.addEventListener('click', () => {
+    window.scrollTo(0, 0);
+    location.reload();
+  });
+
+  // Carousel setup
+  if (slider && slides.length > 0) {
+    let currentSlide = 0;
+    let autoplayInterval = null;
+    let startX = null;
+
+    const controls = document.createElement('div');
+    controls.id = 'carousel-controls';
+    Object.assign(controls.style, {
+      position: 'absolute',
+      bottom: '12px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      zIndex: '10'
     });
 
-    // Keyboard accessibility for toggles
-    [menuToggle, cartToggle, searchToggle].forEach(el => {
-      el?.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          el.click();
-        }
+    const arrowStyle = {
+      fontSize: '24px',
+      background: 'rgba(0,0,0,0.4)',
+      border: 'none',
+      color: 'white',
+      cursor: 'pointer',
+      padding: '4px 8px',
+      borderRadius: '4px'
+    };
+
+    const leftBtn = document.createElement('button');
+    Object.assign(leftBtn.style, arrowStyle);
+    leftBtn.innerHTML = '&#10094;';
+    leftBtn.setAttribute('aria-label', 'Previous slide');
+    leftBtn.onclick = () => {
+      showSlide(currentSlide - 1);
+      resetAutoplay();
+    };
+
+    const rightBtn = document.createElement('button');
+    Object.assign(rightBtn.style, arrowStyle);
+    rightBtn.innerHTML = '&#10095;';
+    rightBtn.setAttribute('aria-label', 'Next slide');
+    rightBtn.onclick = () => {
+      showSlide(currentSlide + 1);
+      resetAutoplay();
+    };
+
+    const dotsContainer = document.createElement('div');
+    dotsContainer.style.display = 'flex';
+    dotsContainer.style.gap = '8px';
+
+    controls.append(leftBtn, dotsContainer, rightBtn);
+    slider.parentElement.appendChild(controls);
+
+    const dots = [];
+    for (let i = 0; i < slides.length; i++) {
+      const dot = document.createElement('button');
+      Object.assign(dot.style, {
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.5)',
+        border: 'none',
+        cursor: 'pointer'
       });
-    });
-
-    logo?.addEventListener('click', () => {
-      window.scrollTo(0, 0);
-      location.reload();
-    });
-
-    if (slider && slides.length > 0) {
-      let currentSlide = 0;
-      let autoplayInterval = null;
-      let startX = null;
-
-      const controls = document.createElement('div');
-      controls.id = 'custom-carousel-controls';
-      controls.style.position = 'absolute';
-      controls.style.bottom = '12px';
-      controls.style.left = '50%';
-      controls.style.transform = 'translateX(-50%)';
-      controls.style.display = 'flex';
-      controls.style.alignItems = 'center';
-      controls.style.gap = '8px';
-      controls.style.zIndex = '2000';
-
-      const leftBtn = document.createElement('button');
-      leftBtn.className = 'arrow left';
-      leftBtn.setAttribute('aria-label', 'Previous slide');
-      leftBtn.innerHTML = '&#10094;';
-      leftBtn.style.fontSize = '24px';
-      leftBtn.style.background = 'rgba(0,0,0,0.3)';
-      leftBtn.style.border = 'none';
-      leftBtn.style.color = 'white';
-      leftBtn.style.cursor = 'pointer';
-      leftBtn.style.padding = '4px 8px';
-      leftBtn.style.borderRadius = '4px';
-      leftBtn.addEventListener('click', () => {
-        showSlide(currentSlide - 1);
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dot.onclick = () => {
+        showSlide(i);
         resetAutoplay();
+      };
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+
+    function showSlide(index) {
+      currentSlide = (index + slides.length) % slides.length;
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      updateDots();
+    }
+
+    function updateDots() {
+      dots.forEach((dot, i) => {
+        dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)';
       });
+    }
 
-      const rightBtn = document.createElement('button');
-      rightBtn.className = 'arrow right';
-      rightBtn.setAttribute('aria-label', 'Next slide');
-      rightBtn.innerHTML = '&#10095;';
-      rightBtn.style.fontSize = '24px';
-      rightBtn.style.background = 'rgba(0,0,0,0.3)';
-      rightBtn.style.border = 'none';
-      rightBtn.style.color = 'white';
-      rightBtn.style.cursor = 'pointer';
-      rightBtn.style.padding = '4px 8px';
-      rightBtn.style.borderRadius = '4px';
-      rightBtn.addEventListener('click', () => {
-        showSlide(currentSlide + 1);
-        resetAutoplay();
-      });
-
-      const dotsContainer = document.createElement('div');
-      dotsContainer.className = 'dots-container';
-      dotsContainer.style.display = 'flex';
-      dotsContainer.style.gap = '8px';
-
-      controls.append(leftBtn, dotsContainer, rightBtn);
-      slider.parentElement.appendChild(controls);
-
-      const dots = [];
-      for (let i = 0; i < slides.length; i++) {
-        const dot = document.createElement('button');
-        dot.className = 'dot';
-        dot.setAttribute('aria-label', `Slide ${i + 1}`);
-        dot.style.width = '12px';
-        dot.style.height = '12px';
-        dot.style.borderRadius = '50%';
-        dot.style.border = 'none';
-        dot.style.background = 'rgba(255,255,255,0.5)';
-        dot.style.cursor = 'pointer';
-        dot.addEventListener('click', () => {
-          showSlide(i);
-          resetAutoplay();
-        });
-        dotsContainer.appendChild(dot);
-        dots.push(dot);
-      }
-
-      function showSlide(index) {
-        currentSlide = (index + slides.length) % slides.length;
-        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-        updateDots();
-      }
-
-      function updateDots() {
-        dots.forEach((dot, i) => {
-          dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)';
-        });
-      }
-
-      function resetAutoplay() {
-        clearInterval(autoplayInterval);
-        autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
-      }
-
-      slider.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-      });
-
-      slider.addEventListener('touchend', e => {
-        if (startX === null) return;
-        const diff = e.changedTouches[0].clientX - startX;
-        if (diff > 50) showSlide(currentSlide - 1);
-        else if (diff < -50) showSlide(currentSlide + 1);
-        startX = null;
-        resetAutoplay();
-      });
-
-      showSlide(0);
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
       autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
     }
 
-    if (policiesLink && policiesDropdown) {
-      policiesLink.addEventListener('click', e => {
-        e.preventDefault();
-        const isOpen = policiesDropdown.classList.toggle('open');
-        policiesLink.classList.toggle('arrow-open', isOpen);
-        policiesLink.classList.toggle('arrow-closed', !isOpen);
-        policiesLink.setAttribute('aria-expanded', String(isOpen));
-        policiesDropdown.setAttribute('aria-hidden', String(!isOpen));
-      });
-    }
-  });
+    slider.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener('touchend', e => {
+      if (startX === null) return;
+      const delta = e.changedTouches[0].clientX - startX;
+      if (delta > 50) showSlide(currentSlide - 1);
+      else if (delta < -50) showSlide(currentSlide + 1);
+      startX = null;
+      resetAutoplay();
+    });
+
+    showSlide(0);
+    autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
+  }
+
+  // Policies dropdown
+  if (policiesLink && policiesDropdown) {
+    policiesLink.addEventListener('click', e => {
+      e.preventDefault();
+      const isOpen = policiesDropdown.classList.toggle('open');
+      policiesLink.classList.toggle('arrow-open', isOpen);
+      policiesLink.classList.toggle('arrow-closed', !isOpen);
+      policiesLink.setAttribute('aria-expanded', isOpen);
+      policiesDropdown.setAttribute('aria-hidden', !isOpen);
+    });
+  }
+});
 </script>
 
 </body>

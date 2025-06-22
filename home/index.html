@@ -7,306 +7,372 @@
   <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700;900&family=Oswald&display=swap" rel="stylesheet" />
   <style>
   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  html, body {
-    overflow-x: hidden;
-    background-color: white;
-    font-family: 'Oswald', sans-serif;
-    user-select: none;
-    min-height: 100vh;
-  }
-  body.sidebar-open,
-  body.cart-open {
-    position: fixed;
-    overflow: hidden;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    touch-action: none;
-  }
-  .sidebar,
-  .cart-sidebar {
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    padding: 80px 20px;
-    background: white;
-    color: black;
-    font-family: 'Oswald', sans-serif;
-    overflow-y: auto;
-    transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
-    z-index: 1700;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    visibility: hidden;
-    pointer-events: none;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  overflow-x: hidden;
+  background-color: white;
+  font-family: 'Oswald', sans-serif;
+  user-select: none;
+  min-height: 100vh;
+}
+body.sidebar-open,
+body.cart-open {
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  touch-action: none;
+}
+
+/* Sidebar and cart sidebar styling */
+.sidebar,
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  padding: 80px 20px;
+  background: white;
+  color: black;
+  font-family: 'Oswald', sans-serif;
+  overflow-y: auto;
+  transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  z-index: 1700;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  visibility: hidden;
+  pointer-events: none;
+}
+.sidebar {
+  left: 0;
+  width: 50vw;
+  max-width: 280px;
+  transform: translateX(-100%);
+}
+.cart-sidebar {
+  right: 0;
+  width: 50vw;
+  max-width: 280px;
+  transform: translateX(100%);
+}
+.sidebar.open,
+.cart-sidebar.open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 17px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  z-index: 1800;
+}
+.sidebar .close-btn { left: 17px; }
+.cart-sidebar .close-btn { right: 17px; }
+.close-btn::before,
+.close-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 11px;
+  width: 2px;
+  height: 24px;
+  background-color: black;
+}
+.close-btn::before { transform: rotate(45deg); }
+.close-btn::after { transform: rotate(-45deg); }
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: transparent; /* transparent by default */
+  z-index: 2000;
+  border-bottom: none;
+  transition: background-color 0.4s ease, border-bottom 0.4s ease;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+header.active-search-bg {
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  /* This white background is layered underneath icons */
+}
+
+/* Header container with icons and logo */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Logo */
+#logoContainer {
+  font-family: 'Cardo', serif;
+  font-weight: 900;
+  font-size: 22px;
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  color: black;
+}
+
+/* Icons container */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Icon buttons */
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s ease;
+}
+
+/* Icons default - black */
+.icon-btn svg,
+.icon-btn img {
+  width: 20px;
+  height: 20px;
+  filter: invert(0);
+  transition: filter 0.3s ease;
+}
+
+/* When search is active, header background turns black, icons & logo turn white */
+/* But you want white header bar under icons, so we handle header background as white */
+/* and invert icons to black normally, then icons invert on black background inside search bar */
+
+header.search-active {
+  background-color: black;
+  border-bottom: 1px solid #222;
+  color: white;
+  /* Keep header container background white to layer behind icons */
+}
+header.search-active .header-container {
+  background-color: white;
+  z-index: 2001; /* layered above header black background */
+  padding: 0 16px;
+}
+header.search-active #logoContainer {
+  color: black;
+  transition: color 0.3s ease;
+}
+header.search-active .icon-btn svg,
+header.search-active .icon-btn img {
+  filter: invert(0); /* icons black on white */
+}
+
+/* Cart count */
+#cartCount {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: black;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: none;
+}
+
+/* Search bar container */
+#searchBarContainer {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  background-color: black;
+  border-top: 1px solid #222;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+  padding: 0 16px;
+  z-index: 1999;
+}
+#searchBarContainer.active {
+  max-height: 60px;
+  opacity: 1;
+  padding: 8px 16px;
+}
+
+/* Search input */
+#searchInput {
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  font-size: 16px;
+  font-family: 'Oswald', sans-serif;
+  background: transparent;
+  color: white;
+  outline-offset: 2px;
+  outline-color: #fff;
+}
+
+/* Image box and slider */
+.image-box {
+  margin: 88px auto 32px; /* margin top to clear fixed header + search */
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 3 / 4;
+  background: black;
+  overflow: hidden;
+  position: relative;
+}
+.slider {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+.slide {
+  flex: 0 0 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  padding: 12px 16px;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.sidebar a.current,
+.sidebar a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Policies arrow */
+.policies-link.arrow-closed::after {
+  content: "▼";
+  float: right;
+  transition: transform 0.3s ease;
+}
+.policies-link.arrow-open::after {
+  content: "▲";
+  float: right;
+  transition: transform 0.3s ease;
+}
+
+/* Policies dropdown */
+.policies-dropdown {
+  display: none;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 2px solid #ccc;
+}
+.policies-dropdown.open {
+  display: block;
+}
+.policies-dropdown a {
+  font-weight: 400;
+  font-size: 14px;
+  padding: 6px 16px;
+}
+
+/* Cart content */
+.cart-content {
+  font-family: 'Oswald', sans-serif;
+}
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.cart-item img {
+  width: 64px;
+  height: 80px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+.cart-item-details {
+  flex-grow: 1;
+}
+.cart-item-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.cart-item-quantity {
+  font-size: 14px;
+  color: grey;
+}
+.cart-item-price {
+  font-weight: 700;
+  font-size: 16px;
+}
+.cart-total {
+  font-weight: 900;
+  font-size: 20px;
+  margin-top: 24px;
+  border-top: 1px solid #ccc;
+  padding-top: 16px;
+}
+.checkout-btn {
+  display: block;
+  margin-top: 24px;
+  padding: 12px;
+  background: black;
+  color: white;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .cart-sidebar,
   .sidebar {
-    left: 0;
-    width: 50vw;
-    max-width: 280px;
-    transform: translateX(-100%);
-  }
-  .cart-sidebar {
-    right: 0;
-    width: 50vw;
-    max-width: 280px;
-    transform: translateX(100%);
-  }
-  .sidebar.open,
-  .cart-sidebar.open {
-    transform: translateX(0);
-    visibility: visible;
-    pointer-events: auto;
-  }
-  .close-btn {
-    position: absolute;
-    top: 17px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    user-select: none;
-    background: transparent;
-    z-index: 1800;
-  }
-  .sidebar .close-btn { left: 17px; }
-  .cart-sidebar .close-btn { right: 17px; }
-  .close-btn::before,
-  .close-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 11px;
-    width: 2px;
-    height: 24px;
-    background-color: black;
-  }
-  .close-btn::before { transform: rotate(45deg); }
-  .close-btn::after { transform: rotate(-45deg); }
-  header {
-    background-color: white;
-    color: black;
-    position: sticky;
-    top: 0;
-    z-index: 2000;
-    border-bottom: 1px solid #eee;
-    transition: background 0.4s ease, color 0.4s ease;
-    padding: 16px 24px;
-  }
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .header-icons {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  /* When search is toggled on, icons & logo turn black (default)
-     But you want them to switch between black and white
-     So let's toggle filter brightness to invert colors */
-
-  header.search-active {
-    background-color: black;
-    color: white;
-  }
-  header.search-active #logoContainer {
-    color: white;
-  }
-  header.search-active .icon-btn svg,
-  header.search-active .icon-btn img {
-    filter: brightness(0) invert(1);
-  }
-
-  #logoContainer {
-    font-family: 'Cardo', serif;
-    font-weight: 900;
-    font-size: 22px;
-    cursor: pointer;
-    user-select: none;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-    color: black;
-  }
-  .icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .icon-btn svg,
-  .icon-btn img {
-    width: 20px;
-    height: 20px;
-    transition: filter 0.3s ease;
-  }
-  #cartCount {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: black;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 50%;
-    padding: 2px 6px;
-    display: none;
-  }
-  #searchBarContainer {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    background-color: white;
-    border-top: 1px solid #eee;
-    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
-  }
-  #searchBarContainer.active {
-    max-height: 60px;
-    opacity: 1;
-    padding: 12px 24px;
-  }
-  #searchInput {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    font-family: 'Oswald', sans-serif;
+    width: 80vw;
+    max-width: none;
+    padding: 80px 16px;
   }
   .image-box {
-    margin: 32px auto;
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 3 / 4;
-    background: black;
-    overflow: hidden;
-    position: relative;
-  }
-  .slider {
-    display: flex;
-    width: 300%;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-  }
-  .slide {
-    flex: 0 0 100%;
-    background-size: cover;
-    background-position: center;
+    margin-top: 120px;
+    padding: 0 16px;
   }
   .sidebar a {
-    display: block;
-    padding: 12px 16px;
-    font-weight: 700;
-    color: black;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-  }
-  .sidebar a.current,
-  .sidebar a:hover {
-    background-color: #f0f0f0;
-  }
-  .policies-link.arrow-closed::after {
-    content: "▼";
-    float: right;
-    transition: transform 0.3s ease;
-  }
-  .policies-link.arrow-open::after {
-    content: "▲";
-    float: right;
-    transition: transform 0.3s ease;
+    text-align: center;
   }
   .policies-dropdown {
-    display: none;
-    margin-left: 12px;
-    padding-left: 12px;
-    border-left: 2px solid #ccc;
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
   }
-  .policies-dropdown.open {
-    display: block;
-  }
-  .policies-dropdown a {
-    font-weight: 400;
-    font-size: 14px;
-    padding: 6px 16px;
-  }
-  .cart-content {
-    font-family: 'Oswald', sans-serif;
-  }
-  .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .cart-item img {
-    width: 64px;
-    height: 80px;
-    object-fit: contain;
-    margin-right: 16px;
-  }
-  .cart-item-details {
-    flex-grow: 1;
-  }
-  .cart-item-title {
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
-  .cart-item-quantity {
-    font-size: 14px;
-    color: grey;
-  }
-  .cart-item-price {
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .cart-total {
-    font-weight: 900;
-    font-size: 20px;
-    margin-top: 24px;
-    border-top: 1px solid #ccc;
-    padding-top: 16px;
-  }
-  .checkout-btn {
-    display: block;
-    margin-top: 24px;
-    padding: 12px;
-    background: black;
-    color: white;
-    font-weight: 900;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
-  }
-  @media (max-width: 767px) {
-    .cart-sidebar,
-    .sidebar {
-      width: 80vw;
-      max-width: none;
-      padding: 80px 16px;
-    }
-    .image-box {
-      padding: 0 16px;
-    }
-    .sidebar a {
-      text-align: center;
-    }
-    .policies-dropdown {
-      margin-left: 0;
-      padding-left: 0;
-      border-left: none;
-    }
-  }
+}
 </style>
 
 <header>
@@ -407,9 +473,14 @@
     const slider = document.getElementById('slider');
     const logo = document.getElementById('logoContainer');
     const searchBarContainer = document.getElementById('searchBarContainer');
+    const searchInput = document.getElementById('searchInput');
+    const menuToggleImg = menuToggle.querySelector('img');
+    const cartIconImg = cartToggle.querySelector('img');
+    const searchSvg = searchToggle.querySelector('svg');
     const slides = slider?.children || [];
 
     let scrollTop = 0;
+    let searchOpen = false;
 
     function lockBodyScroll() {
       scrollTop = window.scrollY || window.pageYOffset;
@@ -461,24 +532,82 @@
       unlockBodyScroll();
     }
 
-    function toggleSearchBar() {
+    function openSearch() {
       if (!searchBarContainer) return;
-      const active = searchBarContainer.classList.toggle('active');
-      if (active) {
-        const input = searchBarContainer.querySelector('input');
-        input?.focus();
+      searchOpen = true;
+
+      // Show white background behind header container
+      const headerContainer = document.querySelector('.header-container');
+      headerContainer.style.backgroundColor = 'white';
+      headerContainer.style.borderBottom = '1px solid #eee';
+
+      // Icons black on white
+      menuToggleImg.style.filter = 'invert(0)';
+      cartIconImg.style.filter = 'invert(0)';
+      searchSvg.setAttribute('fill', 'black');
+
+      // Show search bar with smooth transitions
+      searchBarContainer.style.maxHeight = '60px';
+      searchBarContainer.style.opacity = '1';
+      searchBarContainer.style.padding = '8px 16px';
+
+      searchInput.focus();
+    }
+
+    function closeSearch() {
+      if (!searchBarContainer) return;
+      searchOpen = false;
+
+      // Transparent header container
+      const headerContainer = document.querySelector('.header-container');
+      headerContainer.style.backgroundColor = 'transparent';
+      headerContainer.style.borderBottom = 'none';
+
+      // Icons remain black (no invert)
+      menuToggleImg.style.filter = 'invert(0)';
+      cartIconImg.style.filter = 'invert(0)';
+      searchSvg.setAttribute('fill', 'black');
+
+      // Hide search bar smoothly
+      searchBarContainer.style.maxHeight = '0';
+      searchBarContainer.style.opacity = '0';
+      searchBarContainer.style.padding = '0 16px';
+
+      searchInput.value = '';
+    }
+
+    function toggleSearchBar() {
+      if (searchOpen) {
+        closeSearch();
+      } else {
+        closeSidebars(); // Close sidebars if open
+        openSearch();
       }
     }
 
-    menuToggle?.addEventListener('click', () => toggleSidebar(sidebar, cartSidebar, menuToggle));
-    cartToggle?.addEventListener('click', () => toggleSidebar(cartSidebar, sidebar, cartToggle));
-    closeButtons.forEach(btn => btn.addEventListener('click', closeSidebars));
+    menuToggle?.addEventListener('click', () => {
+      closeSearch();
+      toggleSidebar(sidebar, cartSidebar, menuToggle);
+    });
+    cartToggle?.addEventListener('click', () => {
+      closeSearch();
+      toggleSidebar(cartSidebar, sidebar, cartToggle);
+    });
+    closeButtons.forEach(btn => btn.addEventListener('click', () => {
+      closeSidebars();
+      closeSearch();
+    }));
     searchToggle?.addEventListener('click', toggleSearchBar);
 
+    // Close search or sidebars on Escape
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeSidebars();
+      if (e.key === 'Escape') {
+        closeSidebars();
+        closeSearch();
+      }
     });
 
+    // Keyboard accessibility for toggles
     [menuToggle, cartToggle, searchToggle].forEach(el => {
       el?.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {

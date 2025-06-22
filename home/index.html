@@ -546,7 +546,8 @@
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
     <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
   </div>
-  
+</div> <!-- ✅ This closes the image-box correctly -->
+
 <script>
   // Reload current page and scroll to top after 1 second
   document.getElementById('logoContainer').addEventListener('click', () => {
@@ -557,6 +558,7 @@
   });
 </script>
 
+<!-- ✅ Product section now OUTSIDE the image-box -->
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
   <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="Red Jersey">
     <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />

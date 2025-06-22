@@ -626,6 +626,7 @@
 
   // === HEADER BEHAVIOR ===
   function activateHeaderTemporarily() {
+    if (!header) return;
     header.classList.add('active');
     clearTimeout(header.bgTimeout);
     header.bgTimeout = setTimeout(() => {
@@ -633,12 +634,18 @@
     }, 5000);
   }
 
-  [menuToggle, cartToggle, searchToggle, logoContainer].forEach(btn => {
-    btn?.addEventListener('click', activateHeaderTemporarily);
+  // Show header on main toggles & logo click
+  [menuToggle, cartToggle, searchToggle, logoContainer].forEach(el => {
+    el?.addEventListener('click', activateHeaderTemporarily);
   });
+
+  // Also show header when hovering or focusing the header (for surrounding space)
+  header?.addEventListener('mouseenter', activateHeaderTemporarily);
+  header?.addEventListener('focusin', activateHeaderTemporarily);
 
   // === SIDEBAR TOGGLES ===
   menuToggle?.addEventListener('click', () => {
+    if (!sidebar || !cartSidebar) return;
     const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
     body.classList.toggle('sidebar-open', isOpen);
@@ -648,6 +655,7 @@
   });
 
   cartToggle?.addEventListener('click', () => {
+    if (!sidebar || !cartSidebar) return;
     const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
     body.classList.toggle('cart-open', isOpen);
@@ -660,13 +668,14 @@
     alert('Search toggled! Implement your search UI here.');
   });
 
+  // Sidebar close buttons
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      cartSidebar.classList.remove('open');
+      sidebar?.classList.remove('open');
+      cartSidebar?.classList.remove('open');
       body.classList.remove('sidebar-open', 'cart-open');
-      sidebar.setAttribute('aria-hidden', 'true');
-      cartSidebar.setAttribute('aria-hidden', 'true');
+      sidebar?.setAttribute('aria-hidden', 'true');
+      cartSidebar?.setAttribute('aria-hidden', 'true');
     });
   });
 
@@ -680,13 +689,14 @@
     });
   });
 
+  // ESC closes sidebars
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      sidebar.classList.remove('open');
-      cartSidebar.classList.remove('open');
+      sidebar?.classList.remove('open');
+      cartSidebar?.classList.remove('open');
       body.classList.remove('sidebar-open', 'cart-open');
-      sidebar.setAttribute('aria-hidden', 'true');
-      cartSidebar.setAttribute('aria-hidden', 'true');
+      sidebar?.setAttribute('aria-hidden', 'true');
+      cartSidebar?.setAttribute('aria-hidden', 'true');
     }
   });
 
@@ -695,6 +705,7 @@
   const totalSlides = slides.length;
 
   function showSlide(index) {
+    if (!slider) return;
     currentSlide = (index + totalSlides) % totalSlides;
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     updateDots();
@@ -703,79 +714,81 @@
   function prevSlide() { showSlide(currentSlide - 1); }
   function nextSlide() { showSlide(currentSlide + 1); }
 
-  const controlsContainer = document.createElement('div');
-  controlsContainer.id = 'custom-carousel-controls';
-  Object.assign(controlsContainer.style, {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '12px',
-    marginTop: '8px'
-  });
-
-  const leftBtn = document.createElement('button');
-  leftBtn.innerHTML = '&#10094;';
-  leftBtn.className = 'arrow left';
-  Object.assign(leftBtn.style, {
-    position: 'static',
-    fontSize: '20px',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: 'black'
-  });
-  leftBtn.addEventListener('click', prevSlide);
-
-  const rightBtn = document.createElement('button');
-  rightBtn.innerHTML = '&#10095;';
-  rightBtn.className = 'arrow right';
-  Object.assign(rightBtn.style, {
-    position: 'static',
-    fontSize: '20px',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: 'black'
-  });
-  rightBtn.addEventListener('click', nextSlide);
-
-  const dots = [];
-  const dotContainer = document.createElement('div');
-  Object.assign(dotContainer.style, {
-    display: 'flex',
-    gap: '10px'
-  });
-
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.classList.add('dot');
-    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-    dot.addEventListener('click', () => showSlide(i));
-    dots.push(dot);
-    dotContainer.appendChild(dot);
-  }
-
-  controlsContainer.appendChild(leftBtn);
-  controlsContainer.appendChild(dotContainer);
-  controlsContainer.appendChild(rightBtn);
-  slider?.parentElement?.appendChild(controlsContainer);
-
-  function updateDots() {
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentSlide);
+  if (slider) {
+    const controlsContainer = document.createElement('div');
+    controlsContainer.id = 'custom-carousel-controls';
+    Object.assign(controlsContainer.style, {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '12px',
+      marginTop: '8px'
     });
-  }
 
-  [leftBtn, rightBtn].forEach(btn => {
-    btn.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btn.click();
-      }
+    const leftBtn = document.createElement('button');
+    leftBtn.innerHTML = '&#10094;';
+    leftBtn.className = 'arrow left';
+    Object.assign(leftBtn.style, {
+      position: 'static',
+      fontSize: '20px',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'black'
     });
-  });
+    leftBtn.addEventListener('click', prevSlide);
 
-  if (totalSlides > 0) showSlide(0);
+    const rightBtn = document.createElement('button');
+    rightBtn.innerHTML = '&#10095;';
+    rightBtn.className = 'arrow right';
+    Object.assign(rightBtn.style, {
+      position: 'static',
+      fontSize: '20px',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'black'
+    });
+    rightBtn.addEventListener('click', nextSlide);
+
+    const dots = [];
+    const dotContainer = document.createElement('div');
+    Object.assign(dotContainer.style, {
+      display: 'flex',
+      gap: '10px'
+    });
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dot.addEventListener('click', () => showSlide(i));
+      dots.push(dot);
+      dotContainer.appendChild(dot);
+    }
+
+    controlsContainer.appendChild(leftBtn);
+    controlsContainer.appendChild(dotContainer);
+    controlsContainer.appendChild(rightBtn);
+    slider.parentElement.appendChild(controlsContainer);
+
+    function updateDots() {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    [leftBtn, rightBtn].forEach(btn => {
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    if (totalSlides > 0) showSlide(0);
+  }
 
   // === POLICIES DROPDOWN ===
   policiesLink?.addEventListener('click', e => {
@@ -797,7 +810,7 @@
 
   // === LOGO CLICK: SCROLL TO TOP + RELOAD ===
   logoContainer?.addEventListener('click', () => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Jump immediately to top with no scroll animation
     location.reload();
   });
 </script>

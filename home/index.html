@@ -341,7 +341,9 @@
 .cart-sidebar.open {
   transform: translateX(0);
   visibility: visible;
-  pointer-events: auto; /* Enable interaction when visible */
+  pointer-events: auto; /* enable clicking/interactions */
+  /* optionally add transition if not set globally */
+  transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
 }
 
 /* === Close Button Styles === */
@@ -357,7 +359,7 @@
   z-index: 1800;
 }
 
-/* "X" icon */
+/* "X" icon lines */
 .cart-sidebar .close-btn:before,
 .cart-sidebar .close-btn:after {
   content: '';
@@ -438,25 +440,25 @@
   }
 
   .image-box {
-    margin-top: 0px;
-    width: 100%;
-    top: 0;
-    max-width: 600px;
-    aspect-ratio: 3 / 4;
-    background: black;
-    overflow: hidden;
-    position: relative;
-    z-index: 0;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  margin-top: 0;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 3 / 4;
+  background: black;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .slider {
+.slider {
   display: flex;
-  width: 300%; /* Assuming 3 slides; consider using JS to set this dynamically */
+  width: 300%; /* Adjust dynamically if needed */
   transition: transform 0.5s ease-in-out;
   height: 100%;
-  overflow: hidden; /* Ensure slides don’t overflow */
+  overflow: hidden; /* Prevent slides overflow */
+  position: relative; /* For layering controls if needed */
 }
 
 .slide {
@@ -464,6 +466,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
+  user-select: none;
 }
 
 #custom-carousel-controls {
@@ -473,6 +476,11 @@
   gap: 20px;
   margin-top: 10px;
   user-select: none;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 #custom-carousel-controls button {
@@ -487,7 +495,7 @@
 
 #custom-carousel-controls button:hover,
 #custom-carousel-controls button:focus {
-  color: #555; /* subtle hover/focus color */
+  color: #555;
   outline: none;
 }
 
@@ -516,6 +524,7 @@
     margin-left: 0;
   }
 }
+    
 </style>
 </head>
 <body>
@@ -653,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, scrollTop);
   }
 
-  // Focus helper
+  // Focus helper for accessibility
   function focusFirstFocusable(container) {
     if (!container) return;
     const selectors = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -676,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
     unlockBodyScroll();
   }
 
-  // Toggle sidebar open/close
+  // Toggle menu sidebar open/close
   menuToggle?.addEventListener('click', () => {
     const isOpening = !sidebar.classList.contains('open');
     if (isOpening) {
@@ -714,9 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close buttons for both sidebars
   sidebarCloseBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      closeSidebars();
-    });
+    btn.addEventListener('click', closeSidebars);
   });
 
   // ESC key closes any open sidebar

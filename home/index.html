@@ -6,7 +6,6 @@
 <title>Matt Scianna</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
 <style>
-  /* Reset & base */
   * {
     margin: 0;
     padding: 0;
@@ -331,7 +330,7 @@
   /* === RESPONSIVE === */
   @media (max-width: 767px) {
     .cart-sidebar {
-      width: 100vw;
+      width: 50vw;
       padding: 80px 16px;
       max-width: none;
     }
@@ -502,17 +501,22 @@ document.addEventListener('DOMContentLoaded', () => {
       other?.classList.remove('open');
       other?.setAttribute('aria-hidden', 'true');
 
+      // Adjust cart width for mobile
+      if (target === cartSidebar && window.innerWidth <= 767) {
+        cartSidebar.style.width = '50vw';
+      } else if (target === cartSidebar) {
+        cartSidebar.style.width = ''; // reset for desktop
+      }
+
       target.classList.add('open');
       target.setAttribute('aria-hidden', 'false');
       lockBodyScroll();
 
-      // Focus first focusable inside sidebar
       const focusable = target.querySelector('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])');
       focusable?.focus();
     }
   }
 
-  // Close all sidebars
   function closeSidebars() {
     sidebar?.classList.remove('open');
     cartSidebar?.classList.remove('open');
@@ -521,21 +525,17 @@ document.addEventListener('DOMContentLoaded', () => {
     unlockBodyScroll();
   }
 
-  // Event listeners for toggles
   menuToggle?.addEventListener('click', () => toggleSidebar(sidebar, cartSidebar, menuToggle));
   cartToggle?.addEventListener('click', () => toggleSidebar(cartSidebar, sidebar, cartToggle));
 
-  // Close buttons inside sidebars
   closeButtons.forEach(btn => btn.addEventListener('click', closeSidebars));
 
-  // Close sidebars on ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeSidebars();
     }
   });
 
-  // Keyboard accessibility: activate on Enter or Space
   [menuToggle, cartToggle, searchToggle].forEach(el => {
     el?.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -545,12 +545,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Placeholder search toggle
   searchToggle?.addEventListener('click', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
-  // Reload page & scroll top on logo click
   document.getElementById('logoContainer')?.addEventListener('click', () => {
     window.scrollTo(0, 0);
     location.reload();
@@ -562,11 +560,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoplayInterval = null;
     let startX = null;
 
-    // Create controls container
     const controls = document.createElement('div');
     controls.id = 'custom-carousel-controls';
 
-    // Left arrow
     const leftBtn = document.createElement('button');
     leftBtn.className = 'arrow left';
     leftBtn.setAttribute('aria-label', 'Previous slide');
@@ -576,7 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
       resetAutoplay();
     });
 
-    // Right arrow
     const rightBtn = document.createElement('button');
     rightBtn.className = 'arrow right';
     rightBtn.setAttribute('aria-label', 'Next slide');
@@ -586,14 +581,12 @@ document.addEventListener('DOMContentLoaded', () => {
       resetAutoplay();
     });
 
-    // Dots container
     const dotsContainer = document.createElement('div');
     dotsContainer.className = 'dots-container';
 
     controls.append(leftBtn, dotsContainer, rightBtn);
     slider.parentElement.appendChild(controls);
 
-    // Create dots
     const dots = [];
     for (let i = 0; i < slides.length; i++) {
       const dot = document.createElement('button');
@@ -607,30 +600,27 @@ document.addEventListener('DOMContentLoaded', () => {
       dots.push(dot);
     }
 
-    // Show slide with wrap-around
     function showSlide(index) {
       currentSlide = (index + slides.length) % slides.length;
       slider.style.transform = `translateX(-${currentSlide * 100}%)`;
       updateDots();
     }
 
-    // Update dots active state
     function updateDots() {
       dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === currentSlide);
       });
     }
 
-    // Reset autoplay timer
     function resetAutoplay() {
       clearInterval(autoplayInterval);
       autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
     }
 
-    // Touch swipe support
     slider.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
     });
+
     slider.addEventListener('touchend', (e) => {
       if (startX === null) return;
       const diff = e.changedTouches[0].clientX - startX;
@@ -640,7 +630,6 @@ document.addEventListener('DOMContentLoaded', () => {
       resetAutoplay();
     });
 
-    // Initialize carousel
     showSlide(0);
     autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
   }

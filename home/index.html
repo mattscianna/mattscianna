@@ -18,7 +18,6 @@
     font-family: 'Oswald', sans-serif;
     user-select: none;
     min-height: 100vh;
-    padding-top: 64px; /* Offset for fixed header */
 }
 
   body.sidebar-open, body.cart-open {
@@ -27,7 +26,7 @@
 }  
 
   header {
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -372,14 +371,13 @@
   .product-image-box {
     width: 90vw;
     max-width: 600px;
-    margin: 0 auto 8px auto;
+    margin: 32px auto 8px auto; /* 32px top margin, 8px bottom */
     background: none;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: visible;
     cursor: pointer;
-    margin-top: 120px;
   }
 
   .jersey-img {

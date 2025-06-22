@@ -31,22 +31,26 @@
     align-items: center;
     padding: 0 16px;
     height: 120px;
-    position: relative;
+    position: absolute; /* Not fixed — won't follow scroll */
     top: 0;
     width: 100%;
-    background-color: #cfcdce;
+    background-color: transparent; /* Start transparent */
     z-index: 1600;
     transition: transform 0.3s ease, background-color 0.3s ease;
-    transform: translateY(0); /* Show header by default */
+    transform: translateY(0); /* Header is visible */
     border: none;
     box-shadow: none;
     outline: none;
   }
 
   header.visible {
-    /* You can keep this if you want to toggle visibility later */
-    transform: translateY(0);
-}
+    transform: translateY(0); /* Optional: allow for show/hide behavior */
+  }
+
+/* Class for when header should show gray background */
+  header.active {
+    background-color: #cfcdce;
+  }
 
   .icon-btn.menu-toggle,
   .icon-btn.cart-toggle,
@@ -605,7 +609,7 @@
 </nav>
 
 <script>
-  // Elements
+  // === DOM ELEMENTS ===
   const body = document.body;
   const sidebar = document.getElementById('sidebar');
   const cartSidebar = document.getElementById('cartSidebar');
@@ -615,22 +619,26 @@
   const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
   const header = document.querySelector('header');
   const logoContainer = document.getElementById('logoContainer');
+  const policiesLink = document.getElementById('policiesLink');
+  const policiesDropdown = document.getElementById('policiesDropdown');
+  const slider = document.getElementById('slider');
+  const slides = slider?.children || [];
 
-  // Header show/hide
-  function showHeaderTemporarily() {
-    header.classList.add('visible');
-    clearTimeout(header.hideTimeout);
-    header.hideTimeout = setTimeout(() => {
-      header.classList.remove('visible');
+  // === HEADER BEHAVIOR ===
+  function activateHeaderTemporarily() {
+    header.classList.add('active');
+    clearTimeout(header.bgTimeout);
+    header.bgTimeout = setTimeout(() => {
+      header.classList.remove('active');
     }, 5000);
   }
 
-  [menuToggle, cartToggle, searchToggle].forEach(btn => {
-    btn.addEventListener('click', showHeaderTemporarily);
+  [menuToggle, cartToggle, searchToggle, logoContainer].forEach(btn => {
+    btn?.addEventListener('click', activateHeaderTemporarily);
   });
 
-  // Sidebar toggle
-  menuToggle.addEventListener('click', () => {
+  // === SIDEBAR TOGGLES ===
+  menuToggle?.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
     body.classList.toggle('sidebar-open', isOpen);
@@ -639,8 +647,7 @@
     cartSidebar.setAttribute('aria-hidden', 'true');
   });
 
-  // Cart toggle
-  cartToggle.addEventListener('click', () => {
+  cartToggle?.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
     body.classList.toggle('cart-open', isOpen);
@@ -649,12 +656,10 @@
     sidebar.setAttribute('aria-hidden', 'true');
   });
 
-  // Search
-  searchToggle.addEventListener('click', () => {
+  searchToggle?.addEventListener('click', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
-  // Sidebar close buttons
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       sidebar.classList.remove('open');
@@ -665,9 +670,9 @@
     });
   });
 
-  // Keyboard access for toggles
+  // === KEYBOARD SUPPORT ===
   [menuToggle, cartToggle, searchToggle].forEach(toggle => {
-    toggle.addEventListener('keydown', e => {
+    toggle?.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         toggle.click();
@@ -675,7 +680,6 @@
     });
   });
 
-  // ESC closes sidebars
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       sidebar.classList.remove('open');
@@ -686,11 +690,9 @@
     }
   });
 
-  // --- Carousel ---
-  const slider = document.getElementById('slider');
-  const slides = slider.children;
-  const totalSlides = slides.length;
+  // === CAROUSEL ===
   let currentSlide = 0;
+  const totalSlides = slides.length;
 
   function showSlide(index) {
     currentSlide = (index + totalSlides) % totalSlides;
@@ -698,21 +700,18 @@
     updateDots();
   }
 
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
+  function prevSlide() { showSlide(currentSlide - 1); }
+  function nextSlide() { showSlide(currentSlide + 1); }
 
   const controlsContainer = document.createElement('div');
   controlsContainer.id = 'custom-carousel-controls';
-  controlsContainer.style.display = 'flex';
-  controlsContainer.style.justifyContent = 'center';
-  controlsContainer.style.alignItems = 'center';
-  controlsContainer.style.gap = '12px';
-  controlsContainer.style.marginTop = '8px';
+  Object.assign(controlsContainer.style, {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '12px',
+    marginTop: '8px'
+  });
 
   const leftBtn = document.createElement('button');
   leftBtn.innerHTML = '&#10094;';
@@ -742,8 +741,10 @@
 
   const dots = [];
   const dotContainer = document.createElement('div');
-  dotContainer.style.display = 'flex';
-  dotContainer.style.gap = '10px';
+  Object.assign(dotContainer.style, {
+    display: 'flex',
+    gap: '10px'
+  });
 
   for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('button');
@@ -757,7 +758,7 @@
   controlsContainer.appendChild(leftBtn);
   controlsContainer.appendChild(dotContainer);
   controlsContainer.appendChild(rightBtn);
-  slider.parentElement.appendChild(controlsContainer);
+  slider?.parentElement?.appendChild(controlsContainer);
 
   function updateDots() {
     dots.forEach((dot, i) => {
@@ -774,13 +775,10 @@
     });
   });
 
-  showSlide(0);
+  if (totalSlides > 0) showSlide(0);
 
-  // --- Policies dropdown ---
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
-
-  policiesLink.addEventListener('click', e => {
+  // === POLICIES DROPDOWN ===
+  policiesLink?.addEventListener('click', e => {
     e.preventDefault();
     const isOpen = policiesDropdown.classList.contains('open');
     policiesDropdown.classList.toggle('open', !isOpen);
@@ -790,16 +788,16 @@
     policiesDropdown.setAttribute('aria-hidden', String(isOpen));
   });
 
-  policiesLink.addEventListener('keydown', e => {
+  policiesLink?.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       policiesLink.click();
     }
   });
 
-  // --- Logo click: jump to top and reload ---
-  logoContainer.addEventListener('click', () => {
-    window.scrollTo(0, 0); // Jumps directly with no scroll animation
+  // === LOGO CLICK: SCROLL TO TOP + RELOAD ===
+  logoContainer?.addEventListener('click', () => {
+    window.scrollTo(0, 0);
     location.reload();
   });
 </script>

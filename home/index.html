@@ -37,15 +37,16 @@
     background-color: #cfcdce;
     z-index: 1600;
     transition: transform 0.3s ease, background-color 0.3s ease;
-    transform: translateY(-100%);
+    transform: translateY(0); /* Show header by default */
     border: none;
     box-shadow: none;
     outline: none;
   }
 
   header.visible {
+    /* You can keep this if you want to toggle visibility later */
     transform: translateY(0);
-  }
+}
 
   .icon-btn.menu-toggle,
   .icon-btn.cart-toggle,

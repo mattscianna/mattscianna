@@ -24,34 +24,7 @@
     overflow: hidden;
     width: 100%;
   }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px;
-    height: 120px;
-    position: absolute; /* Not fixed — won't follow scroll */
-    top: 0;
-    width: 100%;
-    background-color: transparent; /* Start transparent */
-    z-index: 1600;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    transform: translateY(0); /* Header is visible */
-    border: none;
-    box-shadow: none;
-    outline: none;
-  }
-
-  header.visible {
-    transform: translateY(0); /* Optional: allow for show/hide behavior */
-  }
-
-/* Class for when header should show gray background */
-  header.active {
-    background-color: #cfcdce;
-  }
-
+    
   .icon-btn.menu-toggle,
   .icon-btn.cart-toggle,
   .icon-btn.search-toggle,
@@ -617,35 +590,14 @@
   const cartToggle = document.getElementById('cartIcon');
   const searchToggle = document.getElementById('searchIcon');
   const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
-  const header = document.querySelector('header');
   const logoContainer = document.getElementById('logoContainer');
   const policiesLink = document.getElementById('policiesLink');
   const policiesDropdown = document.getElementById('policiesDropdown');
   const slider = document.getElementById('slider');
   const slides = slider?.children || [];
 
-  // === HEADER BEHAVIOR ===
-  function activateHeaderTemporarily() {
-    if (!header) return;
-    header.classList.add('active');
-    clearTimeout(header.bgTimeout);
-    header.bgTimeout = setTimeout(() => {
-      header.classList.remove('active');
-    }, 5000);
-  }
-
-  // Show header on main toggles & logo click
-  [menuToggle, cartToggle, searchToggle, logoContainer].forEach(el => {
-    el?.addEventListener('click', activateHeaderTemporarily);
-  });
-
-  // Also show header when hovering or focusing the header (for surrounding space)
-  header?.addEventListener('mouseenter', activateHeaderTemporarily);
-  header?.addEventListener('focusin', activateHeaderTemporarily);
-
   // === SIDEBAR TOGGLES ===
   menuToggle?.addEventListener('click', () => {
-    if (!sidebar || !cartSidebar) return;
     const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
     body.classList.toggle('sidebar-open', isOpen);
@@ -655,7 +607,6 @@
   });
 
   cartToggle?.addEventListener('click', () => {
-    if (!sidebar || !cartSidebar) return;
     const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
     body.classList.toggle('cart-open', isOpen);
@@ -810,7 +761,7 @@
 
   // === LOGO CLICK: SCROLL TO TOP + RELOAD ===
   logoContainer?.addEventListener('click', () => {
-    window.scrollTo(0, 0); // Jump immediately to top with no scroll animation
+    window.scrollTo(0, 0);
     location.reload();
   });
 </script>

@@ -20,11 +20,13 @@
     min-height: 100vh;
   }
 
-  body.sidebar-open, body.cart-open {
+ body.sidebar-open, body.cart-open {
     position: fixed;
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    top: 0;
+    left: 0;
     touch-action: none;
   }    
 
@@ -125,74 +127,64 @@
     width: 100%;
     height: 100%;
   }
-
-  /* Sidebars */
-  .sidebar, .cart-sidebar {
-    position: fixed;
-    top: 0;
-    background: white;
-    color: black;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 400;
-    font-size: 24px;
-    transition: transform 0.4s ease-in-out;
-    z-index: 1700;
-    overflow-y: auto;
-    height: 100vh;
-    text-align: center;
-    padding-top: 80px;
-    box-shadow: none;
-  }
-
-  /* Sidebar (left) */
-  .sidebar {
+    
+  /* Shared styles for both sidebars */
+.sidebar, .cart-sidebar {
+  position: fixed;
+  top: 0;
   left: 0;
+  z-index: 1700;
   width: 100vw;
   max-width: 320px;
-  padding-left: 0;
-  padding-right: 0;
+  height: 100vh;
+  background: white;
+  color: black;
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: none;
+  padding-top: 80px;
   transform: translateX(-100%);
+  transition: transform 0.4s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
-  background-color: white;
-  height: 100vh;  /* Full height always */
-  top: 0;
-  z-index: 1700;
-  overflow-y: auto;
-  transition: transform 0.4s ease-in-out;
 }
 
+/* Open state for sidebar */
 .sidebar.open {
   transform: translateX(0);
 }
 
+/* Sidebar nav layout */
 .sidebar nav {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 24px;
   margin-top: 0;
   width: 100%;
   max-width: 320px;
-  align-items: center;
 }
 
+/* Sidebar nav links */
 .sidebar nav a {
   color: black;
   text-decoration: none;
   font-size: 24px;
   font-weight: 400;
   text-align: center;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
   cursor: pointer;
-  position: relative;
   user-select: none;
   display: inline-block;
   max-width: max-content;
   margin: 0 auto;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
 .sidebar nav a:hover {
@@ -210,19 +202,18 @@
   border-bottom-color: #aaa;
 }
 
-/* Full screen sidebar on mobile */
+/* Fullscreen sidebar on mobile */
 @media (max-width: 768px) {
   .sidebar {
-    max-width: 100vw; /* Full viewport width */
+    max-width: 100vw;
     width: 100vw;
-    height: 100vh;    /* Full viewport height */
   }
 
   .sidebar nav {
-    max-width: 100vw; /* Make sure nav stretches full width */
-    width: 100%;
-    padding: 0 16px;  /* Optional padding inside sidebar */
+    max-width: 100vw;
+    padding: 0 16px;
   }
+}
 }
 
   .arrow {
@@ -638,14 +629,23 @@
     scrollTop = window.scrollY;
     body.style.position = 'fixed';
     body.style.top = `-${scrollTop}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.overflow = 'hidden';
     body.style.width = '100%';
+    body.style.height = '100vh';
     body.classList.add('sidebar-open');
   }
+
   function unlockBodyScroll() {
     body.classList.remove('sidebar-open');
     body.style.position = '';
     body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
+    body.style.overflow = '';
     body.style.width = '';
+    body.style.height = '';
     window.scrollTo(0, scrollTop);
   }
 
@@ -653,44 +653,47 @@
   menuToggle?.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
-    if (isOpen) {
-      lockBodyScroll();
-    } else {
-      unlockBodyScroll();
-    }
-    cartSidebar.setAttribute('aria-hidden', 'true');
     sidebar.setAttribute('aria-hidden', !isOpen);
+    cartSidebar.setAttribute('aria-hidden', 'true');
+    isOpen ? lockBodyScroll() : unlockBodyScroll();
   });
 
   cartToggle?.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
-    if (isOpen) {
-      lockBodyScroll();
-    } else {
-      unlockBodyScroll();
-    }
-    sidebar.setAttribute('aria-hidden', 'true');
     cartSidebar.setAttribute('aria-hidden', !isOpen);
+    sidebar.setAttribute('aria-hidden', 'true');
+    isOpen ? lockBodyScroll() : unlockBodyScroll();
   });
 
-  // Sidebar close buttons
+  // === CLOSE BUTTONS ===
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       sidebar?.classList.remove('open');
       cartSidebar?.classList.remove('open');
-      unlockBodyScroll();
       sidebar?.setAttribute('aria-hidden', 'true');
       cartSidebar?.setAttribute('aria-hidden', 'true');
+      unlockBodyScroll();
     });
   });
 
-  // === SEARCH ICON ===
+  // === ESC KEY CLOSE ===
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      sidebar?.classList.remove('open');
+      cartSidebar?.classList.remove('open');
+      sidebar?.setAttribute('aria-hidden', 'true');
+      cartSidebar?.setAttribute('aria-hidden', 'true');
+      unlockBodyScroll();
+    }
+  });
+
+  // === SEARCH PLACEHOLDER ===
   searchToggle?.addEventListener('click', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
-  // === KEYBOARD SUPPORT ===
+  // === KEYBOARD TOGGLE SUPPORT ===
   [menuToggle, cartToggle, searchToggle].forEach(toggle => {
     toggle?.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -698,17 +701,6 @@
         toggle.click();
       }
     });
-  });
-
-  // ESC closes sidebars
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      sidebar?.classList.remove('open');
-      cartSidebar?.classList.remove('open');
-      unlockBodyScroll();
-      sidebar?.setAttribute('aria-hidden', 'true');
-      cartSidebar?.setAttribute('aria-hidden', 'true');
-    }
   });
 
   // === CAROUSEL ===
@@ -819,7 +811,7 @@
     }
   });
 
-  // === LOGO CLICK: SCROLL TO TOP + RELOAD ===
+  // === LOGO SCROLL TO TOP + RELOAD ===
   logoContainer?.addEventListener('click', () => {
     window.scrollTo(0, 0);
     location.reload();

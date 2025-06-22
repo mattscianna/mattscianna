@@ -25,23 +25,26 @@
     width: 100%;
   }
 
-   header {
+  header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    height: 120px; /* Increased to match the MS logo height */
+    height: 120px;
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #cfcdce; /* Light gray as requested */
+    background-color: #cfcdce;
     z-index: 1600;
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-
-  /* Clean up any unwanted border effects */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    transform: translateY(-100%);
     border: none;
     box-shadow: none;
     outline: none;
+  }
+
+  header.visible {
+    transform: translateY(0);
   }
 
   .icon-btn.menu-toggle,
@@ -609,6 +612,21 @@
   const cartToggle = document.getElementById('cartIcon');
   const searchToggle = document.getElementById('searchIcon');
   const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
+  const header = document.querySelector('header');
+
+  // --- Header show/hide behavior ---
+  function showHeaderTemporarily() {
+    header.classList.add('visible');
+    clearTimeout(header.hideTimeout);
+    header.hideTimeout = setTimeout(() => {
+      header.classList.remove('visible');
+    }, 5000); // Hide after 5s
+  }
+
+  // Show header on menu/cart/search toggle clicks
+  [menuToggle, cartToggle, searchToggle].forEach(btn => {
+    btn.addEventListener('click', showHeaderTemporarily);
+  });
 
   // Sidebar toggle
   menuToggle.addEventListener('click', () => {
@@ -690,7 +708,7 @@
     showSlide(currentSlide + 1);
   }
 
-  // Carousel controls container (below image)
+  // Carousel controls container
   const controlsContainer = document.createElement('div');
   controlsContainer.id = 'custom-carousel-controls';
   controlsContainer.style.display = 'flex';
@@ -702,27 +720,30 @@
   const leftBtn = document.createElement('button');
   leftBtn.innerHTML = '&#10094;';
   leftBtn.className = 'arrow left';
-  leftBtn.style.position = 'static';
-  leftBtn.style.fontSize = '20px';
-  leftBtn.style.background = 'none';
-  leftBtn.style.border = 'none';
-  leftBtn.style.cursor = 'pointer';
-  leftBtn.style.color = 'black';
+  Object.assign(leftBtn.style, {
+    position: 'static',
+    fontSize: '20px',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: 'black'
+  });
   leftBtn.addEventListener('click', prevSlide);
 
   const rightBtn = document.createElement('button');
   rightBtn.innerHTML = '&#10095;';
   rightBtn.className = 'arrow right';
-  rightBtn.style.position = 'static';
-  rightBtn.style.fontSize = '20px';
-  rightBtn.style.background = 'none';
-  rightBtn.style.border = 'none';
-  rightBtn.style.cursor = 'pointer';
-  rightBtn.style.color = 'black';
+  Object.assign(rightBtn.style, {
+    position: 'static',
+    fontSize: '20px',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: 'black'
+  });
   rightBtn.addEventListener('click', nextSlide);
 
   const dots = [];
-
   const dotContainer = document.createElement('div');
   dotContainer.style.display = 'flex';
   dotContainer.style.gap = '10px';
@@ -739,7 +760,6 @@
   controlsContainer.appendChild(leftBtn);
   controlsContainer.appendChild(dotContainer);
   controlsContainer.appendChild(rightBtn);
-
   slider.parentElement.appendChild(controlsContainer);
 
   function updateDots() {
@@ -748,7 +768,7 @@
     });
   }
 
-  // Keyboard arrow button support
+  // Keyboard arrow support
   [leftBtn, rightBtn].forEach(btn => {
     btn.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -767,19 +787,11 @@
   policiesLink.addEventListener('click', e => {
     e.preventDefault();
     const isOpen = policiesDropdown.classList.contains('open');
-    if (isOpen) {
-      policiesDropdown.classList.remove('open');
-      policiesLink.classList.remove('arrow-open');
-      policiesLink.classList.add('arrow-closed');
-      policiesLink.setAttribute('aria-expanded', 'false');
-      policiesDropdown.setAttribute('aria-hidden', 'true');
-    } else {
-      policiesDropdown.classList.add('open');
-      policiesLink.classList.add('arrow-open');
-      policiesLink.classList.remove('arrow-closed');
-      policiesLink.setAttribute('aria-expanded', 'true');
-      policiesDropdown.setAttribute('aria-hidden', 'false');
-    }
+    policiesDropdown.classList.toggle('open', !isOpen);
+    policiesLink.classList.toggle('arrow-open', !isOpen);
+    policiesLink.classList.toggle('arrow-closed', isOpen);
+    policiesLink.setAttribute('aria-expanded', String(!isOpen));
+    policiesDropdown.setAttribute('aria-hidden', String(isOpen));
   });
 
   policiesLink.addEventListener('keydown', e => {

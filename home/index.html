@@ -21,9 +21,10 @@
   }
 
   body.sidebar-open, body.cart-open {
+    position: fixed;
     overflow: hidden;
-    height: 100vh;
     width: 100%;
+    height: 100vh;
     touch-action: none;
   }    
 
@@ -631,27 +632,46 @@
   const slider = document.getElementById('slider');
   const slides = slider?.children || [];
 
+  // === SCROLL LOCK ===
+  let scrollTop = 0;
+  function lockBodyScroll() {
+    scrollTop = window.scrollY;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollTop}px`;
+    body.style.width = '100%';
+    body.classList.add('sidebar-open');
+  }
+  function unlockBodyScroll() {
+    body.classList.remove('sidebar-open');
+    body.style.position = '';
+    body.style.top = '';
+    body.style.width = '';
+    window.scrollTo(0, scrollTop);
+  }
+
   // === SIDEBAR TOGGLES ===
   menuToggle?.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
-    body.classList.toggle('sidebar-open', isOpen);
-    body.classList.remove('cart-open');
-    sidebar.setAttribute('aria-hidden', !isOpen);
+    if (isOpen) {
+      lockBodyScroll();
+    } else {
+      unlockBodyScroll();
+    }
     cartSidebar.setAttribute('aria-hidden', 'true');
+    sidebar.setAttribute('aria-hidden', !isOpen);
   });
 
   cartToggle?.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
-    body.classList.toggle('cart-open', isOpen);
-    body.classList.remove('sidebar-open');
-    cartSidebar.setAttribute('aria-hidden', !isOpen);
+    if (isOpen) {
+      lockBodyScroll();
+    } else {
+      unlockBodyScroll();
+    }
     sidebar.setAttribute('aria-hidden', 'true');
-  });
-
-  searchToggle?.addEventListener('click', () => {
-    alert('Search toggled! Implement your search UI here.');
+    cartSidebar.setAttribute('aria-hidden', !isOpen);
   });
 
   // Sidebar close buttons
@@ -659,10 +679,15 @@
     btn.addEventListener('click', () => {
       sidebar?.classList.remove('open');
       cartSidebar?.classList.remove('open');
-      body.classList.remove('sidebar-open', 'cart-open');
+      unlockBodyScroll();
       sidebar?.setAttribute('aria-hidden', 'true');
       cartSidebar?.setAttribute('aria-hidden', 'true');
     });
+  });
+
+  // === SEARCH ICON ===
+  searchToggle?.addEventListener('click', () => {
+    alert('Search toggled! Implement your search UI here.');
   });
 
   // === KEYBOARD SUPPORT ===
@@ -680,7 +705,7 @@
     if (e.key === 'Escape') {
       sidebar?.classList.remove('open');
       cartSidebar?.classList.remove('open');
-      body.classList.remove('sidebar-open', 'cart-open');
+      unlockBodyScroll();
       sidebar?.setAttribute('aria-hidden', 'true');
       cartSidebar?.setAttribute('aria-hidden', 'true');
     }

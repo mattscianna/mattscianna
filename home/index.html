@@ -317,39 +317,30 @@
 
   /* Cart sidebar (right) */
   .cart-sidebar {
+    position: fixed;
+    top: 0;
     right: 0;
     width: 50vw;
     max-width: 280px;
+    height: 100vh;
     padding: 80px 20px;
-    transform: translateX(100%);
-    text-align: left;
     background: white;
     color: black;
-    position: fixed;
-    top: 0;
-    height: 100vh;
+    text-align: left;
     overflow-y: auto;
-    z-index: 1700;
+    transform: translateX(100%);
     transition: transform 0.4s ease-in-out;
+    z-index: 1700;
     box-shadow: none;
+    font-family: 'Oswald', sans-serif; /* ensure consistent font */
   }
 
+  /* Show the cart sidebar when open */
   .cart-sidebar.open {
     transform: translateX(0);
   }
 
-  .sidebar .close-btn {
-    position: fixed;
-    top: 17px;
-    left: 17px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 1800;
-    background: transparent;
-  }
-
+  /* Close button inside cart sidebar */
   .cart-sidebar .close-btn {
     position: fixed;
     top: 17px;
@@ -358,10 +349,11 @@
     height: 24px;
     cursor: pointer;
     user-select: none;
-    z-index: 1800;
     background: transparent;
+    z-index: 1800;
   }
 
+  /* Common styles for the close button "X" */
   .close-btn:before,
   .close-btn:after {
     content: '';
@@ -373,6 +365,7 @@
     background-color: black;
   }
 
+  /* Rotate lines to form "X" */
   .close-btn:before {
     transform: rotate(45deg);
   }
@@ -456,67 +449,70 @@
   }
 
   .slider {
-    display: flex;
-    width: 300%;
-    transition: transform 0.5s ease-in-out;
-    height: 100%;
-  }
+  display: flex;
+  width: 300%; /* Assuming 3 slides; consider using JS to set this dynamically */
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+  overflow: hidden; /* Ensure slides don’t overflow */
+}
 
-  .slide {
-    flex: 0 0 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-  }
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
 
-  #custom-carousel-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 10px;
-  }
+#custom-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+  user-select: none;
+}
 
-  #custom-carousel-controls button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    padding: 5px 10px;
-    color: black;
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.3s ease;
-  }
+#custom-carousel-controls button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  padding: 5px 10px;
+  color: black;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
-  #custom-carousel-controls button:hover {
-    color: black;
-  }
+#custom-carousel-controls button:hover,
+#custom-carousel-controls button:focus {
+  color: #555; /* subtle hover/focus color */
+  outline: none;
+}
 
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: none;
-    background-color: lightgray;
-    cursor: pointer;
-    padding: 0;
-    transition: background-color 0.3s ease;
-  }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: lightgray;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.3s ease;
+}
 
 .dot.active {
   background-color: black;
 }
 
-  @media (max-width: 767px) {
-    .sidebar nav a {
-      text-align: center;
-      display: inline-block;
-    }
-
-    .policies-dropdown {
-      margin-left: 0;
-    }
+@media (max-width: 767px) {
+  .sidebar nav a {
+    text-align: center;
+    display: inline-block;
   }
+
+  .policies-dropdown {
+    margin-left: 0;
+  }
+}
 </style>
 </head>
 <body>
@@ -601,9 +597,11 @@
   </div>
 </nav>
 
-<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close cart sidebar"></div>
-  <!-- Cart sidebar content is dynamically inserted -->
+<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1">
+  <button class="close-btn" type="button" aria-label="Close cart sidebar"></button>
+  <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals">
+    <!-- Cart sidebar content is dynamically inserted here -->
+  </div>
 </nav>
 
 <script>
@@ -620,6 +618,12 @@
   const policiesDropdown = document.getElementById('policiesDropdown');
   const slider = document.getElementById('slider');
   const slides = slider?.children || [];
+
+  // === INITIAL SETUP ===
+  sidebar.classList.remove('open');
+  sidebar.setAttribute('aria-hidden', 'true');
+  cartSidebar.classList.remove('open');
+  cartSidebar.setAttribute('aria-hidden', 'true');
 
   // === SCROLL LOCK ===
   let scrollTop = 0;
@@ -647,30 +651,61 @@
     window.scrollTo(0, scrollTop);
   }
 
+  function focusFirstFocusable(container) {
+    if (!container) return;
+    const focusableSelectors = [
+      'a[href]', 'button:not([disabled])', 'input:not([disabled])', 
+      'select:not([disabled])', 'textarea:not([disabled])', 
+      '[tabindex]:not([tabindex="-1"])'
+    ];
+    const firstFocusable = container.querySelector(focusableSelectors.join(','));
+    if (firstFocusable) firstFocusable.focus();
+  }
+
   // === SIDEBAR TOGGLES ===
   menuToggle?.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
-    cartSidebar.classList.remove('open');
-    sidebar.setAttribute('aria-hidden', !isOpen);
-    cartSidebar.setAttribute('aria-hidden', 'true');
-    isOpen ? lockBodyScroll() : unlockBodyScroll();
+    if (isOpen) {
+      cartSidebar.classList.remove('open');
+      sidebar.setAttribute('aria-hidden', 'false');
+      cartSidebar.setAttribute('aria-hidden', 'true');
+      lockBodyScroll();
+      focusFirstFocusable(sidebar);
+    } else {
+      sidebar.setAttribute('aria-hidden', 'true');
+      unlockBodyScroll();
+      menuToggle.focus();
+    }
   });
 
   cartToggle?.addEventListener('click', () => {
     const isOpen = cartSidebar.classList.toggle('open');
-    sidebar.classList.remove('open');
-    cartSidebar.setAttribute('aria-hidden', !isOpen);
-    sidebar.setAttribute('aria-hidden', 'true');
-    isOpen ? lockBodyScroll() : unlockBodyScroll();
+    if (isOpen) {
+      sidebar.classList.remove('open');
+      cartSidebar.setAttribute('aria-hidden', 'false');
+      sidebar.setAttribute('aria-hidden', 'true');
+      lockBodyScroll();
+      focusFirstFocusable(cartSidebar);
+    } else {
+      cartSidebar.setAttribute('aria-hidden', 'true');
+      unlockBodyScroll();
+      cartToggle.focus();
+    }
   });
 
   // === CLOSE BUTTONS ===
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      sidebar?.classList.remove('open');
-      cartSidebar?.classList.remove('open');
-      sidebar?.setAttribute('aria-hidden', 'true');
-      cartSidebar?.setAttribute('aria-hidden', 'true');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        sidebar.setAttribute('aria-hidden', 'true');
+        menuToggle.focus();
+      }
+      if (cartSidebar.classList.contains('open')) {
+        cartSidebar.classList.remove('open');
+        cartSidebar.setAttribute('aria-hidden', 'true');
+        cartToggle.focus();
+      }
       unlockBodyScroll();
     });
   });
@@ -678,20 +713,27 @@
   // === ESC KEY CLOSE ===
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      sidebar?.classList.remove('open');
-      cartSidebar?.classList.remove('open');
-      sidebar?.setAttribute('aria-hidden', 'true');
-      cartSidebar?.setAttribute('aria-hidden', 'true');
-      unlockBodyScroll();
+      let wasOpen = false;
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        sidebar.setAttribute('aria-hidden', 'true');
+        menuToggle.focus();
+        wasOpen = true;
+      }
+      if (cartSidebar.classList.contains('open')) {
+        cartSidebar.classList.remove('open');
+        cartSidebar.setAttribute('aria-hidden', 'true');
+        cartToggle.focus();
+        wasOpen = true;
+      }
+      if (wasOpen) unlockBodyScroll();
     }
   });
 
-  // === SEARCH PLACEHOLDER ===
   searchToggle?.addEventListener('click', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
-  // === KEYBOARD TOGGLE SUPPORT ===
   [menuToggle, cartToggle, searchToggle].forEach(toggle => {
     toggle?.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -704,6 +746,7 @@
   // === CAROUSEL ===
   let currentSlide = 0;
   const totalSlides = slides.length;
+  let autoplayInterval;
 
   function showSlide(index) {
     if (!slider) return;
@@ -712,8 +755,20 @@
     updateDots();
   }
 
-  function prevSlide() { showSlide(currentSlide - 1); }
-  function nextSlide() { showSlide(currentSlide + 1); }
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+    resetAutoplay();
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+    resetAutoplay();
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayInterval);
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
 
   if (slider) {
     const controlsContainer = document.createElement('div');
@@ -763,7 +818,10 @@
       const dot = document.createElement('button');
       dot.classList.add('dot');
       dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      dot.addEventListener('click', () => showSlide(i));
+      dot.addEventListener('click', () => {
+        showSlide(i);
+        resetAutoplay();
+      });
       dots.push(dot);
       dotContainer.appendChild(dot);
     }
@@ -788,7 +846,36 @@
       });
     });
 
-    if (totalSlides > 0) showSlide(0);
+    // Start autoplay
+    if (totalSlides > 0) {
+      showSlide(0);
+      autoplayInterval = setInterval(nextSlide, 5000);
+    }
+
+    // === SWIPE SUPPORT ===
+    let startX = 0;
+    let isDragging = false;
+
+    slider.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    slider.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      const endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      }
+
+      isDragging = false;
+    });
   }
 
   // === POLICIES DROPDOWN ===
@@ -809,7 +896,7 @@
     }
   });
 
-  // === LOGO SCROLL TO TOP + RELOAD ===
+  // === LOGO CLICK = SCROLL TO TOP + RELOAD ===
   logoContainer?.addEventListener('click', () => {
     window.scrollTo(0, 0);
     location.reload();

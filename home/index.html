@@ -18,13 +18,28 @@
     font-family: 'Oswald', sans-serif;
     user-select: none;
     min-height: 100vh;
-  }
+    padding-top: 64px; /* Offset for fixed header */
+}
 
   body.sidebar-open, body.cart-open {
     overflow: hidden;
     width: 100%;
-  }
-    
+}  
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    background: black;
+    z-index: 1000;
+}
+
   .icon-btn.menu-toggle,
   .icon-btn.cart-toggle,
   .icon-btn.search-toggle,
@@ -35,7 +50,7 @@
     color: white;
     display: flex;
     align-items: center;
-  }
+}
 
   .logo-container {
     position: absolute;

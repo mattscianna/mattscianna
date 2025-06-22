@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Matt Scianna</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cardo:wght@700;900&display=swap" rel="stylesheet" />
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matt Scianna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700;900&family=Oswald&display=swap" rel="stylesheet" />
+  <style>
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-
   html, body {
     overflow-x: hidden;
     background-color: white;
@@ -19,7 +18,6 @@
     user-select: none;
     min-height: 100vh;
   }
-
   body.sidebar-open,
   body.cart-open {
     position: fixed;
@@ -30,8 +28,6 @@
     left: 0;
     touch-action: none;
   }
-
-  /* === SIDEBARS === */
   .sidebar,
   .cart-sidebar {
     position: fixed;
@@ -48,28 +44,24 @@
     visibility: hidden;
     pointer-events: none;
   }
-
   .sidebar {
     left: 0;
     width: 50vw;
     max-width: 280px;
     transform: translateX(-100%);
   }
-
   .cart-sidebar {
     right: 0;
     width: 50vw;
     max-width: 280px;
     transform: translateX(100%);
   }
-
   .sidebar.open,
   .cart-sidebar.open {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
   }
-
   .close-btn {
     position: absolute;
     top: 17px;
@@ -80,10 +72,8 @@
     background: transparent;
     z-index: 1800;
   }
-
   .sidebar .close-btn { left: 17px; }
   .cart-sidebar .close-btn { right: 17px; }
-
   .close-btn::before,
   .close-btn::after {
     content: '';
@@ -94,11 +84,8 @@
     height: 24px;
     background-color: black;
   }
-
   .close-btn::before { transform: rotate(45deg); }
   .close-btn::after { transform: rotate(-45deg); }
-
-  /* === HEADER === */
   header {
     background-color: white;
     color: black;
@@ -107,33 +94,35 @@
     z-index: 2000;
     border-bottom: 1px solid #eee;
     transition: background 0.4s ease, color 0.4s ease;
+    padding: 16px 24px;
   }
-
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
   }
-
   .header-icons {
     display: flex;
     align-items: center;
     gap: 24px;
   }
 
-  header.search-active {
-    background-color: white;
-    color: black;
-    border-bottom: 1px solid #ccc;
-  }
+  /* When search is toggled on, icons & logo turn black (default)
+     But you want them to switch between black and white
+     So let's toggle filter brightness to invert colors */
 
-  header.search-active #logoContainer,
+  header.search-active {
+    background-color: black;
+    color: white;
+  }
+  header.search-active #logoContainer {
+    color: white;
+  }
   header.search-active .icon-btn svg,
   header.search-active .icon-btn img {
-    filter: brightness(0);
+    filter: brightness(0) invert(1);
   }
 
   #logoContainer {
@@ -143,9 +132,9 @@
     cursor: pointer;
     user-select: none;
     letter-spacing: 0.5px;
-    transition: filter 0.3s ease;
+    transition: color 0.3s ease;
+    color: black;
   }
-
   .icon-btn {
     background: none;
     border: none;
@@ -155,14 +144,12 @@
     align-items: center;
     justify-content: center;
   }
-
   .icon-btn svg,
   .icon-btn img {
     width: 20px;
     height: 20px;
     transition: filter 0.3s ease;
   }
-
   #cartCount {
     position: absolute;
     top: -6px;
@@ -175,8 +162,6 @@
     padding: 2px 6px;
     display: none;
   }
-
-  /* === SEARCH BAR === */
   #searchBarContainer {
     max-height: 0;
     opacity: 0;
@@ -185,13 +170,11 @@
     border-top: 1px solid #eee;
     transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
   }
-
   #searchBarContainer.active {
     max-height: 60px;
     opacity: 1;
     padding: 12px 24px;
   }
-
   #searchInput {
     width: 100%;
     padding: 12px 16px;
@@ -199,10 +182,8 @@
     font-size: 16px;
     font-family: 'Oswald', sans-serif;
   }
-
-  /* === IMAGE CAROUSEL === */
   .image-box {
-    margin: 0 auto;
+    margin: 32px auto;
     width: 100%;
     max-width: 600px;
     aspect-ratio: 3 / 4;
@@ -210,37 +191,17 @@
     overflow: hidden;
     position: relative;
   }
-
   .slider {
     display: flex;
     width: 300%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
   }
-
   .slide {
     flex: 0 0 100%;
     background-size: cover;
     background-position: center;
   }
-
-  /* === ADDITIONAL JERSEY GRID BELOW === */
-  .jersey-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 32px 24px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .jersey-grid img {
-    width: 100%;
-    object-fit: cover;
-    border: 1px solid #eee;
-  }
-
-  /* === SIDEBAR NAVIGATION === */
   .sidebar a {
     display: block;
     padding: 12px 16px;
@@ -249,79 +210,64 @@
     text-decoration: none;
     transition: background-color 0.2s ease;
   }
-
   .sidebar a.current,
   .sidebar a:hover {
     background-color: #f0f0f0;
   }
-
   .policies-link.arrow-closed::after {
     content: "▼";
     float: right;
     transition: transform 0.3s ease;
   }
-
   .policies-link.arrow-open::after {
     content: "▲";
     float: right;
     transition: transform 0.3s ease;
   }
-
   .policies-dropdown {
     display: none;
     margin-left: 12px;
     padding-left: 12px;
     border-left: 2px solid #ccc;
   }
-
   .policies-dropdown.open {
     display: block;
   }
-
   .policies-dropdown a {
     font-weight: 400;
     font-size: 14px;
     padding: 6px 16px;
   }
-
-  /* === CART CONTENT === */
   .cart-content {
     font-family: 'Oswald', sans-serif;
   }
-
   .cart-item {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
   }
-
   .cart-item img {
     width: 64px;
     height: 80px;
     object-fit: contain;
     margin-right: 16px;
   }
-
   .cart-item-details {
     flex-grow: 1;
   }
-
   .cart-item-title {
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 4px;
   }
-
   .cart-item-quantity {
     font-size: 14px;
     color: grey;
   }
-
   .cart-item-price {
     font-weight: 700;
     font-size: 16px;
   }
-
   .cart-total {
     font-weight: 900;
     font-size: 20px;
@@ -329,7 +275,6 @@
     border-top: 1px solid #ccc;
     padding-top: 16px;
   }
-
   .checkout-btn {
     display: block;
     margin-top: 24px;
@@ -343,8 +288,6 @@
     text-align: center;
     font-size: 18px;
   }
-
-  /* === RESPONSIVE === */
   @media (max-width: 767px) {
     .cart-sidebar,
     .sidebar {
@@ -352,310 +295,303 @@
       max-width: none;
       padding: 80px 16px;
     }
-
     .image-box {
       padding: 0 16px;
     }
-
     .sidebar a {
       text-align: center;
     }
-
     .policies-dropdown {
       margin-left: 0;
       padding-left: 0;
       border-left: none;
     }
-
-    .jersey-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
   }
 </style>
-<head>
-</body>
 
-<header style="padding: 16px 24px; border-bottom: 1px solid #eee;">
-  <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
-    
-    <!-- Left: Menu -->
-    <button id="menuToggle" aria-label="Toggle menu" 
-      style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
+<header>
+  <div class="header-container">
+    <button id="menuToggle" aria-label="Toggle menu" class="icon-btn">
       <img src="https://img.icons8.com/ios-filled/24/menu--v1.png" alt="Menu Icon" />
     </button>
-    
-    <!-- Center: Logo -->
-    <div id="logoContainer" role="button" tabindex="0" aria-label="Reload home page"
-      style="font-family: 'Cardo', serif; font-weight: 900; font-size: 22px; cursor: pointer; user-select: none; letter-spacing: 0.5px;">
+    <div id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
       MATT SCIANNA
     </div>
-    
-    <!-- Right: Search & Cart -->
-    <div style="display: flex; align-items: center; gap: 24px;">
-      <!-- Search -->
-      <button id="searchIcon" aria-label="Search" 
-        style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
+    <div class="header-icons">
+      <button id="searchIcon" aria-label="Search" class="icon-btn">
         <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M10,2A8,8 0 0,1 18,10C18,12.21 17.21,14.21 15.83,15.59L21.71,21.46L20.29,22.88L14.41,17C13.04,18.38 11.04,19.17 9,19.17A8,8 0 0,1 1,11.17A8,8 0 0,1 10,2M10,4A6,6 0 0,0 4,10A6,6 0 0,0 10,16A6,6 0 0,0 16,10A6,6 0 0,0 10,4Z"/>
         </svg>
       </button>
-      
-      <!-- Cart -->
-      <button id="cartIcon" aria-label="Toggle cart" title="Cart" 
-        style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; position: relative;">
+      <button id="cartIcon" aria-label="Toggle cart" title="Cart" class="icon-btn" style="position: relative;">
         <img src="https://via.placeholder.com/24?text=🛍️" alt="Cart Icon" />
-        <span id="cartCount" style="position: absolute; top: -6px; right: -6px; background: black; color: white; font-size: 12px; 
-          font-weight: 700; border-radius: 50%; padding: 2px 6px; display: none;">0</span>
+        <span id="cartCount">0</span>
       </button>
     </div>
-    
   </div>
 </header>
 
-<!-- Image Carousel -->
-<div class="image-box" aria-live="polite" aria-label="Product image slider" 
-     style="position: relative; max-width: 600px; margin: 32px auto; height: 400px; overflow: hidden;">
-  <div class="slider" id="slider" style="display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out;">
-    <div class="slide" role="img" aria-label="Slide 1" 
-         style="flex: 0 0 100%; background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png'); background-size: cover; background-position: center;"></div>
-    <div class="slide" role="img" aria-label="Slide 2" 
-         style="flex: 0 0 100%; background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1178.png'); background-size: cover; background-position: center;"></div>
-    <div class="slide" role="img" aria-label="Slide 3" 
-         style="flex: 0 0 100%; background-image: url('https://via.placeholder.com/600x800?text=Slide+3'); background-size: cover; background-position: center;"></div>
+<div id="searchBarContainer" style="max-height: 0; opacity: 0; overflow: hidden; background-color: white; border-top: 1px solid #eee; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;">
+  <input type="text" id="searchInput" placeholder="Search..." />
+</div>
+
+<div class="image-box" aria-live="polite" aria-label="Product image slider">
+  <div class="slider" id="slider">
+    <div class="slide" role="img" aria-label="Slide 1" style="background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png');"></div>
+    <div class="slide" role="img" aria-label="Slide 2" style="background-image: url('https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1178.png');"></div>
+    <div class="slide" role="img" aria-label="Slide 3" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');"></div>
   </div>
 </div>
 
-<!-- Sidebar Menu -->
-<nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true" tabindex="-1" style="position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow-y: auto; transform: translateX(-100%); transition: transform 0.4s ease-in-out;">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar" style="position: absolute; top: 17px; left: 17px; width: 24px; height: 24px; cursor: pointer; user-select: none;">
-    <span style="position: absolute; top: 0; left: 11px; width: 2px; height: 24px; background-color: black; transform: rotate(45deg);"></span>
-    <span style="position: absolute; top: 0; left: 11px; width: 2px; height: 24px; background-color: black; transform: rotate(-45deg);"></span>
-  </div>
-  <a href="https://mattscianna.com/home" class="current" style="display: block; padding: 12px 16px; font-weight: 700; color: black; text-decoration: none;">HOME</a>
-  <a href="https://mattscianna.com/lookbooks" style="display: block; padding: 12px 16px; font-weight: 700; color: black; text-decoration: none;">LOOKBOOKS</a>
-  <a href="https://mattscianna.com/contact" style="display: block; padding: 12px 16px; font-weight: 700; color: black; text-decoration: none;">CONTACT</a>
-  <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown" style="display: block; padding: 12px 16px; font-weight: 700; color: black; text-decoration: none;">POLICIES</a>
-  <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true" style="display:none; margin-left: 12px; padding-left: 12px; border-left: 2px solid #ccc;">
-    <a href="/return-policy" style="display: block; font-weight: 400; font-size: 14px; padding: 6px 16px; color: black; text-decoration: none;">RETURN POLICY</a>
-    <a href="/shipping-policy" style="display: block; font-weight: 400; font-size: 14px; padding: 6px 16px; color: black; text-decoration: none;">SHIPPING POLICY</a>
-    <a href="/privacy-policy" style="display: block; font-weight: 400; font-size: 14px; padding: 6px 16px; color: black; text-decoration: none;">PRIVACY POLICY</a>
+<nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true" tabindex="-1">
+  <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar"></div>
+  <a href="https://mattscianna.com/home" class="current">HOME</a>
+  <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
+  <a href="https://mattscianna.com/contact">CONTACT</a>
+  <a href="#" class="policies-link arrow-closed" id="policiesLink" aria-expanded="false" aria-controls="policiesDropdown">POLICIES</a>
+  <div id="policiesDropdown" class="policies-dropdown" role="region" aria-hidden="true">
+    <a href="/return-policy">RETURN POLICY</a>
+    <a href="/shipping-policy">SHIPPING POLICY</a>
+    <a href="/privacy-policy">PRIVACY POLICY</a>
   </div>
 </nav>
 
-<!-- Cart Sidebar -->
-<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1" role="dialog" aria-modal="true" style="position: fixed; top: 0; right: 0; width: 280px; height: 100vh; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow-y: auto; transform: translateX(100%); transition: transform 0.4s ease-in-out;">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close cart sidebar" style="position: absolute; top: 17px; right: 17px; width: 24px; height: 24px; cursor: pointer; user-select: none;">
-    <span style="position: absolute; top: 0; left: 11px; width: 2px; height: 24px; background-color: black; transform: rotate(45deg);"></span>
-    <span style="position: absolute; top: 0; left: 11px; width: 2px; height: 24px; background-color: black; transform: rotate(-45deg);"></span>
-  </div>
-  <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals" style="padding: 80px 20px;">
-    <!-- Example cart item -->
-    <div class="cart-item" style="display: flex; align-items: center; margin-bottom: 20px;">
-      <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png" alt="Red Jersey" style="width: 64px; height: 80px; object-fit: contain; margin-right: 16px;" />
-      <div class="cart-item-details" style="flex-grow: 1;">
-        <div class="cart-item-title" style="font-weight: 700; font-size: 16px; margin-bottom: 4px;">TWO-FIVE JERSEY - RED</div>
-        <div class="cart-item-quantity" style="font-size: 14px; color: grey;">Quantity: 1</div>
+<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1" role="dialog" aria-modal="true">
+  <div class="close-btn" role="button" tabindex="0" aria-label="Close cart sidebar"></div>
+  <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals">
+    <div class="cart-item">
+      <img src="https://raw.githubusercontent.com/mattscianna/mattscianna/main/IMG_1183.png" alt="Red Jersey" />
+      <div class="cart-item-details">
+        <div class="cart-item-title">TWO-FIVE JERSEY - RED</div>
+        <div class="cart-item-quantity">Quantity: 1</div>
       </div>
-      <div class="cart-item-price" style="font-weight: 700; font-size: 16px;">$49.99</div>
+      <div class="cart-item-price">$49.99</div>
     </div>
-
-    <div class="cart-total" style="font-weight: 900; font-size: 20px; margin-top: 24px; border-top: 1px solid #ccc; padding-top: 16px;">Total: $49.99</div>
-    <button class="checkout-btn" type="button" style="display: block; margin-top: 24px; padding: 12px; background: black; color: white; font-weight: 900; border: none; cursor: pointer; width: 100%; text-align: center; font-size: 18px;">Checkout</button>
+    <div class="cart-total">Total: $49.99</div>
+    <button class="checkout-btn" type="button">Checkout</button>
   </div>
 </nav>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const body = document.body;
-  const sidebar = document.getElementById('sidebar');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const menuToggle = document.getElementById('menuToggle');
-  const cartToggle = document.getElementById('cartIcon');
-  const searchToggle = document.getElementById('searchIcon');
-  const closeButtons = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
-  const policiesLink = document.getElementById('policiesLink');
-  const policiesDropdown = document.getElementById('policiesDropdown');
-  const slider = document.getElementById('slider');
-  const logo = document.getElementById('logoContainer');
-  const searchBarContainer = document.getElementById('searchBarContainer');
-  const slides = slider?.children || [];
+  document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const sidebar = document.getElementById('sidebar');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const cartToggle = document.getElementById('cartIcon');
+    const searchToggle = document.getElementById('searchIcon');
+    const closeButtons = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
+    const policiesLink = document.getElementById('policiesLink');
+    const policiesDropdown = document.getElementById('policiesDropdown');
+    const slider = document.getElementById('slider');
+    const logo = document.getElementById('logoContainer');
+    const searchBarContainer = document.getElementById('searchBarContainer');
+    const slides = slider?.children || [];
 
-  let scrollTop = 0;
+    let scrollTop = 0;
 
-  function lockBodyScroll() {
-    scrollTop = window.scrollY || window.pageYOffset;
-    body.style.position = 'fixed';
-    body.style.top = `-${scrollTop}px`;
-    body.style.width = '100%';
-    body.classList.add('sidebar-open');
-  }
+    function lockBodyScroll() {
+      scrollTop = window.scrollY || window.pageYOffset;
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollTop}px`;
+      body.style.width = '100%';
+      body.classList.add('sidebar-open');
+    }
 
-  function unlockBodyScroll() {
-    body.classList.remove('sidebar-open');
-    body.style.position = '';
-    body.style.top = '';
-    window.scrollTo(0, scrollTop);
-  }
+    function unlockBodyScroll() {
+      body.classList.remove('sidebar-open');
+      body.style.position = '';
+      body.style.top = '';
+      window.scrollTo(0, scrollTop);
+    }
 
-  function toggleSidebar(target, other, toggleBtn) {
-    const isOpen = target.classList.contains('open');
+    function toggleSidebar(target, other, toggleBtn) {
+      const isOpen = target.classList.contains('open');
 
-    if (isOpen) {
-      target.classList.remove('open');
-      target.setAttribute('aria-hidden', 'true');
+      if (isOpen) {
+        target.classList.remove('open');
+        target.setAttribute('aria-hidden', 'true');
+        unlockBodyScroll();
+        toggleBtn?.focus();
+      } else {
+        other?.classList.remove('open');
+        other?.setAttribute('aria-hidden', 'true');
+
+        if (target === cartSidebar && window.innerWidth <= 767) {
+          cartSidebar.style.width = '50vw';
+        } else if (target === cartSidebar) {
+          cartSidebar.style.width = '';
+        }
+
+        target.classList.add('open');
+        target.setAttribute('aria-hidden', 'false');
+        lockBodyScroll();
+
+        const focusable = target.querySelector('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])');
+        focusable?.focus();
+      }
+    }
+
+    function closeSidebars() {
+      sidebar?.classList.remove('open');
+      cartSidebar?.classList.remove('open');
+      sidebar?.setAttribute('aria-hidden', 'true');
+      cartSidebar?.setAttribute('aria-hidden', 'true');
       unlockBodyScroll();
-      toggleBtn?.focus();
-    } else {
-      other?.classList.remove('open');
-      other?.setAttribute('aria-hidden', 'true');
-
-      if (target === cartSidebar && window.innerWidth <= 767) {
-        cartSidebar.style.width = '50vw';
-      } else if (target === cartSidebar) {
-        cartSidebar.style.width = '';
-      }
-
-      target.classList.add('open');
-      target.setAttribute('aria-hidden', 'false');
-      lockBodyScroll();
-
-      const focusable = target.querySelector('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])');
-      focusable?.focus();
     }
-  }
 
-  function closeSidebars() {
-    sidebar?.classList.remove('open');
-    cartSidebar?.classList.remove('open');
-    sidebar?.setAttribute('aria-hidden', 'true');
-    cartSidebar?.setAttribute('aria-hidden', 'true');
-    unlockBodyScroll();
-  }
-
-  function toggleSearchBar() {
-    if (!searchBarContainer) return;
-    const active = searchBarContainer.classList.toggle('active');
-    if (active) {
-      const input = searchBarContainer.querySelector('input');
-      input?.focus();
-    }
-  }
-
-  menuToggle?.addEventListener('click', () => toggleSidebar(sidebar, cartSidebar, menuToggle));
-  cartToggle?.addEventListener('click', () => toggleSidebar(cartSidebar, sidebar, cartToggle));
-  closeButtons.forEach(btn => btn.addEventListener('click', closeSidebars));
-  searchToggle?.addEventListener('click', toggleSearchBar);
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeSidebars();
-  });
-
-  [menuToggle, cartToggle, searchToggle].forEach(el => {
-    el?.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        el.click();
+    function toggleSearchBar() {
+      if (!searchBarContainer) return;
+      const active = searchBarContainer.classList.toggle('active');
+      if (active) {
+        const input = searchBarContainer.querySelector('input');
+        input?.focus();
       }
-    });
-  });
+    }
 
-  logo?.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    location.reload();
-  });
+    menuToggle?.addEventListener('click', () => toggleSidebar(sidebar, cartSidebar, menuToggle));
+    cartToggle?.addEventListener('click', () => toggleSidebar(cartSidebar, sidebar, cartToggle));
+    closeButtons.forEach(btn => btn.addEventListener('click', closeSidebars));
+    searchToggle?.addEventListener('click', toggleSearchBar);
 
-  // === Carousel ===
-  if (slider && slides.length > 0) {
-    let currentSlide = 0;
-    let autoplayInterval = null;
-    let startX = null;
-
-    const controls = document.createElement('div');
-    controls.id = 'custom-carousel-controls';
-
-    const leftBtn = document.createElement('button');
-    leftBtn.className = 'arrow left';
-    leftBtn.setAttribute('aria-label', 'Previous slide');
-    leftBtn.innerHTML = '&#10094;';
-    leftBtn.addEventListener('click', () => {
-      showSlide(currentSlide - 1);
-      resetAutoplay();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSidebars();
     });
 
-    const rightBtn = document.createElement('button');
-    rightBtn.className = 'arrow right';
-    rightBtn.setAttribute('aria-label', 'Next slide');
-    rightBtn.innerHTML = '&#10095;';
-    rightBtn.addEventListener('click', () => {
-      showSlide(currentSlide + 1);
-      resetAutoplay();
+    [menuToggle, cartToggle, searchToggle].forEach(el => {
+      el?.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
     });
 
-    const dotsContainer = document.createElement('div');
-    dotsContainer.className = 'dots-container';
+    logo?.addEventListener('click', () => {
+      window.scrollTo(0, 0);
+      location.reload();
+    });
 
-    controls.append(leftBtn, dotsContainer, rightBtn);
-    slider.parentElement.appendChild(controls);
+    if (slider && slides.length > 0) {
+      let currentSlide = 0;
+      let autoplayInterval = null;
+      let startX = null;
 
-    const dots = [];
-    for (let i = 0; i < slides.length; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'dot';
-      dot.setAttribute('aria-label', `Slide ${i + 1}`);
-      dot.addEventListener('click', () => {
-        showSlide(i);
+      const controls = document.createElement('div');
+      controls.id = 'custom-carousel-controls';
+      controls.style.position = 'absolute';
+      controls.style.bottom = '12px';
+      controls.style.left = '50%';
+      controls.style.transform = 'translateX(-50%)';
+      controls.style.display = 'flex';
+      controls.style.alignItems = 'center';
+      controls.style.gap = '8px';
+      controls.style.zIndex = '2000';
+
+      const leftBtn = document.createElement('button');
+      leftBtn.className = 'arrow left';
+      leftBtn.setAttribute('aria-label', 'Previous slide');
+      leftBtn.innerHTML = '&#10094;';
+      leftBtn.style.fontSize = '24px';
+      leftBtn.style.background = 'rgba(0,0,0,0.3)';
+      leftBtn.style.border = 'none';
+      leftBtn.style.color = 'white';
+      leftBtn.style.cursor = 'pointer';
+      leftBtn.style.padding = '4px 8px';
+      leftBtn.style.borderRadius = '4px';
+      leftBtn.addEventListener('click', () => {
+        showSlide(currentSlide - 1);
         resetAutoplay();
       });
-      dotsContainer.appendChild(dot);
-      dots.push(dot);
-    }
 
-    function showSlide(index) {
-      currentSlide = (index + slides.length) % slides.length;
-      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-      updateDots();
-    }
-
-    function updateDots() {
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
+      const rightBtn = document.createElement('button');
+      rightBtn.className = 'arrow right';
+      rightBtn.setAttribute('aria-label', 'Next slide');
+      rightBtn.innerHTML = '&#10095;';
+      rightBtn.style.fontSize = '24px';
+      rightBtn.style.background = 'rgba(0,0,0,0.3)';
+      rightBtn.style.border = 'none';
+      rightBtn.style.color = 'white';
+      rightBtn.style.cursor = 'pointer';
+      rightBtn.style.padding = '4px 8px';
+      rightBtn.style.borderRadius = '4px';
+      rightBtn.addEventListener('click', () => {
+        showSlide(currentSlide + 1);
+        resetAutoplay();
       });
-    }
 
-    function resetAutoplay() {
-      clearInterval(autoplayInterval);
+      const dotsContainer = document.createElement('div');
+      dotsContainer.className = 'dots-container';
+      dotsContainer.style.display = 'flex';
+      dotsContainer.style.gap = '8px';
+
+      controls.append(leftBtn, dotsContainer, rightBtn);
+      slider.parentElement.appendChild(controls);
+
+      const dots = [];
+      for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.style.width = '12px';
+        dot.style.height = '12px';
+        dot.style.borderRadius = '50%';
+        dot.style.border = 'none';
+        dot.style.background = 'rgba(255,255,255,0.5)';
+        dot.style.cursor = 'pointer';
+        dot.addEventListener('click', () => {
+          showSlide(i);
+          resetAutoplay();
+        });
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
+      }
+
+      function showSlide(index) {
+        currentSlide = (index + slides.length) % slides.length;
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        updateDots();
+      }
+
+      function updateDots() {
+        dots.forEach((dot, i) => {
+          dot.style.background = i === currentSlide ? 'white' : 'rgba(255,255,255,0.5)';
+        });
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplayInterval);
+        autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
+      }
+
+      slider.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      });
+
+      slider.addEventListener('touchend', e => {
+        if (startX === null) return;
+        const diff = e.changedTouches[0].clientX - startX;
+        if (diff > 50) showSlide(currentSlide - 1);
+        else if (diff < -50) showSlide(currentSlide + 1);
+        startX = null;
+        resetAutoplay();
+      });
+
+      showSlide(0);
       autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
     }
 
-    slider.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
-    slider.addEventListener('touchend', e => {
-      if (startX === null) return;
-      const diff = e.changedTouches[0].clientX - startX;
-      if (diff > 50) showSlide(currentSlide - 1);
-      else if (diff < -50) showSlide(currentSlide + 1);
-      startX = null;
-      resetAutoplay();
-    });
-
-    showSlide(0);
-    autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
-  }
-
-  if (policiesLink && policiesDropdown) {
-    policiesLink.addEventListener('click', e => {
-      e.preventDefault();
-      const isOpen = policiesDropdown.classList.toggle('open');
-      policiesLink.classList.toggle('arrow-open', isOpen);
-      policiesLink.classList.toggle('arrow-closed', !isOpen);
-      policiesLink.setAttribute('aria-expanded', String(isOpen));
-      policiesDropdown.setAttribute('aria-hidden', String(!isOpen));
-    });
-  }
-});
+    if (policiesLink && policiesDropdown) {
+      policiesLink.addEventListener('click', e => {
+        e.preventDefault();
+        const isOpen = policiesDropdown.classList.toggle('open');
+        policiesLink.classList.toggle('arrow-open', isOpen);
+        policiesLink.classList.toggle('arrow-closed', !isOpen);
+        policiesLink.setAttribute('aria-expanded', String(isOpen));
+        policiesDropdown.setAttribute('aria-hidden', String(!isOpen));
+      });
+    }
+  });
 </script>
 
 </body>

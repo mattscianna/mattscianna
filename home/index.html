@@ -315,64 +315,67 @@
     border-bottom: 1px solid white;
   }
 
-  /* Cart sidebar (right) */
-  .cart-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 50vw;
-    max-width: 280px;
-    height: 100vh;
-    padding: 80px 20px;
-    background: white;
-    color: black;
-    text-align: left;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.4s ease-in-out;
-    z-index: 1700;
-    box-shadow: none;
-    font-family: 'Oswald', sans-serif; /* ensure consistent font */
-  }
+  /* === Cart Sidebar Styles === */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  max-width: 280px;
+  height: 100vh;
+  padding: 80px 20px;
+  background-color: white;
+  color: black;
+  font-family: 'Oswald', sans-serif;
+  text-align: left;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  z-index: 1700;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  visibility: hidden;
+  pointer-events: none; /* Prevent interaction when hidden */
+}
 
-  /* Show the cart sidebar when open */
-  .cart-sidebar.open {
-    transform: translateX(0);
-  }
+/* Show cart sidebar when open */
+.cart-sidebar.open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto; /* Enable interaction when visible */
+}
 
-  /* Close button inside cart sidebar */
-  .cart-sidebar .close-btn {
-    position: fixed;
-    top: 17px;
-    right: 17px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    user-select: none;
-    background: transparent;
-    z-index: 1800;
-  }
+/* === Close Button Styles === */
+.cart-sidebar .close-btn {
+  position: absolute; /* inside fixed sidebar */
+  top: 17px;
+  right: 17px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  z-index: 1800;
+}
 
-  /* Common styles for the close button "X" */
-  .close-btn:before,
-  .close-btn:after {
-    content: '';
-    position: absolute;
-    left: 11px;
-    top: 0;
-    width: 2px;
-    height: 24px;
-    background-color: black;
-  }
+/* "X" icon */
+.cart-sidebar .close-btn:before,
+.cart-sidebar .close-btn:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 11px;
+  width: 2px;
+  height: 24px;
+  background-color: black;
+}
 
-  /* Rotate lines to form "X" */
-  .close-btn:before {
-    transform: rotate(45deg);
-  }
+.cart-sidebar .close-btn:before {
+  transform: rotate(45deg);
+}
 
-  .close-btn:after {
-    transform: rotate(-45deg);
-  }
+.cart-sidebar .close-btn:after {
+  transform: rotate(-45deg);
+}
 
   /* Product image and info */
   .product-image-box {
@@ -597,7 +600,7 @@
   </div>
 </nav>
 
-<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1">
+<nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1" role="dialog" aria-modal="true">
   <button class="close-btn" type="button" aria-label="Close cart sidebar"></button>
   <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals">
     <!-- Cart sidebar content is dynamically inserted here -->
@@ -605,7 +608,7 @@
 </nav>
 
 <script>
-  // === DOM ELEMENTS ===
+document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const sidebar = document.getElementById('sidebar');
   const cartSidebar = document.getElementById('cartSidebar');
@@ -619,224 +622,219 @@
   const slider = document.getElementById('slider');
   const slides = slider?.children || [];
 
-  // === INITIAL SETUP ===
-  sidebar.classList.remove('open');
-  sidebar.setAttribute('aria-hidden', 'true');
-  cartSidebar.classList.remove('open');
-  cartSidebar.setAttribute('aria-hidden', 'true');
+  // Initialize sidebars closed and aria-hidden true
+  if(sidebar) {
+    sidebar.classList.remove('open');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+  if(cartSidebar) {
+    cartSidebar.classList.remove('open');
+    cartSidebar.setAttribute('aria-hidden', 'true');
+  }
 
-  // === SCROLL LOCK ===
+  // Scroll lock helpers
   let scrollTop = 0;
   function lockBodyScroll() {
-    scrollTop = window.scrollY;
+    scrollTop = window.scrollY || window.pageYOffset;
     body.style.position = 'fixed';
     body.style.top = `-${scrollTop}px`;
     body.style.left = '0';
-    body.style.right = '0';
-    body.style.overflow = 'hidden';
     body.style.width = '100%';
     body.style.height = '100vh';
     body.classList.add('sidebar-open');
   }
-
   function unlockBodyScroll() {
     body.classList.remove('sidebar-open');
     body.style.position = '';
     body.style.top = '';
     body.style.left = '';
-    body.style.right = '';
-    body.style.overflow = '';
     body.style.width = '';
     body.style.height = '';
     window.scrollTo(0, scrollTop);
   }
 
+  // Focus helper
   function focusFirstFocusable(container) {
     if (!container) return;
-    const focusableSelectors = [
-      'a[href]', 'button:not([disabled])', 'input:not([disabled])', 
-      'select:not([disabled])', 'textarea:not([disabled])', 
-      '[tabindex]:not([tabindex="-1"])'
-    ];
-    const firstFocusable = container.querySelector(focusableSelectors.join(','));
+    const selectors = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const firstFocusable = container.querySelector(selectors);
     if (firstFocusable) firstFocusable.focus();
   }
 
-  // === SIDEBAR TOGGLES ===
-  menuToggle?.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('open');
-    if (isOpen) {
+  // Close both sidebars helper
+  function closeSidebars() {
+    if (sidebar?.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      menuToggle?.focus();
+    }
+    if (cartSidebar?.classList.contains('open')) {
       cartSidebar.classList.remove('open');
+      cartSidebar.setAttribute('aria-hidden', 'true');
+      cartToggle?.focus();
+    }
+    unlockBodyScroll();
+  }
+
+  // Toggle sidebar open/close
+  menuToggle?.addEventListener('click', () => {
+    const isOpening = !sidebar.classList.contains('open');
+    if (isOpening) {
+      sidebar.classList.add('open');
       sidebar.setAttribute('aria-hidden', 'false');
+      cartSidebar.classList.remove('open');
       cartSidebar.setAttribute('aria-hidden', 'true');
       lockBodyScroll();
       focusFirstFocusable(sidebar);
     } else {
+      sidebar.classList.remove('open');
       sidebar.setAttribute('aria-hidden', 'true');
       unlockBodyScroll();
       menuToggle.focus();
     }
   });
 
+  // Toggle cart sidebar open/close
   cartToggle?.addEventListener('click', () => {
-    const isOpen = cartSidebar.classList.toggle('open');
-    if (isOpen) {
-      sidebar.classList.remove('open');
+    const isOpening = !cartSidebar.classList.contains('open');
+    if (isOpening) {
+      cartSidebar.classList.add('open');
       cartSidebar.setAttribute('aria-hidden', 'false');
+      sidebar.classList.remove('open');
       sidebar.setAttribute('aria-hidden', 'true');
       lockBodyScroll();
       focusFirstFocusable(cartSidebar);
     } else {
+      cartSidebar.classList.remove('open');
       cartSidebar.setAttribute('aria-hidden', 'true');
       unlockBodyScroll();
       cartToggle.focus();
     }
   });
 
-  // === CLOSE BUTTONS ===
+  // Close buttons for both sidebars
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-        sidebar.setAttribute('aria-hidden', 'true');
-        menuToggle.focus();
-      }
-      if (cartSidebar.classList.contains('open')) {
-        cartSidebar.classList.remove('open');
-        cartSidebar.setAttribute('aria-hidden', 'true');
-        cartToggle.focus();
-      }
-      unlockBodyScroll();
+      closeSidebars();
     });
   });
 
-  // === ESC KEY CLOSE ===
-  document.addEventListener('keydown', e => {
+  // ESC key closes any open sidebar
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      let wasOpen = false;
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-        sidebar.setAttribute('aria-hidden', 'true');
-        menuToggle.focus();
-        wasOpen = true;
+      if ((sidebar?.classList.contains('open')) || (cartSidebar?.classList.contains('open'))) {
+        closeSidebars();
       }
-      if (cartSidebar.classList.contains('open')) {
-        cartSidebar.classList.remove('open');
-        cartSidebar.setAttribute('aria-hidden', 'true');
-        cartToggle.focus();
-        wasOpen = true;
-      }
-      if (wasOpen) unlockBodyScroll();
     }
   });
 
+  // Search toggle placeholder alert
   searchToggle?.addEventListener('click', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
-  [menuToggle, cartToggle, searchToggle].forEach(toggle => {
-    toggle?.addEventListener('keydown', e => {
+  // Keyboard toggles (Enter/Space triggers click)
+  [menuToggle, cartToggle, searchToggle].forEach(el => {
+    el?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggle.click();
+        el.click();
       }
     });
   });
 
-  // === CAROUSEL ===
-  let currentSlide = 0;
-  const totalSlides = slides.length;
-  let autoplayInterval;
+  // === Carousel logic ===
+  if (slider && slides.length > 0) {
+    let currentSlide = 0;
+    let autoplay;
 
-  function showSlide(index) {
-    if (!slider) return;
-    currentSlide = (index + totalSlides) % totalSlides;
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    updateDots();
-  }
+    // Create controls container
+    const controls = document.createElement('div');
+    controls.id = 'custom-carousel-controls';
+    controls.style.display = 'flex';
+    controls.style.justifyContent = 'center';
+    controls.style.alignItems = 'center';
+    controls.style.gap = '12px';
+    controls.style.marginTop = '8px';
 
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-    resetAutoplay();
-  }
-
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-    resetAutoplay();
-  }
-
-  function resetAutoplay() {
-    clearInterval(autoplayInterval);
-    autoplayInterval = setInterval(nextSlide, 5000);
-  }
-
-  if (slider) {
-    const controlsContainer = document.createElement('div');
-    controlsContainer.id = 'custom-carousel-controls';
-    Object.assign(controlsContainer.style, {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '12px',
-      marginTop: '8px'
-    });
-
+    // Left arrow button
     const leftBtn = document.createElement('button');
-    leftBtn.innerHTML = '&#10094;';
     leftBtn.className = 'arrow left';
-    Object.assign(leftBtn.style, {
-      position: 'static',
-      fontSize: '20px',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      color: 'black'
-    });
-    leftBtn.addEventListener('click', prevSlide);
+    leftBtn.innerHTML = '&#10094;';
+    leftBtn.style.fontSize = '20px';
+    leftBtn.style.background = 'none';
+    leftBtn.style.border = 'none';
+    leftBtn.style.cursor = 'pointer';
+    leftBtn.style.color = 'black';
 
+    // Right arrow button
     const rightBtn = document.createElement('button');
-    rightBtn.innerHTML = '&#10095;';
     rightBtn.className = 'arrow right';
-    Object.assign(rightBtn.style, {
-      position: 'static',
-      fontSize: '20px',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      color: 'black'
-    });
-    rightBtn.addEventListener('click', nextSlide);
+    rightBtn.innerHTML = '&#10095;';
+    rightBtn.style.fontSize = '20px';
+    rightBtn.style.background = 'none';
+    rightBtn.style.border = 'none';
+    rightBtn.style.cursor = 'pointer';
+    rightBtn.style.color = 'black';
 
+    // Dots container
+    const dotsContainer = document.createElement('div');
+    dotsContainer.style.display = 'flex';
+    dotsContainer.style.gap = '10px';
+
+    // Append buttons and dots to controls container
+    controls.appendChild(leftBtn);
+    controls.appendChild(dotsContainer);
+    controls.appendChild(rightBtn);
+
+    slider.parentElement.appendChild(controls);
+
+    // Dots array
     const dots = [];
-    const dotContainer = document.createElement('div');
-    Object.assign(dotContainer.style, {
-      display: 'flex',
-      gap: '10px'
-    });
 
-    for (let i = 0; i < totalSlides; i++) {
+    function updateDots() {
+      dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentSlide));
+    }
+
+    function showSlide(i) {
+      currentSlide = (i + slides.length) % slides.length;
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      updateDots();
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+      resetAutoplay();
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+      resetAutoplay();
+    }
+
+    function resetAutoplay() {
+      clearInterval(autoplay);
+      autoplay = setInterval(nextSlide, 5000);
+    }
+
+    // Create dots for each slide
+    for (let i = 0; i < slides.length; i++) {
       const dot = document.createElement('button');
-      dot.classList.add('dot');
+      dot.className = 'dot';
       dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
       dot.addEventListener('click', () => {
         showSlide(i);
         resetAutoplay();
       });
+      dotsContainer.appendChild(dot);
       dots.push(dot);
-      dotContainer.appendChild(dot);
     }
 
-    controlsContainer.appendChild(leftBtn);
-    controlsContainer.appendChild(dotContainer);
-    controlsContainer.appendChild(rightBtn);
-    slider.parentElement.appendChild(controlsContainer);
+    // Add click handlers to arrows
+    leftBtn.addEventListener('click', prevSlide);
+    rightBtn.addEventListener('click', nextSlide);
 
-    function updateDots() {
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-      });
-    }
-
+    // Keyboard accessibility for arrows
     [leftBtn, rightBtn].forEach(btn => {
       btn.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -846,61 +844,51 @@
       });
     });
 
-    // Start autoplay
-    if (totalSlides > 0) {
-      showSlide(0);
-      autoplayInterval = setInterval(nextSlide, 5000);
-    }
+    // Show initial slide and start autoplay
+    showSlide(0);
+    autoplay = setInterval(nextSlide, 5000);
 
-    // === SWIPE SUPPORT ===
-    let startX = 0;
-    let isDragging = false;
-
-    slider.addEventListener('touchstart', (e) => {
+    // Touch swipe support
+    let startX = null;
+    slider.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
-      isDragging = true;
     });
-
-    slider.addEventListener('touchend', (e) => {
-      if (!isDragging) return;
+    slider.addEventListener('touchend', e => {
+      if (startX === null) return;
       const endX = e.changedTouches[0].clientX;
-      const deltaX = endX - startX;
-
-      if (Math.abs(deltaX) > 50) {
-        if (deltaX > 0) {
-          prevSlide();
-        } else {
-          nextSlide();
-        }
-      }
-
-      isDragging = false;
+      const diff = endX - startX;
+      if (diff > 50) prevSlide();
+      else if (diff < -50) nextSlide();
+      startX = null;
     });
   }
 
-  // === POLICIES DROPDOWN ===
-  policiesLink?.addEventListener('click', e => {
-    e.preventDefault();
-    const isOpen = policiesDropdown.classList.contains('open');
-    policiesDropdown.classList.toggle('open', !isOpen);
-    policiesLink.classList.toggle('arrow-open', !isOpen);
-    policiesLink.classList.toggle('arrow-closed', isOpen);
-    policiesLink.setAttribute('aria-expanded', String(!isOpen));
-    policiesDropdown.setAttribute('aria-hidden', String(isOpen));
-  });
-
-  policiesLink?.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  // Policies dropdown toggle
+  if (policiesLink && policiesDropdown) {
+    policiesLink.addEventListener('click', e => {
       e.preventDefault();
-      policiesLink.click();
-    }
-  });
+      const isOpen = policiesDropdown.classList.contains('open');
+      policiesDropdown.classList.toggle('open', !isOpen);
+      policiesLink.classList.toggle('arrow-open', !isOpen);
+      policiesLink.classList.toggle('arrow-closed', isOpen);
+      policiesLink.setAttribute('aria-expanded', String(!isOpen));
+      policiesDropdown.setAttribute('aria-hidden', String(isOpen));
+    });
 
-  // === LOGO CLICK = SCROLL TO TOP + RELOAD ===
+    policiesLink.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && policiesLink) {
+        e.preventDefault();
+        policiesLink.click();
+      }
+    });
+  }
+
+  // Logo click scroll + reload
   logoContainer?.addEventListener('click', () => {
     window.scrollTo(0, 0);
     location.reload();
   });
+});
 </script>
   
 </body>

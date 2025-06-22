@@ -20,7 +20,6 @@
     min-height: 100vh;
   }
 
-  /* Lock body scroll when sidebar/cart open */
   body.sidebar-open,
   body.cart-open {
     position: fixed;
@@ -33,7 +32,28 @@
   }
 
   /* === SIDEBARS === */
-  .sidebar, .cart-sidebar {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    max-width: 280px;
+    height: 100vh;
+    padding: 80px 20px;
+    background: white;
+    color: black;
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    z-index: 1700;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .cart-sidebar {
     position: fixed;
     top: 0;
     right: 0;
@@ -54,19 +74,23 @@
     pointer-events: none;
   }
 
-  .sidebar.open,
+  .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
   .cart-sidebar.open {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
   }
 
-  /* Close buttons for sidebars */
+  /* Close buttons */
   .sidebar .close-btn,
   .cart-sidebar .close-btn {
     position: absolute;
     top: 17px;
-    right: 17px;
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -74,6 +98,15 @@
     background: transparent;
     z-index: 1800;
   }
+
+  .sidebar .close-btn {
+    left: 17px;
+  }
+
+  .cart-sidebar .close-btn {
+    right: 17px;
+  }
+
   .sidebar .close-btn::before,
   .sidebar .close-btn::after,
   .cart-sidebar .close-btn::before,
@@ -86,10 +119,12 @@
     height: 24px;
     background-color: black;
   }
+
   .sidebar .close-btn::before,
   .cart-sidebar .close-btn::before {
     transform: rotate(45deg);
   }
+
   .sidebar .close-btn::after,
   .cart-sidebar .close-btn::after {
     transform: rotate(-45deg);
@@ -101,22 +136,32 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 24px;
-    background-color: #000;
-    color: white;
+    background-color: transparent;
+    color: black;
     position: sticky;
     top: 0;
     z-index: 2000;
   }
-  .left-icons, .right-icons {
+
+  .left-icons,
+  .right-icons {
     display: flex;
     align-items: center;
   }
+
   .logo-container {
+    font-family: 'Cardo', serif;
+    font-weight: 900;
+    font-size: 24px;
     cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.5px;
   }
+
   .logo-image {
     height: 36px;
   }
+
   .icon-btn {
     cursor: pointer;
     user-select: none;
@@ -124,19 +169,9 @@
     align-items: center;
     justify-content: center;
   }
-  .icon-btn svg {
-    fill: white;
-  }
 
-  /* Hamburger menu icon */
-  .menu-toggle span {
-    display: block;
-    width: 24px;
-    height: 3px;
-    margin-bottom: 5px;
-    background-color: white;
-    border-radius: 2px;
-    transition: 0.3s;
+  .icon-btn svg {
+    fill: black;
   }
 
   /* === PRODUCT IMAGE BOX === */
@@ -149,12 +184,14 @@
     align-items: center;
     cursor: pointer;
   }
+
   .jersey-img {
     width: 100%;
     height: auto;
     object-fit: contain;
     transition: transform 0.25s ease-in-out;
   }
+
   .jersey-img:hover {
     transform: scale(1.03);
   }
@@ -165,20 +202,24 @@
     margin: 16px auto 24px;
     color: black;
   }
+
   .product-title {
     font-weight: 700;
     font-size: 22px;
     margin-bottom: 4px;
     cursor: pointer;
   }
+
   .product-title:hover {
     border-bottom: 1.5px solid black;
   }
+
   .product-color {
     font-size: 16px;
     color: grey;
     margin-bottom: 4px;
   }
+
   .product-price {
     font-size: 20px;
   }
@@ -193,12 +234,14 @@
     overflow: hidden;
     position: relative;
   }
+
   .slider {
     display: flex;
     width: 300%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
   }
+
   .slide {
     flex: 0 0 100%;
     background-size: cover;
@@ -214,6 +257,7 @@
     margin: 10px auto 0;
     max-width: 600px;
   }
+
   #custom-carousel-controls button {
     background: none;
     border: none;
@@ -222,9 +266,11 @@
     color: black;
     cursor: pointer;
   }
+
   #custom-carousel-controls button:hover {
     color: #555;
   }
+
   .dot {
     width: 12px;
     height: 12px;
@@ -233,6 +279,7 @@
     cursor: pointer;
     border: none;
   }
+
   .dot.active {
     background: black;
   }
@@ -246,29 +293,35 @@
     text-decoration: none;
     transition: background-color 0.2s ease;
   }
+
   .sidebar a.current,
   .sidebar a:hover {
     background-color: #f0f0f0;
   }
+
   .policies-link.arrow-closed::after {
     content: "▼";
     float: right;
     transition: transform 0.3s ease;
   }
+
   .policies-link.arrow-open::after {
     content: "▲";
     float: right;
     transition: transform 0.3s ease;
   }
+
   .policies-dropdown {
     display: none;
     margin-left: 12px;
     padding-left: 12px;
     border-left: 2px solid #ccc;
   }
+
   .policies-dropdown.open {
     display: block;
   }
+
   .policies-dropdown a {
     font-weight: 400;
     font-size: 14px;
@@ -279,33 +332,40 @@
   .cart-content {
     font-family: 'Oswald', sans-serif;
   }
+
   .cart-item {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
   }
+
   .cart-item img {
     width: 64px;
     height: 80px;
     object-fit: contain;
     margin-right: 16px;
   }
+
   .cart-item-details {
     flex-grow: 1;
   }
+
   .cart-item-title {
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 4px;
   }
+
   .cart-item-quantity {
     font-size: 14px;
     color: grey;
   }
+
   .cart-item-price {
     font-weight: 700;
     font-size: 16px;
   }
+
   .cart-total {
     font-weight: 900;
     font-size: 20px;
@@ -313,6 +373,7 @@
     border-top: 1px solid #ccc;
     padding-top: 16px;
   }
+
   .checkout-btn {
     display: block;
     margin-top: 24px;
@@ -334,14 +395,17 @@
       padding: 80px 16px;
       max-width: none;
     }
+
     .product-image-box {
       width: 100%;
       padding: 0 16px;
     }
+
     .sidebar nav a {
       display: block;
       text-align: center;
     }
+
     .policies-dropdown {
       margin-left: 0;
       padding-left: 0;
@@ -349,82 +413,42 @@
     }
   }
 </style>
-</head>
-<body>
+<head>
+</body>
 
 <header>
+  <!-- Left Menu Icon -->
   <div class="left-icons" style="width: 64px; display: flex; align-items: center;">
-    <div id="menuToggle" class="icon-btn menu-toggle" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
+    <div id="menuToggle" class="icon-btn" role="button" tabindex="0" aria-label="Toggle menu" aria-expanded="false">
+      <img src="https://img.icons8.com/ios-filled/24/menu--v1.png" alt="Menu Icon" />
     </div>
   </div>
 
+  <!-- Center Logo Text -->
   <div class="logo-container" id="logoContainer" role="button" tabindex="0" aria-label="Reload home page">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/ms-logo-WHITE.png?raw=true" class="logo-image" id="logoImage" alt="MS Logo" />
+    <span style="font-family: 'Cardo', serif; font-size: 22px; font-weight: 900; color: black;">MATT SCIANNA</span>
   </div>
 
+  <!-- Right Icons -->
   <div class="right-icons" style="width: 96px; display: flex; justify-content: flex-end; align-items: center;">
     <!-- Search Button -->
     <div id="searchIcon" class="icon-btn search-toggle" role="button" tabindex="0" aria-label="Search" style="margin-right: 16px;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="black" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M10,2A8,8 0 0,1 18,10C18,12.21 17.21,14.21 15.83,15.59L21.71,21.46L20.29,22.88L14.41,17C13.04,18.38 11.04,19.17 9,19.17A8,8 0 0,1 1,11.17A8,8 0 0,1 10,2M10,4A6,6 0 0,0 4,10A6,6 0 0,0 10,16A6,6 0 0,0 16,10A6,6 0 0,0 10,4Z"/>
       </svg>
     </div>
 
     <!-- Cart Button -->
     <div id="cartIcon" class="icon-btn cart-toggle" role="button" tabindex="0" aria-label="Toggle cart" aria-expanded="false" title="Cart">
-      <img src="https://via.placeholder.com/24?text=🛍️" alt="Bag" />
+      <img src="https://via.placeholder.com/24?text=🛍️" alt="Cart Icon" />
       <div id="cartCount" class="cart-count" style="display:none;">0</div>
     </div>
   </div>
 </header>
 
-<!-- Image Carousel -->
-<div class="image-box" aria-live="polite" aria-label="Product image slider" style="position: relative;">
-  <div class="slider" id="slider">
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+1');" role="img" aria-label="Slide 1"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+2');" role="img" aria-label="Slide 2"></div>
-    <div class="slide" style="background-image: url('https://via.placeholder.com/600x800?text=Slide+3');" role="img" aria-label="Slide 3"></div>
-  </div>
-</div>
-
-<!-- Product List -->
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-  <!-- Repeat products for demonstration -->
-  <div class="product-image-box" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="Red Jersey">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1183.png?raw=true" class="jersey-img" alt="Red Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/red'" role="link" tabindex="0" aria-label="Red Jersey">TWO-FIVE JERSEY</div>
-    <div class="product-color">RED</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <div class="product-image-box" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="White Jersey">
-    <img src="https://github.com/mattscianna/mattscianna/blob/main/IMG_1178.png?raw=true" class="jersey-img" alt="White Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/white'" role="link" tabindex="0" aria-label="White Jersey">TWO-FIVE JERSEY</div>
-    <div class="product-color">WHITE</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <!-- Additional products for length -->
-  <div class="product-image-box" onclick="location.href='/jersey/black'" role="link" tabindex="0" aria-label="Black Jersey">
-    <img src="https://via.placeholder.com/600x800?text=Black+Jersey" class="jersey-img" alt="Black Jersey" />
-  </div>
-  <div class="product-info">
-    <div class="product-title" onclick="location.href='/jersey/black'" role="link" tabindex="0" aria-label="Black Jersey">TWO-FIVE JERSEY</div>
-    <div class="product-color">BLACK</div>
-    <div class="product-price">$49.99 USD</div>
-  </div>
-
-  <!-- Add more product blocks as needed to approach 900 lines -->
-</div>
-
-<!-- Sidebar navigation -->
+<!-- Sidebar Menu -->
 <nav id="sidebar" class="sidebar" aria-label="Main navigation" aria-hidden="true" tabindex="-1">
-  <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar"></div>
+  <div class="close-btn" role="button" tabindex="0" aria-label="Close menu sidebar" style="left: 17px; right: auto;"></div>
   <a href="https://mattscianna.com/home" class="current">HOME</a>
   <a href="https://mattscianna.com/lookbooks">LOOKBOOKS</a>
   <a href="https://mattscianna.com/contact">CONTACT</a>
@@ -438,7 +462,7 @@
 
 <!-- Cart Sidebar -->
 <nav id="cartSidebar" class="cart-sidebar" aria-label="Shopping cart" aria-hidden="true" tabindex="-1" role="dialog" aria-modal="true">
-  <button class="close-btn" type="button" aria-label="Close cart sidebar"></button>
+  <div class="close-btn" role="button" tabindex="0" aria-label="Close cart sidebar" style="right: 17px;"></div>
   <div class="cart-content" role="region" aria-live="polite" aria-relevant="additions removals">
     <!-- Example cart item -->
     <div class="cart-item">
@@ -450,7 +474,6 @@
       <div class="cart-item-price">$49.99</div>
     </div>
 
-    <!-- Cart total -->
     <div class="cart-total">Total: $49.99</div>
     <button class="checkout-btn" type="button">Checkout</button>
   </div>
@@ -472,7 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let scrollTop = 0;
 
-  // Lock body scroll when sidebar/cart open
   function lockBodyScroll() {
     scrollTop = window.scrollY || window.pageYOffset;
     body.style.position = 'fixed';
@@ -488,7 +510,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, scrollTop);
   }
 
-  // Toggle sidebar open/close
   function toggleSidebar(target, other, toggleBtn) {
     const isOpen = target.classList.contains('open');
 
@@ -501,11 +522,10 @@ document.addEventListener('DOMContentLoaded', () => {
       other?.classList.remove('open');
       other?.setAttribute('aria-hidden', 'true');
 
-      // Adjust cart width for mobile
       if (target === cartSidebar && window.innerWidth <= 767) {
         cartSidebar.style.width = '50vw';
       } else if (target === cartSidebar) {
-        cartSidebar.style.width = ''; // reset for desktop
+        cartSidebar.style.width = '';
       }
 
       target.classList.add('open');
@@ -527,10 +547,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   menuToggle?.addEventListener('click', () => toggleSidebar(sidebar, cartSidebar, menuToggle));
   cartToggle?.addEventListener('click', () => toggleSidebar(cartSidebar, sidebar, cartToggle));
-
   closeButtons.forEach(btn => btn.addEventListener('click', closeSidebars));
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeSidebars();
     }
@@ -549,12 +568,13 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('Search toggled! Implement your search UI here.');
   });
 
+  // Logo text click (e.g., "MATT SCIANNA")
   document.getElementById('logoContainer')?.addEventListener('click', () => {
     window.scrollTo(0, 0);
     location.reload();
   });
 
-  // === Carousel Logic ===
+  // === Carousel ===
   if (slider && slides.length > 0) {
     let currentSlide = 0;
     let autoplayInterval = null;
@@ -617,11 +637,11 @@ document.addEventListener('DOMContentLoaded', () => {
       autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
     }
 
-    slider.addEventListener('touchstart', (e) => {
+    slider.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
     });
 
-    slider.addEventListener('touchend', (e) => {
+    slider.addEventListener('touchend', e => {
       if (startX === null) return;
       const diff = e.changedTouches[0].clientX - startX;
       if (diff > 50) showSlide(currentSlide - 1);
@@ -634,7 +654,6 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplayInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
   }
 
-  // Policies dropdown toggle
   if (policiesLink && policiesDropdown) {
     policiesLink.addEventListener('click', e => {
       e.preventDefault();

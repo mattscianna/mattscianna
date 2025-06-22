@@ -614,38 +614,38 @@
   const searchToggle = document.getElementById('searchIcon');
   const sidebarCloseBtns = document.querySelectorAll('.sidebar .close-btn, .cart-sidebar .close-btn');
   const header = document.querySelector('header');
+  const logoContainer = document.getElementById('logoContainer');
 
-  // --- Header show/hide behavior ---
+  // Header show/hide
   function showHeaderTemporarily() {
     header.classList.add('visible');
     clearTimeout(header.hideTimeout);
     header.hideTimeout = setTimeout(() => {
       header.classList.remove('visible');
-    }, 5000); // Hide after 5s
+    }, 5000);
   }
 
-  // Show header on menu/cart/search toggle clicks
   [menuToggle, cartToggle, searchToggle].forEach(btn => {
     btn.addEventListener('click', showHeaderTemporarily);
   });
 
   // Sidebar toggle
   menuToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
+    const isOpen = sidebar.classList.toggle('open');
     cartSidebar.classList.remove('open');
-    body.classList.toggle('sidebar-open');
+    body.classList.toggle('sidebar-open', isOpen);
     body.classList.remove('cart-open');
-    sidebar.setAttribute('aria-hidden', !sidebar.classList.contains('open'));
+    sidebar.setAttribute('aria-hidden', !isOpen);
     cartSidebar.setAttribute('aria-hidden', 'true');
   });
 
   // Cart toggle
   cartToggle.addEventListener('click', () => {
-    cartSidebar.classList.toggle('open');
+    const isOpen = cartSidebar.classList.toggle('open');
     sidebar.classList.remove('open');
-    body.classList.toggle('cart-open');
+    body.classList.toggle('cart-open', isOpen);
     body.classList.remove('sidebar-open');
-    cartSidebar.setAttribute('aria-hidden', !cartSidebar.classList.contains('open'));
+    cartSidebar.setAttribute('aria-hidden', !isOpen);
     sidebar.setAttribute('aria-hidden', 'true');
   });
 
@@ -654,7 +654,7 @@
     alert('Search toggled! Implement your search UI here.');
   });
 
-  // Close buttons
+  // Sidebar close buttons
   sidebarCloseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       sidebar.classList.remove('open');
@@ -665,7 +665,7 @@
     });
   });
 
-  // Keyboard toggles
+  // Keyboard access for toggles
   [menuToggle, cartToggle, searchToggle].forEach(toggle => {
     toggle.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -675,7 +675,7 @@
     });
   });
 
-  // ESC key closes sidebars
+  // ESC closes sidebars
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       sidebar.classList.remove('open');
@@ -686,17 +686,14 @@
     }
   });
 
-  // Carousel
+  // --- Carousel ---
   const slider = document.getElementById('slider');
   const slides = slider.children;
   const totalSlides = slides.length;
   let currentSlide = 0;
 
   function showSlide(index) {
-    if (index < 0) currentSlide = totalSlides - 1;
-    else if (index >= totalSlides) currentSlide = 0;
-    else currentSlide = index;
-
+    currentSlide = (index + totalSlides) % totalSlides;
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     updateDots();
   }
@@ -709,7 +706,6 @@
     showSlide(currentSlide + 1);
   }
 
-  // Carousel controls container
   const controlsContainer = document.createElement('div');
   controlsContainer.id = 'custom-carousel-controls';
   controlsContainer.style.display = 'flex';
@@ -769,7 +765,6 @@
     });
   }
 
-  // Keyboard arrow support
   [leftBtn, rightBtn].forEach(btn => {
     btn.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -781,7 +776,7 @@
 
   showSlide(0);
 
-  // Policies dropdown
+  // --- Policies dropdown ---
   const policiesLink = document.getElementById('policiesLink');
   const policiesDropdown = document.getElementById('policiesDropdown');
 
@@ -802,9 +797,9 @@
     }
   });
 
-  // Logo click scroll + reload
-  document.getElementById('logoContainer').addEventListener('click', () => {
-    setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 1000);
+  // --- Logo click: jump to top and reload ---
+  logoContainer.addEventListener('click', () => {
+    window.scrollTo(0, 0); // Jumps directly with no scroll animation
     location.reload();
   });
 </script>
